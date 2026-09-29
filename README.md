@@ -36,6 +36,7 @@ Google AV 的核心产出不是坐标，而是一个**可执行的结论**（`AC
 | 05 | [PRD 骨架与路线图](docs/05-prd-and-roadmap.md) | 产品形态、API 设计、差异化、分阶段计划、团队、风险 |
 | 06 | [Loqate 竞品拆解](docs/06-loqate-teardown.md) | Loqate 的补齐（Capture）与验真（Verify）怎么做？AVC 编码怎么读？与 GrabMaps 的合作意味着什么？三方对比 |
 | 07 | [**MVP 技术方案与验证结论**](docs/07-mvp-technical-validation.md) | 技术上可行吗？选定方案比简单做法好多少？每个模块都必要吗？真正的风险在哪？ |
+| 08 | [用 AI / 本地小模型增强](docs/08-ai-local-model.md) | AI 能不能做得更好？本地小模型（如 Qwen）放在哪、怎么防止编造、提升空间有多大、怎么评测和决策？ |
 
 ## 可运行的 MVP（新加坡）
 

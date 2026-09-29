@@ -32,7 +32,15 @@ python scripts/make_golden_set.py     # 生成开发集 1,000 条 + 测试集 4,
 python scripts/evaluate.py            # 输出 reports/eval_report.md 与 reports/eval_results.json
 python scripts/make_noisy_set.py      # 生成"真实客户输入"风格的噪声评测集（开发 540 条 + 测试 1,800 条）
 python scripts/evaluate_noisy.py      # 输出 reports/noisy_eval_report.md；加 --before-impl <旧版目录> 可对比旧版
-pytest -q                             # 46 个单元测试（使用 tests/ 下的小型真实数据夹具，无需下载）
+pytest -q                             # 56 个单元测试（使用 tests/ 下的小型真实数据夹具，无需下载）
+```
+
+可选：本地小模型兜底（如 Qwen，见 [08 文档](../docs/08-ai-local-model.md)）：
+
+```bash
+ollama pull qwen2.5:1.5b
+python scripts/evaluate_llm.py --model qwen2.5:1.5b --pure            # 对比 规则 / 规则 + 模型兜底 / 纯模型
+python -m avmvp.server --llm-endpoint http://127.0.0.1:11434          # 演示页面开启兜底
 ```
 
 ## 结果速览
@@ -68,6 +76,7 @@ mvp/
 │   ├── parser.py       解析：邮编、单元号（多种写法）、楼栋号候选（N-best）、粘连拆分
 │   ├── reference.py    参考库：多路索引（邮编 / 楼栋+道路 / 道路 / 楼宇名）+ 道路模糊检索
 │   ├── validator.py    核心：假设生成与打分 → 规则化结论树 → 响应组装
+│   ├── llm_fallback.py 本地小模型兜底（Ollama / OpenAI 兼容接口）+ 防编造规则
 │   ├── baselines.py    对照方案 B1 / B2
 │   └── server.py       本地 HTTP 服务 + 演示页面（仅标准库）
 ├── scripts/
@@ -75,8 +84,9 @@ mvp/
 │   ├── make_golden_set.py  按错误类别生成评测集
 │   ├── evaluate.py         评测 + 消融 + 严格度 + 数据时效实验
 │   ├── make_noisy_set.py   生成"真实客户输入"风格的噪声评测集
-│   └── evaluate_noisy.py   噪声评测（可对比旧版实现）
-├── tests/              46 个单元测试与 58 条真实地址夹具
+│   ├── evaluate_noisy.py   噪声评测（可对比旧版实现）
+│   └── evaluate_llm.py     本地小模型评测：规则 / 规则 + 模型兜底 / 纯模型
+├── tests/              56 个单元测试与 58 条真实地址夹具
 └── reports/            评测报告与演示截图
 ```
 

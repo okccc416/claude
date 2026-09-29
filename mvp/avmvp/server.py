@@ -120,13 +120,22 @@ def main() -> None:
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--reference", default=str(ROOT / "data" / "reference_sg.csv.gz"))
     ap.add_argument("--attributes", help="可选：楼栋属性 CSV（postal,max_floor）")
+    ap.add_argument("--llm-endpoint", help="可选：本地模型服务地址（如 http://127.0.0.1:11434），开启小模型兜底")
+    ap.add_argument("--llm-model", default="qwen2.5:1.5b")
+    ap.add_argument("--llm-api", default="ollama", choices=["ollama", "openai"])
     args = ap.parse_args()
     t = time.time()
     db = ReferenceDB.load(args.reference)
     if args.attributes:
         db.load_building_attributes(args.attributes)
     print(f"参考库已加载：{len(db.entities):,} 个地址实体（{time.time() - t:.1f}s）")
-    server = ThreadingHTTPServer((args.host, args.port), make_handler(Validator(db)))
+    validator = Validator(db)
+    if args.llm_endpoint:
+        from .llm_fallback import LLMAssistedValidator, LocalLLM
+        validator = LLMAssistedValidator(
+            validator, LocalLLM(endpoint=args.llm_endpoint, model=args.llm_model, api=args.llm_api))
+        print(f"已开启本地小模型兜底：{args.llm_model} @ {args.llm_endpoint}（{args.llm_api}）")
+    server = ThreadingHTTPServer((args.host, args.port), make_handler(validator))
     print(f"演示页面：http://{args.host}:{args.port}/    接口：POST /v1/address:validate")
     server.serve_forever()
 
