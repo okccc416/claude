@@ -1,0 +1,277 @@
+{
+  "systems": {
+    "本方案（Balanced）": {
+      "n": 4000,
+      "full_correct": 0.99925,
+      "action_acc": 0.99925,
+      "FAR": 0.0,
+      "FIX_recall": 1.0,
+      "FRR": 0.0010714285714285715,
+      "UCR": 0.0,
+      "addr_acc": 1.0,
+      "silent_wrong": 0.0,
+      "per_category": {
+        "D2_missing_block": 1.0,
+        "G_building_name_only": 0.9975,
+        "D1_missing_postcode": 1.0,
+        "C_street_typo": 0.9975,
+        "F2_nonexistent_street": 1.0,
+        "E_wrong_postcode": 1.0,
+        "B_messy_format": 1.0,
+        "I_with_unit": 1.0,
+        "A_clean": 0.9975,
+        "F1_nonexistent_block": 1.0
+      },
+      "latency_ms": {
+        "p50": 0.9950600001502607,
+        "p95": 9.23009699999966,
+        "p99": 12.581402999785496,
+        "mean": 2.161908611251647
+      }
+    },
+    "消融：去掉邮编交叉校验": {
+      "n": 4000,
+      "full_correct": 0.872,
+      "action_acc": 0.9755,
+      "FAR": 0.0,
+      "FIX_recall": 1.0,
+      "FRR": 0.0007142857142857143,
+      "UCR": 0.08,
+      "addr_acc": 0.8177269478198713,
+      "silent_wrong": 0.0,
+      "per_category": {
+        "D2_missing_block": 1.0,
+        "G_building_name_only": 0.9975,
+        "D1_missing_postcode": 1.0,
+        "C_street_typo": 0.9625,
+        "F2_nonexistent_street": 1.0,
+        "E_wrong_postcode": 0.0,
+        "B_messy_format": 0.905,
+        "I_with_unit": 0.9275,
+        "A_clean": 0.9275,
+        "F1_nonexistent_block": 1.0
+      },
+      "latency_ms": {
+        "p50": 0.8375010002055205,
+        "p95": 8.236967999891931,
+        "p99": 10.978859999795532,
+        "mean": 1.9086024225035771
+      }
+    },
+    "消融：去掉道路拼写纠错": {
+      "n": 4000,
+      "full_correct": 0.94975,
+      "action_acc": 0.95025,
+      "FAR": 0.0,
+      "FIX_recall": 1.0,
+      "FRR": 0.07107142857142858,
+      "UCR": 0.0,
+      "addr_acc": 0.9992310649750096,
+      "silent_wrong": 0.0,
+      "per_category": {
+        "D2_missing_block": 1.0,
+        "G_building_name_only": 1.0,
+        "D1_missing_postcode": 1.0,
+        "C_street_typo": 0.5,
+        "F2_nonexistent_street": 1.0,
+        "E_wrong_postcode": 1.0,
+        "B_messy_format": 1.0,
+        "I_with_unit": 1.0,
+        "A_clean": 0.9975,
+        "F1_nonexistent_block": 1.0
+      },
+      "latency_ms": {
+        "p50": 0.10824099990713876,
+        "p95": 8.06182800033639,
+        "p99": 9.632570000121632,
+        "mean": 1.290177490248766
+      }
+    },
+    "消融：去掉楼宇名召回": {
+      "n": 4000,
+      "full_correct": 0.90175,
+      "action_acc": 0.9025,
+      "FAR": 0.0,
+      "FIX_recall": 1.0,
+      "FRR": 0.1392857142857143,
+      "UCR": 0.0,
+      "addr_acc": 0.9987551867219917,
+      "silent_wrong": 0.0,
+      "per_category": {
+        "D2_missing_block": 1.0,
+        "G_building_name_only": 0.0225,
+        "D1_missing_postcode": 1.0,
+        "C_street_typo": 0.9975,
+        "F2_nonexistent_street": 1.0,
+        "E_wrong_postcode": 1.0,
+        "B_messy_format": 1.0,
+        "I_with_unit": 1.0,
+        "A_clean": 0.9975,
+        "F1_nonexistent_block": 1.0
+      },
+      "latency_ms": {
+        "p50": 0.8095900002444978,
+        "p95": 3.170829999817215,
+        "p99": 5.883982000341348,
+        "mean": 1.1534533265066784
+      }
+    },
+    "B1 模糊整串匹配（Geocoder 式）": {
+      "n": 4000,
+      "full_correct": 0.5385,
+      "action_acc": 0.544,
+      "FAR": 0.07,
+      "FIX_recall": 0.93,
+      "FRR": 0.2832142857142857,
+      "UCR": 0.0,
+      "addr_acc": 0.7653213751868461,
+      "silent_wrong": 0.13875,
+      "per_category": {
+        "D2_missing_block": 0.9725,
+        "G_building_name_only": 0.0,
+        "D1_missing_postcode": 0.0,
+        "C_street_typo": 0.0,
+        "F2_nonexistent_street": 0.9975,
+        "E_wrong_postcode": 0.0,
+        "B_messy_format": 0.8675,
+        "I_with_unit": 0.8975,
+        "A_clean": 0.83,
+        "F1_nonexistent_block": 0.82
+      },
+      "latency_ms": {
+        "mean_batched_4cores": 1.2291145224999127
+      },
+      "thresholds": {
+        "accept": 69,
+        "confirm": 69
+      }
+    },
+    "B2 仅查邮编": {
+      "n": 4000,
+      "full_correct": 0.576,
+      "action_acc": 0.6,
+      "FAR": 0.0,
+      "FIX_recall": 1.0,
+      "FRR": 0.35714285714285715,
+      "UCR": 0.0,
+      "addr_acc": 0.7166666666666667,
+      "silent_wrong": 0.1275,
+      "per_category": {
+        "D2_missing_block": 1.0,
+        "G_building_name_only": 0.0,
+        "D1_missing_postcode": 0.0,
+        "C_street_typo": 0.0,
+        "F2_nonexistent_street": 1.0,
+        "E_wrong_postcode": 0.0,
+        "B_messy_format": 0.905,
+        "I_with_unit": 0.9275,
+        "A_clean": 0.9275,
+        "F1_nonexistent_block": 1.0
+      },
+      "latency_ms": {
+        "p50": 0.013719999969907803,
+        "p95": 0.025258999812649563,
+        "p99": 0.06019100010234979,
+        "mean": 0.017198573752125412
+      }
+    }
+  },
+  "profiles": {
+    "STRICT": {
+      "FAR": 0.0,
+      "FIX_recall": 1.0,
+      "FRR": 0.0010714285714285715,
+      "UCR": 0.3333333333333333,
+      "silent_wrong": 0.0,
+      "accept_rate": 0.19975
+    },
+    "BALANCED": {
+      "FAR": 0.0,
+      "FIX_recall": 1.0,
+      "FRR": 0.0010714285714285715,
+      "UCR": 0.0,
+      "silent_wrong": 0.0,
+      "accept_rate": 0.29975
+    },
+    "LENIENT": {
+      "FAR": 0.0,
+      "FIX_recall": 1.0,
+      "FRR": 0.0010714285714285715,
+      "UCR": 0.0,
+      "silent_wrong": 0.0,
+      "accept_rate": 0.4995
+    }
+  },
+  "staleness": {
+    "assume_complete=True（默认：认为参考库完整）": {
+      "new_address_fix_rate": 0.962,
+      "new_address_confirm_rate": 0.038,
+      "nonexistent_fix_recall": 1.0,
+      "nonexistent_accept_rate": 0.0
+    },
+    "assume_complete=False（认为参考库可能不完整）": {
+      "new_address_fix_rate": 0.104,
+      "new_address_confirm_rate": 0.896,
+      "nonexistent_fix_recall": 0.0,
+      "nonexistent_accept_rate": 0.0
+    }
+  },
+  "confusion": {
+    "ACCEPT": {
+      "ACCEPT": 1199,
+      "FIX": 1
+    },
+    "CONFIRM": {
+      "CONFIRM": 1598,
+      "FIX": 2
+    },
+    "FIX": {
+      "FIX": 1200
+    }
+  },
+  "unit_kept_rate": 1.0,
+  "errors": {
+    "C_street_typo": [
+      {
+        "input": "32 Mandai Ebstate",
+        "expected": "CONFIRM 32 MANDAI ESTATE 729939",
+        "got": "FIX -",
+        "reasons": [
+          "NO_MATCH"
+        ],
+        "note": "MANDAI ESTATE -> MANDAI EBSTATE"
+      }
+    ],
+    "G_building_name_only": [
+      {
+        "input": "National University Of Singapore (s'pore Synchrotron Light Source)",
+        "expected": "CONFIRM 5 RESEARCH LINK 117603",
+        "got": "FIX -",
+        "reasons": [
+          "MISSING_PREMISE"
+        ],
+        "note": ""
+      }
+    ],
+    "A_clean": [
+      {
+        "input": "188-2B Tanjong Katong Road, Singapore 436990",
+        "expected": "ACCEPT 188-2B TANJONG KATONG ROAD 436990",
+        "got": "FIX -",
+        "reasons": [
+          "POSTCODE_STREET_MISMATCH"
+        ],
+        "note": ""
+      }
+    ]
+  },
+  "error_counts": {
+    "C_street_typo": 1,
+    "G_building_name_only": 1,
+    "A_clean": 1
+  },
+  "reference_entities": 132775,
+  "test_size": 4000,
+  "dev_size": 1000,
+  "tag": ""
+}

@@ -5,7 +5,7 @@ SG-0003,SG,stress,C_typo,"10 Bayfrnt Avenue 018956",SG,TRUE,CONFIRM,"10 Bayfront
 SG-0004,SG,stress,D_missing_component,"1 Raffles Place",SG,TRUE,CONFIRM,"1 Raffles Place, Singapore 048616",1,,Raffles Place,048616,,,authoritative,,,,缺邮编但可唯一推断；按严格度可为 ACCEPT
 SG-0005,SG,stress,E_conflict,"10 Bayfront Avenue, Singapore 819643",SG,TRUE,CONFIRM,"10 Bayfront Avenue, Singapore 018956",10,,Bayfront Avenue,018956,,,authoritative,,,,邮编属于其他楼栋；街道+门牌可信则替换邮编，否则 FIX
 SG-0006,SG,stress,F_nonexistent,"999 Bayfront Avenue, Singapore 018956",SG,FALSE,FIX,,,,,,,,authoritative,,,,虚构门牌；Geocoder 常会插值"成功"，AV 必须判 FIX
-SG-0007,SG,stress,G_informal_poi,"Changi Airport Terminal 3",SG,TRUE,CONFIRM,"60 Airport Boulevard, Singapore 819643",60,,Airport Boulevard,819643,,,authoritative,,,,仅 POI 描述；是否视为完整地址由规则包决定
+SG-0007,SG,stress,G_informal_poi,"Changi Airport Terminal 3",SG,TRUE,CONFIRM,"65 Airport Boulevard, Singapore 819663",65,,Airport Boulevard,819663,,,authoritative,,,,仅 POI 描述；是否视为完整地址由规则包决定
 SG-0008,SG,stress,I_unit_valid,"<HDB 楼栋真实地址> #05-12",SG,TRUE,ACCEPT,<待填>,<待填>,#05-12,<待填>,<待填>,,,authoritative,,,,用真实 HDB 楼栋替换占位符；楼层在最高层以内
 SG-0009,SG,stress,I_unit_floor_exceeds,"<同一 HDB 楼栋> #25-12",SG,FALSE,FIX,,<待填>,#25-12,<待填>,<待填>,,,authoritative,,,,楼层超过该楼最高层（可用 data.gov.sg HDB 楼栋数据校验）
 SG-0010,SG,stress,I_unit_missing,"<同一 HDB 楼栋>（不带单元号）",SG,TRUE,CONFIRM_ADD_SUBPREMISES,<待填>,<待填>,,<待填>,<待填>,,,authoritative,,,,多单元住宅楼缺单元号

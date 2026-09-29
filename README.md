@@ -35,6 +35,24 @@ Google AV 的核心产出不是坐标，而是一个**可执行的结论**（`AC
 | 04 | [评测体系](docs/04-evaluation-framework.md) | 怎么证明我们比 Google 好 / 差多少？指标怎么定义？ |
 | 05 | [PRD 骨架与路线图](docs/05-prd-and-roadmap.md) | 产品形态、API 设计、差异化、分阶段计划、团队、风险 |
 | 06 | [Loqate 竞品拆解](docs/06-loqate-teardown.md) | Loqate 的补齐（Capture）与验真（Verify）怎么做？AVC 编码怎么读？与 GrabMaps 的合作意味着什么？三方对比 |
+| 07 | [**MVP 技术方案与验证结论**](docs/07-mvp-technical-validation.md) | 技术上可行吗？选定方案比简单做法好多少？每个模块都必要吗？真正的风险在哪？ |
+
+## 可运行的 MVP（新加坡）
+
+[`mvp/`](mvp/README.md) 是一个已经实现、可在本地运行的新加坡地址校验服务（Python，带演示页面和 HTTP 接口）。在 13.3 万个真实地址构成的参考库上，用 4,000 条从未参与开发迭代的测试样本评测：
+
+| 方案 | 完全正确率 | 误收率 | 误拒率 | 静默错误率 | 单条延迟 |
+|---|---|---|---|---|---|
+| **MVP 方案** | **99.9%** | 0.0% | 0.1% | 0.0% | P50 约 1ms |
+| 直接复用地理编码式的整串模糊匹配 | 53.8% | 7.0% | 28.3% | 13.9% | — |
+| 只查邮编 | 57.6% | 0.0% | 35.7% | 12.8% | — |
+
+消融实验表明每个核心模块都不可省略（去掉任一模块下降 4.9–12.7 个百分点）。**最大的风险不在算法，而在参考数据的时效**：模拟新楼盘未进库时，96% 的新地址会被误拒。详见 [07 文档](docs/07-mvp-technical-validation.md)。
+
+```bash
+cd mvp && pip install -r requirements.txt
+python scripts/fetch_data.py && python -m avmvp.server   # 打开 http://127.0.0.1:8080/
+```
 
 附件模板：
 
