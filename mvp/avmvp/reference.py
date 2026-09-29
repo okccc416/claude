@@ -10,6 +10,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from rapidfuzz import fuzz, process
+from rapidfuzz.distance import Levenshtein
 
 from .normalize import ROAD_TYPE_WORDS, match_key, split_alpha_num
 
@@ -59,6 +60,8 @@ class ReferenceDB:
     _building_keys: list[str] = field(default_factory=list)
     _building_tokens: dict[str, set[int]] = field(default_factory=lambda: defaultdict(set))
     vocab: set[str] = field(default_factory=set)  # 参考库中出现过的全部词
+    _spell_words: list[str] = field(default_factory=list)  # 路名用词（按出现频次降序），用于逐词拼写纠错
+    _spell_map: dict[str, str] = field(default_factory=dict)
     # 可选：楼栋属性（如最高楼层），用于单元号校验
     max_floor_by_postal: dict[str, int] = field(default_factory=dict)
 
@@ -118,6 +121,14 @@ class ReferenceDB:
         self._road_groups = groups
         self._building_keys = list(self.by_building)
         self.vocab = {t for k in self.by_road for t in k.split()} | set(self._building_tokens)
+        freq: dict[str, int] = defaultdict(int)
+        for k, ids in self.by_road.items():
+            for t in k.split():
+                if t.isalpha() and len(t) >= 3:
+                    freq[t] += len(ids)
+        self._spell_map = {t: t for t in freq}
+        self._spell_map.update({full: canon for full, canon in ROAD_TYPE_WORDS.items()})
+        self._spell_words = sorted(self._spell_map, key=lambda t: -freq.get(t, 10 ** 9))
 
     def remove(self, eids: set[int]) -> "ReferenceDB":
         """返回去掉部分实体后的新库（用于模拟参考数据过时 / 不完整）。"""
@@ -142,6 +153,22 @@ class ReferenceDB:
                 hit = process.extractOne(t, _TYPE_WORDS, scorer=fuzz.ratio, score_cutoff=80)
                 if hit:
                     out.append(ROAD_TYPE_WORDS[hit[0]])
+                    continue
+            out.append(t)
+        return out
+
+    def spell_fix(self, tokens: list[str]) -> list[str]:
+        """逐词拼写纠错（针对多处拼写错误）：参考库里没有的词，改成编辑距离最近的路名用词。
+
+        距离上限：≤5 个字母允许 1 处，更长允许 2 处；距离相同取更常见的词。只作为备选切分，由打分裁决。
+        """
+        out = []
+        for t in tokens:
+            if len(t) >= 4 and t.isalpha() and t not in self.vocab:
+                hit = process.extractOne(t, self._spell_words, scorer=Levenshtein.distance,
+                                         score_cutoff=1 if len(t) <= 5 else 2)
+                if hit:
+                    out.append(self._spell_map[hit[0]])
                     continue
             out.append(t)
         return out

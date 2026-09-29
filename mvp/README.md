@@ -1,6 +1,6 @@
 # 新加坡地址校验（Address Validation）MVP
 
-一个可在本地运行的地址校验服务：输入任意写法的新加坡地址，返回**结论**（ACCEPT / CONFIRM / FIX / CONFIRM_ADD_SUBPREMISES）、**标准化地址**、**逐组件判断**、**原因码**和坐标。接口字段语义对齐 Google Address Validation API，并带上 [05 文档](../docs/05-prd-and-roadmap.md) 规划的扩展字段（严格度档位、原因码、纠错前粒度、改动幅度、校验码、候选地址）。
+一个可在本地运行的地址校验服务：输入任意写法的新加坡地址（可以混着电话、收件人、配送备注、本地缩写、粘连和错拼），返回**结论**（ACCEPT / CONFIRM / FIX / CONFIRM_ADD_SUBPREMISES）、**标准化地址**、**逐组件判断**、**原因码**和坐标，并把电话 / 邮箱 / 订单号 / 收件人 / 公司名 / 备注单独拆出来放在 `nonAddressInfo` 里。接口字段语义对齐 Google Address Validation API，并带上 [05 文档](../docs/05-prd-and-roadmap.md) 规划的扩展字段（严格度档位、原因码、纠错前粒度、改动幅度、校验码、候选地址）。
 
 技术方案与验证结论见 **[docs/07-mvp-technical-validation.md](../docs/07-mvp-technical-validation.md)**，完整评测报告见 [reports/eval_report.md](reports/eval_report.md)。
 
@@ -30,16 +30,31 @@ curl -s -X POST http://127.0.0.1:8080/v1/address:validate \
 ```bash
 python scripts/make_golden_set.py     # 生成开发集 1,000 条 + 测试集 4,000 条
 python scripts/evaluate.py            # 输出 reports/eval_report.md 与 reports/eval_results.json
-pytest -q                             # 27 个单元测试（使用 tests/ 下的小型真实数据夹具，无需下载）
+python scripts/make_noisy_set.py      # 生成"真实客户输入"风格的噪声评测集（开发 540 条 + 测试 1,800 条）
+python scripts/evaluate_noisy.py      # 输出 reports/noisy_eval_report.md；加 --before-impl <旧版目录> 可对比旧版
+pytest -q                             # 46 个单元测试（使用 tests/ 下的小型真实数据夹具，无需下载）
 ```
 
-## 结果速览（4,000 条从未参与开发迭代的测试样本）
+## 结果速览
+
+**标准变形**（4,000 条从未参与开发迭代的测试样本，10 类错误）：
 
 | 方案 | 完全正确率 | 误收率 | 误拒率 | 静默错误率 | 单条延迟 P50 / P95 |
 |---|---|---|---|---|---|
-| **本方案** | **99.9%** | 0.0% | 0.1% | 0.0% | 1.0ms / 9.2ms |
-| B1 模糊整串匹配（Geocoder 式，阈值已调到对它最有利） | 53.8% | 7.0% | 28.3% | 13.9% | — |
+| **本方案** | **99.9%** | 0.0% | 0.1% | 0.0% | 1.2ms / 12.5ms |
+| B1 模糊整串匹配（Geocoder 式，阈值已调到对它最有利） | 53.9% | 7.0% | 28.3% | 13.9% | — |
 | B2 仅查邮编 | 57.6% | 0.0% | 35.7% | 12.8% | — |
+
+**真实客户输入风格**（1,800 条带业务噪声的测试样本，9 类）：
+
+| 方案 | 地址识别率 | 直接通过率 | 静默错误率 | 电话抽取 |
+|---|---|---|---|---|
+| **本方案** | **98.8%** | **86.1%** | 0.0% | 100% |
+| 上一版（未做噪声处理） | 96.0% | 13.8% | 0.0% | — |
+| B1 模糊整串匹配 | 58.7% | 58.7% | 10.3% | — |
+| B2 仅查邮编 | 85.0% | 85.0% | 7.1% | — |
+
+![噪声输入演示](reports/demo_noisy.png)
 
 **注意：** 测试集由参考库构造，是"封闭世界"，数字证明的是**方案逻辑可行**，不等于真实流量上的准确率。真实准确率取决于参考数据的完整度和时效，详见 07 文档的"局限"一节。
 
@@ -48,8 +63,9 @@ pytest -q                             # 27 个单元测试（使用 tests/ 下�
 ```
 mvp/
 ├── avmvp/
-│   ├── normalize.py    预处理：大小写 / 标点 / 缩写统一为"规范匹配键"
-│   ├── parser.py       解析：邮编、单元号、楼栋号候选（N-best）
+│   ├── noise.py        业务噪声剥离：电话 / 邮箱 / 订单号 / 收件人 / 公司名 / 配送备注
+│   ├── normalize.py    预处理：大小写 / 标点 / 缩写（含 AMK 等本地缩写）统一为"规范匹配键"
+│   ├── parser.py       解析：邮编、单元号（多种写法）、楼栋号候选（N-best）、粘连拆分
 │   ├── reference.py    参考库：多路索引（邮编 / 楼栋+道路 / 道路 / 楼宇名）+ 道路模糊检索
 │   ├── validator.py    核心：假设生成与打分 → 规则化结论树 → 响应组装
 │   ├── baselines.py    对照方案 B1 / B2
@@ -57,8 +73,10 @@ mvp/
 ├── scripts/
 │   ├── fetch_data.py       下载并构建参考库
 │   ├── make_golden_set.py  按错误类别生成评测集
-│   └── evaluate.py         评测 + 消融 + 严格度 + 数据时效实验
-├── tests/              单元测试与 58 条真实地址夹具
+│   ├── evaluate.py         评测 + 消融 + 严格度 + 数据时效实验
+│   ├── make_noisy_set.py   生成"真实客户输入"风格的噪声评测集
+│   └── evaluate_noisy.py   噪声评测（可对比旧版实现）
+├── tests/              46 个单元测试与 58 条真实地址夹具
 └── reports/            评测报告与演示截图
 ```
 

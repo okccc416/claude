@@ -44,7 +44,8 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;p
 <div id="out"></div>
 <script>
 const EX=["10 Bayfront Avenue, Singapore 018956","018956 10 bayfront ave s'pore","10 Bayfrnt Avenue 018956","1 Raffles Place",
-"10 Bayfront Avenue, Singapore 819643","999 Bayfront Avenue","Marina Bay Sands","Changi Airport Terminal 3","Tampines Avenue 7","34A Poxle Road"];
+"10 Bayfront Avenue, Singapore 819643","999 Bayfront Avenue","Marina Bay Sands","Changi Airport Terminal 3","Tampines Avenue 7","34A Poxle Road",
+"Attn: Jason Teo, Blk123 AMK Ave 6 # 05 - 12 S(560123) pls call b4 delivery 91234567, 请放门口"];
 const ex=document.getElementById('ex');EX.forEach(t=>{const b=document.createElement('button');b.textContent=t;b.onclick=()=>{q.value=t;run()};ex.appendChild(b)});
 const q=document.getElementById('q'),s=document.getElementById('s'),out=document.getElementById('out');
 document.getElementById('go').onclick=run;q.addEventListener('keydown',e=>{if(e.key==='Enter')run()});
@@ -56,11 +57,14 @@ async function run(){
  const comps=a.addressComponents.map(c=>`<tr><td>${esc(c.componentType)}</td><td>${esc(c.componentName.text)}</td><td>${esc(c.confirmationLevel)}</td><td class="muted">${[c.inferred&&'补全',c.replaced&&'替换',c.spellCorrected&&'纠错'].filter(Boolean).join(' / ')}${c.originalText?' ← '+esc(c.originalText):''}</td></tr>`).join('');
  const reasons=v.reasons.map(x=>`<li><code>${esc(x.code)}</code> ${esc(x.message)}</li>`).join('')||'<li class="muted">无</li>';
  const cands=(d.result.candidates||[]).map(c=>`<li>${esc(c.formattedAddress)}</li>`).join('');
+ const NA={phones:'电话',emails:'邮箱',orderRefs:'订单号',recipients:'收件人',organizations:'公司',notes:'备注'};
+ const info=Object.entries(d.result.nonAddressInfo||{}).map(([k,v])=>`<tr><td>${NA[k]||k}</td><td>${v.map(esc).join('<br>')}</td></tr>`).join('');
  out.innerHTML=`<div class="card"><span class="badge ${v.possibleNextAction}">${v.possibleNextAction}</span>
  <span class="muted"> 校验码 ${esc(v.verificationCode)} · 服务端耗时 ${esc(d.serverTimeMs)} ms</span>
  <div class="addr">${esc(a.formattedAddress||'—')}</div>
  <div class="muted">输入粒度 ${v.inputGranularity} → 校验粒度 ${v.validationGranularity}（纠错前 ${v.preCorrectionGranularity}）</div></div>
  <div class="card"><b>原因码</b><ul>${reasons}</ul>${cands?`<b>候选地址</b><ul>${cands}</ul>`:''}</div>
+ ${info?`<div class="card"><b>已分离的非地址信息</b><table>${info}</table></div>`:''}
  <div class="card"><b>逐组件判断</b><table><tr><th>组件</th><th>值</th><th>确认级别</th><th>处理</th></tr>${comps}</table></div>
  <div class="card"><details><summary>原始 JSON</summary><pre>${esc(JSON.stringify(d,null,2))}</pre></details></div>`;
 }

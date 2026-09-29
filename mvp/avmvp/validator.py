@@ -12,8 +12,9 @@ from dataclasses import dataclass, field, replace
 
 from rapidfuzz import fuzz
 
-from .normalize import match_key, title_case
-from .parser import ParsedAddress, parse
+from .noise import NoiseResult, strip_noise
+from .normalize import canon_tokens, clean_text, match_key, strip_punct, title_case
+from .parser import BLOCK_RE, ParsedAddress, parse
 from .reference import Entity, ReferenceDB, RoadMatch
 
 ACCEPT, CONFIRM, FIX, ADD_SUB = "ACCEPT", "CONFIRM", "FIX", "CONFIRM_ADD_SUBPREMISES"
@@ -42,6 +43,7 @@ _REASON_TEXT = {
     "UNIT_FORMAT_INVALID": "单元号格式不合法",
     "UNIT_FLOOR_EXCEEDS_BUILDING": "单元楼层超过该楼栋最高层",
     "UNIT_MISSING_MULTI_UNIT_BUILDING": "多单元住宅楼缺少单元号",
+    "NON_ADDRESS_INFO_EXTRACTED": "已从输入中分离出电话 / 收件人 / 备注等非地址信息（见 nonAddressInfo）",
 }
 
 
@@ -52,6 +54,7 @@ class Config:
     consistency_check: bool = True  # 消融开关：邮编与楼栋/道路交叉校验
     building_route: bool = True  # 消融开关：楼宇名召回
     assume_complete: bool = True  # 参考库在该区域是否完整；False 时"查不到"只判"无法确认"
+    strip_noise: bool = True  # 消融开关：剥离电话 / 收件人 / 备注等业务噪声
 
 
 @dataclass
@@ -85,6 +88,7 @@ class Result:
     tokens: list[str] = field(default_factory=list)  # 当前假设使用的 token（不含楼栋号）
     orig_tokens: list[str] = field(default_factory=list)
     building_confirmed: str | None = None
+    noise: NoiseResult | None = None
 
 
 class Validator:
@@ -95,15 +99,46 @@ class Validator:
     # ------------------------------------------------------------------ 主入口
     def validate(self, raw: str, strictness: str | None = None) -> Result:
         cfg = self.config if strictness is None else replace(self.config, strictness=strictness)
+        noise = strip_noise(raw, self._address_like) if cfg.strip_noise else None
+        res = self._validate_text(noise.text if noise else raw, cfg)
+        if noise and noise.removed_any:
+            if res.action == FIX:
+                # 剥噪声剥过头（如把真实楼宇名当成公司名删掉）时，用原文再试一次
+                alt = self._validate_text(raw, cfg)
+                if alt.action != FIX:
+                    return alt
+            res.noise = noise
+            res.reasons.append("NON_ADDRESS_INFO_EXTRACTED")
+        return res
+
+    def _address_like(self, segment: str) -> bool:
+        """这段文字能否在参考库里命中道路或楼宇名（用于防止把地址当噪声删掉）。"""
+        toks = canon_tokens(strip_punct(clean_text(segment)).split())
+        if not toks:
+            return False
+        if self.db.find_roads(toks, fuzzy=False) or self.db.exact_building(toks):
+            return True
+        return 0 < len(self.db.find_building_entities(toks, fuzzy=False)) <= 5
+
+    def _validate_text(self, raw: str, cfg: Config) -> Result:
         p = parse(raw)
         P = list(self.db.by_postal.get(p.postal, [])) if p.postal else []
-        # 两套 token 都试：原样的，以及纠正了路型词拼写的（纠错可能误伤，如 COUSE -> CLOSE，交给打分裁决）
-        variants = [p.tokens]
-        if cfg.fuzzy_road:
-            fixed = self.db.fix_type_typos(p.tokens)
-            if fixed != p.tokens:
-                variants.append(fixed)
-        hyps = [h for toks in variants for h in self._hypotheses(p, toks, cfg)]
+        # 多套 token 一起试：原样的、纠正路型词拼写的、逐词拼写纠错的，以及粘连写法的另一种切分。
+        # 纠错可能误伤（如 COUSE -> CLOSE），所以不直接替换，而是交给打分裁决
+        variants: list[tuple[list[str], list[str]]] = []
+        for base, orig in ((p.tokens, p.orig_tokens), (p.alt_tokens, p.alt_tokens)):
+            if not base:
+                continue
+            cands = [base]
+            if cfg.fuzzy_road:
+                fixed = self.db.fix_type_typos(base)
+                cands += [fixed, self.db.spell_fix(fixed)]
+            for c in cands:
+                if all(c != v[0] for v in variants):
+                    variants.append((c, orig))
+        if not variants:
+            variants = [(p.tokens, p.orig_tokens)]
+        hyps = [h for toks, orig in variants for h in self._hypotheses(p, toks, orig, cfg)]
         if cfg.building_route and p.block_marked and p.all_tokens != p.tokens:
             # 楼宇名本身带 "BLK 652" 之类字样时，整串当楼宇名再试一次
             hyps.append(Hypothesis(None, False, None, p.all_tokens, [], p.all_tokens))
@@ -170,14 +205,13 @@ class Validator:
         h = max((x for x in hyps if prefix(x) == best), key=rest)
         return self._decide(p, P, h, cfg)
 
-    def _hypotheses(self, p: ParsedAddress, T: list[str], cfg: Config):
+    def _hypotheses(self, p: ParsedAddress, T: list[str], O: list[str], cfg: Config):
         """楼栋号有歧义时枚举所有切分方式，每种切分再配若干道路候选。"""
-        O = p.orig_tokens
         opts: list[tuple[str | None, bool, int | None]] = []
         if p.block_marked:
             opts.append((p.block_marked, True, None))
         else:
-            opts += [(T[idx], False, idx) for idx in p.block_candidates]
+            opts += [(t, False, idx) for idx, t in enumerate(T) if BLOCK_RE.match(t)]
             opts.append((None, False, None))
         # 不拆楼栋号时能精确命中的道路所覆盖的 token：拆走其中的数字当楼栋号属于"偷"路名
         exact_cover = {i for r in self.db.find_roads(T, fuzzy=False) for i in range(r.start, r.end)}
@@ -329,7 +363,13 @@ class Validator:
         else:
             st["premise"] = "confirmed" if blk == e.blk else "replaced"
         # 道路
-        if road is None:
+        typed = db.find_roads(leftover, fuzzy=False) if road is None and leftover else []
+        if typed and typed[0].key != e.road_key:
+            # 用户写了一条真实存在的路，但邮编 + 楼栋号指向另一条路：属于"替换"而不是"补全"
+            st["route"] = "replaced"
+            res.reasons.append("STREET_REPLACED")
+            leftover = leftover[: typed[0].start] + leftover[typed[0].end:]
+        elif road is None:
             st["route"] = "inferred"
             if "POSTCODE_ONLY" not in res.reasons and not poi_only:
                 res.reasons.append("STREET_INFERRED")
@@ -548,6 +588,7 @@ def build_response(db: ReferenceDB, res: Result) -> dict:
             },
             "geocode": {"location": location} if location else None,
             "metadata": {"buildingNames": [title_case(b) for b in e.buildings]} if e else None,
+            "nonAddressInfo": res.noise.as_dict() if res.noise else None,
             "candidates": [
                 {"formattedAddress": _format_address(db.entities[i], None, db.entities[i].primary_building),
                  "location": {"latitude": db.entities[i].lat, "longitude": db.entities[i].lng}}

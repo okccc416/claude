@@ -57,6 +57,17 @@ ROAD_TYPE_WORDS: dict[str, str] = {
     and k not in ("CTR", "BLDG", "TWR", "APT", "EST", "GDN", "SQ", "MT")
 }
 
+# 新加坡本地的市镇缩写（AMK Ave 3 = Ang Mo Kio Avenue 3）。两字母缩写容易撞车，只在后面紧跟路型 / 方位词时展开
+TOWN_ABBREV: dict[str, str] = {
+    "AMK": "ANG MO KIO", "CCK": "CHOA CHU KANG", "TPY": "TOA PAYOH", "BTB": "BUKIT BATOK", "BTP": "BUKIT PANJANG",
+    "TAMP": "TAMPINES", "TPN": "TAMPINES", "WDL": "WOODLANDS", "SBW": "SEMBAWANG", "SRG": "SERANGOON",
+    "SKG": "SENGKANG", "PGL": "PUNGGOL", "CWEALTH": "COMMONWEALTH",
+    "BB": "BUKIT BATOK", "BP": "BUKIT PANJANG", "JW": "JURONG WEST", "JE": "JURONG EAST", "PR": "PASIR RIS",
+    "SK": "SENGKANG", "PG": "PUNGGOL", "HG": "HOUGANG", "YS": "YISHUN", "WL": "WOODLANDS",
+}
+_TOWN_CONTEXT = {"ST", "AVE", "DR", "CTRL", "NTH", "STH", "EAST", "WEST", "RD", "CRES", "IND", "RING", "WAY",
+                 "WALK", "LINK", "CL", "LN", "RISE", "VIEW", "LOOP", "PL", "NORTH", "SOUTH"}
+
 # 楼栋号前缀标记
 BLOCK_MARKERS = {"BLK", "BLOCK", "NO", "NUMBER"}
 # 国家名等噪声词（仅在首尾或邮编旁出现时剔除）
@@ -75,13 +86,24 @@ def clean_text(text: str) -> str:
 
 
 def strip_punct(text: str) -> str:
+    text = re.sub(r"(?<=[A-Z]{2})(?=\d)", " ", text)  # BLK123 / AVE3 / BIZ1 -> BLK 123 / AVE 3 / BIZ 1（两边一致）
     text = _PUNCT.sub(" ", text)
-    text = text.replace("-", " ").replace("#", " ")
+    text = re.sub(r"(?<=\d)-(?=\d)", "\x00", text)  # 保留数字之间的连字符：楼栋号 188-2B
+    text = text.replace("-", " ").replace("#", " ").replace("\x00", "-")
     return _SPACES.sub(" ", text).strip()
 
 
 def canon_tokens(tokens: list[str]) -> list[str]:
-    return [ABBREV.get(t, t) for t in tokens]
+    out: list[str] = []
+    for i, t in enumerate(tokens):
+        c = ABBREV.get(t, t)
+        town = TOWN_ABBREV.get(c)
+        nxt = ABBREV.get(tokens[i + 1], tokens[i + 1]) if i + 1 < len(tokens) else None
+        if town and (len(c) >= 3 or nxt in _TOWN_CONTEXT):
+            out.extend(ABBREV.get(w, w) for w in town.split())
+        else:
+            out.append(c)
+    return out
 
 
 def match_key(text: str) -> str:
