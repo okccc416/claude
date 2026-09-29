@@ -5,6 +5,9 @@
     "request.options",
     "result.verdict.confidence",
     "result.verdict.reasons",
+    "result.verdict.preCorrectionGranularity",
+    "result.verdict.changeScore",
+    "result.verdict.verificationCode",
     "result.address.addressComponents[].originalText",
     "result.address.adminMapping",
     "result.geocode.entrances",
@@ -31,6 +34,7 @@
       "verdict": {
         "inputGranularity": "SUB_PREMISE",
         "validationGranularity": "SUB_PREMISE",
+        "preCorrectionGranularity": "PREMISE",
         "geocodeGranularity": "PREMISE",
         "addressComplete": true,
         "hasUnconfirmedComponents": false,
@@ -39,6 +43,8 @@
         "hasSpellCorrectedComponents": true,
         "possibleNextAction": "CONFIRM",
         "confidence": 0.94,
+        "changeScore": 92,
+        "verificationCode": "C54-092",
         "reasons": [
           {
             "code": "STREET_SPELL_CORRECTED",
