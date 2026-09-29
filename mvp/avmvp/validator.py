@@ -44,6 +44,8 @@ _REASON_TEXT = {
     "UNIT_FLOOR_EXCEEDS_BUILDING": "单元楼层超过该楼栋最高层",
     "UNIT_MISSING_MULTI_UNIT_BUILDING": "多单元住宅楼缺少单元号",
     "NON_ADDRESS_INFO_EXTRACTED": "已从输入中分离出电话 / 收件人 / 备注等非地址信息（见 nonAddressInfo）",
+    "LOW_CONFIDENCE": "把握不足（置信度低于当前严格度档位的门槛）",
+    "BAYES_RESELECTED": "综合各项证据的概率后，选中了与规则优先级不同的候选",
 }
 
 
@@ -89,6 +91,18 @@ class Result:
     orig_tokens: list[str] = field(default_factory=list)
     building_confirmed: str | None = None
     noise: NoiseResult | None = None
+    confidence: float | None = None  # 贝叶斯打分给出的结论概率（仅在启用贝叶斯打分时有值）
+
+
+@dataclass
+class Analysis:
+    """一次校验的中间产物：解析结果、邮编命中、全部候选假设和规则结论（供贝叶斯打分等上层复用）。"""
+    parsed: ParsedAddress
+    postal_hits: list[int]
+    hypotheses: list[Hypothesis]
+    result: Result
+    cfg: Config
+    noise: NoiseResult | None = None
 
 
 class Validator:
@@ -98,18 +112,22 @@ class Validator:
 
     # ------------------------------------------------------------------ 主入口
     def validate(self, raw: str, strictness: str | None = None) -> Result:
+        return self.analyze(raw, strictness).result
+
+    def analyze(self, raw: str, strictness: str | None = None) -> Analysis:
         cfg = self.config if strictness is None else replace(self.config, strictness=strictness)
         noise = strip_noise(raw, self._address_like) if cfg.strip_noise else None
-        res = self._validate_text(noise.text if noise else raw, cfg)
+        a = self._analyze_text(noise.text if noise else raw, cfg)
         if noise and noise.removed_any:
-            if res.action == FIX:
+            if a.result.action == FIX:
                 # 剥噪声剥过头（如把真实楼宇名当成公司名删掉）时，用原文再试一次
-                alt = self._validate_text(raw, cfg)
-                if alt.action != FIX:
+                alt = self._analyze_text(raw, cfg)
+                if alt.result.action != FIX:
                     return alt
-            res.noise = noise
-            res.reasons.append("NON_ADDRESS_INFO_EXTRACTED")
-        return res
+            a.noise = noise
+            a.result.noise = noise
+            a.result.reasons.append("NON_ADDRESS_INFO_EXTRACTED")
+        return a
 
     def _address_like(self, segment: str) -> bool:
         """这段文字能否在参考库里命中道路或楼宇名（用于防止把地址当噪声删掉）。"""
@@ -120,7 +138,7 @@ class Validator:
             return True
         return 0 < len(self.db.find_building_entities(toks, fuzzy=False)) <= 5
 
-    def _validate_text(self, raw: str, cfg: Config) -> Result:
+    def _analyze_text(self, raw: str, cfg: Config) -> Analysis:
         p = parse(raw)
         P = list(self.db.by_postal.get(p.postal, [])) if p.postal else []
         # 多套 token 一起试：原样的、纠正路型词拼写的、逐词拼写纠错的，以及粘连写法的另一种切分。
@@ -203,7 +221,7 @@ class Validator:
         # 先用廉价的前缀排序，只对并列最优的假设再算楼宇名等较贵的特征
         best = max(prefix(x) for x in hyps)
         h = max((x for x in hyps if prefix(x) == best), key=rest)
-        return self._decide(p, P, h, cfg)
+        return Analysis(p, P, hyps, self._decide(p, P, h, cfg), cfg)
 
     def _hypotheses(self, p: ParsedAddress, T: list[str], O: list[str], cfg: Config):
         """楼栋号有歧义时枚举所有切分方式，每种切分再配若干道路候选。"""
@@ -351,7 +369,35 @@ class Validator:
         if eid is None:
             res.action = FIX
             return res
+        return self._finish(p, h, eid, res, poi_only, leftover, cfg)
 
+    def describe(self, a: Analysis, eid: int) -> Result:
+        """给定选中的地址实体，按最契合它的假设生成组件判定与原因码（供贝叶斯打分等上层使用）。"""
+        e = self.db.entities[eid]
+
+        def fit(h: Hypothesis):
+            return (h.road is not None and h.road.key == e.road_key, h.blk == e.blk,
+                    h.road is not None and h.road.exact, h.blk is None and h.road is None)
+
+        h = max(a.hypotheses, key=fit)
+        res = Result(action=FIX, entity=None, parsed=a.parsed, road=h.road, blk=h.blk, tokens=h.tokens,
+                     orig_tokens=h.orig_tokens)
+        p = a.parsed
+        if p.postal and p.postal != e.postal:
+            res.reasons.append("POSTCODE_STREET_MISMATCH" if p.postal in self.db.by_postal else "POSTCODE_NOT_FOUND")
+        poi_only = h.road is None and h.blk is None and not p.postal
+        if poi_only:
+            res.reasons.append("BUILDING_NAME_ONLY")
+        out = self._finish(p, h, eid, res, poi_only, h.leftover, a.cfg)
+        if a.noise and a.noise.removed_any:
+            out.noise = a.noise
+            out.reasons.append("NON_ADDRESS_INFO_EXTRACTED")
+        return out
+
+    def _finish(self, p: ParsedAddress, h: Hypothesis, eid: int, res: Result, poi_only: bool,
+                leftover: list[str], cfg: Config) -> Result:
+        """选定地址实体之后：逐组件判定（确认 / 纠错 / 补全 / 替换）、单元号检查、给出结论。"""
+        db, road, blk = self.db, h.road, h.blk
         e = db.entities[eid]
         res.entity = e
         st = res.status
@@ -576,6 +622,7 @@ def build_response(db: ReferenceDB, res: Result) -> dict:
                 "hasReplacedComponents": "replaced" in vals,
                 "hasSpellCorrectedComponents": "corrected" in vals,
                 "possibleNextAction": res.action,
+                **({"confidence": round(res.confidence, 4)} if res.confidence is not None else {}),
                 "changeScore": change,
                 "verificationCode": code,
                 "reasons": [{"code": r, "message": _REASON_TEXT.get(r, r)} for r in res.reasons],

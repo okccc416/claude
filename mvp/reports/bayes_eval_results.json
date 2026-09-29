@@ -1,0 +1,325 @@
+{
+  "标准集（4,000 条）": {
+    "规则（当前）": {
+      "n": 4000,
+      "full_correct": 0.99925,
+      "action_acc": 0.9995,
+      "FAR": 0.0,
+      "FIX_recall": 1.0,
+      "FRR": 0.0007142857142857143,
+      "UCR": 0.0,
+      "addr_acc": 0.9996426018584703,
+      "silent_wrong": 0.0,
+      "per_category": {
+        "D2_missing_block": 1.0,
+        "G_building_name_only": 0.9975,
+        "D1_missing_postcode": 1.0,
+        "C_street_typo": 0.995,
+        "F2_nonexistent_street": 1.0,
+        "E_wrong_postcode": 1.0,
+        "B_messy_format": 1.0,
+        "I_with_unit": 1.0,
+        "A_clean": 1.0,
+        "F1_nonexistent_block": 1.0
+      },
+      "latency_ms": {
+        "p50": 1.1030200000732293,
+        "p95": 8.516272999941066,
+        "p99": 10.3432050000265,
+        "mean": 2.0966964349994157
+      }
+    },
+    "贝叶斯选择 · 朴素": {
+      "n": 4000,
+      "full_correct": 0.97525,
+      "action_acc": 0.97625,
+      "FAR": 0.0,
+      "FIX_recall": 0.9975,
+      "FRR": 0.032857142857142856,
+      "UCR": 0.0,
+      "addr_acc": 0.9985228951255539,
+      "silent_wrong": 0.0,
+      "per_category": {
+        "D2_missing_block": 1.0,
+        "G_building_name_only": 0.8575,
+        "D1_missing_postcode": 0.985,
+        "C_street_typo": 0.9475,
+        "F2_nonexistent_street": 1.0,
+        "E_wrong_postcode": 0.97,
+        "B_messy_format": 1.0,
+        "I_with_unit": 1.0,
+        "A_clean": 1.0,
+        "F1_nonexistent_block": 0.9925
+      },
+      "latency_ms": {
+        "p50": 1.15089700000226,
+        "p95": 8.490076999919438,
+        "p99": 11.23687599999812,
+        "mean": 2.1736579109998218
+      }
+    },
+    "贝叶斯选择 · 联合证据": {
+      "n": 4000,
+      "full_correct": 0.9855,
+      "action_acc": 0.98675,
+      "FAR": 0.0,
+      "FIX_recall": 0.9975,
+      "FRR": 0.017857142857142856,
+      "UCR": 0.0,
+      "addr_acc": 0.9981818181818182,
+      "silent_wrong": 0.0,
+      "per_category": {
+        "D2_missing_block": 1.0,
+        "G_building_name_only": 0.9175,
+        "D1_missing_postcode": 1.0,
+        "C_street_typo": 0.945,
+        "F2_nonexistent_street": 1.0,
+        "E_wrong_postcode": 1.0,
+        "B_messy_format": 1.0,
+        "I_with_unit": 1.0,
+        "A_clean": 1.0,
+        "F1_nonexistent_block": 0.9925
+      },
+      "latency_ms": {
+        "p50": 1.1554569999816522,
+        "p95": 8.406103999959669,
+        "p99": 10.642694000011943,
+        "mean": 2.1622825634998435
+      }
+    },
+    "规则选择 + 贝叶斯置信度": {
+      "n": 4000,
+      "full_correct": 0.99925,
+      "action_acc": 0.9995,
+      "FAR": 0.0,
+      "FIX_recall": 1.0,
+      "FRR": 0.0007142857142857143,
+      "UCR": 0.0,
+      "addr_acc": 0.9996426018584703,
+      "silent_wrong": 0.0,
+      "per_category": {
+        "D2_missing_block": 1.0,
+        "G_building_name_only": 0.9975,
+        "D1_missing_postcode": 1.0,
+        "C_street_typo": 0.995,
+        "F2_nonexistent_street": 1.0,
+        "E_wrong_postcode": 1.0,
+        "B_messy_format": 1.0,
+        "I_with_unit": 1.0,
+        "A_clean": 1.0,
+        "F1_nonexistent_block": 1.0
+      },
+      "latency_ms": {
+        "p50": 1.0565510000333234,
+        "p95": 8.368214000029184,
+        "p99": 10.015662000000702,
+        "mean": 2.0540506084998924
+      }
+    },
+    "calibration": {
+      "table": [
+        [
+          0.95,
+          0.99,
+          401,
+          0.9869329416777682,
+          0.9975062344139651
+        ],
+        [
+          0.999,
+          1.0,
+          3599,
+          0.999990973395335,
+          0.9994442900805779
+        ]
+      ],
+      "ece": 0.0015518509092564906,
+      "brier": 0.0007605694427445417,
+      "selective": [
+        [
+          0.9,
+          0.9992857142857143,
+          0.00035739814152966406,
+          2798
+        ],
+        [
+          0.95,
+          0.9992857142857143,
+          0.00035739814152966406,
+          2798
+        ],
+        [
+          0.99,
+          0.9992857142857143,
+          0.00035739814152966406,
+          2798
+        ],
+        [
+          0.995,
+          0.9992857142857143,
+          0.00035739814152966406,
+          2798
+        ],
+        [
+          0.999,
+          0.9992857142857143,
+          0.00035739814152966406,
+          2798
+        ]
+      ]
+    }
+  },
+  "噪声集（1,800 条）": {
+    "规则（当前）": {
+      "label": "规则（当前）",
+      "addr_found": 0.9875,
+      "clean_accept": 0.860625,
+      "false_reject": 0.010625,
+      "silent_wrong": 0.0,
+      "junk_rejected": 1.0,
+      "per_category": {
+        "N3_delivery_notes": 1.0,
+        "N1_contact_info": 1.0,
+        "N5_glued_punct_case": 1.0,
+        "N6_multi_typo": 0.9,
+        "N7_unit_variants": 1.0,
+        "N2_recipient_company": 1.0,
+        "N4_local_abbrev": 1.0,
+        "N8_mixed_noise": 1.0,
+        "N9_no_address": 1.0
+      },
+      "latency_ms": {
+        "p50": 0.943390999964322,
+        "p95": 10.835717000077238
+      }
+    },
+    "贝叶斯选择 · 朴素": {
+      "label": "贝叶斯选择 · 朴素",
+      "addr_found": 0.980625,
+      "clean_accept": 0.85625,
+      "false_reject": 0.019375,
+      "silent_wrong": 0.0,
+      "junk_rejected": 1.0,
+      "per_category": {
+        "N3_delivery_notes": 1.0,
+        "N1_contact_info": 1.0,
+        "N5_glued_punct_case": 0.975,
+        "N6_multi_typo": 0.875,
+        "N7_unit_variants": 1.0,
+        "N2_recipient_company": 1.0,
+        "N4_local_abbrev": 1.0,
+        "N8_mixed_noise": 0.995,
+        "N9_no_address": 1.0
+      },
+      "latency_ms": {
+        "p50": 1.008142000046064,
+        "p95": 9.859416999915993
+      }
+    },
+    "贝叶斯选择 · 联合证据": {
+      "label": "贝叶斯选择 · 联合证据",
+      "addr_found": 0.980625,
+      "clean_accept": 0.85625,
+      "false_reject": 0.019375,
+      "silent_wrong": 0.0,
+      "junk_rejected": 1.0,
+      "per_category": {
+        "N3_delivery_notes": 1.0,
+        "N1_contact_info": 1.0,
+        "N5_glued_punct_case": 0.975,
+        "N6_multi_typo": 0.875,
+        "N7_unit_variants": 1.0,
+        "N2_recipient_company": 1.0,
+        "N4_local_abbrev": 1.0,
+        "N8_mixed_noise": 0.995,
+        "N9_no_address": 1.0
+      },
+      "latency_ms": {
+        "p50": 0.9971469999072724,
+        "p95": 10.135679999962122
+      }
+    },
+    "规则选择 + 贝叶斯置信度": {
+      "label": "规则选择 + 贝叶斯置信度",
+      "addr_found": 0.9875,
+      "clean_accept": 0.860625,
+      "false_reject": 0.010625,
+      "silent_wrong": 0.0,
+      "junk_rejected": 1.0,
+      "per_category": {
+        "N3_delivery_notes": 1.0,
+        "N1_contact_info": 1.0,
+        "N5_glued_punct_case": 1.0,
+        "N6_multi_typo": 0.9,
+        "N7_unit_variants": 1.0,
+        "N2_recipient_company": 1.0,
+        "N4_local_abbrev": 1.0,
+        "N8_mixed_noise": 1.0,
+        "N9_no_address": 1.0
+      },
+      "latency_ms": {
+        "p50": 0.9363750000375148,
+        "p95": 9.950325000090743
+      }
+    },
+    "calibration": {
+      "table": [
+        [
+          0.95,
+          0.99,
+          184,
+          0.9869329416777726,
+          0.9130434782608695
+        ],
+        [
+          0.99,
+          0.999,
+          32,
+          0.9989487553263066,
+          1.0
+        ],
+        [
+          0.999,
+          1.0,
+          1584,
+          0.9999936873765862,
+          0.9974747474747475
+        ]
+      ],
+      "ece": 0.009788501057100486,
+      "brier": 0.010894367130216652,
+      "selective": [
+        [
+          0.9,
+          0.989375,
+          0.0018951358180669614,
+          1583
+        ],
+        [
+          0.95,
+          0.989375,
+          0.0018951358180669614,
+          1583
+        ],
+        [
+          0.99,
+          0.989375,
+          0.0018951358180669614,
+          1583
+        ],
+        [
+          0.995,
+          0.989375,
+          0.0018951358180669614,
+          1583
+        ],
+        [
+          0.999,
+          0.989375,
+          0.0018951358180669614,
+          1583
+        ]
+      ]
+    }
+  }
+}

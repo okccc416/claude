@@ -60,7 +60,7 @@ async function run(){
  const NA={phones:'电话',emails:'邮箱',orderRefs:'订单号',recipients:'收件人',organizations:'公司',notes:'备注'};
  const info=Object.entries(d.result.nonAddressInfo||{}).map(([k,v])=>`<tr><td>${NA[k]||k}</td><td>${v.map(esc).join('<br>')}</td></tr>`).join('');
  out.innerHTML=`<div class="card"><span class="badge ${v.possibleNextAction}">${v.possibleNextAction}</span>
- <span class="muted"> 校验码 ${esc(v.verificationCode)} · 服务端耗时 ${esc(d.serverTimeMs)} ms</span>
+ <span class="muted"> ${v.confidence!=null?`置信度 ${(v.confidence*100).toFixed(2)}% · `:''}校验码 ${esc(v.verificationCode)} · 服务端耗时 ${esc(d.serverTimeMs)} ms</span>
  <div class="addr">${esc(a.formattedAddress||'—')}</div>
  <div class="muted">输入粒度 ${v.inputGranularity} → 校验粒度 ${v.validationGranularity}（纠错前 ${v.preCorrectionGranularity}）</div></div>
  <div class="card"><b>原因码</b><ul>${reasons}</ul>${cands?`<b>候选地址</b><ul>${cands}</ul>`:''}</div>
@@ -120,6 +120,8 @@ def main() -> None:
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--reference", default=str(ROOT / "data" / "reference_sg.csv.gz"))
     ap.add_argument("--attributes", help="可选：楼栋属性 CSV（postal,max_floor）")
+    ap.add_argument("--confidence-model", default=str(ROOT / "models" / "confidence_sg.json"),
+                    help="贝叶斯置信度模型（scripts/evaluate_bayes.py 生成）；传空字符串则不输出置信度")
     ap.add_argument("--llm-endpoint", help="可选：本地模型服务地址（如 http://127.0.0.1:11434），开启小模型兜底")
     ap.add_argument("--llm-model", default="qwen2.5:1.5b")
     ap.add_argument("--llm-api", default="ollama", choices=["ollama", "openai"])
@@ -130,6 +132,10 @@ def main() -> None:
         db.load_building_attributes(args.attributes)
     print(f"参考库已加载：{len(db.entities):,} 个地址实体（{time.time() - t:.1f}s）")
     validator = Validator(db)
+    if args.confidence_model and Path(args.confidence_model).exists():
+        from .bayes import ConfidenceModel, ConfidenceValidator
+        validator = ConfidenceValidator(validator, ConfidenceModel.load(args.confidence_model))
+        print(f"已加载贝叶斯置信度模型：{args.confidence_model}")
     if args.llm_endpoint:
         from .llm_fallback import LLMAssistedValidator, LocalLLM
         validator = LLMAssistedValidator(

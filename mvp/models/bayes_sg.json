@@ -1,0 +1,100 @@
+{
+  "mode": "joint",
+  "weights": {
+    "postal": {
+      "exact": 1.6853160249534276,
+      "near": -4.29147531920607,
+      "absent": -1.1261910813313423,
+      "mismatch": -1.6335352213486471
+    },
+    "block": {
+      "exact": 3.8466252573256665,
+      "letter": -6.7065477278306656,
+      "absent": -1.9606704576840164,
+      "mismatch": -6.723890548663624
+    },
+    "street": {
+      "exact": 0.13003348438913326,
+      "corrected": 0.23868426091913353,
+      "absent": 1.0295593623054402,
+      "other": -6.7319905839391545
+    },
+    "building": {
+      "match": 0.6974443655572014,
+      "absent": 0.034664874465340945,
+      "nomatch": -0.5073717851533037
+    }
+  },
+  "joint": {
+    "exact|exact|exact": 8.985841937003341,
+    "exact|mismatch|exact": -4.1476350421391786,
+    "absent|mismatch|corrected": -3.602807887141922,
+    "mismatch|mismatch|absent": -3.0760294821545795,
+    "absent|absent|corrected": 0.5238217520569455,
+    "near|mismatch|exact": -4.1476350421391786,
+    "mismatch|exact|exact": 4.0315060803836325,
+    "mismatch|mismatch|other": -5.5108803632443415,
+    "exact|exact|corrected": 5.7279204545632,
+    "mismatch|mismatch|exact": -6.3381340447126355,
+    "absent|exact|corrected": 2.9860785221777366,
+    "absent|absent|absent": 1.7897891226488944,
+    "absent|mismatch|absent": -1.4910669814334234,
+    "absent|absent|exact": -7.787184742771309,
+    "absent|mismatch|exact": -6.22552630647555,
+    "absent|exact|exact": 6.129283016944967,
+    "exact|mismatch|other": -5.778433373601746,
+    "absent|mismatch|other": -2.4157209494981204,
+    "mismatch|mismatch|corrected": -4.9416516733681854,
+    "mismatch|exact|corrected": -5.409403804073366,
+    "exact|letter|exact": -6.663119716646563
+  },
+  "prior_none": 0.24259259259259258,
+  "temperature": 1.0,
+  "m": {
+    "postal": {
+      "exact": 560,
+      "absent": 191,
+      "mismatch": 66
+    },
+    "block": {
+      "exact": 753,
+      "absent": 61,
+      "mismatch": 3
+    },
+    "street": {
+      "exact": 642,
+      "corrected": 112,
+      "absent": 63
+    },
+    "building": {
+      "absent": 618,
+      "nomatch": 113,
+      "match": 86
+    }
+  },
+  "u": {
+    "postal": {
+      "exact": 280,
+      "absent": 675,
+      "mismatch": 334,
+      "near": 30
+    },
+    "block": {
+      "letter": 167,
+      "absent": 388,
+      "mismatch": 681,
+      "exact": 83
+    },
+    "street": {
+      "exact": 947,
+      "other": 170,
+      "corrected": 153,
+      "absent": 49
+    },
+    "building": {
+      "absent": 974,
+      "nomatch": 260,
+      "match": 85
+    }
+  }
+}

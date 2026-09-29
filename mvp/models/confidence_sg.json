@@ -1,0 +1,109 @@
+{
+  "strength": 10.0,
+  "table": {
+    "ENTITY:confirmed|confirmed|confirmed|bld=n|unres=n|poi=n": [
+      690,
+      690
+    ],
+    "ENTITY:confirmed|confirmed|confirmed": [
+      719,
+      719
+    ],
+    "ENTITY": [
+      1178,
+      1178
+    ],
+    "ENTITY:confirmed|corrected|inferred|bld=n|unres=n|poi=n": [
+      74,
+      74
+    ],
+    "ENTITY:confirmed|corrected|inferred": [
+      74,
+      74
+    ],
+    "FIX:MISSING_PREMISE": [
+      200,
+      200
+    ],
+    "FIX": [
+      360,
+      362
+    ],
+    "ENTITY:confirmed|confirmed|inferred|bld=n|unres=n|poi=n": [
+      99,
+      99
+    ],
+    "ENTITY:confirmed|confirmed|inferred": [
+      99,
+      99
+    ],
+    "FIX:NO_MATCH": [
+      302,
+      306
+    ],
+    "ENTITY:confirmed|confirmed|replaced|bld=n|unres=n|poi=n": [
+      100,
+      100
+    ],
+    "ENTITY:confirmed|confirmed|replaced": [
+      100,
+      100
+    ],
+    "FIX:PREMISE_NOT_FOUND": [
+      200,
+      200
+    ],
+    "ENTITY:confirmed|corrected|confirmed|bld=n|unres=n|poi=n": [
+      81,
+      81
+    ],
+    "ENTITY:confirmed|corrected|confirmed": [
+      81,
+      81
+    ],
+    "ENTITY:confirmed|confirmed|confirmed|bld=y|unres=n|poi=n": [
+      25,
+      25
+    ],
+    "ENTITY:inferred|inferred|inferred|bld=y|unres=n|poi=y": [
+      100,
+      100
+    ],
+    "ENTITY:inferred|inferred|inferred": [
+      100,
+      100
+    ],
+    "FIX:AMBIGUOUS_MULTIPLE_CANDIDATES": [
+      18,
+      18
+    ],
+    "ENTITY:confirmed|confirmed|confirmed|bld=n|unres=y|poi=n": [
+      4,
+      4
+    ],
+    "ENTITY:confirmed|inferred|confirmed|bld=n|unres=y|poi=n": [
+      2,
+      2
+    ],
+    "ENTITY:confirmed|inferred|confirmed": [
+      2,
+      2
+    ],
+    "ENTITY:inferred|inferred|confirmed|bld=n|unres=n|poi=n": [
+      2,
+      2
+    ],
+    "ENTITY:inferred|inferred|confirmed": [
+      2,
+      2
+    ],
+    "ENTITY:inferred|replaced|inferred|bld=y|unres=n|poi=y": [
+      1,
+      1
+    ],
+    "ENTITY:inferred|replaced|inferred": [
+      1,
+      1
+    ]
+  }
+}
