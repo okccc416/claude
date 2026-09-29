@@ -1,0 +1,120 @@
+{
+  "_note": "示意数据：楼栋号、邮编、坐标均为虚构，仅用于说明响应结构，不代表真实地址。",
+  "_extensions": [
+    "request.strictness",
+    "request.options",
+    "result.verdict.confidence",
+    "result.verdict.reasons",
+    "result.address.addressComponents[].originalText",
+    "result.address.adminMapping",
+    "result.geocode.entrances",
+    "result.metadata.buildingType",
+    "result.metadata.maxFloor",
+    "result.candidates"
+  ],
+  "request": {
+    "address": {
+      "regionCode": "SG",
+      "addressLines": ["blk 123 ang moh kio av 3 #05-12", "s560123"]
+    },
+    "strictness": "BALANCED",
+    "options": {
+      "returnReasons": true,
+      "returnEntrances": true,
+      "returnCandidates": true,
+      "outputLanguages": ["en"]
+    }
+  },
+  "response": {
+    "responseId": "b7c1e2a4-0000-4000-8000-000000000001",
+    "result": {
+      "verdict": {
+        "inputGranularity": "SUB_PREMISE",
+        "validationGranularity": "SUB_PREMISE",
+        "geocodeGranularity": "PREMISE",
+        "addressComplete": true,
+        "hasUnconfirmedComponents": false,
+        "hasInferredComponents": false,
+        "hasReplacedComponents": false,
+        "hasSpellCorrectedComponents": true,
+        "possibleNextAction": "CONFIRM",
+        "confidence": 0.94,
+        "reasons": [
+          {
+            "code": "STREET_SPELL_CORRECTED",
+            "componentType": "route",
+            "message": "街道名 'ang moh kio av 3' 已纠正为 'Ang Mo Kio Avenue 3'"
+          }
+        ]
+      },
+      "address": {
+        "formattedAddress": "123 Ang Mo Kio Avenue 3, #05-12, Singapore 560123",
+        "postalAddress": {
+          "regionCode": "SG",
+          "languageCode": "en",
+          "postalCode": "560123",
+          "addressLines": ["123 Ang Mo Kio Avenue 3", "#05-12"]
+        },
+        "addressComponents": [
+          {
+            "componentType": "premise",
+            "componentName": { "text": "123", "languageCode": "en" },
+            "confirmationLevel": "CONFIRMED",
+            "originalText": "blk 123"
+          },
+          {
+            "componentType": "subpremise",
+            "componentName": { "text": "#05-12", "languageCode": "en" },
+            "confirmationLevel": "CONFIRMED"
+          },
+          {
+            "componentType": "route",
+            "componentName": { "text": "Ang Mo Kio Avenue 3", "languageCode": "en" },
+            "confirmationLevel": "CONFIRMED",
+            "spellCorrected": true,
+            "originalText": "ang moh kio av 3"
+          },
+          {
+            "componentType": "postal_code",
+            "componentName": { "text": "560123", "languageCode": "en" },
+            "confirmationLevel": "CONFIRMED",
+            "originalText": "s560123"
+          },
+          {
+            "componentType": "country",
+            "componentName": { "text": "Singapore", "languageCode": "en" },
+            "confirmationLevel": "CONFIRMED"
+          }
+        ],
+        "missingComponentTypes": [],
+        "unconfirmedComponentTypes": [],
+        "unresolvedTokens": [],
+        "adminMapping": null
+      },
+      "geocode": {
+        "location": { "latitude": 1.3700, "longitude": 103.8450 },
+        "featureSizeMeters": 45,
+        "entrances": [
+          {
+            "type": "PEDESTRIAN_LIFT_LOBBY",
+            "location": { "latitude": 1.3701, "longitude": 103.8452 },
+            "source": "delivery_traces"
+          },
+          {
+            "type": "VEHICLE_DROPOFF",
+            "location": { "latitude": 1.3698, "longitude": 103.8455 },
+            "source": "driver_pickups"
+          }
+        ]
+      },
+      "metadata": {
+        "residential": true,
+        "business": false,
+        "poBox": false,
+        "buildingType": "HDB_RESIDENTIAL",
+        "maxFloor": 12
+      },
+      "candidates": []
+    }
+  }
+}
