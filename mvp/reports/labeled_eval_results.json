@@ -1,0 +1,1199 @@
+{
+  "overall": {
+    "n": 4000,
+    "outcomes": {
+      "正确": 0.81425,
+      "正确拒绝": 0.03775,
+      "多余确认": 0.0455,
+      "漏报": 0.0845,
+      "误拒": 0.01,
+      "错误建议": 0.00475,
+      "静默错误": 0.00325
+    },
+    "auto_pass": 0.7865,
+    "direct_pass": 0.7865,
+    "error_in_pass": 0.004132231404958678,
+    "silent_error": 0.00325,
+    "resolvable_found": 0.9892613933996857,
+    "false_reject": 0.010476689366160294,
+    "decision_ok": 0.8562814070351759,
+    "unit_missing_flagged": 0.22477064220183487,
+    "unit_missing_n": 436,
+    "unit_correct": 0.9967277486910995
+  },
+  "by_resolution": {
+    "RESOLVABLE": {
+      "n": 3818,
+      "outcomes": {
+        "正确": 0.8530644316396019,
+        "正确拒绝": 0.0,
+        "多余确认": 0.047668936616029334,
+        "漏报": 0.08852802514405447,
+        "误拒": 0.010476689366160294,
+        "错误建议": 0.00026191723415400735,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.820586694604505,
+      "direct_pass": 0.820586694604505,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.9892613933996857,
+      "false_reject": 0.010476689366160294,
+      "decision_ok": 0.8530644316396019,
+      "unit_missing_flagged": 0.22477064220183487,
+      "unit_missing_n": 436,
+      "unit_correct": 0.9967277486910995
+    },
+    "NO_ADDRESS": {
+      "n": 26,
+      "outcomes": {
+        "正确": 0.0,
+        "正确拒绝": 0.9615384615384616,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.0,
+        "错误建议": 0.038461538461538464,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.0,
+      "direct_pass": 0.0,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.0,
+      "false_reject": 0.0,
+      "decision_ok": 0.9615384615384616,
+      "unit_missing_flagged": 0.0,
+      "unit_missing_n": 0,
+      "unit_correct": 0.0
+    },
+    "OUT_OF_REGION": {
+      "n": 25,
+      "outcomes": {
+        "正确": 0.0,
+        "正确拒绝": 0.6,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.0,
+        "错误建议": 0.4,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.0,
+      "direct_pass": 0.0,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.0,
+      "false_reject": 0.0,
+      "decision_ok": 0.6,
+      "unit_missing_flagged": 0.0,
+      "unit_missing_n": 0,
+      "unit_correct": 0.0
+    },
+    "AMBIGUOUS": {
+      "n": 32,
+      "outcomes": {
+        "正确": 0.0,
+        "正确拒绝": 1.0,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.0,
+        "错误建议": 0.0,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.0,
+      "direct_pass": 0.0,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.0,
+      "false_reject": 0.0,
+      "decision_ok": 1.0,
+      "unit_missing_flagged": 0.0,
+      "unit_missing_n": 0,
+      "unit_correct": 0.0
+    },
+    "NOT_IN_REFERENCE": {
+      "n": 71,
+      "outcomes": {
+        "正确": 0.0,
+        "正确拒绝": 1.0,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.0,
+        "错误建议": 0.0,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.0,
+      "direct_pass": 0.0,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.0,
+      "false_reject": 0.0,
+      "decision_ok": 1.0,
+      "unit_missing_flagged": 0.0,
+      "unit_missing_n": 0,
+      "unit_correct": 0.0
+    },
+    "MISLEADING": {
+      "n": 20,
+      "outcomes": {
+        "正确": 0.0,
+        "正确拒绝": 0.0,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.0,
+        "错误建议": 0.35,
+        "静默错误": 0.65
+      },
+      "auto_pass": 0.65,
+      "direct_pass": 0.65,
+      "error_in_pass": 1.0,
+      "silent_error": 0.65,
+      "resolvable_found": 0.0,
+      "false_reject": 0.0,
+      "decision_ok": 0.0,
+      "unit_missing_flagged": 0.0,
+      "unit_missing_n": 0,
+      "unit_correct": 0.0
+    },
+    "CONFLICTING": {
+      "n": 8,
+      "outcomes": {
+        "正确": 0.0,
+        "正确拒绝": 1.0,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.0,
+        "错误建议": 0.0,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.0,
+      "direct_pass": 0.0,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.0,
+      "false_reject": 0.0,
+      "decision_ok": 1.0,
+      "unit_missing_flagged": 0.0,
+      "unit_missing_n": 0,
+      "unit_correct": 0.0
+    }
+  },
+  "by_channel": {
+    "b2b_upload": {
+      "n": 364,
+      "outcomes": {
+        "正确": 0.8241758241758241,
+        "正确拒绝": 0.07692307692307693,
+        "多余确认": 0.02197802197802198,
+        "漏报": 0.06593406593406594,
+        "误拒": 0.008241758241758242,
+        "错误建议": 0.0027472527472527475,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.7637362637362637,
+      "direct_pass": 0.7637362637362637,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.9880952380952381,
+      "false_reject": 0.008928571428571428,
+      "decision_ok": 0.9010989010989011,
+      "unit_missing_flagged": 0.1724137931034483,
+      "unit_missing_n": 29,
+      "unit_correct": 0.9825783972125436
+    },
+    "web_form": {
+      "n": 1644,
+      "outcomes": {
+        "正确": 0.7944038929440389,
+        "正确拒绝": 0.029197080291970802,
+        "多余确认": 0.05170316301703163,
+        "漏报": 0.10644768856447688,
+        "误拒": 0.010340632603406326,
+        "错误建议": 0.004257907542579075,
+        "静默错误": 0.0036496350364963502
+      },
+      "auto_pass": 0.7925790754257908,
+      "direct_pass": 0.7925790754257908,
+      "error_in_pass": 0.004604758250191865,
+      "silent_error": 0.0036496350364963502,
+      "resolvable_found": 0.9892608970309539,
+      "false_reject": 0.010739102969046115,
+      "decision_ok": 0.8271227855833843,
+      "unit_missing_flagged": 0.15048543689320387,
+      "unit_missing_n": 206,
+      "unit_correct": 0.9975589910496339
+    },
+    "mobile_app": {
+      "n": 992,
+      "outcomes": {
+        "正确": 0.9022177419354839,
+        "正确拒绝": 0.025201612903225805,
+        "多余确认": 0.01310483870967742,
+        "漏报": 0.04838709677419355,
+        "误拒": 0.0,
+        "错误建议": 0.005040322580645161,
+        "静默错误": 0.006048387096774193
+      },
+      "auto_pass": 0.9475806451612904,
+      "direct_pass": 0.9475806451612904,
+      "error_in_pass": 0.006382978723404255,
+      "silent_error": 0.006048387096774193,
+      "resolvable_found": 1.0,
+      "false_reject": 0.0,
+      "decision_ok": 0.9359104781281791,
+      "unit_missing_flagged": 0.02040816326530612,
+      "unit_missing_n": 49,
+      "unit_correct": 0.9988023952095808
+    },
+    "marketplace": {
+      "n": 422,
+      "outcomes": {
+        "正确": 0.8459715639810427,
+        "正确拒绝": 0.03317535545023697,
+        "多余确认": 0.014218009478672985,
+        "漏报": 0.0947867298578199,
+        "误拒": 0.011848341232227487,
+        "错误建议": 0.0,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.8554502369668247,
+      "direct_pass": 0.8554502369668247,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.9877450980392157,
+      "false_reject": 0.012254901960784314,
+      "decision_ok": 0.8791469194312796,
+      "unit_missing_flagged": 0.2,
+      "unit_missing_n": 50,
+      "unit_correct": 1.0
+    },
+    "chat": {
+      "n": 578,
+      "outcomes": {
+        "正确": 0.6903114186851211,
+        "正确拒绝": 0.06228373702422145,
+        "多余确认": 0.12110726643598616,
+        "漏报": 0.08823529411764706,
+        "误拒": 0.025951557093425604,
+        "错误建议": 0.010380622837370242,
+        "静默错误": 0.0017301038062283738
+      },
+      "auto_pass": 0.45674740484429066,
+      "direct_pass": 0.45674740484429066,
+      "error_in_pass": 0.003787878787878788,
+      "silent_error": 0.0017301038062283738,
+      "resolvable_found": 0.9719626168224299,
+      "false_reject": 0.028037383177570093,
+      "decision_ok": 0.7578397212543554,
+      "unit_missing_flagged": 0.5,
+      "unit_missing_n": 102,
+      "unit_correct": 0.9973684210526316
+    }
+  },
+  "by_property_type": {
+    "COMMERCIAL": {
+      "n": 682,
+      "outcomes": {
+        "正确": 0.8460410557184751,
+        "正确拒绝": 0.02785923753665689,
+        "多余确认": 0.02785923753665689,
+        "漏报": 0.08504398826979472,
+        "误拒": 0.005865102639296188,
+        "错误建议": 0.004398826979472141,
+        "静默错误": 0.002932551319648094
+      },
+      "auto_pass": 0.7888563049853372,
+      "direct_pass": 0.7888563049853372,
+      "error_in_pass": 0.0037174721189591076,
+      "silent_error": 0.002932551319648094,
+      "resolvable_found": 0.992412746585736,
+      "false_reject": 0.006069802731411229,
+      "decision_ok": 0.8790560471976401,
+      "unit_missing_flagged": 0.30952380952380953,
+      "unit_missing_n": 84,
+      "unit_correct": 0.9842105263157894
+    },
+    "CONDO": {
+      "n": 564,
+      "outcomes": {
+        "正确": 0.8138297872340425,
+        "正确拒绝": 0.051418439716312055,
+        "多余确认": 0.040780141843971635,
+        "漏报": 0.08333333333333333,
+        "误拒": 0.0035460992907801418,
+        "错误建议": 0.0035460992907801418,
+        "静默错误": 0.0035460992907801418
+      },
+      "auto_pass": 0.8014184397163121,
+      "direct_pass": 0.8014184397163121,
+      "error_in_pass": 0.004424778761061947,
+      "silent_error": 0.0035460992907801418,
+      "resolvable_found": 0.9962335216572504,
+      "false_reject": 0.003766478342749529,
+      "decision_ok": 0.8714285714285714,
+      "unit_missing_flagged": 0.2033898305084746,
+      "unit_missing_n": 59,
+      "unit_correct": 1.0
+    },
+    "HDB": {
+      "n": 2412,
+      "outcomes": {
+        "正确": 0.8080431177446102,
+        "正确拒绝": 0.026119402985074626,
+        "多余确认": 0.052653399668325045,
+        "漏报": 0.09660033167495855,
+        "误拒": 0.013266998341625208,
+        "错误建议": 0.0012437810945273632,
+        "静默错误": 0.0020729684908789387
+      },
+      "auto_pass": 0.7906301824212272,
+      "direct_pass": 0.7906301824212272,
+      "error_in_pass": 0.0026219192448872575,
+      "silent_error": 0.0020729684908789387,
+      "resolvable_found": 0.9863306279367792,
+      "false_reject": 0.013669372063220846,
+      "decision_ok": 0.8369384359400999,
+      "unit_missing_flagged": 0.20477815699658702,
+      "unit_missing_n": 293,
+      "unit_correct": 0.9995039682539683
+    },
+    "LANDED": {
+      "n": 291,
+      "outcomes": {
+        "正确": 0.9347079037800687,
+        "正确拒绝": 0.0,
+        "多余确认": 0.044673539518900345,
+        "漏报": 0.0,
+        "误拒": 0.006872852233676976,
+        "错误建议": 0.0,
+        "静默错误": 0.013745704467353952
+      },
+      "auto_pass": 0.8556701030927835,
+      "direct_pass": 0.8556701030927835,
+      "error_in_pass": 0.01606425702811245,
+      "silent_error": 0.013745704467353952,
+      "resolvable_found": 0.9930313588850174,
+      "false_reject": 0.006968641114982578,
+      "decision_ok": 0.9477351916376306,
+      "unit_missing_flagged": 0.0,
+      "unit_missing_n": 0,
+      "unit_correct": 0.0
+    },
+    "（非地址）": {
+      "n": 51,
+      "outcomes": {
+        "正确": 0.0,
+        "正确拒绝": 0.7843137254901961,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.0,
+        "错误建议": 0.21568627450980393,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.0,
+      "direct_pass": 0.0,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.0,
+      "false_reject": 0.0,
+      "decision_ok": 0.7843137254901961,
+      "unit_missing_flagged": 0.0,
+      "unit_missing_n": 0,
+      "unit_correct": 0.0
+    }
+  },
+  "by_tag": {
+    "UNIT_FORMAT": {
+      "n": 973,
+      "outcomes": {
+        "正确": 0.8787255909558068,
+        "正确拒绝": 0.030832476875642344,
+        "多余确认": 0.07091469681397738,
+        "漏报": 0.0,
+        "误拒": 0.013360739979445015,
+        "错误建议": 0.003083247687564234,
+        "静默错误": 0.003083247687564234
+      },
+      "auto_pass": 0.7420349434737924,
+      "direct_pass": 0.7420349434737924,
+      "error_in_pass": 0.004155124653739612,
+      "silent_error": 0.003083247687564234,
+      "resolvable_found": 0.9861259338313767,
+      "false_reject": 0.013874066168623266,
+      "decision_ok": 0.9152016546018614,
+      "unit_missing_flagged": 0.0,
+      "unit_missing_n": 0,
+      "unit_correct": 0.9902597402597403
+    },
+    "ABBREV": {
+      "n": 884,
+      "outcomes": {
+        "正确": 0.747737556561086,
+        "正确拒绝": 0.02262443438914027,
+        "多余确认": 0.1074660633484163,
+        "漏报": 0.1074660633484163,
+        "误拒": 0.011312217194570135,
+        "错误建议": 0.0022624434389140274,
+        "静默错误": 0.0011312217194570137
+      },
+      "auto_pass": 0.6911764705882353,
+      "direct_pass": 0.6911764705882353,
+      "error_in_pass": 0.0016366612111292963,
+      "silent_error": 0.0011312217194570137,
+      "resolvable_found": 0.9883855981416957,
+      "false_reject": 0.011614401858304297,
+      "decision_ok": 0.7729852440408627,
+      "unit_missing_flagged": 0.33098591549295775,
+      "unit_missing_n": 142,
+      "unit_correct": 0.9984423676012462
+    },
+    "（无错误）": {
+      "n": 1560,
+      "outcomes": {
+        "正确": 1.0,
+        "正确拒绝": 0.0,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.0,
+        "错误建议": 0.0,
+        "静默错误": 0.0
+      },
+      "auto_pass": 1.0,
+      "direct_pass": 1.0,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 1.0,
+      "false_reject": 0.0,
+      "decision_ok": 1.0,
+      "unit_missing_flagged": 0.0,
+      "unit_missing_n": 0,
+      "unit_correct": 0.9992800575953924
+    },
+    "UNIT_MISSING": {
+      "n": 452,
+      "outcomes": {
+        "正确": 0.2168141592920354,
+        "正确拒绝": 0.01991150442477876,
+        "多余确认": 0.0,
+        "漏报": 0.7477876106194691,
+        "误拒": 0.015486725663716814,
+        "错误建议": 0.0,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.7477876106194691,
+      "direct_pass": 0.7477876106194691,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.9841986455981941,
+      "false_reject": 0.01580135440180587,
+      "decision_ok": 0.23672566371681417,
+      "unit_missing_flagged": 0.22477064220183487,
+      "unit_missing_n": 436,
+      "unit_correct": 0.0
+    },
+    "POSTAL_MISSING": {
+      "n": 207,
+      "outcomes": {
+        "正确": 0.8260869565217391,
+        "正确拒绝": 0.13526570048309178,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.024154589371980676,
+        "错误建议": 0.014492753623188406,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.0,
+      "direct_pass": 0.0,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.9715909090909091,
+      "false_reject": 0.028409090909090908,
+      "decision_ok": 0.9754901960784313,
+      "unit_missing_flagged": 1.0,
+      "unit_missing_n": 29,
+      "unit_correct": 0.9921259842519685
+    },
+    "NOISE_PHONE": {
+      "n": 544,
+      "outcomes": {
+        "正确": 0.7261029411764706,
+        "正确拒绝": 0.03308823529411765,
+        "多余确认": 0.12316176470588236,
+        "漏报": 0.08455882352941177,
+        "误拒": 0.02389705882352941,
+        "错误建议": 0.0055147058823529415,
+        "静默错误": 0.003676470588235294
+      },
+      "auto_pass": 0.5128676470588235,
+      "direct_pass": 0.5128676470588235,
+      "error_in_pass": 0.007168458781362007,
+      "silent_error": 0.003676470588235294,
+      "resolvable_found": 0.9750479846449136,
+      "false_reject": 0.02495201535508637,
+      "decision_ok": 0.7662337662337663,
+      "unit_missing_flagged": 0.4772727272727273,
+      "unit_missing_n": 88,
+      "unit_correct": 0.9973684210526316
+    },
+    "NOISE_NOTE": {
+      "n": 218,
+      "outcomes": {
+        "正确": 0.7247706422018348,
+        "正确拒绝": 0.022935779816513763,
+        "多余确认": 0.14220183486238533,
+        "漏报": 0.0871559633027523,
+        "误拒": 0.022935779816513763,
+        "错误建议": 0.0,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.44954128440366975,
+      "direct_pass": 0.44954128440366975,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.9765258215962441,
+      "false_reject": 0.023474178403755867,
+      "decision_ok": 0.7477064220183486,
+      "unit_missing_flagged": 0.5365853658536586,
+      "unit_missing_n": 41,
+      "unit_correct": 1.0
+    },
+    "TOWN_ABBREV": {
+      "n": 88,
+      "outcomes": {
+        "正确": 0.6931818181818182,
+        "正确拒绝": 0.0,
+        "多余确认": 0.1590909090909091,
+        "漏报": 0.10227272727272728,
+        "误拒": 0.045454545454545456,
+        "错误建议": 0.0,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.6704545454545454,
+      "direct_pass": 0.6704545454545454,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.9545454545454546,
+      "false_reject": 0.045454545454545456,
+      "decision_ok": 0.6931818181818182,
+      "unit_missing_flagged": 0.18181818181818182,
+      "unit_missing_n": 11,
+      "unit_correct": 1.0
+    },
+    "NOISE_NAME": {
+      "n": 538,
+      "outcomes": {
+        "正确": 0.7211895910780669,
+        "正确拒绝": 0.03345724907063197,
+        "多余确认": 0.12453531598513011,
+        "漏报": 0.08550185873605948,
+        "误拒": 0.026022304832713755,
+        "错误建议": 0.007434944237918215,
+        "静默错误": 0.0018587360594795538
+      },
+      "auto_pass": 0.48698884758364314,
+      "direct_pass": 0.48698884758364314,
+      "error_in_pass": 0.003816793893129771,
+      "silent_error": 0.0018587360594795538,
+      "resolvable_found": 0.9709302325581395,
+      "false_reject": 0.027131782945736434,
+      "decision_ok": 0.7602996254681648,
+      "unit_missing_flagged": 0.48314606741573035,
+      "unit_missing_n": 89,
+      "unit_correct": 0.9893048128342246
+    },
+    "NOISE_COMPANY": {
+      "n": 184,
+      "outcomes": {
+        "正确": 0.8478260869565217,
+        "正确拒绝": 0.04891304347826087,
+        "多余确认": 0.021739130434782608,
+        "漏报": 0.06521739130434782,
+        "误拒": 0.010869565217391304,
+        "错误建议": 0.005434782608695652,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.7554347826086957,
+      "direct_pass": 0.7554347826086957,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.9828571428571429,
+      "false_reject": 0.011428571428571429,
+      "decision_ok": 0.8967391304347826,
+      "unit_missing_flagged": 0.14285714285714285,
+      "unit_missing_n": 14,
+      "unit_correct": 0.9798657718120806
+    },
+    "STREET_TYPO": {
+      "n": 158,
+      "outcomes": {
+        "正确": 0.9936708860759493,
+        "正确拒绝": 0.006329113924050633,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.0,
+        "错误建议": 0.0,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.0,
+      "direct_pass": 0.0,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 1.0,
+      "false_reject": 0.0,
+      "decision_ok": 1.0,
+      "unit_missing_flagged": 1.0,
+      "unit_missing_n": 27,
+      "unit_correct": 1.0
+    },
+    "NO_ADDRESS": {
+      "n": 26,
+      "outcomes": {
+        "正确": 0.0,
+        "正确拒绝": 0.9615384615384616,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.0,
+        "错误建议": 0.038461538461538464,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.0,
+      "direct_pass": 0.0,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.0,
+      "false_reject": 0.0,
+      "decision_ok": 0.9615384615384616,
+      "unit_missing_flagged": 0.0,
+      "unit_missing_n": 0,
+      "unit_correct": 0.0
+    },
+    "OUT_OF_REGION": {
+      "n": 25,
+      "outcomes": {
+        "正确": 0.0,
+        "正确拒绝": 0.6,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.0,
+        "错误建议": 0.4,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.0,
+      "direct_pass": 0.0,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.0,
+      "false_reject": 0.0,
+      "decision_ok": 0.6,
+      "unit_missing_flagged": 0.0,
+      "unit_missing_n": 0,
+      "unit_correct": 0.0
+    },
+    "DUPLICATED_TEXT": {
+      "n": 101,
+      "outcomes": {
+        "正确": 0.6138613861386139,
+        "正确拒绝": 0.009900990099009901,
+        "多余确认": 0.297029702970297,
+        "漏报": 0.04950495049504951,
+        "误拒": 0.019801980198019802,
+        "错误建议": 0.009900990099009901,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.5247524752475248,
+      "direct_pass": 0.5247524752475248,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.9797979797979798,
+      "false_reject": 0.020202020202020204,
+      "decision_ok": 0.63,
+      "unit_missing_flagged": 0.5833333333333334,
+      "unit_missing_n": 12,
+      "unit_correct": 1.0
+    },
+    "POSTAL_TYPO": {
+      "n": 44,
+      "outcomes": {
+        "正确": 0.7045454545454546,
+        "正确拒绝": 0.09090909090909091,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.045454545454545456,
+        "错误建议": 0.022727272727272728,
+        "静默错误": 0.13636363636363635
+      },
+      "auto_pass": 0.13636363636363635,
+      "direct_pass": 0.13636363636363635,
+      "error_in_pass": 1.0,
+      "silent_error": 0.13636363636363635,
+      "resolvable_found": 0.9393939393939394,
+      "false_reject": 0.06060606060606061,
+      "decision_ok": 0.9459459459459459,
+      "unit_missing_flagged": 1.0,
+      "unit_missing_n": 5,
+      "unit_correct": 1.0
+    },
+    "BLOCK_MISSING": {
+      "n": 41,
+      "outcomes": {
+        "正确": 0.926829268292683,
+        "正确拒绝": 0.07317073170731707,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.0,
+        "错误建议": 0.0,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.0,
+      "direct_pass": 0.0,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 1.0,
+      "false_reject": 0.0,
+      "decision_ok": 1.0,
+      "unit_missing_flagged": 1.0,
+      "unit_missing_n": 5,
+      "unit_correct": 1.0
+    },
+    "BUILDING_TYPO": {
+      "n": 26,
+      "outcomes": {
+        "正确": 0.8846153846153846,
+        "正确拒绝": 0.038461538461538464,
+        "多余确认": 0.0,
+        "漏报": 0.07692307692307693,
+        "误拒": 0.0,
+        "错误建议": 0.0,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.5769230769230769,
+      "direct_pass": 0.5769230769230769,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 1.0,
+      "false_reject": 0.0,
+      "decision_ok": 0.9230769230769231,
+      "unit_missing_flagged": 0.6,
+      "unit_missing_n": 5,
+      "unit_correct": 1.0
+    },
+    "LOCATION_HINT": {
+      "n": 58,
+      "outcomes": {
+        "正确": 0.2413793103448276,
+        "正确拒绝": 0.05172413793103448,
+        "多余确认": 0.6379310344827587,
+        "漏报": 0.017241379310344827,
+        "误拒": 0.034482758620689655,
+        "错误建议": 0.017241379310344827,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.10344827586206896,
+      "direct_pass": 0.10344827586206896,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.9629629629629629,
+      "false_reject": 0.037037037037037035,
+      "decision_ok": 0.2982456140350877,
+      "unit_missing_flagged": 0.5,
+      "unit_missing_n": 2,
+      "unit_correct": 0.9782608695652174
+    },
+    "BLOCK_TYPO": {
+      "n": 19,
+      "outcomes": {
+        "正确": 0.7368421052631579,
+        "正确拒绝": 0.21052631578947367,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.05263157894736842,
+        "错误建议": 0.0,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.0,
+      "direct_pass": 0.0,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.9333333333333333,
+      "false_reject": 0.06666666666666667,
+      "decision_ok": 0.9473684210526315,
+      "unit_missing_flagged": 1.0,
+      "unit_missing_n": 1,
+      "unit_correct": 1.0
+    },
+    "BLOCK_LETTER_DROPPED": {
+      "n": 48,
+      "outcomes": {
+        "正确": 0.10416666666666667,
+        "正确拒绝": 0.0,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.6458333333333334,
+        "错误建议": 0.10416666666666667,
+        "静默错误": 0.14583333333333334
+      },
+      "auto_pass": 0.14583333333333334,
+      "direct_pass": 0.14583333333333334,
+      "error_in_pass": 1.0,
+      "silent_error": 0.14583333333333334,
+      "resolvable_found": 0.13513513513513514,
+      "false_reject": 0.8378378378378378,
+      "decision_ok": 0.13513513513513514,
+      "unit_missing_flagged": 0.0,
+      "unit_missing_n": 0,
+      "unit_correct": 1.0
+    },
+    "BUILDING_ONLY": {
+      "n": 55,
+      "outcomes": {
+        "正确": 0.43636363636363634,
+        "正确拒绝": 0.5272727272727272,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.03636363636363636,
+        "错误建议": 0.0,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.0,
+      "direct_pass": 0.0,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.9230769230769231,
+      "false_reject": 0.07692307692307693,
+      "decision_ok": 0.9636363636363636,
+      "unit_missing_flagged": 1.0,
+      "unit_missing_n": 1,
+      "unit_correct": 1.0
+    },
+    "POSTAL_OTHER_ADDRESS": {
+      "n": 15,
+      "outcomes": {
+        "正确": 0.8666666666666667,
+        "正确拒绝": 0.0,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.0,
+        "错误建议": 0.13333333333333333,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.0,
+      "direct_pass": 0.0,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 1.0,
+      "false_reject": 0.0,
+      "decision_ok": 1.0,
+      "unit_missing_flagged": 1.0,
+      "unit_missing_n": 2,
+      "unit_correct": 1.0
+    },
+    "NEW_HDB_BLOCK": {
+      "n": 45,
+      "outcomes": {
+        "正确": 0.0,
+        "正确拒绝": 1.0,
+        "多余确认": 0.0,
+        "漏报": 0.0,
+        "误拒": 0.0,
+        "错误建议": 0.0,
+        "静默错误": 0.0
+      },
+      "auto_pass": 0.0,
+      "direct_pass": 0.0,
+      "error_in_pass": 0.0,
+      "silent_error": 0.0,
+      "resolvable_found": 0.0,
+      "false_reject": 0.0,
+      "decision_ok": 1.0,
+      "unit_missing_flagged": 0.0,
+      "unit_missing_n": 0,
+      "unit_correct": 0.0
+    }
+  },
+  "confidence": {
+    "旧模型（合成测试集统计）": {
+      "calibration": {
+        "table": [
+          [
+            0.95,
+            0.99,
+            37,
+            0.9869329416777741,
+            1.0
+          ],
+          [
+            0.99,
+            0.999,
+            72,
+            0.9946544208342671,
+            0.4861111111111111
+          ],
+          [
+            0.999,
+            1.0,
+            3891,
+            0.999976846157098,
+            0.9910048830634798
+          ]
+        ],
+        "ece": 0.01800212696381455,
+        "brier": 0.017855053166214746,
+        "auroc": 0.7345404752449034
+      },
+      "gates": [
+        {
+          "threshold": 0.0,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        },
+        {
+          "threshold": 0.9,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        },
+        {
+          "threshold": 0.95,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        },
+        {
+          "threshold": 0.97,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        },
+        {
+          "threshold": 0.99,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        },
+        {
+          "threshold": 0.995,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        }
+      ],
+      "profiles": {
+        "STRICT": {
+          "threshold": 0.99,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        },
+        "BALANCED": {
+          "threshold": 0.95,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        },
+        "LENIENT": {
+          "threshold": 0.9,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        }
+      }
+    },
+    "新模型（订单训练部分统计）": {
+      "calibration": {
+        "table": [
+          [
+            0.0,
+            0.5,
+            44,
+            0.22846154728439017,
+            0.18181818181818182
+          ],
+          [
+            0.5,
+            0.7,
+            15,
+            0.6324611913204498,
+            0.4
+          ],
+          [
+            0.9,
+            0.95,
+            67,
+            0.9367975122971145,
+            1.0
+          ],
+          [
+            0.95,
+            0.99,
+            188,
+            0.9666896556826776,
+            0.973404255319149
+          ],
+          [
+            0.99,
+            0.999,
+            3308,
+            0.9960913433505704,
+            0.9948609431680774
+          ],
+          [
+            0.999,
+            1.0,
+            378,
+            0.9998924692722412,
+            0.9867724867724867
+          ]
+        ],
+        "ece": 0.005016413636665958,
+        "brier": 0.009503795703933322,
+        "auroc": 0.6765455387873974
+      },
+      "gates": [
+        {
+          "threshold": 0.0,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        },
+        {
+          "threshold": 0.9,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        },
+        {
+          "threshold": 0.95,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        },
+        {
+          "threshold": 0.97,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        },
+        {
+          "threshold": 0.99,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        },
+        {
+          "threshold": 0.995,
+          "auto_pass": 0.68025,
+          "silent_error": 0.0025,
+          "error_in_pass": 0.003675119441381845,
+          "n_pass": 2721
+        }
+      ],
+      "profiles": {
+        "STRICT": {
+          "threshold": 0.99,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        },
+        "BALANCED": {
+          "threshold": 0.95,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        },
+        "LENIENT": {
+          "threshold": 0.9,
+          "auto_pass": 0.7865,
+          "silent_error": 0.00325,
+          "error_in_pass": 0.004132231404958678,
+          "n_pass": 3146
+        }
+      }
+    }
+  },
+  "risky_classes": [
+    [
+      "FIX:POSTCODE_BLOCK_CONFLICT",
+      26,
+      124
+    ],
+    [
+      "ENTITY:confirmed|confirmed|inferred|bld=n|unres=y|poi=n",
+      36,
+      39
+    ],
+    [
+      "FIX:NO_MATCH",
+      128,
+      136
+    ],
+    [
+      "ENTITY:confirmed|corrected|inferred|bld=n|unres=n|poi=n",
+      21,
+      22
+    ],
+    [
+      "ENTITY:inferred|inferred|inferred|bld=y|unres=n|poi=y",
+      23,
+      24
+    ],
+    [
+      "ENTITY:confirmed|confirmed|inferred|bld=y|unres=n|poi=n",
+      26,
+      27
+    ],
+    [
+      "ENTITY:confirmed|confirmed|inferred|bld=n|unres=n|poi=n",
+      144,
+      149
+    ],
+    [
+      "ENTITY:confirmed|confirmed|replaced|bld=n|unres=n|poi=n",
+      58,
+      59
+    ],
+    [
+      "FIX:PREMISE_NOT_FOUND",
+      248,
+      250
+    ],
+    [
+      "ENTITY:confirmed|confirmed|confirmed|bld=y|unres=n|poi=n",
+      603,
+      607
+    ],
+    [
+      "ENTITY:confirmed|confirmed|confirmed|bld=n|unres=n|poi=n",
+      4058,
+      4072
+    ],
+    [
+      "ENTITY:confirmed|confirmed|confirmed|bld=n|unres=y|poi=n",
+      230,
+      230
+    ]
+  ],
+  "sizes": {
+    "train": 6000,
+    "test": 4000
+  },
+  "latency_ms": {
+    "p50": 0.9766919999947277,
+    "p95": 6.784246999814059
+  }
+}

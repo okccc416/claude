@@ -1,0 +1,237 @@
+{
+  "strength": 10.0,
+  "table": {
+    "ENTITY:confirmed|confirmed|confirmed|bld=n|unres=n|poi=n": [
+      4058,
+      4072
+    ],
+    "ENTITY:confirmed|confirmed|confirmed": [
+      4891,
+      4909
+    ],
+    "ENTITY": [
+      5645,
+      5692
+    ],
+    "ENTITY:confirmed|confirmed|confirmed|bld=y|unres=n|poi=n": [
+      603,
+      607
+    ],
+    "FIX:NO_MATCH": [
+      128,
+      136
+    ],
+    "FIX": [
+      251,
+      308
+    ],
+    "FIX:POSTCODE_BLOCK_CONFLICT": [
+      26,
+      124
+    ],
+    "ENTITY:confirmed|confirmed|confirmed|bld=n|unres=y|poi=n": [
+      230,
+      230
+    ],
+    "ENTITY:confirmed|corrected|confirmed|bld=n|unres=n|poi=n": [
+      246,
+      246
+    ],
+    "ENTITY:confirmed|corrected|confirmed": [
+      307,
+      307
+    ],
+    "ENTITY:confirmed|confirmed|inferred|bld=n|unres=n|poi=n": [
+      144,
+      149
+    ],
+    "ENTITY:confirmed|confirmed|inferred": [
+      206,
+      215
+    ],
+    "ENTITY:inferred|inferred|confirmed|bld=y|unres=n|poi=n": [
+      20,
+      20
+    ],
+    "ENTITY:inferred|inferred|confirmed": [
+      24,
+      24
+    ],
+    "ENTITY:confirmed|corrected|inferred|bld=n|unres=y|poi=n": [
+      7,
+      7
+    ],
+    "ENTITY:confirmed|corrected|inferred": [
+      31,
+      32
+    ],
+    "ENTITY:confirmed|confirmed|inferred|bld=n|unres=y|poi=n": [
+      36,
+      39
+    ],
+    "ENTITY:confirmed|confirmed|inferred|bld=y|unres=n|poi=n": [
+      26,
+      27
+    ],
+    "FIX:PREMISE_NOT_FOUND": [
+      248,
+      250
+    ],
+    "ENTITY:confirmed|corrected|inferred|bld=n|unres=n|poi=n": [
+      21,
+      22
+    ],
+    "ENTITY:confirmed|corrected|confirmed|bld=n|unres=y|poi=n": [
+      30,
+      30
+    ],
+    "ENTITY:inferred|inferred|inferred|bld=y|unres=n|poi=y": [
+      23,
+      24
+    ],
+    "ENTITY:inferred|inferred|inferred": [
+      23,
+      24
+    ],
+    "ENTITY:confirmed|confirmed|replaced|bld=n|unres=n|poi=n": [
+      58,
+      59
+    ],
+    "ENTITY:confirmed|confirmed|replaced": [
+      71,
+      79
+    ],
+    "FIX:AMBIGUOUS_MULTIPLE_CANDIDATES": [
+      80,
+      80
+    ],
+    "ENTITY:confirmed|corrected|confirmed|bld=y|unres=n|poi=n": [
+      31,
+      31
+    ],
+    "ENTITY:confirmed|confirmed|replaced|bld=y|unres=n|poi=n": [
+      7,
+      7
+    ],
+    "ENTITY:inferred|confirmed|confirmed|bld=n|unres=n|poi=n": [
+      34,
+      34
+    ],
+    "ENTITY:inferred|confirmed|confirmed": [
+      42,
+      42
+    ],
+    "ENTITY:replaced|confirmed|confirmed|bld=n|unres=n|poi=n": [
+      11,
+      11
+    ],
+    "ENTITY:replaced|confirmed|confirmed": [
+      14,
+      14
+    ],
+    "ENTITY:confirmed|inferred|confirmed|bld=y|unres=n|poi=n": [
+      1,
+      1
+    ],
+    "ENTITY:confirmed|inferred|confirmed": [
+      18,
+      18
+    ],
+    "ENTITY:confirmed|confirmed|replaced|bld=n|unres=y|poi=n": [
+      6,
+      13
+    ],
+    "ENTITY:confirmed|corrected|replaced|bld=n|unres=y|poi=n": [
+      0,
+      7
+    ],
+    "ENTITY:confirmed|corrected|replaced": [
+      7,
+      16
+    ],
+    "ENTITY:inferred|confirmed|confirmed|bld=n|unres=y|poi=n": [
+      5,
+      5
+    ],
+    "ENTITY:confirmed|corrected|replaced|bld=n|unres=n|poi=n": [
+      5,
+      7
+    ],
+    "ENTITY:confirmed|inferred|confirmed|bld=n|unres=y|poi=n": [
+      17,
+      17
+    ],
+    "ENTITY:confirmed|corrected|replaced|bld=y|unres=n|poi=n": [
+      2,
+      2
+    ],
+    "FIX:POSTCODE_STREET_MISMATCH": [
+      4,
+      10
+    ],
+    "ENTITY:inferred|corrected|confirmed|bld=n|unres=n|poi=n": [
+      5,
+      5
+    ],
+    "ENTITY:inferred|corrected|confirmed": [
+      7,
+      7
+    ],
+    "ENTITY:inferred|confirmed|confirmed|bld=y|unres=n|poi=n": [
+      3,
+      3
+    ],
+    "ENTITY:inferred|inferred|confirmed|bld=n|unres=y|poi=n": [
+      2,
+      2
+    ],
+    "ENTITY:inferred|corrected|inferred|bld=n|unres=y|poi=n": [
+      0,
+      1
+    ],
+    "ENTITY:inferred|corrected|inferred": [
+      0,
+      1
+    ],
+    "ENTITY:confirmed|replaced|confirmed|bld=n|unres=n|poi=n": [
+      3,
+      3
+    ],
+    "ENTITY:confirmed|replaced|confirmed": [
+      3,
+      3
+    ],
+    "FIX:MISSING_PREMISE": [
+      16,
+      16
+    ],
+    "ENTITY:inferred|corrected|confirmed|bld=n|unres=y|poi=n": [
+      2,
+      2
+    ],
+    "ENTITY:confirmed|corrected|inferred|bld=y|unres=n|poi=n": [
+      3,
+      3
+    ],
+    "ENTITY:replaced|corrected|confirmed|bld=n|unres=n|poi=n": [
+      1,
+      1
+    ],
+    "ENTITY:replaced|corrected|confirmed": [
+      1,
+      1
+    ],
+    "ENTITY:inferred|inferred|confirmed|bld=n|unres=n|poi=n": [
+      2,
+      2
+    ],
+    "ENTITY:replaced|confirmed|confirmed|bld=n|unres=y|poi=n": [
+      2,
+      2
+    ],
+    "ENTITY:replaced|confirmed|confirmed|bld=y|unres=n|poi=n": [
+      1,
+      1
+    ]
+  }
+}

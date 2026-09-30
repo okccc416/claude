@@ -38,6 +38,7 @@ Google AV 的核心产出不是坐标，而是一个**可执行的结论**（`AC
 | 07 | [**MVP 技术方案与验证结论**](docs/07-mvp-technical-validation.md) | 技术上可行吗？选定方案比简单做法好多少？每个模块都必要吗？真正的风险在哪？ |
 | 08 | [用 AI / 本地小模型增强](docs/08-ai-local-model.md) | AI 能不能做得更好？本地小模型（如 Qwen）放在哪、怎么防止编造、提升空间有多大、怎么评测和决策？ |
 | 09 | [贝叶斯打分与置信度](docs/09-bayesian-scoring.md) | 贝叶斯能否替代手工规则？置信度怎么算、准不准、怎么用来设门槛？ |
+| 10 | [标注数据：没有真实订单怎么办](docs/10-labeled-data.md) | 模拟订单怎么造、怎么标？校验器在接近真实的分布上表现如何？置信度重新统计后有什么变化？真实订单怎么标？ |
 
 ## 可运行的 MVP（新加坡）
 
@@ -53,6 +54,8 @@ Google AV 的核心产出不是坐标，而是一个**可执行的结论**（`AC
 
 真实客户输入风格（1,800 条，混着电话、收件人、配送备注、AMK 等本地缩写、粘连和错拼）：地址识别率 **98.8%**，**86.1%** 可直接通过（未做噪声处理的上一版只有 13.8%），电话 / 收件人 / 备注被单独拆出返回，静默错误 0%。
 
+在按真实订单分布模拟的 10,000 单标注数据上（[10 文档](docs/10-labeled-data.md)，含新楼盘、马来西亚地址、App 自动补全等开放世界情况）：自动通过 78.6%，静默错误 0.33%，且全部来自"文字自洽但指向别的真实地址"的输入；最大缺口是缺单元号只检出 22.5%。
+
 消融实验表明每个核心模块都不可省略（去掉任一模块下降 4.9–12.7 个百分点）。**最大的风险不在算法，而在参考数据的时效**：模拟新楼盘未进库时，96% 的新地址会被误拒。详见 [07 文档](docs/07-mvp-technical-validation.md)。
 
 ```bash
@@ -64,6 +67,7 @@ python scripts/fetch_data.py && python -m avmvp.server   # 打开 http://127.0.0
 
 - [`templates/golden-set-template.csv`](templates/golden-set-template.csv) — 评测集字段模板（含新加坡示意样例）
 - [`templates/api-response-example-sg.json`](templates/api-response-example-sg.json) — 建议的 API 响应结构示例（新加坡 HDB 地址）
+- [`mvp/labeled/GUIDELINE.md`](mvp/labeled/GUIDELINE.md) — 地址校验标注规范（模拟订单与真实订单通用）
 
 ---
 

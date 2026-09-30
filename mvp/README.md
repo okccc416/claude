@@ -33,7 +33,9 @@ python scripts/evaluate.py            # 输出 reports/eval_report.md 与 report
 python scripts/make_noisy_set.py      # 生成"真实客户输入"风格的噪声评测集（开发 540 条 + 测试 1,800 条）
 python scripts/evaluate_noisy.py      # 输出 reports/noisy_eval_report.md；加 --before-impl <旧版目录> 可对比旧版
 python scripts/evaluate_bayes.py      # 贝叶斯打分：训练置信度模型并与规则方案对比（见 docs/09）
-pytest -q                             # 63 个单元测试（使用 tests/ 下的小型真实数据夹具，无需下载）
+python scripts/make_labeled_orders.py # 模拟订单标注数据 10,000 单（已提交在 labeled/，重跑结果一致，见 docs/10）
+python scripts/evaluate_labeled.py    # 在模拟订单上评测，并用训练部分重新统计置信度（models/confidence_sg_orders.json）
+pytest -q                             # 73 个单元测试（使用 tests/ 下的小型真实数据夹具，无需下载）
 ```
 
 接口的 `verdict.confidence` 为贝叶斯置信度：规则结论所属类别在带标注数据里的实际正确率（服务器默认加载 `models/confidence_sg.json`）。
@@ -67,6 +69,14 @@ python -m avmvp.server --llm-endpoint http://127.0.0.1:11434          # 演示�
 
 ![噪声输入演示](reports/demo_noisy.png)
 
+**模拟真实订单**（[labeled/](labeled/README.md)，按 5 个下单渠道的错误画像生成，含参考库没有的新地址、马来西亚地址、App 自动补全带出的错误地址；测试部分 4,000 单）：
+
+| 自动通过率 | 静默错误率 | 误拒率 | 缺单元号检出率 |
+|---|---|---|---|
+| 78.6% | 0.33%（全部来自"文字自洽但指向别的真实地址"） | 1.0% | 22.5% |
+
+问题清单与置信度重新统计的结果见 [docs/10](../docs/10-labeled-data.md)。
+
 **注意：** 测试集由参考库构造，是"封闭世界"，数字证明的是**方案逻辑可行**，不等于真实流量上的准确率。真实准确率取决于参考数据的完整度和时效，详见 07 文档的"局限"一节。
 
 ## 目录
@@ -90,9 +100,12 @@ mvp/
 │   ├── make_noisy_set.py   生成"真实客户输入"风格的噪声评测集
 │   ├── evaluate_noisy.py   噪声评测（可对比旧版实现）
 │   ├── evaluate_llm.py     本地小模型评测：规则 / 规则 + 模型兜底 / 纯模型
-│   └── evaluate_bayes.py   贝叶斯打分评测：准确率对比、置信度校准、按门槛通过率
+│   ├── evaluate_bayes.py   贝叶斯打分评测：准确率对比、置信度校准、按门槛通过率
+│   ├── make_labeled_orders.py  生成模拟订单标注数据（按渠道模拟 + 独立标注规则）
+│   └── evaluate_labeled.py     模拟订单评测 + 置信度重新统计
+├── labeled/            模拟订单标注数据（orders_sg_v1.csv）、数据说明、标注规范
 ├── models/             贝叶斯参数（证据权重、置信度统计表）
-├── tests/              63 个单元测试与 58 条真实地址夹具
+├── tests/              73 个单元测试与 58 条真实地址夹具
 └── reports/            评测报告与演示截图
 ```
 
