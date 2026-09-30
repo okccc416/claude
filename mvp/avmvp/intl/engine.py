@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 import math
+import re
 import uuid
 from dataclasses import dataclass, field
 
@@ -26,6 +27,7 @@ from .markets import MARKETS
 from .parse import Parsed, RuleParser, Span
 from .pluscode import encode, recover
 from .reference import MarketReference, haversine
+from .text import script_of
 
 ACCEPT, CONFIRM, FIX, ADD_SUB = "ACCEPT", "CONFIRM", "FIX", "CONFIRM_ADD_SUBPREMISES"
 BASE = {"exact": 3.0, "core": 2.6, "thai": 2.4, "partial": 2.2, "crf": 2.2, "translit": 2.2}
@@ -175,7 +177,7 @@ class Engine:
         code = self._plus_code(p)
         if code:  # Plus Code：直接给出约 14 米见方的位置；与所写道路核对
             h = Hypothesis(6.0, code=code)
-            h.notes.append("LOCATED_BY_PLUS_CODE")
+            h.notes.append("LOCATED_BY_COORDINATES" if "latlng" in p.codes else "LOCATED_BY_PLUS_CODE")
             areas = [ref.areas[a] for sp in p.areas for a in sp.ids[:5]]
             if areas and all(haversine(a.lat, a.lng, code[0], code[1]) > max(a.radius_m * 1.5, 2000) for a in areas):
                 h.notes.append("PLUS_CODE_AREA_MISMATCH")
@@ -198,6 +200,10 @@ class Engine:
         return sorted(hyps, key=lambda h: -h.score)
 
     def _plus_code(self, p: Parsed) -> tuple[float, float, float] | None:
+        if "latlng" in p.codes:  # 直接贴的坐标：与 Plus Code 同样处理
+            lat, lng = map(float, p.codes["latlng"].split(","))
+            if any(b[1] - 0.3 <= lat <= b[3] + 0.3 and b[0] - 0.3 <= lng <= b[2] + 0.3 for _, b in self.m.regions):
+                return lat, lng, 10.0
         raw = p.codes.get("plus_code")
         if not raw:
             return None
@@ -212,6 +218,11 @@ class Engine:
                                   for _, b in self.m.regions):
             return None
         return res
+
+    def _area_at(self, lat: float, lng: float):
+        """点所在（或最近）的最小片区。"""
+        near = [a for a in self.ref.areas if haversine(a.lat, a.lng, lat, lng) <= a.radius_m]
+        return min(near, key=lambda a: a.radius_m) if near else None
 
     def _narrow(self, ids, area_ids, pc, buildings) -> list[int]:
         ref = self.ref
@@ -246,7 +257,14 @@ class Engine:
     def _premise(self, h: Hypothesis, p: Parsed) -> None:
         if not p.number:
             return
-        pts = self.ref.addresses([h.street], p.number)
+        pts = []
+        for num in self._number_variants(p.number):
+            pts = self.ref.addresses([h.street], num)
+            if pts:
+                break
+        if pts and p.unit:  # 同一门牌下优先取单元号一致的地址点
+            want = re.sub(r"^(?:UNIT|APARTMENT|SUITE|FLAT|SHOP)\s*", "", p.unit.upper())
+            pts = [x for x in pts if (x["unit"] or "").upper().replace("UNIT ", "") == want] or pts
         if not pts:
             h.score -= 1.0
             h.notes.append("PREMISE_NOT_FOUND")
@@ -261,6 +279,15 @@ class Engine:
         h.point = pts[0]
         h.score += 4.0
         h.support.add("point")
+
+    def _number_variants(self, number: str) -> list[str]:
+        """门牌号的等价写法：51-55（区间，官方表可能只记首尾之一）、12 A / 12A。"""
+        n = number.replace(" ", "").upper()
+        out = [n]
+        m = re.fullmatch(r"(\d+[A-Z]?)-(\d+[A-Z]?)", n)
+        if m and self.market != "NL":
+            out += [m.group(1), m.group(2)]
+        return out
 
     # ------------------------------------------------------------------ 结论
     def _decide(self, p: Parsed, strictness: str) -> Result:
@@ -307,12 +334,20 @@ class Engine:
             lat, lng = self._route_point(best, p)
         if best.street is not None:
             s = ref.streets[best.street]
-            comps["route"] = {"text": s.name, "level": "CONFIRMED" if best.street_span and
+            comps["route"] = {"text": _display(s.names, p.raw), "level": "CONFIRMED" if best.street_span and
                               best.street_span.how not in ("fuzzy", "partial") else "UNCONFIRMED_BUT_PLAUSIBLE",
                               "spellCorrected": "STREET_SPELL_CORRECTED" in best.notes,
                               "inferred": best.street_span is None}
         if best.area is not None:
-            comps["locality"] = {"text": ref.areas[best.area].name, "level": "CONFIRMED"}
+            comps["locality"] = {"text": _display(ref.areas[best.area].names, p.raw), "level": "CONFIRMED"}
+        elif best.point and best.point.get("locality"):  # A 类：官方地址表里的地名
+            comps["locality"] = {"text": best.point["locality"], "level": "CONFIRMED", "inferred": True}
+        elif best.code:  # 只有 Plus Code / 坐标：补上所在片区
+            a = self._area_at(best.code[0], best.code[1])
+            if a is not None:
+                comps["locality"] = {"text": _display(a.names, p.raw), "level": "CONFIRMED", "inferred": True}
+        if best.code:
+            comps["plus_code"] = {"text": encode(best.code[0], best.code[1]), "level": "CONFIRMED"}
         if best.building:
             comps["premise_name"] = {"text": best.building["name"], "level": "CONFIRMED"}
         if p.number:
@@ -424,16 +459,13 @@ class Engine:
     def to_response(self, res: Result) -> dict:
         """Google AV 风格的响应（字段含义与新加坡引擎一致，见 docs/13）。"""
         names = {"route": "route", "locality": "sublocality", "premise_name": "premise_name",
-                 "street_number": "street_number", "postal_code": "postal_code", "subpremise": "subpremise"}
+                 "street_number": "street_number", "postal_code": "postal_code", "subpremise": "subpremise",
+                 "plus_code": "plus_code"}
         comps = []
         for k, v in res.components.items():
             c = {"componentType": names[k], "componentName": {"text": v["text"]}, "confirmationLevel": v["level"]}
             c.update({f: True for f in ("inferred", "spellCorrected", "replaced") if v.get(f)})
             comps.append(c)
-        parts = [res.components.get(k, {}).get("text") for k in ("subpremise", "premise_name", "street_number",
-                                                                  "route", "locality", "postal_code")]
-        if not self.m.number_first and parts[2] and parts[3]:  # 德国 / 荷兰 / 印尼：道路名在门牌前
-            parts[2], parts[3] = parts[3], parts[2]
         missing = [t for t, k in (("route", "route"), ("street_number", "street_number"))
                    if k not in res.components and not (k == "street_number" and res.best and res.best.building)]
         levels = [c["confirmationLevel"] for c in comps]
@@ -447,7 +479,7 @@ class Engine:
                         "hasSpellCorrectedComponents": any(c.get("spellCorrected")
                                                            for c in res.components.values()),
                         "reasons": [{"code": r, "message": REASON_TEXT.get(r, r)} for r in dict.fromkeys(res.reasons)]},
-            "address": {"formattedAddress": ", ".join(x for x in parts if x), "addressComponents": comps,
+            "address": {"formattedAddress": self._format(res.components), "addressComponents": comps,
                         "missingComponentTypes": missing if res.action != ACCEPT else []},
             "geocode": {"location": {"latitude": res.lat, "longitude": res.lng},
                         "plusCode": {"globalCode": encode(res.lat, res.lng)}} if res.lat is not None else None,
@@ -461,6 +493,27 @@ class Engine:
         }}
 
 
+    def _format(self, comps: dict[str, dict]) -> str:
+        """按各市场习惯排版：12 Smith Street / Musterstraße 12；邮编在城市前（欧洲）或后。"""
+        t = {k: v["text"] for k, v in comps.items()}
+        unit = t.get("subpremise", "")
+        unit = unit.title() if unit.isupper() and len(unit) > 2 and any(c.isalpha() for c in unit) else unit
+        num, route = t.get("street_number"), t.get("route")
+        pc, loc = t.get("postal_code"), t.get("locality")
+        if self.market == "NL":  # 荷兰写法：Rozengracht 162A、Aalsmeerderweg 283-30、邮编 1016 NK
+            if num and unit and len(unit) <= 4:
+                num, unit = (num + unit if len(unit) == 1 and unit.isalpha() else f"{num}-{unit.upper()}"), ""
+            pc = re.sub(r"^(\d{4})([A-Z]{2})$", r"\1 \2", pc) if pc else pc
+        line = " ".join(x for x in ((num, route) if self.m.number_first else (route, num)) if x)
+        if self.market in ("DE", "FR", "NL"):
+            tail = " ".join(x for x in (pc, loc) if x)
+        elif self.market == "AU" and pc:
+            tail = " ".join(x for x in (loc, AU_STATE.get(pc[:1], ""), pc) if x)
+        else:
+            tail = ", ".join(x for x in (loc, pc) if x)
+        return ", ".join(x for x in (unit, t.get("premise_name"), line, tail, t.get("plus_code")) if x)
+
+
 REASON_TEXT = {
     "NON_ADDRESS_INFO_EXTRACTED": "已把电话 / 邮箱 / 网址等非地址信息分离出来",
     "ONLY_LOCALITY": "只能确认到片区 / 邮编范围，找不到道路或楼宇",
@@ -468,6 +521,7 @@ REASON_TEXT = {
     "STREET_SPELL_CORRECTED": "道路名有拼写错误，已按参考数据纠正",
     "STREET_TRANSLITERATED": "道路名是拉丁字母转写，已对应到阿拉伯文名称",
     "LOCATED_BY_PLUS_CODE": "按输入里的 Plus Code 定位",
+    "LOCATED_BY_COORDINATES": "按输入里的经纬度定位",
     "PLUS_CODE_STREET_MISMATCH": "Plus Code 的位置与所写道路不符",
     "PLUS_CODE_AREA_MISMATCH": "Plus Code 的位置不在所写片区附近",
     "ROUTE_NOT_CORROBORATED": "只验证到道路：缺少邮编与道路相互印证，或同名道路不止一条，需要用户确认",
@@ -484,6 +538,17 @@ REASON_TEXT = {
     "AMBIGUOUS_MULTIPLE_CANDIDATES": "有多个相距较远、可信度接近的候选地址，需要用户确认",
     "UNIT_MISSING_MULTI_UNIT_BUILDING": "该门牌下有多个单元，但没有写单元号",
 }
+
+
+def _display(names: list[str], raw: str) -> str:
+    """返回与输入同一种文字的名称（输入写英文就给英文名，写阿拉伯文 / 泰文就给当地文字）。"""
+    counts = {"arabic": len(re.findall(r"[؀-ۿ]", raw)), "thai": len(re.findall(r"[฀-๿]", raw)),
+              "latin": len(re.findall(r"[A-Za-zÀ-ỹ]", raw))}
+    want = max(counts, key=counts.get)  # 混写时按字数多的文字（"Sheikh Zayed Rd, دبي" -> 英文）
+    return next((n for n in names if script_of(n) == want), names[0])
+
+
+AU_STATE = {"2": "NSW", "3": "VIC", "4": "QLD", "5": "SA", "6": "WA", "7": "TAS", "8": "NT"}
 
 
 def _far(ref: MarketReference, a: Hypothesis, b: Hypothesis) -> bool:

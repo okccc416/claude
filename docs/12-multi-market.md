@@ -2,6 +2,7 @@
 
 > 问题 1：新加坡太规则了，只做新加坡不够。澳洲、中东、东南亚其他国家、欧洲的地址是什么情况？
 > 问题 2：是不是"规则 + 数据库查询"一定比 AI 好？
+> 后续：已按本文第 4 节的建议做成覆盖 12 个市场的服务，并逐市场评测了规则 / 机器学习 / 混合三种解析，见 [13 文档](13-multi-market-product.md)。
 > 数据：Overture Maps 2026-09（各国开放官方地址表的覆盖，17 个城市共 180 万家商户的自填地址）；脚本 [`profile_countries.py`](../mvp/scripts/profile_countries.py)，报告 [`country_address_profile.md`](../mvp/reports/country_address_profile.md)
 
 ---

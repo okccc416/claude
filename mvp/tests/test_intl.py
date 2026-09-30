@@ -168,6 +168,12 @@ def test_au_missing_or_unknown_number_is_fix(au):
     assert au.validate("Crown Street, Surry Hills NSW 2010").action == FIX
 
 
+def test_au_number_range_and_glued_tokens(au):
+    r = au.validate("100-104 Crown St, Surry Hills NSW 2010")  # 官方表只记单个门牌时按区间首尾查
+    assert r.granularity == "PREMISE" and r.action in (ACCEPT, ADD_SUB)
+    assert tokenize("Shop4068, 500Oxford Street, 12th Ave") == ["SHOP", "4068", "500", "OXFORD", "STREET", "12TH", "AVE"]
+
+
 def test_au_wrong_postcode_is_replaced(au):
     r = au.validate("100 Crown Street, Surry Hills NSW 2042")
     assert r.action == CONFIRM and r.components["postal_code"]["text"] == "2010"
@@ -241,6 +247,12 @@ def test_route_accept_needs_postcode_corroboration(sa):
     assert (r.action, r.granularity) == (ACCEPT, "ROUTE")  # 道路名唯一、邮编就在道路旁
     r = sa.validate("12 King Fahd Road, Riyadh")
     assert r.action == CONFIRM and "ROUTE_NOT_CORROBORATED" in r.reasons
+
+
+def test_pasted_coordinates_locate_address(sa):
+    r = sa.validate("24.700100, 46.680200, King Fahd Road, Riyadh")
+    assert (r.action, r.granularity) == (ACCEPT, "PREMISE_PROXIMITY")
+    assert "LOCATED_BY_COORDINATES" in r.reasons and abs(r.lat - 24.7001) < 1e-6
 
 
 def test_placeholder_postcode_is_ignored(sa):

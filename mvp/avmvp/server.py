@@ -91,11 +91,32 @@ async function run(){
 init();
 </script></main></body></html>"""
 
-# 演示页面的示例输入（真实写法；各市场第一条为默认示例）
+# 演示页面的示例输入（各市场取自开发集里真实商户自填的地址；第一条为默认示例）
 EXAMPLES = {
     "SG": ["10 Bayfront Avenue, Singapore 018956", "018956 10 bayfront ave s'pore", "10 Bayfrnt Avenue 018956",
            "10 Bayfront Avenue, Singapore 819643", "999 Bayfront Avenue", "Marina Bay Sands", "Tampines Avenue 7",
            "Attn: Jason Teo, Blk123 AMK Ave 6 # 05 - 12 S(560123) pls call b4 delivery 91234567, 请放门口"],
+    "AU": ["360 Lonsdale Street, Melbourne, 3000", "636 Inkerman Rd, Melbourne, 3161",
+           "203-205 Blackburn Rd, Melbourne, 3149", "24 Salicki Ave, Epping, 3076", "Granville, Sydney, 2142"],
+    "DE": ["Invalidenstraße 117, Berlin, 10115", "Lankwitzer Str. 14, 12107 Berlin", "Müllerstraße 15, Berlin, 13347",
+           "Invalidenstraße 999, 10115 Berlin"],
+    "FR": ["67 Rue Galande, Paris, 75005", "13 rue Brey, Paris", "10 Cr Louis Lumière, Vincennes, 94300"],
+    "NL": ["Sint Antoniesbreestraat 51, Amsterdam, 1011 HB", "Stadhouderskade 101, 1073 AW Amsterdam",
+           "Lutmastraat 180, Amsterdam, 1073 RE", "Amsterdamse Bos, Amstelveen"],
+    "AE": ["Burlington Tower - 16th & 17th Floor Marasi Dr, دبي", "Latifa Tower - Shop No.L2, Ground Floor - Sheikh Zayed Rd, Dubai",
+           "Naif Road, Naif, Deira Souq, Opposite Al Futtaim Mosque, Dubai", "Ground Floor, Mirdif City Centre, Dubai"],
+    "SA": ["PRX9+WV5, Riyadh, 14232", "RM58+685, طريق الثمامة, الرياض",
+           "Shop# 302, Ground Floor, Gulf Commercial Centre, الرياض, 12642", "حي بدر, الرياض, 14724"],
+    "MY": ["35 Jalan AWF 2, Ampang, 68000", "G-38, Casa Tiara, Jalan SS 16/1, Subang Jaya, 47500",
+           "Jalan Genting Kelang, Jln Taman Ibu Kota, Setapak, 53300", "SELAYANG, Batu, 68100"],
+    "ID": ["Jl. Cideng Timur No.16A, RT.1/RW.4, Jakarta Pusat, 10130", "Jalan Letjen Suprapto 32, Jakarta, 10640",
+           "Jl. KH. Mas Mansyur, RT.007/RW.003, Tangerang Kota, 15145", "Chedoya St, Jakarta Barat, 11520"],
+    "TH": ["824 ถนน สุขุมวิท, คลองเตย, 10110", "1 Phatthanakan Rd, กรุงเทพมหานคร, 10250",
+           "2409 Phetchaburi Rd, กรุงเทพมหานคร, 10310", "59 กลาง 1 Suphaphong Alley, กรุงเทพมหานคร, 10250"],
+    "VN": ["226 Đường Trần Văn Kiểu, Quận 6, 73115", "42/5 Hẻm 42 Lương Thế Vinh, Quận Tân Phú, 72015",
+           "42 Lê Lợi, P. Bến Nghế, Quận 1, TP. HCM", "31031983 hcmc, Quận Gò Vấp"],
+    "PH": ["55-51, Angelo St, Quezon City, 1403", "Jiao Building, Timog Ave, Quezon City, 1100",
+           "M. H. Del Pilar St 223, Malabon, 1474", "14.515182,121.003079, Parañaque, 1300"],
 }
 
 
@@ -136,6 +157,7 @@ def make_handler(router: MarketRouter):
                 strictness = (body.get("strictness") or "BALANCED").upper()
                 if not text or strictness not in ("STRICT", "BALANCED", "LENIENT"):
                     raise ValueError("需要 address.addressLines（或 text），strictness 取 STRICT/BALANCED/LENIENT")
+                router.engine(region)  # 第一次请求某个市场时加载参考数据，不计入耗时
                 t = time.perf_counter()
                 out = router.validate(region, text, strictness)
             except (ValueError, json.JSONDecodeError) as e:  # UnsupportedRegion 也是 ValueError

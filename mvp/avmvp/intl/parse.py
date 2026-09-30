@@ -21,7 +21,8 @@ EMAIL = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
 URL = re.compile(r"https?://\S+|www\.\S+")
 PLUS_CODE = re.compile(r"\b[23456789CFGHJMPQRVWX]{4,8}\+[23456789CFGHJMPQRVWX]{2,3}\b", re.I)
 MAKANI = re.compile(r"(?<!\d)\d{5}\s\d{5}(?!\d)")
-PO_BOX = re.compile(r"(?:\bP\.?\s?O\.?\s?BOX|\bPOB|ص\.?\s?ب)\s*[.:#]?\s*(\d{2,7})\b", re.I)
+LATLNG = re.compile(r"(?<![\d.])(-?\d{1,2}\.\d{4,})\s*,\s*(-?\d{1,3}\.\d{4,})(?![\d.])")  # 直接贴的坐标
+PO_BOX = re.compile(r"(?:\bP\.?\s?O\.?\s?BOX|\bPOB|\bPOSTBUS|\bPOSTFACH|\bBOITE POSTALE|ص\.?\s?ب)\s*[.:#]?\s*(\d{2,7})\b", re.I)
 # 单独出现时不能当楼名 / 转写道路名的通用词
 GENERIC_WORDS = {"OFFICE", "SHOP", "BUILDING", "TOWER", "TOWERS", "MALL", "CENTER", "CENTRE", "HOTEL", "FLOOR",
                  "GROUND", "LEVEL", "SUITE", "UNIT", "STORE", "PLAZA", "MARKET", "SHOPPING", "COMMERCIAL",
@@ -30,7 +31,7 @@ UNIT_WORDS = {"UNIT", "APARTMENT", "SUITE", "SHOP", "FLAT", "LEVEL", "FLOOR", "L
               "الطابق", "شقه", "مكتب", "LOT", "ROOM", "KIOSK", "STALL", "OFFICE", "TOWER", "BLOCK", "BLOK"}
 NUMBER_MARKERS = {"NO", "NOMOR", "NUMBER", "BLK", "#", "رقم", "مبني", "SỐ", "SO", "เลขที่", "VILLA", "فيلا"}
 MARKER_WORDS = {"NO", "NOMOR", "NUMBER", "KAV", "KAVLING", "KM", "رقم"}
-HOUSE_NO = re.compile(r"^\d{1,5}[A-Z]?(?:[/\-]\d{1,5}[A-Z]?){0,2}$")
+HOUSE_NO = re.compile(r"^\d{1,5}(?:[A-Z]|HS|BG|BV)?(?:[/\-]\d{1,5}[A-Z]?){0,2}$")
 AU_STATES = {"NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"}
 FLOOR_TOKEN = re.compile(r"^(?:\d{1,2}(?:ST|ND|RD|TH)?F|G|GF|UG|LG|UGF|LGF|B\d)$")  # 2F、12F、GF：楼层，不是门牌
 # 国家 / 州 / 大区名：不参与道路 / 片区匹配（避免 Metro Manila -> Metro Avenue、Selangor -> Jalan Selangor）
@@ -87,6 +88,10 @@ def strip_noise(raw: str) -> tuple[str, dict[str, list[str]], dict[str, str]]:
         if found:
             noise[name] = found
             text = rx.sub(" ", text)
+    m = LATLNG.search(text)
+    if m:
+        codes["latlng"] = f"{m.group(1)},{m.group(2)}"
+        text = text[:m.start()] + " " + text[m.end():]
     for name, rx in (("plus_code", PLUS_CODE), ("makani", MAKANI)):
         m = rx.search(text)
         if m:
@@ -422,6 +427,10 @@ class RuleParser:
             if t == p.number:
                 used[i] = True
                 break
+        if self.ref.market == "NL" and p.number:  # 荷兰：35hs、162A、283-30 = 门牌 + 附加（官方表里记在单元里）
+            m = re.fullmatch(r"(\d+)(?:(HS|BG|BV|[A-Z])|-(\w+))", p.number)
+            if m:
+                p.number, p.unit = m.group(1), p.unit or (m.group(2) or m.group(3))
 
 
 def tokenize_seps(text: str) -> list[bool]:

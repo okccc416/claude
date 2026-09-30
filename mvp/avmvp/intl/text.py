@@ -96,7 +96,10 @@ def _thai_tokenizer():
 def tokenize(text: str) -> list[str]:
     """分词：拉丁 / 数字按空格和标点切开（保留 339/5、12-14 这类门牌），泰文用词典分词。"""
     out: list[str] = []
-    for m in _TOKEN.finditer(fold(text)):
+    t = fold(text)
+    t = re.sub(r"(?<=\d)(?=[A-Z]{3,})(?!(?:ST|ND|RD|TH|HS|BG|BV)\b)", " ", t)  # 500OXFORD -> 500 OXFORD
+    t = re.sub(r"\b(SHOP|UNIT|LEVEL|SUITE|LOT|BLOCK|BLK|OFFICE)(?=\d)", r"\1 ", t)  # SHOP4068 -> SHOP 4068
+    for m in _TOKEN.finditer(t):
         tok = m.group(0)
         if _THAI.match(tok):
             out.extend(_thai_tokenizer()(tok))
