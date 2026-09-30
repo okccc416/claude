@@ -94,7 +94,10 @@ def nearest_point(ref: MarketReference, sid: int, lat: float, lng: float) -> tup
 
 
 class Engine:
-    def __init__(self, market: str, parser: str = "rules", ref: MarketReference | None = None):
+    """parser：rules / crf / hybrid（规则 + 机器学习都出候选）/ llm（只用本地小模型）。
+    llm：可选的本地小模型客户端（见 llm.py）。给了它，hybrid 在没有直接通过时再请模型拆一次字段（级联）。"""
+
+    def __init__(self, market: str, parser: str = "rules", ref: MarketReference | None = None, llm=None):
         self.market = market
         self.m = MARKETS[market]
         self.ref = ref or MarketReference.load(market)
@@ -104,10 +107,17 @@ class Engine:
         if parser in ("crf", "hybrid"):
             from .crf import CRFParser
             self.crf = CRFParser(self.ref)
+        self.llm = None
+        if llm is not None or parser == "llm":
+            from .llm import LLMParser
+            self.llm = LLMParser(self.ref, llm)
 
     # ------------------------------------------------------------------ 入口
     def validate(self, text: str, strictness: str = "BALANCED") -> Result:
-        if self.parser == "rules":
+        if self.parser == "llm":
+            p = self.llm.parse(text)
+            parses = [p] if p is not None else [self.rules.parse(text)]
+        elif self.parser == "rules":
             parses = [self.rules.parse(text)]
         elif self.parser == "crf":
             parses = [self.crf.parse(text)]
@@ -115,11 +125,29 @@ class Engine:
             parses = [self.rules.parse(text), self.crf.parse(text)]
         best_res = None
         for p in parses:
-            res = self._decide(p, strictness)
+            res = self._llm_cap(self._decide(p, strictness))
             if best_res is None or _rank(res) > _rank(best_res):
                 best_res = res
         best_res.parser = self.parser
+        if self.llm is not None and self.parser != "llm" and best_res.action != ACCEPT:
+            # 级联：规则 + 机器学习没能直接通过时，请本地小模型再拆一次字段，结果同样由参考数据裁决
+            p = self.llm.parse(text)
+            if p is not None:
+                # 两种用法都试：只用模型拆出的字段；把模型补出的字段并入规则解析（规则认出道路、模型认出片区 / 楼名）
+                for cand in (p, _merge(best_res.parsed, p)):
+                    res = self._llm_cap(self._decide(cand, strictness))
+                    if _rank(res) > _rank(best_res):
+                        res.parser = self.parser + "+llm"
+                        best_res = res
         return best_res
+
+    @staticmethod
+    def _llm_cap(res: Result) -> Result:
+        """模型改写过的字段（不是原文照抄）最多给 CONFIRM。"""
+        if res.parsed.parser == "llm" and not getattr(res.parsed, "verbatim", True) and res.action in (ACCEPT, ADD_SUB):
+            res.action = CONFIRM
+            res.reasons.append("LLM_REWRITTEN")
+        return res
 
     # ------------------------------------------------------------------ 候选与打分
     def _hypotheses(self, p: Parsed) -> list[Hypothesis]:
@@ -522,6 +550,7 @@ REASON_TEXT = {
     "STREET_TRANSLITERATED": "道路名是拉丁字母转写，已对应到阿拉伯文名称",
     "LOCATED_BY_PLUS_CODE": "按输入里的 Plus Code 定位",
     "LOCATED_BY_COORDINATES": "按输入里的经纬度定位",
+    "LLM_REWRITTEN": "本地小模型改写过输入里的字段（不是原文照抄），需要用户确认",
     "PLUS_CODE_STREET_MISMATCH": "Plus Code 的位置与所写道路不符",
     "PLUS_CODE_AREA_MISMATCH": "Plus Code 的位置不在所写片区附近",
     "ROUTE_NOT_CORROBORATED": "只验证到道路：缺少邮编与道路相互印证，或同名道路不止一条，需要用户确认",
@@ -549,6 +578,17 @@ def _display(names: list[str], raw: str) -> str:
 
 
 AU_STATE = {"2": "NSW", "3": "VIC", "4": "QLD", "5": "SA", "6": "WA", "7": "TAS", "8": "NT"}
+
+
+def _merge(base: Parsed, extra: Parsed) -> Parsed:
+    """规则 / 机器学习的解析结果 + 模型补出的字段（只补缺的，道路两边的候选都保留）。"""
+    from dataclasses import replace
+    m = replace(base, streets=base.streets + [s for s in extra.streets if s.text not in {x.text for x in base.streets}],
+                areas=base.areas or extra.areas, buildings=base.buildings or extra.buildings,
+                number=base.number or extra.number, unit=base.unit or extra.unit,
+                postcode=base.postcode or extra.postcode, parser="llm")
+    m.verbatim = getattr(extra, "verbatim", True)  # type: ignore[attr-defined]
+    return m
 
 
 def _far(ref: MarketReference, a: Hypothesis, b: Hypothesis) -> bool:

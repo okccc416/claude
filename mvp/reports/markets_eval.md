@@ -9,66 +9,66 @@
 
 | 市场 | 类别 | 解析 | 条数 | 正确·直接通过 | 正确·要求确认 | 判 FIX·片区对 | 判 FIX | 错误建议 | 静默错误 | 其中偏差 >1 公里 | 500 米内 | 毫秒/条 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 澳大利亚（AU） | A | rules | 1000 | 74.8% | 3.4% | 0.4% | 13.0% | 4.6% | 3.8% | 1.6% | 86.7% | 2 |
-| 澳大利亚（AU） | A | crf | 1000 | 69.1% | 2.3% | 2.5% | 18.4% | 4.2% | 3.5% | 1.5% | 86.1% | 2 |
-| 澳大利亚（AU） | A | hybrid | 1000 | 75.4% | 2.8% | 0.4% | 12.7% | 4.8% | 3.9% | 1.7% | 86.5% | 3 |
-| 德国（DE） | A | rules | 1000 | 92.3% | 1.4% | 0.2% | 2.0% | 3.2% | 0.9% | 0.5% | 95.7% | 2 |
-| 德国（DE） | A | crf | 1000 | 86.6% | 1.2% | 0.7% | 8.0% | 3.2% | 0.3% | 0.2% | 93.9% | 1 |
-| 德国（DE） | A | hybrid | 1000 | 94.2% | 1.2% | 0.1% | 2.0% | 1.6% | 0.9% | 0.5% | 97.3% | 2 |
-| 法国（FR） | A | rules | 1000 | 88.4% | 3.0% | 0.3% | 6.1% | 1.0% | 1.2% | 0.7% | 95.6% | 1 |
-| 法国（FR） | A | crf | 1000 | 85.5% | 4.7% | 0.8% | 5.9% | 2.1% | 1.0% | 0.6% | 94.8% | 1 |
-| 法国（FR） | A | hybrid | 1000 | 88.9% | 3.2% | 0.2% | 5.7% | 0.8% | 1.2% | 0.7% | 96.5% | 2 |
-| 荷兰（NL） | A | rules | 1000 | 81.2% | 7.5% | 0.9% | 8.1% | 0.8% | 1.5% | 0.8% | 96.0% | 2 |
-| 荷兰（NL） | A | crf | 1000 | 72.0% | 2.1% | 0.8% | 22.7% | 1.1% | 1.3% | 0.8% | 89.9% | 1 |
-| 荷兰（NL） | A | hybrid | 1000 | 83.2% | 5.6% | 0.8% | 8.1% | 0.7% | 1.6% | 0.8% | 96.1% | 3 |
-| 阿联酋（AE） | B | rules | 1000 | 1.6% | 29.8% | 11.7% | 24.7% | 31.4% | 0.8% | 0.6% | 18.0% | 3 |
-| 阿联酋（AE） | B | crf | 1000 | 0.7% | 19.3% | 6.6% | 53.0% | 20.0% | 0.4% | 0.2% | 11.1% | 3 |
-| 阿联酋（AE） | B | hybrid | 1000 | 1.6% | 30.3% | 10.5% | 21.4% | 35.2% | 1.0% | 0.7% | 18.7% | 5 |
-| 沙特（SA） | B | rules | 1000 | 2.4% | 27.8% | 11.8% | 13.8% | 43.5% | 0.7% | 0.6% | 17.4% | 3 |
-| 沙特（SA） | B | crf | 1000 | 2.2% | 26.3% | 17.2% | 25.2% | 28.3% | 0.8% | 0.7% | 18.2% | 3 |
-| 沙特（SA） | B | hybrid | 1000 | 2.6% | 32.0% | 9.5% | 12.5% | 42.7% | 0.7% | 0.6% | 19.4% | 6 |
-| 马来西亚（MY） | C | rules | 1000 | 34.2% | 37.2% | 4.7% | 5.5% | 15.9% | 2.5% | 1.2% | 59.1% | 2 |
-| 马来西亚（MY） | C | crf | 1000 | 28.3% | 40.1% | 12.3% | 6.4% | 10.8% | 2.1% | 1.0% | 59.6% | 2 |
-| 马来西亚（MY） | C | hybrid | 1000 | 34.4% | 39.7% | 3.4% | 4.3% | 15.6% | 2.6% | 1.2% | 62.1% | 5 |
-| 印尼（ID） | C | rules | 1000 | 28.5% | 28.2% | 2.7% | 4.0% | 32.9% | 3.7% | 1.2% | 40.9% | 2 |
-| 印尼（ID） | C | crf | 1000 | 11.4% | 32.8% | 27.8% | 8.8% | 18.0% | 1.2% | 0.5% | 41.8% | 5 |
-| 印尼（ID） | C | hybrid | 1000 | 28.4% | 31.3% | 2.1% | 3.7% | 30.4% | 4.1% | 1.5% | 43.6% | 6 |
-| 泰国（TH） | C | rules | 1000 | 17.4% | 41.2% | 10.9% | 7.5% | 20.3% | 2.7% | 1.1% | 29.9% | 5 |
-| 泰国（TH） | C | crf | 1000 | 13.1% | 28.6% | 24.0% | 19.5% | 13.4% | 1.4% | 0.5% | 22.0% | 3 |
-| 泰国（TH） | C | hybrid | 1000 | 17.7% | 41.7% | 9.6% | 7.2% | 21.1% | 2.7% | 1.1% | 30.4% | 8 |
-| 越南（VN） | C | rules | 1000 | 10.1% | 52.5% | 1.9% | 4.0% | 29.9% | 1.6% | 0.6% | 46.5% | 2 |
-| 越南（VN） | C | crf | 1000 | 10.7% | 36.5% | 18.6% | 16.4% | 16.4% | 1.4% | 0.7% | 38.1% | 3 |
-| 越南（VN） | C | hybrid | 1000 | 13.6% | 51.1% | 1.4% | 3.5% | 28.5% | 1.9% | 0.8% | 46.3% | 5 |
-| 菲律宾（PH） | C | rules | 1000 | 20.1% | 34.0% | 15.5% | 9.7% | 18.4% | 2.3% | 1.0% | 36.1% | 3 |
-| 菲律宾（PH） | C | crf | 1000 | 12.4% | 41.3% | 22.0% | 8.7% | 15.0% | 0.6% | 0.3% | 43.8% | 2 |
-| 菲律宾（PH） | C | hybrid | 1000 | 21.4% | 42.1% | 8.5% | 6.5% | 19.1% | 2.4% | 1.0% | 44.1% | 5 |
+| 澳大利亚（AU） | A | rules | 1000 | 73.8% | 4.6% | 0.9% | 12.1% | 4.6% | 4.0% | 1.4% | 87.5% | 6 |
+| 澳大利亚（AU） | A | crf | 1000 | 68.2% | 2.4% | 2.9% | 18.8% | 4.2% | 3.5% | 1.4% | 86.9% | 2 |
+| 澳大利亚（AU） | A | hybrid | 1000 | 74.3% | 4.3% | 0.9% | 11.3% | 5.1% | 4.1% | 1.5% | 87.7% | 3 |
+| 德国（DE） | A | rules | 1000 | 91.9% | 1.8% | 0.5% | 2.3% | 3.0% | 0.5% | 0.1% | 96.4% | 2 |
+| 德国（DE） | A | crf | 1000 | 85.7% | 1.4% | 1.2% | 8.7% | 2.5% | 0.5% | 0.1% | 93.5% | 1 |
+| 德国（DE） | A | hybrid | 1000 | 93.9% | 1.2% | 0.4% | 2.2% | 1.7% | 0.6% | 0.1% | 97.2% | 2 |
+| 法国（FR） | A | rules | 1000 | 89.6% | 2.5% | 0.5% | 5.6% | 1.2% | 0.6% | 0.1% | 96.1% | 2 |
+| 法国（FR） | A | crf | 1000 | 87.4% | 4.2% | 1.0% | 5.5% | 1.3% | 0.6% | 0.1% | 96.3% | 1 |
+| 法国（FR） | A | hybrid | 1000 | 90.3% | 2.4% | 0.4% | 5.3% | 1.0% | 0.6% | 0.1% | 96.9% | 2 |
+| 荷兰（NL） | A | rules | 1000 | 82.1% | 5.3% | 1.0% | 8.7% | 1.0% | 1.9% | 0.8% | 96.0% | 5 |
+| 荷兰（NL） | A | crf | 1000 | 70.5% | 3.1% | 0.7% | 22.9% | 1.1% | 1.7% | 0.7% | 89.3% | 1 |
+| 荷兰（NL） | A | hybrid | 1000 | 83.1% | 4.6% | 0.8% | 8.6% | 0.7% | 2.2% | 1.0% | 96.5% | 3 |
+| 阿联酋（AE） | B | rules | 1000 | 2.3% | 29.3% | 12.3% | 24.3% | 30.6% | 1.2% | 0.9% | 19.6% | 3 |
+| 阿联酋（AE） | B | crf | 1000 | 0.9% | 16.8% | 7.5% | 54.0% | 20.3% | 0.5% | 0.4% | 9.6% | 2 |
+| 阿联酋（AE） | B | hybrid | 1000 | 2.4% | 30.0% | 11.6% | 20.7% | 34.1% | 1.2% | 0.9% | 20.0% | 5 |
+| 沙特（SA） | B | rules | 1000 | 3.0% | 28.6% | 10.5% | 13.9% | 43.3% | 0.7% | 0.6% | 19.3% | 3 |
+| 沙特（SA） | B | crf | 1000 | 2.2% | 27.0% | 16.0% | 22.4% | 31.5% | 0.9% | 0.6% | 19.9% | 3 |
+| 沙特（SA） | B | hybrid | 1000 | 3.1% | 33.7% | 7.8% | 11.7% | 42.9% | 0.8% | 0.6% | 21.8% | 6 |
+| 马来西亚（MY） | C | rules | 1000 | 33.4% | 36.6% | 4.9% | 5.3% | 16.2% | 3.6% | 1.7% | 60.7% | 5 |
+| 马来西亚（MY） | C | crf | 1000 | 29.1% | 39.9% | 10.7% | 6.4% | 11.3% | 2.6% | 1.4% | 62.2% | 2 |
+| 马来西亚（MY） | C | hybrid | 1000 | 34.0% | 38.7% | 3.3% | 3.3% | 17.1% | 3.6% | 1.7% | 63.2% | 5 |
+| 印尼（ID） | C | rules | 1000 | 28.6% | 26.4% | 2.9% | 3.7% | 35.0% | 3.4% | 1.0% | 38.1% | 2 |
+| 印尼（ID） | C | crf | 1000 | 9.9% | 32.0% | 28.2% | 8.4% | 21.0% | 0.5% | 0.2% | 42.8% | 4 |
+| 印尼（ID） | C | hybrid | 1000 | 28.6% | 29.5% | 2.4% | 3.6% | 32.6% | 3.3% | 1.0% | 41.5% | 6 |
+| 泰国（TH） | C | rules | 1000 | 17.3% | 41.8% | 9.2% | 8.9% | 20.0% | 2.8% | 1.0% | 29.3% | 5 |
+| 泰国（TH） | C | crf | 1000 | 11.5% | 28.9% | 26.1% | 19.3% | 11.8% | 2.4% | 1.0% | 19.6% | 3 |
+| 泰国（TH） | C | hybrid | 1000 | 17.3% | 43.1% | 8.5% | 8.0% | 20.1% | 3.0% | 1.2% | 29.8% | 8 |
+| 越南（VN） | C | rules | 1000 | 8.6% | 57.7% | 2.0% | 4.0% | 26.2% | 1.5% | 1.0% | 47.9% | 2 |
+| 越南（VN） | C | crf | 1000 | 8.5% | 41.1% | 20.0% | 15.4% | 13.9% | 1.1% | 0.7% | 40.8% | 3 |
+| 越南（VN） | C | hybrid | 1000 | 11.0% | 56.5% | 1.5% | 3.9% | 25.1% | 2.0% | 1.3% | 48.0% | 4 |
+| 菲律宾（PH） | C | rules | 1000 | 19.7% | 31.4% | 15.3% | 9.4% | 22.6% | 1.6% | 0.5% | 34.0% | 3 |
+| 菲律宾（PH） | C | crf | 1000 | 11.8% | 38.7% | 21.7% | 8.5% | 18.8% | 0.5% | 0.1% | 39.9% | 3 |
+| 菲律宾（PH） | C | hybrid | 1000 | 20.6% | 38.6% | 9.0% | 6.0% | 24.2% | 1.6% | 0.5% | 40.1% | 6 |
 
 ## 合成地址
 
 | 市场 | 类别 | 解析 | 条数 | 正确·直接通过 | 正确·要求确认 | 判 FIX·片区对 | 判 FIX | 错误建议 | 静默错误 | 其中偏差 >1 公里 | 500 米内 | 毫秒/条 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 澳大利亚（AU） | A | rules | 1000 | 82.5% | 8.7% | 0.0% | 5.8% | 1.8% | 1.2% | 0.2% | 97.6% | 2 |
+| 澳大利亚（AU） | A | rules | 1000 | 82.5% | 8.7% | 0.0% | 5.8% | 1.8% | 1.2% | 0.2% | 97.6% | 3 |
 | 澳大利亚（AU） | A | crf | 1000 | 86.7% | 5.7% | 0.0% | 5.8% | 0.6% | 1.2% | 0.2% | 99.0% | 1 |
-| 澳大利亚（AU） | A | hybrid | 1000 | 86.4% | 5.9% | 0.0% | 5.8% | 0.7% | 1.2% | 0.2% | 98.9% | 3 |
+| 澳大利亚（AU） | A | hybrid | 1000 | 86.4% | 5.9% | 0.0% | 5.8% | 0.7% | 1.2% | 0.2% | 98.9% | 2 |
 | 德国（DE） | A | rules | 1000 | 79.6% | 6.8% | 0.0% | 5.5% | 5.4% | 2.7% | 0.2% | 94.3% | 2 |
 | 德国（DE） | A | crf | 1000 | 83.0% | 9.7% | 0.0% | 4.9% | 2.2% | 0.2% | 0.2% | 97.3% | 1 |
 | 德国（DE） | A | hybrid | 1000 | 81.9% | 8.7% | 0.0% | 4.6% | 2.1% | 2.7% | 0.2% | 97.5% | 3 |
 | 法国（FR） | A | rules | 1000 | 89.5% | 3.1% | 0.0% | 5.1% | 1.9% | 0.4% | 0.0% | 97.4% | 2 |
 | 法国（FR） | A | crf | 1000 | 88.2% | 6.6% | 0.0% | 4.3% | 0.9% | 0.0% | 0.0% | 99.2% | 1 |
-| 法国（FR） | A | hybrid | 1000 | 90.6% | 4.2% | 0.0% | 4.3% | 0.6% | 0.3% | 0.0% | 99.2% | 3 |
-| 荷兰（NL） | A | rules | 1000 | 86.7% | 7.0% | 0.0% | 4.2% | 0.7% | 1.4% | 0.0% | 99.4% | 3 |
+| 法国（FR） | A | hybrid | 1000 | 90.6% | 4.2% | 0.0% | 4.3% | 0.6% | 0.3% | 0.0% | 99.2% | 2 |
+| 荷兰（NL） | A | rules | 1000 | 86.7% | 7.0% | 0.0% | 4.2% | 0.7% | 1.4% | 0.0% | 99.4% | 4 |
 | 荷兰（NL） | A | crf | 1000 | 87.3% | 8.0% | 0.0% | 4.0% | 0.1% | 0.6% | 0.0% | 100.0% | 1 |
-| 荷兰（NL） | A | hybrid | 1000 | 87.1% | 7.4% | 0.0% | 3.8% | 0.3% | 1.4% | 0.0% | 100.0% | 4 |
+| 荷兰（NL） | A | hybrid | 1000 | 87.1% | 7.4% | 0.0% | 3.8% | 0.3% | 1.4% | 0.0% | 100.0% | 3 |
 | 阿联酋（AE） | B | rules | 1000 | 1.9% | 45.3% | 0.0% | 34.7% | 18.0% | 0.1% | 0.0% | 52.6% | 2 |
 | 阿联酋（AE） | B | crf | 1000 | 7.0% | 69.0% | 0.0% | 2.0% | 21.9% | 0.1% | 0.0% | 72.9% | 1 |
-| 阿联酋（AE） | B | hybrid | 1000 | 7.0% | 69.2% | 0.0% | 1.2% | 22.5% | 0.1% | 0.0% | 73.1% | 4 |
-| 沙特（SA） | B | rules | 1000 | 10.2% | 66.8% | 0.0% | 7.4% | 15.6% | 0.0% | 0.0% | 76.2% | 2 |
+| 阿联酋（AE） | B | hybrid | 1000 | 7.0% | 69.2% | 0.0% | 1.2% | 22.5% | 0.1% | 0.0% | 73.1% | 3 |
+| 沙特（SA） | B | rules | 1000 | 10.2% | 66.8% | 0.0% | 7.3% | 15.7% | 0.0% | 0.0% | 76.2% | 2 |
 | 沙特（SA） | B | crf | 1000 | 13.1% | 79.8% | 0.0% | 0.6% | 6.4% | 0.1% | 0.0% | 91.2% | 1 |
 | 沙特（SA） | B | hybrid | 1000 | 13.1% | 79.7% | 0.0% | 0.4% | 6.7% | 0.1% | 0.0% | 91.0% | 3 |
-| 马来西亚（MY） | C | rules | 1000 | 18.7% | 71.6% | 0.0% | 2.4% | 7.3% | 0.0% | 0.0% | 89.8% | 2 |
+| 马来西亚（MY） | C | rules | 1000 | 18.7% | 71.6% | 0.0% | 2.4% | 7.3% | 0.0% | 0.0% | 89.8% | 3 |
 | 马来西亚（MY） | C | crf | 1000 | 23.2% | 72.9% | 0.0% | 0.1% | 3.8% | 0.0% | 0.0% | 95.0% | 1 |
 | 马来西亚（MY） | C | hybrid | 1000 | 23.8% | 72.0% | 0.0% | 0.0% | 4.2% | 0.0% | 0.0% | 94.7% | 4 |
-| 印尼（ID） | C | rules | 1000 | 22.5% | 66.6% | 0.0% | 0.4% | 10.5% | 0.0% | 0.0% | 88.8% | 2 |
+| 印尼（ID） | C | rules | 1000 | 22.5% | 66.6% | 0.0% | 0.3% | 10.6% | 0.0% | 0.0% | 88.8% | 2 |
 | 印尼（ID） | C | crf | 1000 | 32.2% | 61.3% | 0.0% | 0.3% | 6.2% | 0.0% | 0.0% | 92.4% | 2 |
 | 印尼（ID） | C | hybrid | 1000 | 32.7% | 60.6% | 0.0% | 0.0% | 6.7% | 0.0% | 0.0% | 92.2% | 3 |
 | 泰国（TH） | C | rules | 1000 | 20.2% | 74.1% | 0.0% | 1.8% | 3.9% | 0.0% | 0.0% | 93.1% | 3 |
@@ -87,296 +87,296 @@
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| 53 Talavera Rd, Sydney, 2113 | FIX | ROUTE | 53 Talavera Road, Sydney NSW 2113 |
-| SHOP 1, FOOTSCRAY PLAZA SHOPPING CENTRE, CNR ALBERT & PAISLEY STREET, FOOTSCRAY, 3011 | FIX | ROUTE | Shop 1, Paisley Street, Footscray VIC 3011 |
-| Broughton Street,, Sydney, 2219 | FIX | ROUTE | Broughton Street, Sydney NSW 2219 |
-| Hotham St, St Kilda East, 3183 | FIX | ROUTE | Hotham Street, St Kilda East VIC 3183 |
+| 872 Canterbury Rd, Sydney, 2196 | FIX | ROUTE | 872 Canterbury Road, Sydney NSW 2196 |
+| Cnr Davies &, Arab Rd, Sydney, 2211 | FIX | ROUTE | Arab Road, Sydney NSW 2211 |
+| Unit 2/153/155 Orchardleigh St, Sydney, 2161 | FIX | ROUTE | Unit 2/153/155, Orchardleigh Street, Sydney NSW 2161 |
+| Oak Rd N, Kirrawee, 2232 | FIX | ROUTE | Oak Road, Kirrawee NSW 2232 |
 
 **澳大利亚 · 静默错误**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| 1/2 Tube St, Melbourne, 3020 | ACCEPT | PREMISE | Unit 1, 2 Tube Street, Melbourne VIC 3020 |
-| 32 Lawrence St, Sydney, 2096 | CONFIRM_ADD_SUBPREMISES | PREMISE | 32 Lawrence Street, Sydney NSW 2096 |
-| 404 High Street, WINDSOR, 3181 | ACCEPT | PREMISE | 404 High Street, Windsor VIC 3181 |
-| Westfield, 236 Pacific Hwy, Sydney, 2077 | CONFIRM_ADD_SUBPREMISES | PREMISE | 236 Pacific Highway, Sydney NSW 2077 |
+| 155 Queen St Level 10, Melbourne, 3000 | ACCEPT | PREMISE | Level 10, 155 Queen Street, Melbourne VIC 3000 |
+| 345 Pacific Hwy Suite 9, North Sydney, 2060 | ACCEPT | PREMISE | Suite 9, 345 Pacific Highway, North Sydney NSW 2060 |
+| 233 Riversdale Road, Hawthorn, VIC, 3122, 3122 | ACCEPT | PREMISE | 233 Riversdale Road, Hawthorn VIC 3122 |
+| 25A Barker Rd, Sydney, 2135 | ACCEPT | PREMISE | 25A Barker Road, Sydney NSW 2135 |
 
 **澳大利亚 · 错误建议**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| 775 Sydney Rd, Melbourne, 3056 | CONFIRM | PREMISE | 775 Sydney Road, Melbourne VIC 3058 |
-| Unit 2/174-176 Victoria St, Sydney, 2015 | CONFIRM | ROUTE | Unit 2/174-176, Victoria Street, Sydney NSW 2015 |
-| Suite 1/200 Lygon St, Melbourne, 3053 | CONFIRM | PREMISE | Suite 1, 200 Lygon Street, Melbourne VIC 3057 |
-| 12 Cabots Drive, Altona North, 3025 | CONFIRM | PREMISE | 12 Cabot Drive, Altona North VIC 3025 |
-
-**德国 · 错误建议**
-
-| 输入 | 结论 | 粒度 | 标准化结果 |
-|---|---|---|---|
-| Alt-Karow 3, Berlin, 13125 | CONFIRM | PREMISE | Boenkestraße 3, 13125 Karow |
-| Europaplatz 2, Berlin, 10557 | CONFIRM | PREMISE | Holsteiner Ufer 2, 10557 Hansaviertel |
-| Mierendorffplatz 8, Berlin, 10589 | CONFIRM | PREMISE | Bonhoefferufer 8, 10589 Charlottenburg |
-| Terminal 1, Schönefeld, 12529 | CONFIRM | PREMISE | Mahlower Allee 1, 12529 Schönefeld |
-
-**德国 · 静默错误**
-
-| 输入 | 结论 | 粒度 | 标准化结果 |
-|---|---|---|---|
-| Handy Germany, Stuttgarter Platz 1A, Berlin, 10627 | ACCEPT | PREMISE | Stuttgarter Platz 1 A, 10627 Charlottenburg |
-| Neuendorfstraße 5, Hennigsdorf, 16761 | ACCEPT | PREMISE | Neuendorfstraße 5, 16761 Hennigsdorf |
-| Berliner Str. 8, Velten, 16727 | ACCEPT | PREMISE | Berliner Straße 8, 16727 Oberkrämer |
-| Beusselstraße 44/N-Q, Berlin, 10553 | ACCEPT | PREMISE | Beusselstraße 1, 10553 Moabit |
+| Building A, Level, 1, Room A.1.08, Lidcombe, 2141 | CONFIRM | PREMISE | Level 1, 1 Eucalyptus Street, LIDCOMBE NSW 2141 |
+| 89-93 High St, Melbourne, 3101 | CONFIRM | PREMISE | 93 High Street, Melbourne VIC 3070 |
+| 9A George St Suite 2, Sydney, 2137 | CONFIRM | PREMISE | Suite 2, 9A George Street, Sydney NSW 2166 |
+| KINGS ARCADE, Suites 11-12, 2/978 High St, Melbourne, 3143 | CONFIRM | PREMISE | Unit 2, 11 High Street, Melbourne VIC 3181 |
 
 **德国 · 判 FIX**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| Am Ostbahnhof, Berlin, 10243 | FIX | ROUTE | Am Ostbahnhof, 10243 |
-| Hagenower Ring, Berlin, 13059 | FIX | ROUTE | Hagenower Ring, 13059 |
-| Reichenberger Straße 113, Berlin, 10999 | FIX | ROUTE | Reichenberger Straße 113, 10999 |
-| Lichtenhainer Straße 16, Berlin, 12627 | FIX | ROUTE | Lichtenhainer Straße 16, 12627 |
+| Iranische Straße 6, Berlin, 13347 | FIX | ROUTE | Iranische Straße 6, 13347 |
+| Alt-Mahlsdorf 121 a, Berlin, 12623 | FIX | ROUTE | Alt-Mahlsdorf 121, 12623 |
+| Lindauer Allee 35, Berlin, 13407 | FIX | ROUTE | Lindauer Allee 35, 13407 |
+| Köllnischer Park, Wallstraße 51, Berlin, 10179 | FIX | ROUTE | Wallstraße 51, 10179 |
+
+**德国 · 错误建议**
+
+| 输入 | 结论 | 粒度 | 标准化结果 |
+|---|---|---|---|
+| Kohlfurter Straße 1, Berlin, 10999 | CONFIRM | PREMISE | Paul-Lincke-Ufer 1, 10999 Kreuzberg |
+| Ausbau Kirschberg 23, Neuhausen/Spree, 03058 | CONFIRM | ROUTE | Ausbau 23, 03058 |
+| Alt-Kladow 22, Berlin, 14089 | CONFIRM | PREMISE | Kafkastraße 22, 14089 Kladow |
+| Schloßstraße, Berlin, 10178 | CONFIRM | PREMISE | Schloßstraße 10, 12163 Steglitz |
+
+**德国 · 静默错误**
+
+| 输入 | 结论 | 粒度 | 标准化结果 |
+|---|---|---|---|
+| Lennéstraße 13, Berlin, 10785 | ACCEPT | PREMISE | Lennéstraße 13, 10785 Tiergarten |
+| Hubertusbader Straße 35, Berlin, 14193 | ACCEPT | PREMISE | Hubertusbader Straße 35, 14193 Grunewald |
+| Bruno-Bürgel-Weg 70 - 80, Berlin, 12439 | ACCEPT | PREMISE | Bruno-Bürgel-Weg 70, 12439 Niederschöneweide |
+| Rothe Management, Großbeerenstraße 262, Potsdam, 14480 | ACCEPT | PREMISE | Großbeerenstraße 262, 14480 Potsdam |
 
 **法国 · 判 FIX**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| Imp. des Jardiniers, Paris, 75011 | FIX | ROUTE | Impasse des Jardiniers, 75011 |
-| Rue de Saint-Simon, Paris, 75007 | FIX | ROUTE | Rue de Saint-Simon, 75007 |
-| 170 Rue de la Nouvelle France, Montreuil, 93100 | FIX | ROUTE | 170 Rue Nouvelle, 93100 Montreuil |
-| 82 Av. Georges Lafont, Paris, 75016 | FIX | ROUTE | 82 Avenue Georges Lafont, 75016 |
-
-**法国 · 静默错误**
-
-| 输入 | 结论 | 粒度 | 标准化结果 |
-|---|---|---|---|
-| 46 Rue Condorcet, Paris, 75009 | ACCEPT | PREMISE | 46 Rue Condorcet, 75009 Paris 9e Arrondissement |
-| CAP 18 189 rue Aubervilliers Bat 5 allée F No 9, Paris, 75018 | ACCEPT | PREMISE | 189 Rue d'Aubervilliers, 75018 Paris 18e Arrondissement |
-| 35 Av. de la Prte de Choisy, Paris, 75013 | ACCEPT | PREMISE | 35 Avenue de Choisy, 75013 Paris 13e Arrondissement |
-| 5 Place de Port au Prince, Paris, 75013 | ACCEPT | PREMISE | 5 Place de Port-au-Prince, 75013 Paris 13e Arrondissement |
+| 35 Boulevard de Rochechouart, Paris, 75009 | FIX | ROUTE | 35 Boulevard de Rochechouart, 75009 |
+| 11 Place des Victoires, Asnières-sur-Seine, 92600 | FIX | ROUTE | 11 Place des Victoires, 92600 |
+| 40 Avenue Pierre 1er de Serbie, Paris, 75008 | FIX | ROUTE | 40 Rue Pierre, 75008 |
+| Avenue du Maine, Paris, 75015 | FIX | ROUTE | Avenue du Maine, 75015 |
 
 **法国 · 错误建议**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| 21 Rue des 4 Cheminées, Boulogne-Billancourt, 92100 | CONFIRM | PREMISE | 21 Rue des Cheminots, 75018 Paris 18e Arrondissement |
-| 3 Bis Vla Guizot, Paris, 75017 | CONFIRM | PREMISE | 3 Rue Denis Poisson, 75017 Paris 17e Arrondissement |
-| 94-96 rue Ledru Rollin, Paris, 75011 | CONFIRM | ROUTE | 94-96 Rue Ledru-Rollin, 75011 |
-| Espace Champerret, 6 Rue Jean Oestreiche, Paris, 75017 | CONFIRM | PREMISE | 6 Rue Jean, 93400 Saint-Ouen-sur-Seine |
+| 14 Rue Paul Éluard, Charenton-le-Pont, 94220 | CONFIRM | PREMISE | 14 Rue de Charenton, 75012 Paris 12e Arrondissement |
+| 53 Rue de La Rochefoucauld, Paris, 75009 | CONFIRM | PREMISE | 53 Rue de la Rochefoucauld, 92100 Boulogne-Billancourt |
+| 5 Rue Moret, Paris, 75011 | CONFIRM | PREMISE | 5 Rue Morel, 92120 Montrouge |
+| 2 Rue De Reuilly75012 Paris, Paris, 75012 | CONFIRM | PREMISE | 2 Rue François Truffaut, 75012 Paris 12e Arrondissement |
 
-**荷兰 · 判 FIX**
+**法国 · 静默错误**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| IJdoornlaan 1001, Amsterdam, 1035 | FIX | ROUTE | IJdoornlaan 1001 |
-| Hamerstraat 2/4, Amsterdam, 1021 JV | FIX | ROUTE | Hamerstraat 2/4, 1021 JV |
-| Develstein 100C, Amsterdam, 1102 AK | FIX | ROUTE | Develstein 100C, 1102 AK |
-| Sarphatistraat 35, Amsterdam, 1018 EV | FIX | ROUTE | Sarphatistraat 35, 1018 EV |
+| 10 Port de la Gare, Paris, 75013 | ACCEPT | PREMISE | 10 Port de la Gare, 75013 Paris 13e Arrondissement |
+| 34 Rue Camille Pelletan, Levallois-Perret, 92300 | ACCEPT | PREMISE | 34 Rue Camille Pelletan, 92300 Levallois-Perret |
+| 149 Rue de Sèvres, Paris, 75015 | ACCEPT | PREMISE | 149 Rue de Sèvres, 75015 Paris 15e Arrondissement |
+| 7 rue Baudin, Courbevoie, 92400 | ACCEPT | PREMISE | 7 Rue Baudin, 92400 Courbevoie |
 
 **荷兰 · 错误建议**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| Van Boshuizenstraat 12, Amsterdam, 1083 DG | CONFIRM | PREMISE | Van Boshuizenstraat 12, 1083 BA Amsterdam |
-| Eleanoor Rooseveltlaan 2, Amstelveen, 1183 CL | CONFIRM | PREMISE | Rooseveltlaan 2, 1078 NH Amstelveen |
-| Station Amsterdam Centraal, Amsterdam, 1012 AB | CONFIRM | PREMISE_PROXIMITY | Station Amsterdam-Centraal, 1012 AB |
-| Stadsplein 100, Amstelveen, 1181 ZM | CONFIRM | PREMISE | Stadsplein 100, 1181 ZM Amstelveen |
+| Schipluidenlaan 4, Amsterdam, 1062 MZ | CONFIRM | PREMISE | Schipluidenlaan 4, 1062 HE Amsterdam |
+| Kon. Wilhelminaplein 13, 1062HH, Amsterdam, 1062 HH | CONFIRM | PREMISE | Wilhelminaplein 13, 1182 ER Amstelveen |
+| Dorpsstraat, Ouderkerk a/d Amstel | CONFIRM | ROUTE | Dorpsstraat |
+| Kerk straat, Amsterdam | CONFIRM | ROUTE | Kerkstraat |
+
+**荷兰 · 判 FIX**
+
+| 输入 | 结论 | 粒度 | 标准化结果 |
+|---|---|---|---|
+| Rokin, Amsterdam, 1012KR | FIX | ROUTE | Rokin, 1012 KR |
+| Stationsplein, 41l, Amsterdam, 1012 AB | FIX | ROUTE | Stationsplein-ZW 41L, 1012 AB |
+| Asserring 93, Amstelveen, 1187 SM | FIX | ROUTE | Asserring 93, 1187 SM Amstelveen |
+| Gedempt Hamerkanaal 267, Amsterdam, 1021 KP | FIX | ROUTE | Gedempt Hamerkanaal 267, 1021 KP |
 
 **荷兰 · 静默错误**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| Mbc Netherlands, Valkenburgerstraat 194, Amsterdam, 1011 NC | CONFIRM_ADD_SUBPREMISES | PREMISE | Valkenburgerstraat 194, 1011 NC Amsterdam |
-| Service van Jo, Krugerstraat 4, Amsterdam, 1091 LE | CONFIRM_ADD_SUBPREMISES | PREMISE | Krugerstraat 4, 1091 LE Amsterdam |
-| Anthony Fokkerweg 1, Amsterdam, 1059 CM | ACCEPT | PREMISE | Anthony Fokkerweg 1, 1059 CM Amsterdam |
-| Gatwickstraat 33, Amsterdam, 1043 GL | ACCEPT | PREMISE | Gatwickstraat 33, 1043 GL Amsterdam |
+| Machineweg 1, Halfweg, 1165 NB | ACCEPT | PREMISE | Machineweg 1, 1165 NB Halfweg |
+| Rozengracht 220B, Amsterdam, 1016 NL | ACCEPT | PREMISE | Rozengracht 220B, 1016 NL Amsterdam |
+| Buitenveldert, Doornburg 2, Amsterdam, 1081 JB | ACCEPT | PREMISE | Doornburg 2, 1081 JB Buitenveldert |
+| Paasheuvelweg 25, Amsterdam, 1105 BP | ACCEPT | PREMISE | Paasheuvelweg 25, 1105 BP Amsterdam |
 
 **阿联酋 · 判 FIX**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| 22277 84744, شارع 35 36, دبي | FIX | OTHER |  |
-| Grand Millenium Hotel, دبي | FIX | OTHER |  |
-| Ajman,New Industrial Area Jurf 1, دبي, 31466 | FIX | LOCALITY |  |
-| Hassanicor Building, Ground Floor, Dubai | FIX | OTHER |  |
+| Al Shoala Building - Block E 306 - 308 - near Deira City Center, دبي, 14476 | FIX | LOCALITY |  |
+| Dubai Island | FIX | LOCALITY |  |
+| Shop 7, Building 5, دبي, 00000 | FIX | OTHER |  |
+| Dubai, دبي, <<not-applicable>> | FIX | OTHER |  |
 
 **阿联酋 · 错误建议**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| Omar Bin Al Khattab St, دبي, 78G5+78 | CONFIRM | PREMISE_PROXIMITY | Al Murar, 7HQQ78G5+78 |
-| - 43rd St, دبي, 46477 | CONFIRM | ROUTE | 3rd Street |
-| Mall of The Emirates - Ground Level, دبي, 182956 | CONFIRM | ROUTE | Ground Floor, Emirates Road |
-| TCM - G-010 & G011, Circle Mall, Dubai, 00000 | CONFIRM | PREMISE_PROXIMITY | Circle Mall, 010 |
+| 13th street, Umm Ramool, Rashidiya, دبي | CONFIRM | ROUTE | 13 Street |
+| "First Floor, Mirdif City Centre, Sheikh Mohammed Bin Zayed Road (E311 Road), Mirdif", دبي | CONFIRM | ROUTE | Sheikh Mohammed bin Zayed Road, മിർദിഫ് |
+| Office no. 111 Sheikh Hamdan Building, AI Khubaisi Area Near Abu Bakar Metro Station, DUBA | CONFIRM | PREMISE_PROXIMITY | Dubai UAE, 111 |
+| Four Points by Sheraton Production City, Dubai, دبي | CONFIRM | PREMISE_PROXIMITY | Four Points By Sheraton |
 
 **阿联酋 · 静默错误**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| Murano Residence 1, Al Furjan, Dubai, دبي, 24FR+H5J | ACCEPT | PREMISE_PROXIMITY | 1, Al Furjan, 7HQQ24FR+H5 |
-| Level 1, Emaar Square Building 4 - Office 103 - Sheikh Mohammed bin Rashid Blvd - Burj Kha | ACCEPT | PREMISE_PROXIMITY | Office 103, Emaar Square, 4 Sheikh Mohammed bin Rashid Boulevard, Даун |
-| Al Ghurair Centre, Unit G-65, Al Rigga St., دبي, 000 | ACCEPT | PREMISE_PROXIMITY | Al Ghurair Centre, 65 Al Rigga Street |
-| Sharjah Industrial Area 17/ 7CJV+C7 S102 | ACCEPT | PREMISE_PROXIMITY | 17, Muhaisnah 5, 7HQQ7CJV+C7 |
-
-**沙特 · 错误建议**
-
-| 输入 | 结论 | 粒度 | 标准化结果 |
-|---|---|---|---|
-| 7710 Abi Sufyan Ibn Harb، حي, RHNA3882, 3882, الرياض, 12474 | CONFIRM | ROUTE | 7710 Ibn Harb, 12474 |
-| Exit 25, The Western Ring Road Jarir Book Store, الرياض, NA | CONFIRM | ROUTE | 25 Western Ring Road |
-| Oqba Bin Nafea St, الرياض | CONFIRM | ROUTE | Oqbah Bin Nafea |
-| Imam Saud Bin Abdulaziz, الرياض, 12274 | CONFIRM | ROUTE | Saeed Al Bana, 12274 |
+| Upper Level, The Boulevard, Jumeirah Emirates Towers, Sheikh Zayed Road, DIFC, دبي, 00000 | ACCEPT | PREMISE_PROXIMITY | The Boulevard, Sheikh Zayed Road (south), Jumeira |
+| 8C8W+7G - Industrial AreaIndustrial Area 13 - Sharjah, الشارقة, 79681 | ACCEPT | PREMISE_PROXIMITY | 13, Mughaidir, 7HQQ8C8W+7G |
+| Aveda Flagship Salon, Rooftop of Galleria Mall, Al Wasl Road, دبي | ACCEPT | PREMISE_PROXIMITY | Galleria Mall, Al Wasl Road |
+| Oud Metha Metro Station, Oud Metha Rd, Near Rashid Hospital, Dubai | ACCEPT | PREMISE_PROXIMITY | Rashid Hospital, Oud Metha Road, ഔദ് മേത്ത |
 
 **沙特 · 判 FIX**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| الرياض السعودية, الرياض | FIX | OTHER |  |
-| السعوديه الرياض, الرياض, 13334 | FIX | LOCALITY |  |
-| Khories Rd, East Naseem, الرياض | FIX | OTHER |  |
-| head office : Batha, Bangaldeshi Market, Near Lu Lu Market Gate No-4, الرياض | FIX | LOCALITY |  |
+| Riyadh, الرياض, 11461 | FIX | LOCALITY |  |
+| حي المرقب - الرياض, الرياض, 12345 | FIX | LOCALITY |  |
+| طريق الثمامة، الصحافة، الرياض 13315, الرياض, 13315 | FIX | LOCALITY |  |
+| KASCH, Riyadh | FIX | OTHER |  |
+
+**沙特 · 错误建议**
+
+| 输入 | 结论 | 粒度 | 标准化结果 |
+|---|---|---|---|
+| King Abdullah Road, الرياض | CONFIRM | ROUTE | King Abdullah Rd |
+| 8406 Prince Turki Ibn Abdulaziz Al Awwal Rd, An Nakhil Riyadh 12391 4990, الرياض, 12391 | CONFIRM | ROUTE | 4990 Prince Turki Bin Abdelaziz, 12391 |
+| Al Sail Khabeer St. Al Ghadeer Dist., الرياض, 11461 | CONFIRM | ROUTE | Al Sail, 11461 |
+| king saud university, الرياض, 00966 | CONFIRM | ROUTE | King Saud, 00966 |
 
 **沙特 · 静默错误**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| QJ83+CPQ, الرياض | ACCEPT | PREMISE_PROXIMITY | Hittin, 7HP8QJ83+CP |
-| Kingdom Centre - Olaya St., الرياض, 12345 | ACCEPT | PREMISE_PROXIMITY | Kingdom Centre, Al Olaya Street, 12345 |
-| RM8Q+97M, الرياض | ACCEPT | PREMISE_PROXIMITY | An Nada, 7HP8RM8Q+97 |
-| VJ6W+7RR, الرياض, 13336 | ACCEPT | PREMISE_PROXIMITY | Al Aarid, 13336, 7HP8VJ6W+7R |
+| MM7M+P2C, الرياض | ACCEPT | PREMISE_PROXIMITY | Al Mutamarat District, 7HP8MM7M+P2 |
+| ⁧مجمع الرصيص التجاري, RHOA6468, 6468 شارع العليا, الرياض, 12211 | ACCEPT | ROUTE | 6468 Al Olaya Street, 12211 |
+| Kingdom Centre, Olaya Street, Olaya Dist, الرياض | ACCEPT | PREMISE_PROXIMITY | Kingdom Centre, Al Olaya Street |
+| Northern Ring Rd الفرعي, PJR3+JM6, الرياض, 12394 | ACCEPT | PREMISE_PROXIMITY | Northern Ring Rd, Hittin, 12394, 7HP8PJR3+JM |
 
 **马来西亚 · 错误建议**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| No.54-1, Jalan PJS11/28A, Sunway Metro. Selangor, Subang Jaya, 46150 | CONFIRM | ROUTE | 54-1 Persiaran Metro, 46150 |
-| Tingkat 12, Wisma Perkeso, Bandar Kuala Lumpur | CONFIRM | PREMISE_PROXIMITY | Wisma PERKESO, 12 |
-| Taman Tasik Perdana, Kuala Lumpur | CONFIRM | ROUTE | Lebuh Perdana, Kuala Lumpur |
-| No. 41, Aked Nisara, Jalan Tunku Abdul Rahman, Bandar Kuala Lumpur, 50100 | CONFIRM | ROUTE | 41 Jalan Tunku, 50100 |
+| 145 Jalan Ampang, Bandar Kuala Lumpur, 50450 | CONFIRM | ROUTE | 145 Jalan Ampang, Kuala Lumpur, 50450 |
+| Jalan Equine 10A, Bandar Kuala Lumpur, 43300 | CONFIRM | ROUTE | 10A Jalan Equine, 43300 |
+| Jalan Sentul, Bandar Kuala Lumpur | CONFIRM | ROUTE | Jalan Sentul |
+| No. 1.57, 1st  Floor South Citi Plaza Taman Serdang Perdana Seksyen 1, Seri Kembangan, 433 | CONFIRM | ROUTE | 1St Floor, 57 Jalan Serdang, 43300 |
 
 **马来西亚 · 判 FIX**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| Corus Hotel, Kuala Lumpur, 50450 | FIX | LOCALITY |  |
-| jalan pju 10/13, Petaling Jaya, 47830 | FIX | LOCALITY |  |
-| 10 Jalan SM4 Taman Sunway Batu Caves, Batu Caves, 68100 | FIX | LOCALITY |  |
-| C-2-19, Jalan 2/142A Megan Phoenix, Kuala Lumpur, 56000 | FIX | LOCALITY |  |
+| Suria KLCC, Kuala Lumpur, 50088 | FIX | LOCALITY |  |
+| 2nd Floor, 29, Jalan SS 22/23, Petaling Jaya, 47400 | FIX | LOCALITY |  |
+| جامعه بوترا ماليزيا Universiti Putra Malaysia UPM, Seri Kembangan, 43000 | FIX | LOCALITY |  |
+| Depan Empire, Subang Jaya | FIX | LOCALITY |  |
 
 **马来西亚 · 静默错误**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| 29 21, Jalan Ampang Utama 2/2, Ampang, 68000 | ACCEPT | ROUTE | 21 Jalan Ampang Utama 2/2, Ampang, 68000 |
-| 5 Jalan 5/62A, Batu, 52200 | ACCEPT | ROUTE | 5 Jalan 5/62A, 52200 |
-| 1 Jalan Puteri 4/1, Puchong, 47100 | ACCEPT | ROUTE | 1 Jalan Puteri 4/1, Puchong, 47100 |
-| Unit B-G-11 Gateway Corporate Suites Gateway Kiaramas, 1, Jalan Desa Kiara, Kuala Lumpur,  | ACCEPT | ROUTE | 1 Jalan Desa Kiara, Kiaramas, 50480 |
+| Heritage House, 33 Jalan Yap Ah Shak, Bandar Kuala Lumpur, 50300 | ACCEPT | PREMISE_PROXIMITY | Heritage House, 33 Jalan Yap Ah Shak, Kuala Lumpur, 50300 |
+| 9 Jalan Suasana 2/7A, Cheras, 43200 | ACCEPT | ROUTE | 9 Jalan Suasana 2/7A, Cheras, 43200 |
+| 19 Jalan Kolam Air Lama, Ampang, 68000 | ACCEPT | ROUTE | 19 Jalan Kolam Air Lama, Ampang, 68000 |
+| 2 Jalan Manja 5, Batu, 52200 | ACCEPT | ROUTE | 2 Jalan Manja 5, 52200 |
 
 **印尼 · 错误建议**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| Bintaro, Tangerang | CONFIRM | ROUTE | Jalan Tangerang |
-| Jalan Bendungan Jatiluhur 28, Jakarta, 10210 | CONFIRM | ROUTE | Jalan Bendungan 28, 10210 |
-| Samsung Service Center, PGC Cililitan Pusat Grosir Cililitan (PGC), Lantai 3, 968 & 969+G, | CONFIRM | ROUTE | Lantai 3, Gang Service 968, Jakarta Timur, 13630 |
-| Cengkareng Business City 8, Tangerang Kota, 15125 | CONFIRM | ROUTE | Jalan Tangerang 8, 15125 |
-
-**印尼 · 静默错误**
-
-| 输入 | 结论 | 粒度 | 标准化结果 |
-|---|---|---|---|
-| Jl. Moh. Kahfi 1 No.2, RT.1/RW.6, Jakarta Selatan, 12620 | ACCEPT | ROUTE | Jalan Kahfi 1, Jakarta Selatan, 12620 |
-| Jalan Raya Bogor 27, Jakarta, 13740 | ACCEPT | ROUTE | Jalan Raya Bogor 27, 13740 |
-| Jl. Moh. Kahfi 1 No.11, RT.6/RW.4, Jakarta Selatan, 12630 | ACCEPT | ROUTE | Jalan Kahfi 1, Jakarta Selatan, 12630 |
-| Jl. Meruya Utara No. 17, Jakarta Barat, 11620 | ACCEPT | ROUTE | Jalan Meruya Utara 17, Jakarta Barat, 11620 |
+| Jl. Prima Raya, RT.4/RW.10, Jakarta Barat, 11820 | CONFIRM | ROUTE | Jalan Prima Raya, 11820 |
+| Jl. R.A. Kartini No.1, RT.9/RW.7, Jakarta Selatan, 12440 | CONFIRM | ROUTE | Jalan R 1, Jakarta Selatan, 12440 |
+| Bojong Kulur Gunung Putri, Bekasi, 16969 | CONFIRM | ROUTE | Jalan Putri, 16969 |
+| Jl. Kihajar Dewantara, RT.02/RW.10, Tangerang Selatan, 15411 | CONFIRM | ROUTE | Jalan Tangerang, 15411 |
 
 **印尼 · 判 FIX**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| Palmerah, Jakarta Barat, 14420 | FIX | LOCALITY |  |
-| RT.9/RW.7, Jakarta Timur, 13460 | FIX | LOCALITY |  |
-| Jalan Raya Psr Minggu 2 B-C Ged IBA, Jakarta Selatan, 12780 | FIX | LOCALITY |  |
-| Lippo Mall, Jakarta | FIX | OTHER |  |
+| Esutubizi Centre 2nd Floor, Jl, Waltermonginsidi No. 71, Jakarta Selatan | FIX | LOCALITY |  |
+| RT.14/RW.9, Jakarta Barat, 11810 | FIX | LOCALITY |  |
+| Rukan Avenue No.8 007, RT.11/RW.8, Jakarta Timur, 13910 | FIX | LOCALITY |  |
+| Jl. TPU Prumpung No.1, RW.2, Jakarta Timur, 13410 | FIX | LOCALITY |  |
 
-**泰国 · 错误建议**
-
-| 输入 | 结论 | 粒度 | 标准化结果 |
-|---|---|---|---|
-| 32/1 พระราม 9 ซอย 41, กรุงเทพมหานคร, 10250 | CONFIRM | ROUTE | 32/1 ซอยพระราม 9 ซอย 41, 10250 |
-| 41 ซอย ร่วมพัฒนา, กรุงเทพมหานคร, 10250 | CONFIRM | ROUTE | 41 ซอยร่วมพัฒนา, 10250 |
-| บ้านเอื้ออาทรร่มเกล้า2 ซอย12, กรุงเทพมหานคร, 10520 | CONFIRM | ROUTE | 12 ซอยร่มเกล้า 2, 10520 |
-| Bangkrang, กรุงเทพมหานคร, 11000 | CONFIRM | ROUTE | Bangkrang 5, 11000 |
-
-**泰国 · 静默错误**
+**印尼 · 静默错误**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| 9 หมู่ 10 ถนนเพชรเกษม, กรุงเทพมหานคร, 10160 | ACCEPT | ROUTE | 10 ถนนเพชรเกษม, 10160 |
-| 1000/161,164.,1st Fl Liberty Plaza Building,Soi Thonglor(Sukhumvit55, ถ. สุขุมวิท, กรุงเทพ | ACCEPT | ROUTE | 1St Floor, 164 Sukhumvit Road, 10110 |
-| 11 ถนน สุขุมวิท, กรุงเทพมหานคร, 10260 | ACCEPT | ROUTE | 11 ถนนสุขุมวิท, 10260 |
-| 999/9 ถนน พระรามที่ 1, ปทุมวัน, 10330 | ACCEPT | ROUTE | 999/9 ถนนพระรามที่ 1, ปทุมวัน, 10330 |
+| Mall Bintaro Jaya X Change Lantai LG #129, Boulevard Bintaro Jaya, Bintaro Jaya Sektor 7 B | ACCEPT | ROUTE | #129, Jalan Boulevard Bintaro Jaya 2, Bintaro Jaya, 15117 |
+| Jalan Pangeran Tubagus Angke 2, Jakarta, 11460 | ACCEPT | ROUTE | Jalan Pangeran Tubagus Angke 2, 11460 |
+| Jalan Cikoko Timur II 2B, Jakarta, 12770 | ACCEPT | ROUTE | Jalan Cikoko Timur II 2B, 12770 |
+| Sequis Center, Senayan, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta, Indonesia 20t | ACCEPT | PREMISE_PROXIMITY | Unit 6, Daerah Khusus IbuKota Jakarta, Jalan Jenderal Sudirman 71, Jak |
 
 **泰国 · 判 FIX**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| ซอย น้อมสุข 401, กรุงเทพมหานคร, 10240 | FIX | LOCALITY |  |
-| พัฒนาการ, กรุงเทพมหานคร, 10250 | FIX | LOCALITY |  |
-| หนองใหญ่, กรุงเทพมหานคร, 10160 | FIX | LOCALITY |  |
-| ปากซอยไปรษณีย์สุทธิสาร, กรุงเทพมหานคร | FIX | OTHER |  |
+| พระยามนธาตุ, กรุงเทพมหานคร, 10150 | FIX | LOCALITY |  |
+| 695/2 Ladprao, Saparnsong, Wangthonglang, กรุงเทพมหานคร, 10310 | FIX | LOCALITY |  |
+| 120/36, กรุงเทพมหานคร, 10150 | FIX | LOCALITY |  |
+| โครงการ Aqua อารีย์ 488, กรุงเทพมหานคร, 10400 | FIX | LOCALITY |  |
+
+**泰国 · 错误建议**
+
+| 输入 | 结论 | 粒度 | 标准化结果 |
+|---|---|---|---|
+| 89/5 วิลเลต ทาวน์โฮม กาญจนาภิเษก, กรุงเทพมหานคร, 10150 | CONFIRM | ROUTE | 89/5 ถนนกาญจนาภิเษก, 10150 |
+| ปตท.เสรีไทย, กรุงเทพมหานคร, 10240 | CONFIRM | ROUTE | ถนนเสรีไทย, 10240 |
+| 200/1, ถนนกำแพงเพชร, กรุงเทพมหานคร, 10900 | CONFIRM | ROUTE | 200/1 ถนนกำแพงเพชร, 10900 |
+| สินทวี, กรุงเทพมหานคร | CONFIRM | ROUTE | ซอยสินทวี |
+
+**泰国 · 静默错误**
+
+| 输入 | 结论 | 粒度 | 标准化结果 |
+|---|---|---|---|
+| 93/136 ซอยเซ็นต์หลุยส์ 3 แยก 30 ถนนจันทน์, กรุงเทพมหานคร, 10120 | ACCEPT | ROUTE | 30 ถนนจันทน์, 10120 |
+| 40 ถนน หทัยราษฎร์, กรุงเทพมหานคร, 10510 | ACCEPT | ROUTE | 40 ถนนหทัยราษฎร์, 10510 |
+| 120 ถนน ราชปรารภ, กรุงเทพมหานคร, 10400 | ACCEPT | ROUTE | 120 ถนนราชปรารภ, 10400 |
+| ศูนย์ราชการ แจ้งวัฒนะ, 120 ถนน แจ้งวัฒนะ, กรุงเทพมหานคร, 10210 | ACCEPT | ROUTE | 120 ถนนแจ้งวัฒนะ, 10210 |
 
 **越南 · 错误建议**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| 472/12 Vườn Lài, Khu Phố 3, Phường An Phú Đông, Quận Gò Vấp, 700000 | CONFIRM | ROUTE | 472/12 Đường An Phú, Khu phố 3, 700000 |
-| 28 Quốc Lộ 1, Quận 12, 71516 | CONFIRM | ROUTE | 28 Quốc Lộ 1, 71516 |
-| 17 Đường Số 12, Quận Bình Thạnh, 72310 | CONFIRM | ROUTE | Dương Thanh, 72310 |
-| 497/5 Sư Vạn Hạnh, Quận 10, 700000 | CONFIRM | ROUTE | 497/5 Đường Sư Vạn Hạnh, 700000 |
-
-**越南 · 判 FIX**
-
-| 输入 | 结论 | 粒度 | 标准化结果 |
-|---|---|---|---|
-| 666/46/11 Hẻm 666/46 Đường 3/2, Quận 10, 72506 | FIX | LOCALITY |  |
-| 20/1C QL1A, Quận 12, 700000 | FIX | LOCALITY |  |
-| 864 Đường Vĩnh Lộc, Huyện Bình Chánh, 71819 | FIX | LOCALITY |  |
-| 1/90 Đ. Mỹ Phước - Tân Vạn, Thuận Giao, Hồ Chí Minh, Quận 7, 750000 | FIX | LOCALITY |  |
+| 46 Trần Huy Liệu Phú Nhuận, Quận Gò Vấp | CONFIRM | ROUTE | 46 Trần Huy Liệu, Phú Nhuận |
+| Trần Quang Khải, phường Tân Định, Quận 1, Quận Bình Thạnh, 700000 | CONFIRM | ROUTE | 1 Trần Quang Khải, Phường Tân Định, 700000 |
+| 36 Đường Tân Hòa, Dĩ An, 75308 | CONFIRM | ROUTE | 36 Tân Hòa, 75308 |
+| 246 Lê Văn Việt, Phường Long Trường, Quận 7 | CONFIRM | ROUTE | 246 Lê Văn Việt |
 
 **越南 · 静默错误**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| 20D Đường Trương Quốc Dung, Quận Phú Nhuận, 72217 | ACCEPT | ROUTE | 20D Đường Trương Quốc Dung, Phường Phú Nhuận, 72217 |
-| 23 Đường Lê Trung Nghĩa, Quận Tân Bình, 72111 | ACCEPT | ROUTE | 23 Lê Trung Nghĩa, Phường Tân Bình, 72111 |
-| 38 Đường Trương Quốc Dung, Quận Phú Nhuận, 72217 | ACCEPT | ROUTE | 38 Đường Trương Quốc Dung, Phường Phú Nhuận, 72217 |
-| 258 Đường Bình Phú, Thủ Đức, 71311 | ACCEPT | ROUTE | 258 Đường Bình Phú, 71311 |
+| 43 Đường Lô C, Thủ Đức, 71312 | ACCEPT | ROUTE | 43 Đường Lô C, 71312 |
+| 37 Đại Lộ Bình Dương, Thuận An, 75207 | ACCEPT | ROUTE | 37 Đại lộ Bình Dương, 75207 |
+| 923 Đường Nguyễn Kiệm, Quận Gò Vấp, 71409 | ACCEPT | ROUTE | 923 Đường Nguyễn Kiệm, Phường Gò Vấp, 71409 |
+| 435 Đường Lê Đức Thọ, Quận Gò Vấp, 71413 | ACCEPT | ROUTE | 435 Đường Lê Đức Thọ, Phường Gò Vấp, 71413 |
 
-**菲律宾 · 错误建议**
-
-| 输入 | 结论 | 粒度 | 标准化结果 |
-|---|---|---|---|
-| 2nd floor San lorenzo Place Edsa corner chino roces ave., Makati, 1223 | CONFIRM | ROUTE | 2Nd Floor, Chino Roces Avenue, Makati, 1223 |
-| Level 5, One Ayala (Ayala Malls, Makati, 1226 | CONFIRM | PREMISE_PROXIMITY | Level 5, 𝗔𝘆𝗮𝗹𝗮 𝗠𝗮𝗹𝗹𝘀, 1226 |
-| at Epifanio delos Santos Ave., Quezon City, 1109 | CONFIRM | ROUTE | Delos Santos Street, Quezon City, 1109 |
-| L2 Trinisia Building , Arayat Street, San Martin De Porres , San Martin De Pores , 1111 Qu | CONFIRM | ROUTE | Arayat Street, Quezon City, 1111 |
-
-**菲律宾 · 静默错误**
+**越南 · 判 FIX**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| Unit K4-K6 Ground Floor, CW Home Depot, 1 Doña Julia Vargas Ave, Pasig, 1604 | ACCEPT | PREMISE_PROXIMITY | Unit K4, Home Depot, 1 Doña Julia Vargas Avenue, Pasig, 1604 |
-| UP-Ayala Land TechnoHub, Commonwealth Ave, Quezon City | ACCEPT | PREMISE_PROXIMITY | U.P. Ayala Land TechnoHub, Commonwealth Avenue, Quezon City |
-| Exquadra Tower, Exchange Road cor. Jade Drive, Ortigas Center, Pasig City, Pasig, 1605 | ACCEPT | PREMISE_PROXIMITY | Ortigas Center, Jade Drive, Pasig, 1605 |
-| Banlat Rd 208, Quezon City, 1116 | ACCEPT | ROUTE | 208 Banlat Road, Quezon City, 1116 |
+| tháp B, Sadora, Thủ Đức, 71110 | FIX | LOCALITY |  |
+| Quận 9, Thủ Đức | FIX | LOCALITY |  |
+| gần Chùa Giác Vương, q12). ĐT: 0976693907, 107/41 đường TCH35, Quận 12, 71716 | FIX | LOCALITY |  |
+| 363 38/20, Quận Bình Tân | FIX | LOCALITY |  |
 
 **菲律宾 · 判 FIX**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| Victoria, Quezon City, 1116 | FIX | LOCALITY |  |
-| Escolta - Pasig Ferry Lawton, Manila, 1540 | FIX | LOCALITY |  |
-| 5 pulong Kendi Street  Santa Ana Taguig, Taguig City | FIX | LOCALITY |  |
-| Pasig Line, Manila, 1017 | FIX | LOCALITY |  |
+| Resorts World, Pasay | FIX | LOCALITY |  |
+| rizal, Quezon City, <<not-applicable>> | FIX | LOCALITY |  |
+| Ste 1707, Raffles Corporate Center, F. Ortigas Jr. Rd, Pasig, 1605 | FIX | LOCALITY |  |
+| 143 Rd 20, Quezon City, 1108 | FIX | LOCALITY |  |
+
+**菲律宾 · 错误建议**
+
+| 输入 | 结论 | 粒度 | 标准化结果 |
+|---|---|---|---|
+| P. Guevarra, San Juan | CONFIRM | ROUTE | Guevarra |
+| 2nd floor Uptown Parade 9th Ave, Cor 36th St, Taguig City, 1630 | CONFIRM | ROUTE | 2Nd Floor, 9th Avenue, Taguig, 1630 |
+| Ayala Malls Circuit Cinemas - Third Floor, Ayala Malls Circuit, Hippodromo, Carmona, Makat | CONFIRM | PREMISE_PROXIMITY | Ayala Malls Circuit |
+| Milano Street, Taguig City, 1634 | CONFIRM | ROUTE | Mariano Street, Taguig, 1634 |
+
+**菲律宾 · 静默错误**
+
+| 输入 | 结论 | 粒度 | 标准化结果 |
+|---|---|---|---|
+| Higher Ground, Tandang Sora Ave 699, Quezon City, 1119 | ACCEPT | ROUTE | 699 Tandang Sora Avenue, Quezon City, 1119 |
+| Green Sun 1232, 2285 Chino Roces Ave, Makati, 1231 | ACCEPT | ROUTE | 2285 Chino Roces Avenue, Makati, 1231 |
+| L. Gonzales and MG Tower II, Shaw Boulevard, corner 29 de Agosto, Mandaluyong, 1550 | ACCEPT | PREMISE_PROXIMITY | MG Tower, 29 Shaw Boulevard, Mandaluyong, 1550 |
+| 2nd Floor, Unit 2H, Super Miler Bldg, 189 Ortigas Ave, Pasig, 1604 | ACCEPT | ROUTE | Unit 2H, 189 Ortigas Avenue, Pasig, 1604 |
 

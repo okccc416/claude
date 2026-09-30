@@ -32,6 +32,7 @@ from avmvp.intl.markets import MARKETS  # noqa: E402
 from avmvp.intl.reference import DATA, MarketReference, center, haversine, is_test_place  # noqa: E402
 from avmvp.intl.render import Renderer  # noqa: E402
 
+DEV_START, TEST_START = 600, 1200
 OUTCOMES = ["正确·直接通过", "正确·要求确认", "判 FIX·片区对", "判 FIX", "错误建议", "静默错误"]
 CLASS_NAME = {"A": "A 类（有官方地址表）", "B": "B 类（中东）", "C": "C 类（东南亚）"}
 
@@ -50,7 +51,10 @@ def real_cases(market: str, n: int, split: str = "test") -> list[dict]:
         lat, lng = center(r["bbox"])
         out.append({"input": text, "lat": lat, "lng": lng})
     random.Random(7).shuffle(out)
-    return out[:n] if split == "test" else out[n:2 * n]  # 开发样本与测试样本不重叠
+    # 固定切分（与 n 无关）：开发集是打乱后的第 600–1199 条，测试集从第 1200 条开始，两者永不重叠
+    if split == "dev":
+        return out[DEV_START:DEV_START + min(n, TEST_START - DEV_START)]
+    return out[TEST_START:TEST_START + n]
 
 
 def synthetic_cases(ref: MarketReference, n: int, split: str = "test") -> list[dict]:
@@ -139,15 +143,38 @@ def run(eng: Engine, cases: list[dict], judge) -> dict:
             "ms": (time.perf_counter() - t) * 1000 / n, "examples": examples}
 
 
-def evaluate_market(code: str, parsers: list[str], n: int, split: str) -> dict:
+_LLM = None
+
+
+def _llm(model_path: str | None):
+    """本地小模型只加载一次（进程内 llama.cpp，占满 CPU，所以用小模型评测时 --jobs 1）。"""
+    global _LLM
+    if _LLM is None and model_path:
+        from avmvp.intl.llm import LlamaCppLLM
+        _LLM = LlamaCppLLM(model_path)
+    return _LLM
+
+
+def evaluate_market(code: str, parsers: list[str], n: int, split: str, llm_model: str | None = None,
+                    real_only: bool = False) -> dict:
     ref = MarketReference.load(code)
-    real, synth = real_cases(code, n, split), synthetic_cases(ref, n, split)
+    real = real_cases(code, n, split)
+    synth = [] if real_only else synthetic_cases(ref, n, split)
     out = {}
     for parser in parsers:
-        if parser != "rules" and not (DATA / code / "crf.model").exists():
+        if parser not in ("rules", "llm") and not (DATA / code / "crf.model").exists():
             continue
-        eng = Engine(code, parser, ref)
+        if parser == "llm":
+            eng = Engine(code, "llm", ref, llm=_llm(llm_model))
+        elif parser == "hybrid+llm":
+            eng = Engine(code, "hybrid", ref, llm=_llm(llm_model))
+        else:
+            eng = Engine(code, parser, ref)
         r = out[parser] = {"real": run(eng, real, judge_real), "synthetic": run(eng, synth, judge_synth)}
+        if eng.llm is not None:
+            calls, secs = eng.llm.calls, eng.llm.seconds
+            r["llm"] = {"model": eng.llm.llm.name, "calls": calls, "errors": eng.llm.errors,
+                        "call_rate": calls / max(len(real) + len(synth), 1), "sec_per_call": secs / max(calls, 1)}
         ok = lambda x: 100 * (x["outcomes"]["正确·直接通过"] + x["outcomes"]["正确·要求确认"])  # noqa: E731
         print(f"{code} {parser:6} 真实：定位对 {ok(r['real']):.1f}% 直接通过且对 "
               f"{100 * r['real']['outcomes']['正确·直接通过']:.1f}% 静默 {100 * r['real']['outcomes']['静默错误']:.1f}%"
@@ -165,14 +192,17 @@ def main() -> None:
     ap.add_argument("--tag", default="")
     ap.add_argument("--split", default="test", choices=["dev", "test"], help="dev 用于迭代，test 只在最后跑一次")
     ap.add_argument("--jobs", type=int, default=1, help="并行评测的市场数（每个进程约占 1–3 GB 内存）")
+    ap.add_argument("--llm-model", help="本地小模型 GGUF 文件（parsers 里含 llm / hybrid+llm 时用）")
+    ap.add_argument("--real-only", action="store_true", help="只评真实地址（小模型评测较慢时用）")
     args = ap.parse_args()
     codes, parsers = args.markets.split(","), args.parsers.split(",")
+    job = [(c, parsers, args.n, args.split, args.llm_model, args.real_only) for c in codes]
     if args.jobs > 1:
         from multiprocessing import Pool
         with Pool(args.jobs) as pool:
-            outs = pool.starmap(evaluate_market, [(c, parsers, args.n, args.split) for c in codes])
+            outs = pool.starmap(evaluate_market, job)
     else:
-        outs = [evaluate_market(c, parsers, args.n, args.split) for c in codes]
+        outs = [evaluate_market(*j) for j in job]
     results = dict(zip(codes, outs))
     (ROOT / "reports").mkdir(exist_ok=True)
     (ROOT / "reports" / f"markets_eval{args.tag}.json").write_text(
@@ -195,11 +225,19 @@ def write_report(results: dict, tag: str) -> None:
             m = MARKETS[code]
             for parser, r in per.items():
                 x = r[kind]
+                if not x["n"]:
+                    continue
                 o = x["outcomes"]
                 L.append(f"| {m.name}（{code}） | {m.cls} | {parser} | {x['n']} | {pct(o['正确·直接通过'])} | "
                          f"{pct(o['正确·要求确认'])} | {pct(o['判 FIX·片区对'])} | {pct(o['判 FIX'])} | {pct(o['错误建议'])} | "
                          f"{pct(o['静默错误'])} | {pct(x.get('silent_over_1km', 0))} | {pct(x['within_500m'])} | "
                          f"{x['ms']:.0f} |")
+        L.append("")
+    llm_rows = [(code, parser, r["llm"]) for code, per in results.items() for parser, r in per.items() if "llm" in r]
+    if llm_rows:
+        L += ["## 本地小模型调用\n", "| 市场 | 解析 | 模型 | 调用次数 | 调用比例 | 秒/次 |", "|---|---|---|---|---|---|"]
+        L += [f"| {MARKETS[c].name}（{c}） | {p} | {x['model']} | {x['calls']} | {pct(x['call_rate'])} | "
+              f"{x['sec_per_call']:.1f} |" for c, p, x in llm_rows]
         L.append("")
     L.append("## 错误样例（规则解析，真实地址）\n")
     for code, per in results.items():

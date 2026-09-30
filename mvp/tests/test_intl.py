@@ -285,6 +285,42 @@ def test_crf_training_and_hybrid(au):
     assert Engine("AU", "crf", au.ref).crf.parse("100 Crown Street Surry Hills 2010").streets
 
 
+# ---------------------------------------------------------------------------------------------- 本地小模型
+class StubLLM:
+    """替身模型：返回固定字段，用来测试防编造和级联逻辑（真模型的效果见 docs/13）。"""
+    name = "stub"
+
+    def __init__(self, fields):
+        self.fields = fields
+
+    def extract(self, text, market):
+        return dict(self.fields)
+
+
+def test_llm_guard_drops_invented_fields():
+    from avmvp.intl.llm import guard
+
+    fields = {"house_number": "99", "unit": "Office 5", "building": "Burj Khalifa", "street": "Sheikh Zayed Road",
+              "area": "", "postcode": ""}
+    kept, verbatim = guard(fields, "Office 5, Sheikh Zayed Rd, Dubai", "AE")
+    assert "house_number" not in kept  # 99 不在原文里：编造的门牌丢弃
+    assert "building" not in kept  # 原文没有 Burj Khalifa
+    assert kept["street"] == "Sheikh Zayed Road" and kept["unit"] == "Office 5"
+    assert verbatim is False  # Rd -> Road 是改写
+
+
+def test_llm_cascade_only_when_rules_fail_and_is_capped(ae):
+    stub = StubLLM({"house_number": "", "unit": "", "building": "Mall of the Emirates",
+                    "street": "Sheikh Zayed Road", "area": "Al Barsha", "postcode": ""})
+    eng = Engine("AE", "rules", ae.ref, llm=stub)
+    r = eng.validate("MallofEmirates/SheikhZayedRd/AlBarsha")  # 粘连写法，规则解析不出来
+    assert r.parser == "rules+llm" and r.granularity == "PREMISE_PROXIMITY"
+    assert r.action == CONFIRM and "LLM_REWRITTEN" in r.reasons  # 模型改写过的字段最多给 CONFIRM
+    calls = eng.llm.calls
+    ok = eng.validate("Mall of the Emirates, Sheikh Zayed Road, Al Barsha, Dubai")
+    assert ok.action == ACCEPT and eng.llm.calls == calls  # 规则已经直接通过：不调用模型
+
+
 # ---------------------------------------------------------------------------------------------- 服务
 def test_router_and_http(au, monkeypatch):
     from avmvp import router as router_mod
