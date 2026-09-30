@@ -63,7 +63,7 @@ def run(v, rows):
         t = time.perf_counter()
         res = v.validate(r["input"])
         lat.append((time.perf_counter() - t) * 1000)
-        a = CONFIRM if res.action == ADD_SUB else res.action
+        a = ACCEPT if res.action == ADD_SUB else res.action
         preds.append((a, res.entity.eid if res.entity else None))
     return preds, lat
 

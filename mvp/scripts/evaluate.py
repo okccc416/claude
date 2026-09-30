@@ -93,7 +93,7 @@ def run_validator(v: Validator, rows: list[dict], strictness: str | None = None)
         t = time.perf_counter()
         res = v.validate(r["input"], strictness=strictness)
         lat.append((time.perf_counter() - t) * 1000)
-        action = CONFIRM if res.action == ADD_SUB else res.action
+        action = ACCEPT if res.action == ADD_SUB else res.action
         preds.append((action, res.entity.eid if res.entity else None))
         results.append(res)
     return preds, lat, results

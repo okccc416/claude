@@ -115,7 +115,9 @@ def test_outcome_categories(world):
              "acceptable": set(ok), "truth_key": (e.blk, e.road_key, e.postal) if truth_eid is not None else None}
         return r, v.validate(text)
 
-    assert outcome(*row("390 Tampines Ave 7, Singapore 520390", RESOLVABLE, "ACCEPT", ["ACCEPT"])) == "正确"
+    # 组屋没写单元号：标注规范要求提示补充单元号
+    assert outcome(*row("390 Tampines Ave 7, Singapore 520390", RESOLVABLE, "CONFIRM_ADD_SUBPREMISES",
+                        ["CONFIRM_ADD_SUBPREMISES", "CONFIRM"])) == "正确"
     # App 按打错的邮编带出了 391 号：地址自洽，校验器直接通过，但真实地址是 390 号
     assert outcome(*row("391 Tampines Ave 7, Singapore 520391", MISLEADING, "ACCEPT", ["ACCEPT"])) == "静默错误"
     assert outcome(*row("same as last order", "NO_ADDRESS", "FIX", ["FIX"], None)) == "正确拒绝"

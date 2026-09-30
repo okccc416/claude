@@ -6,6 +6,8 @@
 
 from __future__ import annotations
 
+import re
+
 import uuid
 from collections import defaultdict
 from dataclasses import dataclass, field, replace
@@ -46,6 +48,8 @@ _REASON_TEXT = {
     "NON_ADDRESS_INFO_EXTRACTED": "已从输入中分离出电话 / 收件人 / 备注等非地址信息（见 nonAddressInfo）",
     "LOW_CONFIDENCE": "把握不足（置信度低于当前严格度档位的门槛）",
     "BAYES_RESELECTED": "综合各项证据的概率后，选中了与规则优先级不同的候选",
+    "UNVERIFIED_NAME": "楼栋、道路、邮编三者一致；另有楼宇 / 商户名在参考库里查不到，未影响结论",
+    "OUT_OF_REGION": "看起来不是新加坡地址（含马来西亚 / 印尼地名或 5 位邮编）",
 }
 
 
@@ -57,6 +61,7 @@ class Config:
     building_route: bool = True  # 消融开关：楼宇名召回
     assume_complete: bool = True  # 参考库在该区域是否完整；False 时"查不到"只判"无法确认"
     strip_noise: bool = True  # 消融开关：剥离电话 / 收件人 / 备注等业务噪声
+    accept_unverified_names: bool = True  # 楼栋 + 道路 + 邮编三者一致时，查不到的商户 / 楼宇名不阻止直接通过
 
 
 @dataclass
@@ -92,6 +97,7 @@ class Result:
     building_confirmed: str | None = None
     noise: NoiseResult | None = None
     confidence: float | None = None  # 贝叶斯打分给出的结论概率（仅在启用贝叶斯打分时有值）
+    unverified: list[str] = field(default_factory=list)  # 参考库里查不到、但不影响地址本身的名称（商户名等）
 
 
 @dataclass
@@ -105,6 +111,19 @@ class Analysis:
     noise: NoiseResult | None = None
 
 
+_FOREIGN_PLACE = re.compile(
+    r"\b(?:MALAYSIA|JOHOR|JOHOR BAHRU|SKUDAI|KULAI|ISKANDAR PUTERI|PASIR GUDANG|MASAI|SELANGOR|KUALA LUMPUR|MELAKA|"
+    r"PENANG|PULAU PINANG|NEGERI SEMBILAN|INDONESIA|BATAM|KEPULAUAN RIAU|BINTAN)\b")
+
+
+def _foreign(raw: str) -> bool:
+    """马来西亚 / 印尼地址：出现外国地名，并且有 5 位邮编或 Taman / Jalan x/y 这类写法、没有 6 位新加坡邮编。"""
+    t = clean_text(raw)
+    if not _FOREIGN_PLACE.search(t) or re.search(r"(?<!\d)\d{6}(?!\d)", t):
+        return False
+    return bool(re.search(r"(?<!\d)\d{5}(?!\d)|\bTAMAN\b|\bJALAN\s+\w+\s+\d+/\d+|\bJLN?\b", t))
+
+
 class Validator:
     def __init__(self, db: ReferenceDB, config: Config | None = None):
         self.db = db
@@ -116,6 +135,10 @@ class Validator:
 
     def analyze(self, raw: str, strictness: str | None = None) -> Analysis:
         cfg = self.config if strictness is None else replace(self.config, strictness=strictness)
+        if _foreign(raw):
+            p = parse(raw)
+            res = Result(action=FIX, entity=None, parsed=p, reasons=["OUT_OF_REGION"])
+            return Analysis(p, [], [], res, cfg)
         noise = strip_noise(raw, self._address_like) if cfg.strip_noise else None
         a = self._analyze_text(noise.text if noise else raw, cfg)
         if noise and noise.removed_any:
@@ -203,8 +226,10 @@ class Validator:
                 2 if br & pset else 0,  # 邮编 + 楼栋号 + 道路三者一致
                 0 if h.steal else 1,
                 0 if dominated(h) else 1,
-                # 两个独立字段互相印证：楼栋号+道路 / 邮编+楼栋号（道路没认出） / 唯一楼宇名
-                1 if br or exact_b or (h.road is None and h.blk and h.blk in p_blks) else 0,
+                # 两个独立字段互相印证：楼栋号+道路 / 邮编+楼栋号（道路没认出） / 唯一楼宇名。
+                # 容错匹配出来的道路如果和有效邮编矛盾，不算印证（"Bdok South Ave 3" 不应被纠成 3 Toh Avenue）
+                1 if (br and not (pset and not h.road.exact and h.road.key not in p_roads)) or exact_b
+                or (h.road is None and h.blk and h.blk in p_blks) else 0,
                 len(h.tokens) if exact_b else (h.road.end - h.road.start) if h.road else 0,
                 1 if h.road and h.road.key in p_roads else 0,
                 1 if h.road and h.road.exact else 0,
@@ -278,7 +303,13 @@ class Validator:
                 eid = inter[0] if eid is None else eid
             elif P:
                 same_road = [e for e in P if db.entities[e].road_key == road.key]
-                if same_road:
+                # 漏写字母后缀：写了 516，邮编是 516A 的（同一条路、楼号数字相同）-> 按邮编取 516A，提示确认
+                letter = [e for e in same_road if blk.isdigit() and db.entities[e].blk != blk
+                          and re.sub(r"[A-Z]+$", "", db.entities[e].blk) == blk]
+                if len(letter) == 1:
+                    eid = letter[0]
+                    res.reasons.append("BLOCK_REPLACED_BY_POSTCODE")
+                elif same_road:
                     res.reasons.append("POSTCODE_BLOCK_CONFLICT")
                     res.candidates = h.br + same_road
                 else:
@@ -436,7 +467,9 @@ class Validator:
                 res.reasons.append("POSTCODE_LEADING_ZERO_RESTORED")
         else:
             st["postal"] = "replaced"
-        # 楼宇名 / 其余片段
+        # 楼宇名 / 其余片段：先去掉重复写的地址本身（道路词、楼栋号、SINGAPORE）
+        address_words = set(e.road_key.split()) | {e.blk, e.postal, "SINGAPORE", "SG", "BLK", "BLOCK"}
+        leftover = [t for t in leftover if t not in address_words]
         if leftover:
             text = " ".join(leftover)
             if e.buildings and self._building_score(e, text) >= 90:
@@ -444,7 +477,16 @@ class Validator:
                     e.buildings, key=lambda b: (fuzz.token_set_ratio(match_key(b), text), fuzz.ratio(match_key(b), text)))
             elif not (poi_only and self._building_score(e, text) >= 80):
                 res.unresolved = leftover
-                res.reasons.append("UNRESOLVED_TOKENS")
+                three = blk == e.blk and road is not None and road.key == e.road_key and road.exact \
+                    and p.postal == e.postal
+                if three and cfg.accept_unverified_names and cfg.strictness != "STRICT" \
+                        and not self.db.find_roads(leftover, fuzzy=False) \
+                        and all(t.isalpha() for t in leftover) and len(leftover) <= 6:
+                    # 楼栋 + 道路 + 邮编三者一致：多出来的商户 / 楼宇名不影响地址本身，只记录不要求确认
+                    res.unverified, res.unresolved = leftover, []
+                    res.reasons.append("UNVERIFIED_NAME")
+                else:
+                    res.reasons.append("UNRESOLVED_TOKENS")
         # 单元号
         unit_suspicious = False
         if p.unit:
@@ -465,6 +507,11 @@ class Validator:
             # 有楼栋属性数据（如 HDB 楼栋表）即视为多单元住宅楼
             res.action = ADD_SUB
             res.reasons.append("UNIT_MISSING_MULTI_UNIT_BUILDING")
+        elif not p.unit and e.is_hdb and res.action in (ACCEPT, CONFIRM):
+            # 组屋按邮编规则即可判断为多单元楼：缺单元号时提示补充（已要求确认的保持确认，只加原因码）
+            res.reasons.append("UNIT_MISSING_MULTI_UNIT_BUILDING")
+            if res.action == ACCEPT:
+                res.action = ADD_SUB
         return res
 
     @staticmethod

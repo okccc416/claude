@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from avmvp import ReferenceDB, Validator
+from avmvp import Config, ReferenceDB, Validator
 from avmvp.llm_fallback import LLMAssistedValidator, LocalLLM, guard
 from avmvp.validator import ACCEPT, CONFIRM, FIX
 
@@ -29,7 +29,8 @@ class FakeLLM:
 
 @pytest.fixture(scope="module")
 def base():
-    return Validator(ReferenceDB.load(FIXTURE))
+    # 兜底机制的测试需要"规则拿不准"的情形：关闭"三者一致时忽略查不到的名称"
+    return Validator(ReferenceDB.load(FIXTURE), Config(accept_unverified_names=False))
 
 
 def test_not_called_when_rules_are_confident(base):

@@ -1,26 +1,26 @@
 {
   "n": 8000,
-  "in_reference": 7939,
+  "in_reference": 7999,
   "summary": {
     "找对 · 直接通过": {
-      "with_postcode": 6121,
-      "without_postcode": 94
+      "with_postcode": 6875,
+      "without_postcode": 102
     },
     "找对 · 要求确认": {
-      "with_postcode": 1711,
-      "without_postcode": 7388
+      "with_postcode": 1064,
+      "without_postcode": 7453
     },
     "判 FIX": {
-      "with_postcode": 98,
-      "without_postcode": 363
+      "with_postcode": 57,
+      "without_postcode": 370
     },
     "正确拒绝（参考库没有）": {
-      "with_postcode": 55,
-      "without_postcode": 55
+      "with_postcode": 1,
+      "without_postcode": 1
     },
     "错误建议": {
-      "with_postcode": 15,
-      "without_postcode": 99
+      "with_postcode": 3,
+      "without_postcode": 73
     },
     "静默错误": {
       "with_postcode": 0,

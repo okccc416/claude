@@ -16,10 +16,14 @@ _UNIT_PATTERNS = [
     # Level 5 Unit 12 / Lvl 14 #300 / Floor 3, #05
     re.compile(r"\b(?:LEVEL|LVL|LV|FLOOR|FLR)\s*(B?\d{1,2})\s*,?\s*(?:UNIT\s*#?|#)\s*(\d{1,5}[A-Z]?)\b"),
     re.compile(r"\bUNIT\s*#?\s*(B?\d{1,3})\s*[-–]\s*(\d{1,5}[A-Z]?)\b"),
-    re.compile(r"#\s*(B?\d{1,3})\s*[-–]\s*(\d{1,5}[A-Z]?)\b"),
+    # #03-05/06、#02-38/#02-56、#01-01 & 02：多个单元只取第一个，其余一并去掉
+    re.compile(r"#\s*(B?\d{1,3})\s*[-–]\s*(\d{1,5}[A-Z]?)\b(?:\s*(?:/|&|,|AND|TO)\s*#?\s*(?:B?\d{1,3}\s*[-–]\s*)?"
+               r"\d{1,5}[A-Z]?\b)*"),
     re.compile(r"(?<![\w#-])(\d{2})\s*-\s*(\d{2,5}[A-Z]?)(?![\w-])"),
 ]
-_LEVEL_ONLY = re.compile(r"\b(?:LEVEL|LVL|FLOOR|FLR)\s*(B?\d{1,2})\b")
+_LEVEL_ONLY = re.compile(r"\b(?:LEVEL|LVL|FLOOR|FLR)\s*(B?\d{1,2})\b|#?\s*\b(\d{1,2})\s*/\s*F\b"
+                         r"|#\s*(\d{1,2})(?:ST|ND|RD|TH)\b(?:\s*(?:FLOOR|FLR|FL|LEVEL)\b)?|\b(\d{1,2})(?:ST|ND|RD|TH)\s*(?:FLOOR|FLR|FL|LEVEL)\b"
+                         r"|#\s*(B?\d{1,2})\b(?!\s*[-–]\s*\d)")
 _BAD_UNIT = re.compile(r"#\s*[\w-]*")
 _POSTAL6 = re.compile(r"(?:\b(?:SINGAPORE|SPORE|SG|S)\s*\(?\s*)?(?<!\d)(\d{6})(?!\d)\s*\)?")
 _POSTAL5 = re.compile(r"(?:\b(?:SINGAPORE|SPORE|SG|S)\s*\(?\s*)?(?<![\d#-])(\d{5})(?![\d-])\s*\)?")
@@ -69,7 +73,8 @@ def parse(raw: str) -> ParsedAddress:
     if p.unit_floor is None:
         m = _LEVEL_ONLY.search(text)
         if m:
-            p.unit_floor = m.group(1) if m.group(1).startswith("B") else m.group(1).zfill(2)
+            fl = next(g for g in m.groups() if g)
+            p.unit_floor = fl if fl.startswith("B") else fl.zfill(2)
             text = text[: m.start()] + " " + text[m.end():]
     if p.unit_floor is None:
         m = _BAD_UNIT.search(text)

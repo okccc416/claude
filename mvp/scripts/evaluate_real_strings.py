@@ -34,7 +34,7 @@ from avmvp.validator import ACCEPT, ADD_SUB  # noqa: E402
 import measure_noise as mn  # noqa: E402
 
 
-def build_cases(n: int, seed: int) -> list[dict]:
+def build_cases(n: int, seed: int, offset: int = 0) -> list[dict]:
     by_postal, by_num_street = mn.load_official()
     mn.STREETS.update(mn.norm(s) for rows in by_postal.values() for _, s, _ in rows)
     places = pq.read_table(mn.DATA / "sg_places.parquet", columns=["addresses", "sources"]).to_pylist()
@@ -55,7 +55,7 @@ def build_cases(n: int, seed: int) -> list[dict]:
                       "number_form": r.get("number"), "unit": r["unit"], "building": r.get("building"),
                       "prefix_text": r["prefix_text"], "blk_prefix": r["blk_prefix"], "cjk": r.get("cjk")})
     random.Random(seed).shuffle(cases)
-    return cases[:n]
+    return cases[offset:offset + n]  # offset 用来取与测试样本不重叠的开发样本
 
 
 def features(c: dict) -> list[str]:
@@ -103,7 +103,7 @@ def main() -> None:
     in_ref = [c for c in cases if c["in_ref"]]
     L = ["# 真实人写地址评测（自动生成）\n",
          f"- 样本：Overture places 中新加坡商户自填地址 {len(cases):,} 条（按\"地址 + 邮编\"去重后随机抽样）；"
-         f"其中 {len(in_ref):,} 条的真实地址在 2017 参考库里，{len(cases) - len(in_ref):,} 条是参考库没有的新地址",
+         f"其中 {len(in_ref):,} 条的真实地址在 {'2026' if '2026' in args.reference else '2017'} 参考库里，{len(cases) - len(in_ref):,} 条是参考库没有的新地址",
          "- 标准答案：邮编在 2026 年官方地址表里只对应一个地址、且文字里的门牌 / 道路不与之矛盾的记录（弱标注）",
          "- 来源构成：" + "，".join(f"{k} {v:,}" for k, v in Counter(c["source"] for c in cases).most_common()) + "\n",
          "## 1. 总体\n", "| 结果 | 带邮编 | 不带邮编 |", "|---|---|---|"]

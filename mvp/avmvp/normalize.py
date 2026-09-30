@@ -16,7 +16,7 @@ _VARIANTS: dict[str, tuple[str, ...]] = {
     "ST": ("STREET", "ST", "STR", "SAINT"),
     "RD": ("ROAD", "RD"),
     "DR": ("DRIVE", "DR", "DRV"),
-    "CRES": ("CRESCENT", "CRES", "CRESC"),
+    "CRES": ("CRESCENT", "CRES", "CRESC", "CR"),
     "CL": ("CLOSE", "CL"),
     "LN": ("LANE", "LN"),
     "BLVD": ("BOULEVARD", "BLVD"),
@@ -31,7 +31,7 @@ _VARIANTS: dict[str, tuple[str, ...]] = {
     "KG": ("KAMPONG", "KAMPUNG", "KG"),
     "TER": ("TERRACE", "TER", "TERR"),
     "PL": ("PLACE", "PL"),
-    "PK": ("PARK", "PK"),
+    "PK": ("PARK", "PK", "PRK"),
     "HTS": ("HEIGHTS", "HTS"),
     "GDNS": ("GARDENS", "GDNS"),
     "GDN": ("GARDEN", "GDN"),
@@ -46,6 +46,16 @@ _VARIANTS: dict[str, tuple[str, ...]] = {
     "BLDG": ("BUILDING", "BLDG"),
     "TWR": ("TOWER", "TWR"),
     "APT": ("APARTMENT", "APARTMENTS", "APT", "APTS"),
+    # 地图平台 / 商户常用的缩写（真实商户地址实测，见 docs/11）
+    "VW": ("VIEW", "VW"),
+    "WAY": ("WAY", "WY"),
+    "XING": ("CROSSING", "XING"),
+    "HILL": ("HILL", "HL"),
+    "GRN": ("GREEN", "GRN"),
+    "LOOP": ("LOOP", "LP"),
+    "FLD": ("FIELD", "FLD"),
+    "GTWY": ("GATEWAY", "GTWY", "GWY"),
+    "WALK": ("WALK", "WK", "WLK"),
 }
 
 ABBREV: dict[str, str] = {v: k for k, vs in _VARIANTS.items() for v in vs}
@@ -54,7 +64,8 @@ ABBREV: dict[str, str] = {v: k for k, vs in _VARIANTS.items() for v in vs}
 ROAD_TYPE_WORDS: dict[str, str] = {
     vs[0]: k for k, vs in _VARIANTS.items()
     if (len(vs[0]) >= 5 or vs[0] in ("ROAD", "LANE", "PARK"))
-    and k not in ("CTR", "BLDG", "TWR", "APT", "EST", "GDN", "SQ", "MT")
+    and k not in ("CTR", "BLDG", "TWR", "APT", "EST", "GDN", "SQ", "MT", "VW", "WAY", "XING", "HILL", "GRN", "LOOP",
+                  "FLD", "GTWY", "WALK")
 }
 
 # 新加坡本地的市镇缩写（AMK Ave 3 = Ang Mo Kio Avenue 3）。两字母缩写容易撞车，只在后面紧跟路型 / 方位词时展开
@@ -67,6 +78,8 @@ TOWN_ABBREV: dict[str, str] = {
 }
 _TOWN_CONTEXT = {"ST", "AVE", "DR", "CTRL", "NTH", "STH", "EAST", "WEST", "RD", "CRES", "IND", "RING", "WAY",
                  "WALK", "LINK", "CL", "LN", "RISE", "VIEW", "LOOP", "PL", "NORTH", "SOUTH"}
+
+_ROAD_TYPES = {k for k in _VARIANTS} - {"BLDG", "TWR", "APT", "CTR", "EST"}
 
 # 楼栋号前缀标记
 BLOCK_MARKERS = {"BLK", "BLOCK", "NO", "NUMBER"}
@@ -93,9 +106,26 @@ def strip_punct(text: str) -> str:
     return _SPACES.sub(" ", text).strip()
 
 
+# 单字母方位缩写（Bedok N Ave 3、W Coast Dr）：只在紧挨着路名时展开，避免误伤
+_COMPASS = {"N": "NTH", "E": "EAST", "W": "WEST"}
+
+
+def _compass(tokens: list[str], i: int) -> bool:
+    nxt = [ABBREV.get(t, t) for t in tokens[i + 1:i + 4]]
+    if not nxt:
+        return False
+    prev = tokens[i - 1] if i > 0 else ""
+    road_word = lambda w: w in _ROAD_TYPES or w.isdigit()  # noqa: E731
+    return (prev.isalpha() and len(prev) > 1 and road_word(nxt[0])) or (
+        nxt[0].isalpha() and len(nxt[0]) > 2 and any(road_word(w) for w in nxt[1:]))
+
+
 def canon_tokens(tokens: list[str]) -> list[str]:
     out: list[str] = []
     for i, t in enumerate(tokens):
+        if t in _COMPASS and _compass(tokens, i):
+            out.append(_COMPASS[t])
+            continue
         c = ABBREV.get(t, t)
         town = TOWN_ABBREV.get(c)
         nxt = ABBREV.get(tokens[i + 1], tokens[i + 1]) if i + 1 < len(tokens) else None

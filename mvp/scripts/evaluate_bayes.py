@@ -24,7 +24,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from avmvp import ReferenceDB, Validator  # noqa: E402
 from avmvp.bayes import THRESHOLDS, BayesModel, BayesValidator, ConfidenceModel, ConfidenceValidator  # noqa: E402
-from avmvp.validator import ADD_SUB, CONFIRM  # noqa: E402
+from avmvp.validator import ACCEPT, ADD_SUB, CONFIRM  # noqa: E402
 from evaluate import load_golden  # noqa: E402
 from evaluate import metrics as golden_metrics  # noqa: E402
 from evaluate_noisy import load as load_noisy  # noqa: E402
@@ -43,7 +43,7 @@ def run(v, rows):
         t = time.perf_counter()
         res = v.validate(r["input"])
         lat.append((time.perf_counter() - t) * 1000)
-        a = CONFIRM if res.action == ADD_SUB else res.action
+        a = ACCEPT if res.action == ADD_SUB else res.action
         preds.append((a, res.entity.eid if res.entity else None))
         confs.append(res.confidence)
     return preds, lat, confs

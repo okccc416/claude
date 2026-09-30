@@ -1,260 +1,6 @@
 [
   {
     "label": "改进前（上一版 MVP）",
-    "addr_found": 0.96,
-    "clean_accept": 0.1375,
-    "false_reject": 0.031875,
-    "silent_wrong": 0.0,
-    "junk_rejected": 1.0,
-    "per_category": {
-      "N3_delivery_notes": 1.0,
-      "N1_contact_info": 1.0,
-      "N5_glued_punct_case": 0.865,
-      "N6_multi_typo": 0.89,
-      "N7_unit_variants": 1.0,
-      "N2_recipient_company": 1.0,
-      "N4_local_abbrev": 0.95,
-      "N8_mixed_noise": 0.975,
-      "N9_no_address": 1.0
-    },
-    "unit_kept": 0.7669902912621359,
-    "phone_recall": 0.0,
-    "errors": {
-      "N6_multi_typo": [
-        {
-          "input": "24 Llqc Walk",
-          "expected": "CONFIRM 24 LILAC WALK 808156",
-          "got": "FIX",
-          "formatted": "24",
-          "reasons": [
-            "NO_MATCH"
-          ]
-        },
-        {
-          "input": "14A Krnahi Loop",
-          "expected": "CONFIRM 14A KRANJI LOOP 739548",
-          "got": "FIX",
-          "formatted": "14A",
-          "reasons": [
-            "NO_MATCH"
-          ]
-        },
-        {
-          "input": "1A Armdoue Park",
-          "expected": "CONFIRM 1A ARDMORE PARK 259945",
-          "got": "FIX",
-          "formatted": "1A",
-          "reasons": [
-            "NO_MATCH"
-          ]
-        },
-        {
-          "input": "2 Drapoctt Park",
-          "expected": "CONFIRM 2 DRAYCOTT PARK 259386",
-          "got": "FIX",
-          "formatted": "2",
-          "reasons": [
-            "NO_MATCH"
-          ]
-        },
-        {
-          "input": "25A Jalan Ssang",
-          "expected": "CONFIRM 25A JALAN SAYANG 418681",
-          "got": "FIX",
-          "formatted": "25A",
-          "reasons": [
-            "NO_MATCH"
-          ]
-        },
-        {
-          "input": "21 Hume Vaeaue",
-          "expected": "CONFIRM 21 HUME AVENUE 598728",
-          "got": "FIX",
-          "formatted": "21",
-          "reasons": [
-            "NO_MATCH"
-          ]
-        }
-      ],
-      "N8_mixed_noise": [
-        {
-          "input": "ATTN: WONG KAI WEN, BLK22 MARYLAND DRIVE, LVL 3 #73, S(277516) 送到前请联系",
-          "expected": "ACCEPT 22 MARYLAND DRIVE 277516",
-          "got": "FIX",
-          "formatted": "3 Maryland Drive, Singapore 277516",
-          "reasons": [
-            "POSTCODE_BLOCK_CONFLICT"
-          ]
-        },
-        {
-          "input": "attn: lIM meI lINg, BLk20 JoaN RoAd, #13-140, S(298903), 送到前请联系 (ordER #sg2023-127156)",
-          "expected": "ACCEPT 20 JOAN ROAD 298903",
-          "got": "FIX",
-          "formatted": "Joan Road, #13-140, Singapore 127156",
-          "reasons": [
-            "POSTCODE_STREET_MISMATCH"
-          ]
-        },
-        {
-          "input": "8clorong 16 geylang, unit #09-163, s398854 放保安室 (awb 766678656477) tel: +65 9571 5971",
-          "expected": "ACCEPT 8C LORONG 16 GEYLANG 398854",
-          "got": "FIX",
-          "formatted": "16, #09-163, Singapore 398854",
-          "reasons": [
-            "POSTCODE_STREET_MISMATCH"
-          ]
-        },
-        {
-          "input": "c/o LIM MEi LInG, Blk34A Haji LAne, uNiT #05-333, S(189227) (PO: 4569789405)",
-          "expected": "ACCEPT 34A HAJI LANE 189227",
-          "got": "FIX",
-          "formatted": "Haji Lane, #05-333, Singapore 189227",
-          "reasons": [
-            "AMBIGUOUS_MULTIPLE_CANDIDATES"
-          ]
-        },
-        {
-          "input": "170lorong 1 ToA PaYoh, s(310170) (Po: 4589017594), Tan.aHKOw@HOTmAil.coM",
-          "expected": "ACCEPT 170 LORONG 1 TOA PAYOH 310170",
-          "got": "FIX",
-          "formatted": "1, Singapore 310170",
-          "reasons": [
-            "POSTCODE_STREET_MISMATCH"
-          ]
-        }
-      ],
-      "N5_glued_punct_case": [
-        {
-          "input": "BLK361 JOO CHIAT ROAD, S427606",
-          "expected": "ACCEPT 361 JOO CHIAT ROAD 427606",
-          "got": "FIX",
-          "formatted": "Joo Chiat Road, Singapore 427606",
-          "reasons": [
-            "AMBIGUOUS_MULTIPLE_CANDIDATES"
-          ]
-        },
-        {
-          "input": "21tampines industrial avenue 5, 528620",
-          "expected": "ACCEPT 21 TAMPINES INDUSTRIAL AVENUE 5 528620",
-          "got": "FIX",
-          "formatted": "5, Singapore 528620",
-          "reasons": [
-            "POSTCODE_STREET_MISMATCH"
-          ]
-        },
-        {
-          "input": "35bmosque street. s059513",
-          "expected": "ACCEPT 35B MOSQUE STREET 059513",
-          "got": "FIX",
-          "formatted": "Singapore 059513",
-          "reasons": [
-            "AMBIGUOUS_MULTIPLE_CANDIDATES"
-          ]
-        },
-        {
-          "input": "78TUaS AVenue 11 - s(639095)",
-          "expected": "ACCEPT 78 TUAS AVENUE 11 639095",
-          "got": "FIX",
-          "formatted": "11, Singapore 639095",
-          "reasons": [
-            "POSTCODE_STREET_MISMATCH"
-          ]
-        },
-        {
-          "input": "785YIshUn AVenuE 2, sIngaPOre 760785",
-          "expected": "ACCEPT 785 YISHUN AVENUE 2 760785",
-          "got": "FIX",
-          "formatted": "2, Singapore 760785",
-          "reasons": [
-            "POSTCODE_STREET_MISMATCH"
-          ]
-        },
-        {
-          "input": "68lorong 25a geylang ;singapore 388254",
-          "expected": "ACCEPT 68 LORONG 25A GEYLANG 388254",
-          "got": "FIX",
-          "formatted": "25A, Singapore 388254",
-          "reasons": [
-            "POSTCODE_STREET_MISMATCH"
-          ]
-        }
-      ],
-      "N4_local_abbrev": [
-        {
-          "input": "74 Hg Ave 7, Singapore 538806",
-          "expected": "ACCEPT 74 HOUGANG AVENUE 7 538806",
-          "got": "CONFIRM",
-          "formatted": "7 Haig Avenue, Singapore 438862",
-          "reasons": [
-            "POSTCODE_STREET_MISMATCH",
-            "STREET_SPELL_CORRECTED",
-            "UNRESOLVED_TOKENS"
-          ]
-        },
-        {
-          "input": "317 Amk Ave 2, Singapore 569957",
-          "expected": "ACCEPT 317 ANG MO KIO AVENUE 2 569957",
-          "got": "CONFIRM",
-          "formatted": "2 Oak Avenue, Eden Park, Singapore 276763",
-          "reasons": [
-            "POSTCODE_STREET_MISMATCH",
-            "STREET_SPELL_CORRECTED",
-            "UNRESOLVED_TOKENS"
-          ]
-        },
-        {
-          "input": "605 Hg Ave 4, S530605",
-          "expected": "ACCEPT 605 HOUGANG AVENUE 4 530605",
-          "got": "CONFIRM",
-          "formatted": "4 Haig Avenue, Eis Residences, Singapore 438859",
-          "reasons": [
-            "POSTCODE_STREET_MISMATCH",
-            "STREET_SPELL_CORRECTED",
-            "UNRESOLVED_TOKENS"
-          ]
-        },
-        {
-          "input": "204 Amk Ave 3, S560204",
-          "expected": "ACCEPT 204 ANG MO KIO AVENUE 3 560204",
-          "got": "CONFIRM",
-          "formatted": "3 Oak Avenue, Oak Villas, Singapore 276764",
-          "reasons": [
-            "POSTCODE_STREET_MISMATCH",
-            "STREET_SPELL_CORRECTED",
-            "UNRESOLVED_TOKENS"
-          ]
-        },
-        {
-          "input": "465 Amk Avn 2, Singapore 567888",
-          "expected": "ACCEPT 465 ANG MO KIO AVENUE 2 567888",
-          "got": "CONFIRM",
-          "formatted": "2 Oak Avenue, Eden Park, Singapore 276763",
-          "reasons": [
-            "POSTCODE_STREET_MISMATCH",
-            "STREET_SPELL_CORRECTED",
-            "UNRESOLVED_TOKENS"
-          ]
-        },
-        {
-          "input": "700A Amk Avenue 6, Singapore 561700",
-          "expected": "ACCEPT 700A ANG MO KIO AVENUE 6 561700",
-          "got": "CONFIRM",
-          "formatted": "6 Oak Avenue, Eden Park, Singapore 276766",
-          "reasons": [
-            "POSTCODE_STREET_MISMATCH",
-            "STREET_SPELL_CORRECTED",
-            "UNRESOLVED_TOKENS"
-          ]
-        }
-      ]
-    },
-    "latency_ms": {
-      "p50": 2.497564999998758,
-      "p95": 16.225771999984318
-    }
-  },
-  {
-    "label": "改进后（当前版本）",
     "addr_found": 0.9875,
     "clean_accept": 0.860625,
     "false_reject": 0.010625,
@@ -333,25 +79,108 @@
       ]
     },
     "latency_ms": {
-      "p50": 1.1446259999274844,
-      "p95": 15.730947000065498
+      "p50": 0.9053660000972741,
+      "p95": 11.25977799983957
+    }
+  },
+  {
+    "label": "改进后（当前版本）",
+    "addr_found": 0.988125,
+    "clean_accept": 0.8725,
+    "false_reject": 0.01125,
+    "silent_wrong": 0.0,
+    "junk_rejected": 1.0,
+    "per_category": {
+      "N3_delivery_notes": 1.0,
+      "N1_contact_info": 1.0,
+      "N5_glued_punct_case": 1.0,
+      "N6_multi_typo": 0.905,
+      "N7_unit_variants": 1.0,
+      "N2_recipient_company": 1.0,
+      "N4_local_abbrev": 1.0,
+      "N8_mixed_noise": 1.0,
+      "N9_no_address": 1.0
+    },
+    "unit_kept": 1.0,
+    "phone_recall": 1.0,
+    "errors": {
+      "N6_multi_typo": [
+        {
+          "input": "24 Llqc Walk",
+          "expected": "CONFIRM 24 LILAC WALK 808156",
+          "got": "FIX",
+          "formatted": "24",
+          "reasons": [
+            "NO_MATCH"
+          ]
+        },
+        {
+          "input": "14A Krnahi Loop",
+          "expected": "CONFIRM 14A KRANJI LOOP 739548",
+          "got": "FIX",
+          "formatted": "14A",
+          "reasons": [
+            "NO_MATCH"
+          ]
+        },
+        {
+          "input": "1A Armdoue Park",
+          "expected": "CONFIRM 1A ARDMORE PARK 259945",
+          "got": "FIX",
+          "formatted": "1A",
+          "reasons": [
+            "NO_MATCH"
+          ]
+        },
+        {
+          "input": "2 Drapoctt Park",
+          "expected": "CONFIRM 2 DRAYCOTT PARK 259386",
+          "got": "FIX",
+          "formatted": "2",
+          "reasons": [
+            "NO_MATCH"
+          ]
+        },
+        {
+          "input": "25A Jalan Ssang",
+          "expected": "CONFIRM 25A JALAN SAYANG 418681",
+          "got": "FIX",
+          "formatted": "25A Jalan Riang",
+          "reasons": [
+            "PREMISE_NOT_FOUND"
+          ]
+        },
+        {
+          "input": "21 Hume Vaeaue",
+          "expected": "CONFIRM 21 HUME AVENUE 598728",
+          "got": "FIX",
+          "formatted": "21",
+          "reasons": [
+            "NO_MATCH"
+          ]
+        }
+      ]
+    },
+    "latency_ms": {
+      "p50": 0.9523749999971187,
+      "p95": 12.120610999772907
     }
   },
   {
     "label": "B1 模糊整串匹配（Geocoder 式）",
     "addr_found": 0.586875,
     "clean_accept": 0.586875,
-    "false_reject": 0.303125,
-    "silent_wrong": 0.10333333333333333,
+    "false_reject": 0.305,
+    "silent_wrong": 0.10166666666666667,
     "junk_rejected": 0.95,
     "per_category": {
-      "N3_delivery_notes": 0.655,
+      "N3_delivery_notes": 0.65,
       "N1_contact_info": 0.355,
       "N5_glued_punct_case": 0.785,
       "N6_multi_typo": 0.68,
       "N7_unit_variants": 0.815,
       "N2_recipient_company": 0.575,
-      "N4_local_abbrev": 0.79,
+      "N4_local_abbrev": 0.795,
       "N8_mixed_noise": 0.04,
       "N9_no_address": 0.95
     }

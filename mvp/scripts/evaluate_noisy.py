@@ -4,7 +4,7 @@
 
 指标（N1–N8 为"输入里有真实地址"，N9 为"根本没有地址"）：
   地址识别率   N1–N8 中，结论不是 FIX 且识别出的地址正确的比例（核心指标）
-  直接通过率   N1–N8 中，直接 ACCEPT 且地址正确的比例（噪声被干净剥离，不需要打扰用户）
+  直接通过率   N1–N8 中，直接 ACCEPT（或只提示补单元号）且地址正确的比例（噪声被干净剥离，不需要打扰用户）
   误拒率       N1–N8 中被判 FIX 的比例
   静默错误率   全部样本中，判 ACCEPT 但地址错了或其实没有地址的比例
   无地址拒绝率 N9 中被判 FIX 的比例
@@ -63,7 +63,7 @@ def run_validator(label: str, impl: str, rows: list[dict]) -> dict:
         t = time.perf_counter()
         res = v.validate(r["input"])
         lat.append((time.perf_counter() - t) * 1000)
-        action = "CONFIRM" if res.action == "CONFIRM_ADD_SUBPREMISES" else res.action
+        action = "ACCEPT" if res.action == "CONFIRM_ADD_SUBPREMISES" else res.action  # 地址已确认，只提示补单元号
         preds.append((action, res.entity.eid if res.entity else None))
         resp = v.to_response(res)["result"]
         info = resp.get("nonAddressInfo") or {}

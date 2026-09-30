@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import gzip
 import io
+import re
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -29,6 +30,15 @@ class Entity:
     buildings: list[str]
     lat: float
     lng: float
+
+    @property
+    def is_hdb(self) -> bool:
+        """组屋邮编规则：2 位邮区 + 1 位字母后缀编码（A=1…）+ 3 位楼号，如 Blk 655C -> 823655。组屋一定是多单元楼。"""
+        m = re.fullmatch(r"(\d{1,3})([A-H]?)", self.blk)
+        if not m or len(self.postal) != 6:
+            return False
+        return self.postal[3:] == m.group(1).zfill(3) and self.postal[2] == (
+            "0" if not m.group(2) else str(ord(m.group(2)) - 64))
 
     @property
     def primary_building(self) -> str | None:

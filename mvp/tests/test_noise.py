@@ -6,7 +6,7 @@ import pytest
 
 from avmvp import Config, ReferenceDB, Validator
 from avmvp.noise import strip_noise
-from avmvp.validator import ACCEPT, CONFIRM, FIX
+from avmvp.validator import ACCEPT, ADD_SUB, CONFIRM, FIX
 
 FIXTURE = Path(__file__).parent / "fixture_reference.csv"
 
@@ -44,7 +44,7 @@ def test_strip_noise_extracts_each_kind():
     # 订单号里的 6 位数字不能被当成邮编
     ("Order #SG2024-504992, 10 Bayfront Avenue", CONFIRM, "10 BAYFRONT AVENUE 018956"),
     # 本地缩写与粘连写法
-    ("390 Tamp Ave 7, S520390", ACCEPT, "390 TAMPINES AVENUE 7 520390"),
+    ("390 Tamp Ave 7, S520390", ADD_SUB, "390 TAMPINES AVENUE 7 520390"),  # 组屋没写单元号：提示补充
     ("10BAYFRONT AVE S018956", ACCEPT, "10 BAYFRONT AVENUE 018956"),
     ("34APOOLE RD, 437543", ACCEPT, "34A POOLE ROAD 437543"),
     # 楼宇名里有 "Pte Ltd" / 备注词时不能当噪声删掉
@@ -82,4 +82,5 @@ def test_response_carries_non_address_info(v):
 def test_noise_stripping_can_be_disabled(v):
     v2 = Validator(v.db, Config(strip_noise=False))
     res = v2.validate("Attn: Jason Teo, 10 Bayfront Avenue, S(018956)")
-    assert res.action == CONFIRM and "UNRESOLVED_TOKENS" in res.reasons
+    # 不剥噪声时，收件人留在地址里：楼栋 + 道路 + 邮编三者一致，名称只记为"未验证"，但不会被识别为非地址信息
+    assert res.noise is None and "UNVERIFIED_NAME" in res.reasons and "JASON" in res.unverified
