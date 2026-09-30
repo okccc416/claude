@@ -94,6 +94,28 @@ class HTTPLLM:
             return json.loads(json.loads(r.read())["choices"][0]["message"]["content"])
 
 
+class CachedLLM:
+    """把模型输出按（模型, 市场, 输入）缓存到 jsonl：评测重跑、错误分析不用再算一遍（CPU 上每次几秒）。"""
+
+    def __init__(self, llm, path):
+        from pathlib import Path
+
+        self.llm, self.name, self.path = llm, llm.name, Path(path)
+        self.cache: dict[str, dict] = {}
+        if self.path.exists():
+            for line in self.path.read_text(encoding="utf-8").splitlines():
+                r = json.loads(line)
+                self.cache[r["k"]] = r["v"]
+
+    def extract(self, text: str, market: str) -> dict:
+        k = f"{self.name}|{market}|{text}"
+        if k not in self.cache:
+            self.cache[k] = self.llm.extract(text, market)
+            with open(self.path, "a", encoding="utf-8") as f:
+                f.write(json.dumps({"k": k, "v": self.cache[k]}, ensure_ascii=False) + "\n")
+        return self.cache[k]
+
+
 # ---------------------------------------------------------------------------------------------- 防编造
 def _digits(s: str) -> list[str]:
     return re.findall(r"\d+", fold(s))

@@ -141,12 +141,16 @@ class Engine:
                         best_res = res
         return best_res
 
-    @staticmethod
-    def _llm_cap(res: Result) -> Result:
-        """模型改写过的字段（不是原文照抄）最多给 CONFIRM。"""
-        if res.parsed.parser == "llm" and not getattr(res.parsed, "verbatim", True) and res.action in (ACCEPT, ADD_SUB):
-            res.action = CONFIRM
-            res.reasons.append("LLM_REWRITTEN")
+    def _llm_cap(self, res: Result) -> Result:
+        """模型解析出的结果：改写过原文的最多给 CONFIRM；没有官方地址表的市场（B / C 类）一律最多 CONFIRM
+        （开发集上，模型结果在这些市场直接通过时偏差 >1 公里的错误明显增加）。"""
+        if res.parsed.parser == "llm" and res.action in (ACCEPT, ADD_SUB):
+            if not getattr(res.parsed, "verbatim", True):
+                res.action = CONFIRM
+                res.reasons.append("LLM_REWRITTEN")
+            elif not self.ref.has_addresses:
+                res.action = CONFIRM
+                res.reasons.append("LLM_UNVERIFIED")
         return res
 
     # ------------------------------------------------------------------ 候选与打分
@@ -551,6 +555,7 @@ REASON_TEXT = {
     "LOCATED_BY_PLUS_CODE": "按输入里的 Plus Code 定位",
     "LOCATED_BY_COORDINATES": "按输入里的经纬度定位",
     "LLM_REWRITTEN": "本地小模型改写过输入里的字段（不是原文照抄），需要用户确认",
+    "LLM_UNVERIFIED": "地址是本地小模型读出来的，这个市场没有官方地址表可以核实门牌，需要用户确认",
     "PLUS_CODE_STREET_MISMATCH": "Plus Code 的位置与所写道路不符",
     "PLUS_CODE_AREA_MISMATCH": "Plus Code 的位置不在所写片区附近",
     "ROUTE_NOT_CORROBORATED": "只验证到道路：缺少邮编与道路相互印证，或同名道路不止一条，需要用户确认",

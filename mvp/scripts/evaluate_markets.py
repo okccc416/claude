@@ -150,8 +150,9 @@ def _llm(model_path: str | None):
     """本地小模型只加载一次（进程内 llama.cpp，占满 CPU，所以用小模型评测时 --jobs 1）。"""
     global _LLM
     if _LLM is None and model_path:
-        from avmvp.intl.llm import LlamaCppLLM
-        _LLM = LlamaCppLLM(model_path)
+        from avmvp.intl.llm import CachedLLM, LlamaCppLLM
+        name = Path(model_path).stem
+        _LLM = CachedLLM(LlamaCppLLM(model_path), DATA.parent / "models" / f"cache_{name}.jsonl")
     return _LLM
 
 
