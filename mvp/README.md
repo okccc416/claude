@@ -41,6 +41,7 @@ python scripts/make_research_testset.py   # 按调研比例在 2026 年地址上
 python scripts/evaluate_labeled.py --orders labeled/testset_sg_research_v1.csv --confidence-train labeled/orders_sg_v1.csv --tag _research
 python scripts/evaluate_real_strings.py   # 8,000 条真实人写地址评测
 python scripts/whatif_current_reference.py  # 参考库换成 2026 年数据的效果
+python scripts/profile_countries.py   # 澳洲 / 中东 / 东南亚 / 欧洲 17 个城市的地址画像（见 docs/12）
 pytest -q                             # 77 个单元测试（使用 tests/ 下的小型真实数据夹具，无需下载）
 ```
 
@@ -122,7 +123,8 @@ mvp/
 │   ├── measure_noise.py        真实人写地址噪声统计
 │   ├── make_research_testset.py  按调研比例构造测试集
 │   ├── evaluate_real_strings.py  真实人写地址评测
-│   └── whatif_current_reference.py  换参考库的效果
+│   ├── whatif_current_reference.py  换参考库的效果
+│   └── profile_countries.py    多市场地址画像
 ├── labeled/            标注数据（模拟订单 orders_sg_v1.csv、调研测试集 testset_sg_research_v1.csv）、数据说明、标注规范
 ├── models/             贝叶斯参数（证据权重、置信度统计表）
 ├── tests/              77 个单元测试与 58 条真实地址夹具
