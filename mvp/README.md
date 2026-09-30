@@ -35,7 +35,13 @@ python scripts/evaluate_noisy.py      # 输出 reports/noisy_eval_report.md；�
 python scripts/evaluate_bayes.py      # 贝叶斯打分：训练置信度模型并与规则方案对比（见 docs/09）
 python scripts/make_labeled_orders.py # 模拟订单标注数据 10,000 单（已提交在 labeled/，重跑结果一致，见 docs/10）
 python scripts/evaluate_labeled.py    # 在模拟订单上评测，并用训练部分重新统计置信度（models/confidence_sg_orders.json）
-pytest -q                             # 73 个单元测试（使用 tests/ 下的小型真实数据夹具，无需下载）
+python scripts/fetch_overture.py      # 下载 Overture 新加坡数据：2026 年官方地址表 + 商户自填地址（见 docs/11）
+python scripts/measure_noise.py       # 统计真实人写地址里的噪声种类和比例 -> reports/noise_stats.md
+python scripts/make_research_testset.py   # 按调研比例在 2026 年地址上构造测试集（已提交在 labeled/）
+python scripts/evaluate_labeled.py --orders labeled/testset_sg_research_v1.csv --confidence-train labeled/orders_sg_v1.csv --tag _research
+python scripts/evaluate_real_strings.py   # 8,000 条真实人写地址评测
+python scripts/whatif_current_reference.py  # 参考库换成 2026 年数据的效果
+pytest -q                             # 77 个单元测试（使用 tests/ 下的小型真实数据夹具，无需下载）
 ```
 
 接口的 `verdict.confidence` 为贝叶斯置信度：规则结论所属类别在带标注数据里的实际正确率（服务器默认加载 `models/confidence_sg.json`）。
@@ -77,6 +83,15 @@ python -m avmvp.server --llm-endpoint http://127.0.0.1:11434          # 演示�
 
 问题清单与置信度重新统计的结果见 [docs/10](../docs/10-labeled-data.md)。
 
+**按调研比例构造的测试集与真实人写地址**（[docs/11](../docs/11-research-testset.md)）：
+
+| 测试集 | 条数 | 自动通过 | 可确定时找对 | 误拒 | 静默错误 |
+|---|---|---|---|---|---|
+| 调研测试集（2026 年地址 + 实测 / 文献比例的噪声） | 5,000 | 70.7% | 99.2% | 0.7% | 0.04% |
+| 真实人写地址（商户自填，带邮编） | 8,000 | 76.5% | 97.9% | 1.2% | 0% |
+
+参考库从 2017 年换成 2026 年数据后，调研测试集找对率 86.7% → 93.8%（新地址 0% → 95.1%）。
+
 **注意：** 测试集由参考库构造，是"封闭世界"，数字证明的是**方案逻辑可行**，不等于真实流量上的准确率。真实准确率取决于参考数据的完整度和时效，详见 07 文档的"局限"一节。
 
 ## 目录
@@ -102,10 +117,15 @@ mvp/
 │   ├── evaluate_llm.py     本地小模型评测：规则 / 规则 + 模型兜底 / 纯模型
 │   ├── evaluate_bayes.py   贝叶斯打分评测：准确率对比、置信度校准、按门槛通过率
 │   ├── make_labeled_orders.py  生成模拟订单标注数据（按渠道模拟 + 独立标注规则）
-│   └── evaluate_labeled.py     模拟订单评测 + 置信度重新统计
-├── labeled/            模拟订单标注数据（orders_sg_v1.csv）、数据说明、标注规范
+│   ├── evaluate_labeled.py     模拟订单评测 + 置信度重新统计
+│   ├── fetch_overture.py       下载 Overture 新加坡数据（2026 年地址表、商户地址）
+│   ├── measure_noise.py        真实人写地址噪声统计
+│   ├── make_research_testset.py  按调研比例构造测试集
+│   ├── evaluate_real_strings.py  真实人写地址评测
+│   └── whatif_current_reference.py  换参考库的效果
+├── labeled/            标注数据（模拟订单 orders_sg_v1.csv、调研测试集 testset_sg_research_v1.csv）、数据说明、标注规范
 ├── models/             贝叶斯参数（证据权重、置信度统计表）
-├── tests/              73 个单元测试与 58 条真实地址夹具
+├── tests/              77 个单元测试与 58 条真实地址夹具
 └── reports/            评测报告与演示截图
 ```
 

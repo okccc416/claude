@@ -11,6 +11,8 @@
 | 评测 | `python scripts/evaluate_labeled.py` |
 | 参考库 | OneMap 邮编导出（2017 年起），与校验器使用的是同一份 |
 
+> 本目录还有第二份数据 **`testset_sg_research_v1.csv`**（5,000 条，全部为测试数据）：标准地址取自 2026 年官方地址表，噪声种类和比例来自文献与 10.6 万条真实人写地址的实测，包含真实的新地址。见第 8 节与 [docs/11](../../docs/11-research-testset.md)。
+
 ---
 
 ## 1. 每一行是什么
@@ -144,3 +146,22 @@ python scripts/evaluate_labeled.py --orders labeled/orders_sg_real_v1.csv
 
 - 地址来自 [xkjyeah/singapore-postal-codes](https://github.com/xkjyeah/singapore-postal-codes)（OneMap 邮编检索导出），受 [Singapore Open Data Licence](https://www.onemap.gov.sg/legal/opendatalicence.html) 约束："This data dump contains information from Onemap.sg postal code search accessed on 25 Apr 2017, or later"。
 - 姓名、公司名、备注均为虚构。**电话号码是随机生成的 8 位号码，可能与真实号码重合，请勿拨打或用于任何联系。**
+
+---
+
+## 8. 第二份：按调研比例构造的测试集 `testset_sg_research_v1.csv`
+
+| 项目 | 内容 |
+|---|---|
+| 条数 | 5,000（`split` 全部为 `test`，用于评测，不用于统计置信度） |
+| 标准地址 | 2026 年官方地址表（OneMap 地址经 OpenAddresses / Overture Maps 发布，13.5 万个地址），不是校验器用的 2017 参考库 |
+| 噪声比例 | 每一种都有出处：**实测**（10.6 万条新加坡商户自填地址与官方地址比对，见 `reports/noise_stats.md`）、**文献**（Baymard、Damerau、Verhoeff、新加坡统计局）、**假设**（没有数据的项，单独标出）。完整对照表见 [docs/11 第 3 节](../../docs/11-research-testset.md#3-测试集怎么造make_research_testsetpy) |
+| 新地址 | 7.4% 的条目在 2026 年表里有、2017 参考库里没有（**真实新地址**，如 `228B Tengah Drive`），标为 `NOT_IN_REFERENCE` 并带标签 `NEW_ADDRESS_2026` |
+| 字段 | 与 `orders_sg_v1.csv` 完全相同；`channel` 统一为 `research_mix`；`truth_eid` 为 2017 参考库编号（新地址留空，真实地址见 `truth_*` 列） |
+| 新增标签 | `NUMBER_AFTER_STREET`（门牌写在道路后面，如 `Hougang Ave 2, Block 706`）、`BUILDING_PREFIX`（楼宇名写在地址前面）、`CJK_MIXED`（如 `238号`）、`NEW_ADDRESS_2026` |
+| 生成 | `python scripts/fetch_overture.py && python scripts/make_research_testset.py`（随机种子 20261101） |
+
+与第一份的区别：第一份按渠道模拟，比例是经验假设，新地址是虚构的；这一份按字段独立注入，比例有出处，新地址是真实的，但没有模拟 App 自动补全。两份发现的问题一致，可以互相印证。
+
+**许可**：2026 年地址表同为 Singapore Open Data Licence（署名 Singapore Land Authority，见 OpenAddresses 的 `sources/sg/countrywide.json`）。
+

@@ -1,0 +1,30 @@
+{
+  "n": 8000,
+  "in_reference": 7939,
+  "summary": {
+    "找对 · 直接通过": {
+      "with_postcode": 6121,
+      "without_postcode": 94
+    },
+    "找对 · 要求确认": {
+      "with_postcode": 1711,
+      "without_postcode": 7388
+    },
+    "判 FIX": {
+      "with_postcode": 98,
+      "without_postcode": 363
+    },
+    "正确拒绝（参考库没有）": {
+      "with_postcode": 55,
+      "without_postcode": 55
+    },
+    "错误建议": {
+      "with_postcode": 15,
+      "without_postcode": 99
+    },
+    "静默错误": {
+      "with_postcode": 0,
+      "without_postcode": 1
+    }
+  }
+}

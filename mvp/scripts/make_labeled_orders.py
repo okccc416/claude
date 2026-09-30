@@ -296,8 +296,10 @@ def resolve(world: World, w: Written) -> tuple[str, int | None, str]:
         on_road = set(db.by_road[road])
         if w.blk:
             br = set(db.by_blk_road.get((w.blk, road), []))
-            if not br:
-                var = {i for i in on_road if digits(db.entities[i].blk) == digits(w.blk)}
+            if not br and w.blk.isdigit():
+                # 客户漏写字母后缀（写 268，实为 268A）：这条路上只有一个 268x 时视为同一栋；
+                # 反过来写了字母而参考库没有（268A vs 268）不算，可能是新楼
+                var = {i for i in on_road if digits(db.entities[i].blk) == w.blk}
                 br = var if len(var) == 1 else set()
             sets.append(("楼栋+道路", br) if br else ("道路", on_road))
         else:
@@ -320,7 +322,7 @@ def resolve(world: World, w: Written) -> tuple[str, int | None, str]:
         e = db.entities[i]
         s = float(postal == e.postal) + float(road == e.road_key) + float(i in bids)
         if w.blk:
-            s += 1.0 if e.blk == w.blk else 0.5 if digits(e.blk) == digits(w.blk) else 0.0
+            s += 1.0 if e.blk == w.blk else 0.5 if w.blk.isdigit() and digits(e.blk) == w.blk else 0.0
         return s
 
     best: dict[tuple, tuple[float, int]] = {}

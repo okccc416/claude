@@ -7,6 +7,10 @@
 
   python scripts/evaluate_labeled.py
 输出：reports/labeled_eval_report.md、reports/labeled_eval_results.json、models/confidence_sg_orders.json
+
+评测别的测试集（如 labeled/testset_sg_research_v1.csv，全部为测试数据）时，用 --confidence-train 指定统计置信度的数据：
+  python scripts/evaluate_labeled.py --orders labeled/testset_sg_research_v1.csv \
+      --confidence-train labeled/orders_sg_v1.csv --tag _research
 训练部分只用于统计置信度；所有指标都在测试部分上计算（按真实地址切分，与训练部分不重叠）。
 """
 
@@ -186,6 +190,8 @@ def main() -> None:
     ap.add_argument("--orders", default=str(ROOT / "labeled" / "orders_sg_v1.csv"))
     ap.add_argument("--reference", default=str(ROOT / "data" / "reference_sg.csv.gz"))
     ap.add_argument("--old-model", default=str(ROOT / "models" / "confidence_sg.json"))
+    ap.add_argument("--confidence-train", help="用这个文件的训练部分统计置信度（默认：--orders 自己的训练部分）")
+    ap.add_argument("--tag", default="", help="输出文件名后缀，如 _research")
     args = ap.parse_args()
     t0 = time.time()
     db = ReferenceDB.load(args.reference)
@@ -199,11 +205,16 @@ def main() -> None:
         lat.append((time.perf_counter() - t) * 1000)
     train = [(r, res) for r, res in zip(rows, results) if r["split"] == "train"]
     test = [(r, res) for r, res in zip(rows, results) if r["split"] == "test"]
+    train_src = Path(args.orders).name
+    if args.confidence_train:
+        train_src = Path(args.confidence_train).name
+        train = [(r, v.validate(r["input"])) for r in load(args.confidence_train, db) if r["split"] == "train"]
     t_rows, t_res = [r for r, _ in test], [res for _, res in test]
     print(f"校验完成：{len(rows)} 单（训练 {len(train)} / 测试 {len(test)}），{time.time() - t0:.0f}s")
 
     new = ConfidenceModel().fit((res, correct(r, res)) for r, res in train)
-    new.save(ROOT / "models" / "confidence_sg_orders.json")
+    if not args.tag:
+        new.save(ROOT / "models" / "confidence_sg_orders.json")
     old = ConfidenceModel.load(args.old_model)
     overall = summarize(t_rows, t_res)
 
@@ -248,13 +259,13 @@ def main() -> None:
            "risky_classes": [(s, c, n) for s, c, n in risky], "sizes": {"train": len(train), "test": len(test)},
            "latency_ms": {"p50": sorted(lat)[len(lat) // 2], "p95": sorted(lat)[int(len(lat) * 0.95)]}}
     (ROOT / "reports").mkdir(exist_ok=True)
-    (ROOT / "reports" / "labeled_eval_results.json").write_text(
+    (ROOT / "reports" / f"labeled_eval_results{args.tag}.json").write_text(
         json.dumps(out, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
 
     # ------------------------------------------------------------------ 报告
-    L = ["# 模拟订单标注数据评测报告（自动生成）\n",
-         f"- 数据：`labeled/orders_sg_v1.csv`，共 {len(rows):,} 单；训练 {len(train):,} 单只用于统计置信度，"
-         f"以下指标均在测试 {len(test):,} 单上计算（按真实地址切分，互不重叠）",
+    L = ["# 标注数据评测报告（自动生成）\n",
+         f"- 数据：`labeled/{Path(args.orders).name}`，指标均在其测试部分 {len(test):,} 条上计算",
+         f"- 置信度：用 `labeled/{train_src}` 的训练部分 {len(train):,} 条统计（按真实地址切分，与测试部分不重叠）",
          "- 校验器：规则方案，默认 BALANCED 档，未加载楼栋属性表",
          f"- 单条延迟 P50 {out['latency_ms']['p50']:.1f} ms / P95 {out['latency_ms']['p95']:.1f} ms\n",
          "## 1. 总体\n", "| 指标 | 数值 | 说明 |", "|---|---|---|",
@@ -326,9 +337,9 @@ def main() -> None:
         for oid, text, act, got, truth in items[:3]:
             L.append(f"| {oid} | {text.replace('|', '/')} | {act} | {got} | {truth or '—'} |")
         L.append("")
-    (ROOT / "reports" / "labeled_eval_report.md").write_text("\n".join(L) + "\n", encoding="utf-8")
+    (ROOT / "reports" / f"labeled_eval_report{args.tag}.md").write_text("\n".join(L) + "\n", encoding="utf-8")
     print("\n".join(L[:40]))
-    print(f"\n完成，用时 {time.time() - t0:.0f}s；报告：reports/labeled_eval_report.md")
+    print(f"\n完成，用时 {time.time() - t0:.0f}s；报告：reports/labeled_eval_report{args.tag}.md")
 
 
 if __name__ == "__main__":
