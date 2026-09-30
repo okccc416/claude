@@ -31,7 +31,7 @@ ABBREV: dict[str, dict[str, str]] = {
            "HTS": "HEIGHTS", "PKWY": "PARKWAY", "RDGE": "RIDGE", "BVD": "BOULEVARD", "APT": "APARTMENT",
            "BLDG": "BUILDING", "TWR": "TOWER", "FLR": "FLOOR", "LVL": "LEVEL", "UPR": "UPPER", "LWR": "LOWER",
            "STO": "SANTO", "STA": "SANTA", "GEN": "GENERAL", "BRGY": "BARANGAY", "BGY": "BARANGAY",
-           "EXT": "EXTENSION"},
+           "EXT": "EXTENSION", "PRES": "PRESIDENT"},
     "DE": {"STR": "STRASSE", "STRAßE": "STRASSE", "PL": "PLATZ", "STRASE": "STRASSE"},
     "FR": {"R": "RUE", "AV": "AVENUE", "AVE": "AVENUE", "BD": "BOULEVARD", "BLVD": "BOULEVARD", "PL": "PLACE",
            "ST": "SAINT", "STE": "SAINTE", "QU": "QUAI", "IMP": "IMPASSE", "CHE": "CHEMIN", "SQ": "SQUARE",

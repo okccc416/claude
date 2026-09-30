@@ -120,6 +120,9 @@ class RuleParser:
         self.neutral = {key(x, ref.market) for x in REGION_WORDS.get(ref.market, []) + CITY_WORDS.get(ref.market, [])}
         self.omit_type = ref.market in ("MY", "ID", "VN", "TH", "AE", "SA")  # 这些市场常省略 Jalan / Đường / شارع
         self.type_after = ref.market in ("AU", "PH", "AE", "SA")  # 英文写法：类型词在名称后面（King Street）
+        # 菲律宾商户地址常见"路名 门牌"且不写 St（Kapiligan 84, Quezon City）：段首名称紧跟门牌号时允许省略类型词
+        #（开发集上本地小模型读对、规则漏掉的主要写法）
+        self.street_number_order = ref.market == "PH"
         self._arabic = bool(getattr(ref, "street_skel", None))  # 阿拉伯文市场：拉丁转写 <-> 阿拉伯文
         if self._thai:
             self.nospace = {}
@@ -298,7 +301,9 @@ class RuleParser:
                 how = None
                 if words in table:
                     how = "exact"
-                elif (kind == "area" or self.omit_type or _has_type_word(words, self.ref.market)) \
+                elif (kind == "area" or self.omit_type or _has_type_word(words, self.ref.market)
+                      or (kind == "street" and self.street_number_order and (i == 0 or seps[i])
+                          and i + size < n and HOUSE_NO.match(exp[i + size]))) \
                         and not (kind == "street" and self.type_after and exp[i] in TYPE_WORDS["EN"]):
                     # （英文写法类型词在名称后面：STREET GLEN IRIS 里的 STREET 属于前一条路，不能拿来匹配 Glen Iris Road）
                     # 核心键（去掉类型词）匹配：只在"习惯省略类型词"的市场，或写了类型词但写法不同时使用，
