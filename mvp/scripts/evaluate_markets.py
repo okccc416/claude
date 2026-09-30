@@ -79,6 +79,15 @@ def judge_real(eng: Engine, res, case) -> str:
     return _outcome(res.action, ok, res.granularity)
 
 
+def error_m(eng: Engine, res, case) -> float | None:
+    """给出的位置离标准答案多远（米）：道路级按道路到商户坐标的距离，其余按点距离。"""
+    if res.lat is None:
+        return None
+    if res.granularity == "ROUTE" and res.best is not None and res.best.street is not None:
+        return dist_to_street(eng.ref, res.best.street, case["lat"], case["lng"])
+    return haversine(res.lat, res.lng, case["lat"], case["lng"])
+
+
 def judge_synth(eng: Engine, res, case) -> str:
     ok = False
     b = res.best
@@ -107,6 +116,7 @@ def _outcome(action: str, ok: bool, gran: str = "") -> str:
 def run(eng: Engine, cases: list[dict], judge) -> dict:
     t = time.perf_counter()
     oc, gran, dists, examples = Counter(), Counter(), [], {}
+    gross = Counter()
     for c in cases:
         res = eng.validate(c["input"])
         o = judge(eng, res, c)
@@ -114,11 +124,15 @@ def run(eng: Engine, cases: list[dict], judge) -> dict:
         gran[res.granularity] += 1
         if res.lat is not None and "lat" in c:
             dists.append(haversine(res.lat, res.lng, c["lat"], c["lng"]))
+            err = error_m(eng, res, c)
+            if o in ("静默错误", "错误建议") and err is not None and err > 1000:
+                gross[o] += 1  # 偏差超过 1 公里：不是商户坐标不准能解释的
         if o in ("静默错误", "错误建议", "判 FIX") and len(examples.setdefault(o, [])) < 4:
             examples[o].append((c["input"][:90], res.action, res.granularity,
                                 eng.to_response(res)["result"]["address"]["formattedAddress"][:70]))
     n = max(len(cases), 1)
     return {"n": len(cases), "outcomes": {k: oc[k] / n for k in OUTCOMES},
+            "silent_over_1km": gross["静默错误"] / n, "wrong_over_1km": gross["错误建议"] / n,
             "granularity": {k: v / n for k, v in gran.most_common()},
             "median_error_m": statistics.median(dists) if dists else None,
             "within_500m": sum(d <= 500 for d in dists) / n,
@@ -135,7 +149,9 @@ def evaluate_market(code: str, parsers: list[str], n: int, split: str) -> dict:
         eng = Engine(code, parser, ref)
         r = out[parser] = {"real": run(eng, real, judge_real), "synthetic": run(eng, synth, judge_synth)}
         ok = lambda x: 100 * (x["outcomes"]["正确·直接通过"] + x["outcomes"]["正确·要求确认"])  # noqa: E731
-        print(f"{code} {parser:6} 真实：定位对 {ok(r['real']):.1f}% 静默 {100 * r['real']['outcomes']['静默错误']:.1f}% | "
+        print(f"{code} {parser:6} 真实：定位对 {ok(r['real']):.1f}% 直接通过且对 "
+              f"{100 * r['real']['outcomes']['正确·直接通过']:.1f}% 静默 {100 * r['real']['outcomes']['静默错误']:.1f}%"
+              f"（>1km {100 * r['real']['silent_over_1km']:.1f}%） | "
               f"合成：对 {ok(r['synthetic']):.1f}% 静默 {100 * r['synthetic']['outcomes']['静默错误']:.1f}%"
               f"（{r['real']['ms']:.0f} ms/条）", flush=True)
     return out
@@ -169,10 +185,12 @@ def write_report(results: dict, tag: str) -> None:
     L = ["# 多市场评测报告（自动生成）\n",
          "- 真实地址：各城市留出的 20% 商户（不在参考库里）的自填地址，标准答案为商户坐标（弱标注）",
          "- 合成地址：按各市场写法渲染的测试部分道路（AI 解析器训练时没见过），标准答案已知",
-         "- 解析方式：rules = 规则 + 地名表；crf = 机器学习（条件随机场）；hybrid = 两者都出候选，由参考数据裁决\n"]
+         "- 解析方式：rules = 规则 + 地名表；crf = 机器学习（条件随机场）；hybrid = 两者都出候选，由参考数据裁决",
+         "- 判对标准（真实地址）：门牌级 ≤ 250 米、楼宇级 ≤ 400 米、道路级为该道路经过商户 250 米内；"
+         "\"偏差 >1 公里\"的静默错误不是商户坐标不准能解释的，是真正的错\n"]
     for kind, title in (("real", "真实商户地址"), ("synthetic", "合成地址")):
         L += [f"## {title}\n", "| 市场 | 类别 | 解析 | 条数 | 正确·直接通过 | 正确·要求确认 | 判 FIX·片区对 | 判 FIX | 错误建议 | "
-              "静默错误 | 500 米内 | 毫秒/条 |", "|---|---|---|---|---|---|---|---|---|---|---|---|"]
+              "静默错误 | 其中偏差 >1 公里 | 500 米内 | 毫秒/条 |", "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
         for code, per in results.items():
             m = MARKETS[code]
             for parser, r in per.items():
@@ -180,7 +198,8 @@ def write_report(results: dict, tag: str) -> None:
                 o = x["outcomes"]
                 L.append(f"| {m.name}（{code}） | {m.cls} | {parser} | {x['n']} | {pct(o['正确·直接通过'])} | "
                          f"{pct(o['正确·要求确认'])} | {pct(o['判 FIX·片区对'])} | {pct(o['判 FIX'])} | {pct(o['错误建议'])} | "
-                         f"{pct(o['静默错误'])} | {pct(x['within_500m'])} | {x['ms']:.0f} |")
+                         f"{pct(o['静默错误'])} | {pct(x.get('silent_over_1km', 0))} | {pct(x['within_500m'])} | "
+                         f"{x['ms']:.0f} |")
         L.append("")
     L.append("## 错误样例（规则解析，真实地址）\n")
     for code, per in results.items():

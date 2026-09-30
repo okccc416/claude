@@ -1,0 +1,1453 @@
+{
+  "AE": {
+    "rules": {
+      "real": {
+        "n": 600,
+        "outcomes": {
+          "正确·直接通过": 0.075,
+          "正确·要求确认": 0.24,
+          "判 FIX·片区对": 0.11833333333333333,
+          "判 FIX": 0.25,
+          "错误建议": 0.27166666666666667,
+          "静默错误": 0.045
+        },
+        "silent_over_1km": 0.03166666666666667,
+        "wrong_over_1km": 0.225,
+        "granularity": {
+          "ROUTE": 0.51,
+          "LOCALITY": 0.19166666666666668,
+          "OTHER": 0.17666666666666667,
+          "PREMISE_PROXIMITY": 0.12166666666666667
+        },
+        "median_error_m": 1732.6656634624965,
+        "within_500m": 0.18166666666666667,
+        "ms": 2.576632560000386,
+        "examples": {
+          "判 FIX": [
+            [
+              "Sanctuary Tower - Office NO.105, دبي, 341296",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "Al Tawoon, الشارقة, 06",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "Grosvenor House, Dubai",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "8/F, ICD Brookfield Place, Dubai",
+              "FIX",
+              "LOCALITY",
+              ""
+            ]
+          ],
+          "错误建议": [
+            [
+              "Al Hammadi 01, Ras Al Khor Industrial First, دبي",
+              "CONFIRM",
+              "ROUTE",
+              "01, شارع رأس الخور"
+            ],
+            [
+              "27/2 10th St, دبي",
+              "CONFIRM",
+              "ROUTE",
+              "27/2, شارع 10"
+            ],
+            [
+              "Saraya Cafe & Roasters SHJ Warehouses Land Service Road Industrial Area 18, Sharjah, 14053",
+              "CONFIRM",
+              "ROUTE",
+              "18, Service Road"
+            ],
+            [
+              "Ground Floor، Auto Center Building - Showroom#5 - Office #105 22A St, دبي, 22542",
+              "CONFIRM",
+              "ROUTE",
+              "#105, 22a شارع"
+            ]
+          ],
+          "静默错误": [
+            [
+              "31394 97957, شارع الحمرية, دبي",
+              "ACCEPT",
+              "ROUTE",
+              "شارع الحمرية"
+            ],
+            [
+              "Opposite Deira Palace Hotel, 107 Sikkat Al Khail St, Deira, Dubai, UAE, دبي",
+              "ACCEPT",
+              "ROUTE",
+              "107, طريق سكة الخيل, ديرة"
+            ],
+            [
+              "28291 95853, شارع الخور, دبي",
+              "ACCEPT",
+              "ROUTE",
+              "شارع الخور"
+            ],
+            [
+              "24965 90410, شارع الوصل 35, دبي",
+              "ACCEPT",
+              "ROUTE",
+              "35, شارع الوصل"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 600,
+        "outcomes": {
+          "正确·直接通过": 0.33666666666666667,
+          "正确·要求确认": 0.17166666666666666,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.31333333333333335,
+          "错误建议": 0.16333333333333333,
+          "静默错误": 0.015
+        },
+        "silent_over_1km": 0.005,
+        "wrong_over_1km": 0.14833333333333334,
+        "granularity": {
+          "ROUTE": 0.6483333333333333,
+          "LOCALITY": 0.24166666666666667,
+          "OTHER": 0.07166666666666667,
+          "PREMISE_PROXIMITY": 0.03833333333333333
+        },
+        "median_error_m": 263.92414371883626,
+        "within_500m": 0.5233333333333333,
+        "ms": 1.7516847783326739,
+        "examples": {
+          "判 FIX": [
+            [
+              "57 شارع 101, Al Mizhar 4",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Floor 13, 80 Street, مجمع دبي للاستثمار, Dubai, UAE",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "37 15 Street المنارہ, Dubai, UAE",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "234 11 Street Al Warqa",
+              "FIX",
+              "LOCALITY",
+              ""
+            ]
+          ],
+          "错误建议": [
+            [
+              "36 64c شارع, മിർദിഫ്",
+              "CONFIRM",
+              "ROUTE",
+              "36, 64c شارع"
+            ],
+            [
+              "13 17B ST, അൽ-മൻഖൂൽ, DUBAI",
+              "CONFIRM",
+              "ROUTE",
+              "13, 17b شارع"
+            ],
+            [
+              "7A, 43a Street مجتمع القوز, Dubai, UAE",
+              "CONFIRM",
+              "ROUTE",
+              "7A, 43a شارع, مجتمع القوز"
+            ],
+            [
+              "63 شارع 11 Al Nahda 1, دبي",
+              "CONFIRM",
+              "ROUTE",
+              "11, شارع النهضة"
+            ]
+          ],
+          "静默错误": [
+            [
+              "metavinci makers, 43 شارع 20, al wasl, dubai",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "MetaVinci Makers, 20, شارع الوصل"
+            ],
+            [
+              "160A Zone D, الفرجان",
+              "ACCEPT",
+              "ROUTE",
+              "160A, D منطقة, الفرجان"
+            ],
+            [
+              "Flat 7, 30C شارع 20, الورقاء دبي",
+              "ACCEPT",
+              "ROUTE",
+              "FLAT 7, 20, 30c شارع, Al Warqa"
+            ],
+            [
+              "21 Quortaj 3, Entrance A Dubai, UAE",
+              "ACCEPT",
+              "ROUTE",
+              "3, entrance"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "SA": {
+    "rules": {
+      "real": {
+        "n": 600,
+        "outcomes": {
+          "正确·直接通过": 0.07333333333333333,
+          "正确·要求确认": 0.22833333333333333,
+          "判 FIX·片区对": 0.11333333333333333,
+          "判 FIX": 0.14333333333333334,
+          "错误建议": 0.4166666666666667,
+          "静默错误": 0.025
+        },
+        "silent_over_1km": 0.025,
+        "wrong_over_1km": 0.37666666666666665,
+        "granularity": {
+          "ROUTE": 0.6666666666666666,
+          "LOCALITY": 0.14333333333333334,
+          "OTHER": 0.11333333333333333,
+          "PREMISE_PROXIMITY": 0.07666666666666666
+        },
+        "median_error_m": 2624.372230291197,
+        "within_500m": 0.16166666666666665,
+        "ms": 2.3667882633329405,
+        "examples": {
+          "错误建议": [
+            [
+              "Prince Muhammad Ibn Saad Ibn Abdulaziz Rd, الرياض, 13512",
+              "CONFIRM",
+              "ROUTE",
+              "طريق الأمير محمد بن سعد بن عبدالعزيز, 13512"
+            ],
+            [
+              "Prince Ahmad Bin Abdulaziz Street Riyadh, الرياض, 11461",
+              "CONFIRM",
+              "ROUTE",
+              "Ahmad, 11461"
+            ],
+            [
+              "Saeed Bin Zaid St, الرياض",
+              "CONFIRM",
+              "ROUTE",
+              "سعيد بن زيد"
+            ],
+            [
+              "شارع الطائف, الرياض, 34439",
+              "CONFIRM",
+              "ROUTE",
+              "الطائف, 34439"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "hitteen, الرياض, 11411",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "https://goo.gl/maps/heC8gbHXxjT1kkKG9, الرياض",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "Riyadh, الرياض, 2233",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "الرياض, الرياض, 1200",
+              "FIX",
+              "OTHER",
+              ""
+            ]
+          ],
+          "静默错误": [
+            [
+              "Al Thoumamah Road 3178, الرياض, 13322",
+              "ACCEPT",
+              "ROUTE",
+              "3178, طريق الثمامة, 13322"
+            ],
+            [
+              "6526 التخصصي, الرياض, 12332",
+              "ACCEPT",
+              "ROUTE",
+              "6526, التخصصي, 12332"
+            ],
+            [
+              "HH6V+683، العوالي، الرياض 14926، المملكة العربية السعودية, الرياض, 14926",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "14926"
+            ],
+            [
+              "2418 Al Olaya, Al Wurud, Riyadh, 12253",
+              "ACCEPT",
+              "ROUTE",
+              "2418, العليا, الورود, 12253"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 600,
+        "outcomes": {
+          "正确·直接通过": 0.5016666666666667,
+          "正确·要求确认": 0.265,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.06666666666666667,
+          "错误建议": 0.15833333333333333,
+          "静默错误": 0.008333333333333333
+        },
+        "silent_over_1km": 0.0033333333333333335,
+        "wrong_over_1km": 0.15333333333333332,
+        "granularity": {
+          "ROUTE": 0.92,
+          "LOCALITY": 0.056666666666666664,
+          "PREMISE_PROXIMITY": 0.013333333333333334,
+          "OTHER": 0.01
+        },
+        "median_error_m": 109.9351593147648,
+        "within_500m": 0.7533333333333333,
+        "ms": 1.5327814099994914,
+        "examples": {
+          "错误建议": [
+            [
+              "9 No. 10, بلدية الشمال, الرياض",
+              "CONFIRM",
+              "ROUTE",
+              "10, البلدية"
+            ],
+            [
+              "32 الأبناء, أحد, الرياض",
+              "CONFIRM",
+              "ROUTE",
+              "32, الأبناء"
+            ],
+            [
+              "Building 109, Tharmadaa, Riyadh, Saudi Arabia",
+              "CONFIRM",
+              "ROUTE",
+              "109, ثرمداء"
+            ],
+            [
+              "13 Abdulrahman Al Demshqqi بلدية الروضة, Riyadh, 13242",
+              "CONFIRM",
+              "ROUTE",
+              "13, البلدية, 13242"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Building 32 No. 415, Municipality of Al Shamal, الرياض 13532",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Building, 47 No. 167, 13761",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Building 91 رقم 45, الاسكان, الرياض",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "11 رقم 426, Riyadh, Saudi Arabia",
+              "FIX",
+              "OTHER",
+              ""
+            ]
+          ],
+          "静默错误": [
+            [
+              "43 Haifa Ar Rabwah, Riyadh, 21955",
+              "ACCEPT",
+              "ROUTE",
+              "43, حيفا, الربوة, 21955"
+            ],
+            [
+              "139A Al Daen, Al Rawda Muncipality, 13236",
+              "ACCEPT",
+              "ROUTE",
+              "139A, الضائن, بلدية الروضة, 13236"
+            ],
+            [
+              "Building 41 الحارث بن عباد البtري, المرسلات الرياض",
+              "ACCEPT",
+              "ROUTE",
+              "41, الحارث, المرسلات"
+            ],
+            [
+              "124 Baraq, الدريهمية Riyadh, Saudi Arabia",
+              "ACCEPT",
+              "ROUTE",
+              "124, بارق, الدريهمية"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "ID": {
+    "rules": {
+      "real": {
+        "n": 600,
+        "outcomes": {
+          "正确·直接通过": 0.37166666666666665,
+          "正确·要求确认": 0.16333333333333333,
+          "判 FIX·片区对": 0.023333333333333334,
+          "判 FIX": 0.041666666666666664,
+          "错误建议": 0.30833333333333335,
+          "静默错误": 0.09166666666666666
+        },
+        "silent_over_1km": 0.03666666666666667,
+        "wrong_over_1km": 0.26666666666666666,
+        "granularity": {
+          "ROUTE": 0.9266666666666666,
+          "LOCALITY": 0.056666666666666664,
+          "PREMISE_PROXIMITY": 0.008333333333333333,
+          "OTHER": 0.008333333333333333
+        },
+        "median_error_m": 826.0614599944884,
+        "within_500m": 0.38666666666666666,
+        "ms": 1.9255225516659873,
+        "examples": {
+          "静默错误": [
+            [
+              "Jl. Raya Bekasi No.KM 26, RW.5, Jakarta Timur, 13960",
+              "ACCEPT",
+              "ROUTE",
+              "Jalan Raya Bekasi, 26, Jakarta Timur, 13960"
+            ],
+            [
+              "Jl. Kamal Raya No.32 Blk C7, RT.6/RW.14, Jakarta Barat, 11730",
+              "ACCEPT",
+              "ROUTE",
+              "Jalan Kamal Raya, 32, Jakarta Barat, 11730"
+            ],
+            [
+              "Jl. Enim 2 No.87, RT.3/RW.3, Jakarta Utara, 14330",
+              "ACCEPT",
+              "ROUTE",
+              "Jalan Enim, 2, Jakarta Utara, 14330"
+            ],
+            [
+              "Jalan Senopati 8B, Jakarta, 12190",
+              "ACCEPT",
+              "ROUTE",
+              "Jalan Senopati, 8B, 12190"
+            ]
+          ],
+          "错误建议": [
+            [
+              "Jalan M H Thamrin 28, Jakarta Pusat, 10350",
+              "CONFIRM",
+              "ROUTE",
+              "MH Thamrin, 28, 10350"
+            ],
+            [
+              "Pusdiklat Kemenag RI Ciputat, Tangerang Selatan",
+              "CONFIRM",
+              "ROUTE",
+              "Jalan Tangerang"
+            ],
+            [
+              "Jalan M H Thamrin 28, RT09/RW05, Gondangdia Kel., Menteng, Jakarta, 10350, Indonesia, Jaka",
+              "CONFIRM",
+              "ROUTE",
+              "MH Thamrin, 28, 10350"
+            ],
+            [
+              "Jl. SMPN 207 No.77, RT.4/RW.8, Jakarta Barat, 11630",
+              "CONFIRM",
+              "ROUTE",
+              "Jalan SMPN 45, 77, Jakarta Barat, 11630"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "jakarta, Jakarta",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "Jl. Hii No.1, RT.7/RW.4, Jakarta Utara, 14240",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "14, RT.14/RW.3, Jakarta Selatan, 12520",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Kompl Duta Mas Bl A-3/45, Jakarta Barat, 11720",
+              "FIX",
+              "LOCALITY",
+              ""
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 600,
+        "outcomes": {
+          "正确·直接通过": 0.5333333333333333,
+          "正确·要求确认": 0.33666666666666667,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.006666666666666667,
+          "错误建议": 0.11,
+          "静默错误": 0.013333333333333334
+        },
+        "silent_over_1km": 0.011666666666666667,
+        "wrong_over_1km": 0.09833333333333333,
+        "granularity": {
+          "ROUTE": 0.9483333333333334,
+          "PREMISE_PROXIMITY": 0.045,
+          "LOCALITY": 0.006666666666666667
+        },
+        "median_error_m": 49.544545462307255,
+        "within_500m": 0.87,
+        "ms": 1.3217537866664013,
+        "examples": {
+          "错误建议": [
+            [
+              "Blok A No. 10, Jalan Haji Usman, No. 14, Jakarta Selatan",
+              "CONFIRM",
+              "ROUTE",
+              "Jalan Haji Usman, 14, Jakarta Selatan"
+            ],
+            [
+              "JALAN PELANGI JINGGA 3, NO. 45, KELAPA GADING JAKARTA PUSAT",
+              "CONFIRM",
+              "ROUTE",
+              "Jalan Kelapa, 45, Jakarta Pusat"
+            ],
+            [
+              "Jalan Rabmutan, No. 55, Jakarta Pusat",
+              "CONFIRM",
+              "ROUTE",
+              "Jalan Rambutan, 55, Jakarta Pusat"
+            ],
+            [
+              "Jalan Cempaka Putih Tengahh XII No. 16, Jakarta Selatan",
+              "CONFIRM",
+              "ROUTE",
+              "Jalan Cempaka Putih, 16"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Blok A No. 16, Jln. Kavling Hankam No. 5, غرب جاكرتا, Jakarta",
+              "ACCEPT",
+              "ROUTE",
+              "Jalan Hankam, 5, Jakarta Barat"
+            ],
+            [
+              "Gg. Haji Leman, No. 75 RT.8/RW.9, Duren Sawit Jakarta Pusat",
+              "ACCEPT",
+              "ROUTE",
+              "Jalan Duren, 75, Jakarta Pusat"
+            ],
+            [
+              "Lantai 9 Jalan Pelepah Indah 1 Blok LB, No. 15, RT.5/RW.2, Kelapa Gading Timur, Jakarta Se",
+              "ACCEPT",
+              "ROUTE",
+              "LANTAI 9, Jalan Kelapa, 15, Jakarta Selatan"
+            ],
+            [
+              "Jln. Raya Pondok Kopi, No. 10, RT.3/RW.4 Duren Sawit, Jakarta Pusat",
+              "ACCEPT",
+              "ROUTE",
+              "Jalan Duren, 10, Jakarta Pusat"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Blok C No. 19 Jln Asra, Jakarta Pusat, 15422",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Garuda, No. 25",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Lantai 16, Gang Swams No. 49 Ciganjur, DKI Jakarta",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Ringlock dan Rigging Jln. Mimoa Raya, No. 124, شمال جاكرتا, Jakarta, 14350",
+              "FIX",
+              "LOCALITY",
+              ""
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "TH": {
+    "rules": {
+      "real": {
+        "n": 600,
+        "outcomes": {
+          "正确·直接通过": 0.38333333333333336,
+          "正确·要求确认": 0.19166666666666668,
+          "判 FIX·片区对": 0.115,
+          "判 FIX": 0.08333333333333333,
+          "错误建议": 0.15666666666666668,
+          "静默错误": 0.07
+        },
+        "silent_over_1km": 0.03166666666666667,
+        "wrong_over_1km": 0.13,
+        "granularity": {
+          "ROUTE": 0.77,
+          "LOCALITY": 0.18666666666666668,
+          "PREMISE_PROXIMITY": 0.03166666666666667,
+          "OTHER": 0.011666666666666667
+        },
+        "median_error_m": 1262.9939072063246,
+        "within_500m": 0.27666666666666667,
+        "ms": 4.677335706667994,
+        "examples": {
+          "判 FIX": [
+            [
+              "69 Phra Ngoen Market, 8 Soi Wat Pra Nguen, บางใหญ่, 11140",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Nawamin 96 Alley, กรุงเทพมหานคร, 10230",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "อ่อนนุช, กรุงเทพมหานคร, 10250",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "111/150 Moo 9, Bang Phut, Mo Town Villege Chaengwattana Rd, ปากเกร็ด, 11120",
+              "FIX",
+              "LOCALITY",
+              ""
+            ]
+          ],
+          "错误建议": [
+            [
+              "ร้านลักชูรี่ เนลล์ บายนุ่น 43/5หมู่3 หน้าตลาดมนวดี ติดกับห้างทองศรสุวรรณ 2 ต.พิมลราช, บางบ",
+              "CONFIRM",
+              "ROUTE",
+              "3, ซอยสุวรรณ, 11110"
+            ],
+            [
+              "กาญจนาภิเษก, นนทบุรี, 11110",
+              "CONFIRM",
+              "ROUTE",
+              "ถนนกาญจนาภิเษก, 11110"
+            ],
+            [
+              "101 สุขุมวิท, กรุงเทพมหานคร, 10260",
+              "CONFIRM",
+              "ROUTE",
+              "101, สุขุมวิท 7, 10260"
+            ],
+            [
+              "ถนนจันทน์ 28 แขวงทุ่งวัดดอน สาทร, กรุงเทพมหานคร, 10120",
+              "CONFIRM",
+              "ROUTE",
+              "ซอยจันทน์ 28, แขวงทุ่งวัดดอน, 10120"
+            ]
+          ],
+          "静默错误": [
+            [
+              "393 หมู่ที่9, ถนนประชาอุทิศ, กรุงเทพมหานคร, 10140",
+              "ACCEPT",
+              "ROUTE",
+              "393, ถนนประชาอุทิศ, 10140"
+            ],
+            [
+              "69 ถนน ประชาอุทิศ, กรุงเทพมหานคร, 10140",
+              "ACCEPT",
+              "ROUTE",
+              "69, ถนนประชาอุทิศ, 10140"
+            ],
+            [
+              "ปาก Tha Din Daeng 12, กรุงเทพมหานคร, 10600",
+              "ACCEPT",
+              "ROUTE",
+              "12, ท่าดินแดง 1, ท่าดินแดง, 10600"
+            ],
+            [
+              "3 ซอย พหลโยธิน 54/1, สายไหม, 10220",
+              "ACCEPT",
+              "ROUTE",
+              "3, ซอย พหลโยธิน 54/1, สายไหม, 10220"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 600,
+        "outcomes": {
+          "正确·直接通过": 0.7183333333333334,
+          "正确·要求确认": 0.22333333333333333,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.02,
+          "错误建议": 0.028333333333333332,
+          "静默错误": 0.01
+        },
+        "silent_over_1km": 0.005,
+        "wrong_over_1km": 0.021666666666666667,
+        "granularity": {
+          "ROUTE": 0.9316666666666666,
+          "PREMISE_PROXIMITY": 0.04833333333333333,
+          "LOCALITY": 0.011666666666666667,
+          "OTHER": 0.008333333333333333
+        },
+        "median_error_m": 46.435229867053486,
+        "within_500m": 0.93,
+        "ms": 3.0979015950000153,
+        "examples": {
+          "错误建议": [
+            [
+              "4 ซอยประชารษาฎร์ 5 แยก 14/6, Mueang Nonthaburi",
+              "CONFIRM",
+              "ROUTE",
+              "4, แยก 14"
+            ],
+            [
+              "ชั้น 28, 91/36 Soi Inthamara 11 แขวงสามเสนใน",
+              "CONFIRM",
+              "ROUTE",
+              "ชั้น 28, 91/36, ถนนสามเสน"
+            ],
+            [
+              "59 ซ. 7, กรุงเทพมหานคร",
+              "CONFIRM",
+              "ROUTE",
+              "59, ซอย 7ก"
+            ],
+            [
+              "32/6 ซ. 1/1",
+              "CONFIRM",
+              "ROUTE",
+              "1/1, ซอย 32/6"
+            ]
+          ],
+          "静默错误": [
+            [
+              "14 ซอยเจริญญกรุง 33",
+              "ACCEPT",
+              "ROUTE",
+              "14, ซอยเจริญ"
+            ],
+            [
+              "279 ซ. Lat Phrao 69, Wang Thonglang",
+              "ACCEPT",
+              "ROUTE",
+              "279, ซอยลาดพร้าว 69, Wang Thonglang"
+            ],
+            [
+              "พัฒนาการซอย30, Floor 19, 24 Soi Pakdee Pandin Suan Luang Subdistrict, 10251",
+              "ACCEPT",
+              "ROUTE",
+              "FLOOR 19, 24, ซอยพัฒนาการ 30, 10251"
+            ],
+            [
+              "Room 38 4 ถนนราชำดริ, แขวงถนนเพชรบุรี, กรุงเทพฯ, 90110",
+              "ACCEPT",
+              "ROUTE",
+              "ROOM 38, 4, ถนนเพชรบุรี, 90110"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "47 ซอยหมู่บ้านเฌอ บาeขุนนนท์ กรุงเทพมหานคร",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "7 Sailak Dr, Nonthaburi, Bangkok",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "62 チョムプーパンティップ 1, Bangkok",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "Floor 17, 66 Forest Pavilion Ave Bangkok",
+              "FIX",
+              "OTHER",
+              ""
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "VN": {
+    "rules": {
+      "real": {
+        "n": 600,
+        "outcomes": {
+          "正确·直接通过": 0.16833333333333333,
+          "正确·要求确认": 0.4533333333333333,
+          "判 FIX·片区对": 0.02,
+          "判 FIX": 0.045,
+          "错误建议": 0.25666666666666665,
+          "静默错误": 0.056666666666666664
+        },
+        "silent_over_1km": 0.03833333333333333,
+        "wrong_over_1km": 0.20166666666666666,
+        "granularity": {
+          "ROUTE": 0.9266666666666666,
+          "LOCALITY": 0.06166666666666667,
+          "PREMISE_PROXIMITY": 0.008333333333333333,
+          "OTHER": 0.0033333333333333335
+        },
+        "median_error_m": 562.5678038393239,
+        "within_500m": 0.48,
+        "ms": 1.458672703333832,
+        "examples": {
+          "错误建议": [
+            [
+              "21 Hoàng Diệu, Quận 4, 70000",
+              "CONFIRM",
+              "ROUTE",
+              "21, Hoàng Diệu, 70000"
+            ],
+            [
+              "51-49 Hồ Thị Kỷ, Phường 1, Quận 10, Thành phố Hồ Chí Minh, Việt Nam, Quận 5, 700000",
+              "CONFIRM",
+              "ROUTE",
+              "51-49, Hồ Thị Kỷ, 700000"
+            ],
+            [
+              "71 Hoàng Hoa Thám, Quận Tân Bình, 72106",
+              "CONFIRM",
+              "ROUTE",
+              "Hẻm 71 Đường Hoàng Hoa Thám, 72106"
+            ],
+            [
+              "3 Khu Đô Thị Geleximco Lê Trọng Tấn, Quận Hà Đông, 12114",
+              "CONFIRM",
+              "ROUTE",
+              "3, Lê Trọng Tấn, 12114"
+            ]
+          ],
+          "静默错误": [
+            [
+              "642 Đ. Lê Đức Thọ, Quận Gò Vấp",
+              "ACCEPT",
+              "ROUTE",
+              "642, Đường Lê Đức Thọ, Phường Gò Vấp"
+            ],
+            [
+              "963 Đường Phan Văn Trị, Quận Gò Vấp, 71407",
+              "ACCEPT",
+              "ROUTE",
+              "963, Đường Phan Văn Trị, Phường Gò Vấp, 71407"
+            ],
+            [
+              "178/23/4 Hẻm 178 Phan Đăng Lưu, Quận Phú Nhuận, 72213",
+              "ACCEPT",
+              "ROUTE",
+              "178/23/4, Hẻm 178 Phan Đăng Lưu, Phường Phú Nhuận, 72213"
+            ],
+            [
+              "177 Đ. Nguyễn Chí Thanh, Phường Chợ Lớn, Thành phố Hồ Chí Minh, Ho Chi Minh City, Vietnam,",
+              "ACCEPT",
+              "ROUTE",
+              "177, Đường Nguyễn Chí Thanh, Phường Chợ Lớn, 70000"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Phường Phước Long, Dĩ An, 700000",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "458/41 Hẻm 458 Đường 3/2, Quận 10, 72510",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "P6-09, KDC PHI Long 5, Huyện Bình Chánh, 71812",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "3 Đường 40, Thủ Đức, 50000",
+              "FIX",
+              "LOCALITY",
+              ""
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 600,
+        "outcomes": {
+          "正确·直接通过": 0.605,
+          "正确·要求确认": 0.30333333333333334,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.008333333333333333,
+          "错误建议": 0.07666666666666666,
+          "静默错误": 0.006666666666666667
+        },
+        "silent_over_1km": 0.0033333333333333335,
+        "wrong_over_1km": 0.06166666666666667,
+        "granularity": {
+          "ROUTE": 0.93,
+          "PREMISE_PROXIMITY": 0.06166666666666667,
+          "LOCALITY": 0.008333333333333333
+        },
+        "median_error_m": 28.99474952182886,
+        "within_500m": 0.9066666666666666,
+        "ms": 2.4841131249998702,
+        "examples": {
+          "错误建议": [
+            [
+              "140/13 Hẻm 778/32 Thốngg Nhất, TP. Hồ Chí Minh 71415",
+              "CONFIRM",
+              "ROUTE",
+              "778/32, Dương Thanh, 71415"
+            ],
+            [
+              "28 Hẻm 1/39 Chến Lược, Phường Bình Trị Đông",
+              "CONFIRM",
+              "ROUTE",
+              "28, Chiến Lược, Phường Bình Trị Đông"
+            ],
+            [
+              "24 Đường số 2, Phường An Lạc, TP.HCM",
+              "CONFIRM",
+              "ROUTE",
+              "Hẻm 24 đường số 2"
+            ],
+            [
+              "Phan Văn Trị, TP. Hồ Chí Minh",
+              "CONFIRM",
+              "ROUTE",
+              "Đường Phan Văn Trị"
+            ]
+          ],
+          "静默错误": [
+            [
+              "14/29 Đườn Số 2",
+              "ACCEPT",
+              "ROUTE",
+              "14/29, Số 2"
+            ],
+            [
+              "86 Hẻm 26 Lê Văn Duytệ, TP. Hồ Chí Minh, 72319",
+              "ACCEPT",
+              "ROUTE",
+              "26, Dương Thanh, 72319"
+            ],
+            [
+              "ViỄN ThÔNg Az, Tầng 3, 37/46 Hẻm 41 Đườgn Số 30, 721400",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "TANG 3, ViỄN ThÔNg Az, 41, Đường số 30, 721400"
+            ],
+            [
+              "Tầng 3, 9 Đường Số 2, Q.Phường Hạnh Thông 727214",
+              "ACCEPT",
+              "ROUTE",
+              "TANG 3, 9, Đường số 2, Phường Hạnh Thông, 727214"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "17/13 Phú Thuận, Q.Phường Phú Thuận",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Phòng 9, 40/37 Hẻm 54 Đ. 34",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "95 Hẻm 105, 824461",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Hẻm 79, Quận Phường Tân Sơn Nhì, Hồ Chí Minh, 760135",
+              "FIX",
+              "LOCALITY",
+              ""
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "MY": {
+    "rules": {
+      "real": {
+        "n": 600,
+        "outcomes": {
+          "正确·直接通过": 0.5133333333333333,
+          "正确·要求确认": 0.17,
+          "判 FIX·片区对": 0.04666666666666667,
+          "判 FIX": 0.065,
+          "错误建议": 0.12833333333333333,
+          "静默错误": 0.07666666666666666
+        },
+        "silent_over_1km": 0.04,
+        "wrong_over_1km": 0.09666666666666666,
+        "granularity": {
+          "ROUTE": 0.85,
+          "LOCALITY": 0.11166666666666666,
+          "PREMISE_PROXIMITY": 0.03833333333333333
+        },
+        "median_error_m": 403.73597716033134,
+        "within_500m": 0.5433333333333333,
+        "ms": 2.234930774999763,
+        "examples": {
+          "错误建议": [
+            [
+              "M3 Mall, Bandar Kuala Lumpur",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "M3 Mall"
+            ],
+            [
+              "Damansara Damai, Petaling Jaya",
+              "CONFIRM",
+              "ROUTE",
+              "Jalan Damansara, Petaling Jaya"
+            ],
+            [
+              "no 22 jalan AU1A/4C Taman Keramat Permai, Ampang, 68000",
+              "CONFIRM",
+              "ROUTE",
+              "4C, Jalan Keramat, 68000"
+            ],
+            [
+              "Lembah Pantai, Petaling Jaya",
+              "CONFIRM",
+              "ROUTE",
+              "Jalan Lembah, Petaling Jaya"
+            ]
+          ],
+          "静默错误": [
+            [
+              "F-11-3, Pusat Bandar Bukit Jalil, Jalan Jalil Utama 2, 57000, Kuala Lumpur, Malaysia., Kua",
+              "ACCEPT",
+              "ROUTE",
+              "11-3, Persiaran Jalil Utama, 57000"
+            ],
+            [
+              "2 Jalan SS 4B/2, Petaling Jaya, 47301",
+              "ACCEPT",
+              "ROUTE",
+              "2, Jalan SS 4B/2, Petaling Jaya, 47301"
+            ],
+            [
+              "127 A, Jalan Damansara, Petaling Jaya, 60000",
+              "ACCEPT",
+              "ROUTE",
+              "127, Jalan Damansara, Petaling Jaya, 60000"
+            ],
+            [
+              "1,Jalan Pandan Indah, Pandan Indah, 55100",
+              "ACCEPT",
+              "ROUTE",
+              "1, Jalan Indah, Kampung Pandan, 55100"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "The Square @ One City, Jalan USJ 25/1C, Subang Jaya, 47650",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "malaysia, Bandar Kuala Lumpur, 55100",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Desa Business Centre, Kuala Lumpur, 58100",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "kepong sentral condominium, Bandar Kuala Lumpur, 52100",
+              "FIX",
+              "LOCALITY",
+              ""
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 600,
+        "outcomes": {
+          "正确·直接通过": 0.6216666666666667,
+          "正确·要求确认": 0.2783333333333333,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.015,
+          "错误建议": 0.06833333333333333,
+          "静默错误": 0.016666666666666666
+        },
+        "silent_over_1km": 0.011666666666666667,
+        "wrong_over_1km": 0.06,
+        "granularity": {
+          "ROUTE": 0.9333333333333333,
+          "PREMISE_PROXIMITY": 0.051666666666666666,
+          "LOCALITY": 0.015
+        },
+        "median_error_m": 61.44429695476879,
+        "within_500m": 0.8983333333333333,
+        "ms": 1.6227366699998431,
+        "examples": {
+          "错误建议": [
+            [
+              "LanTi Homestay at Ampang, No. 37 Jlaan 20A, Majlis Perbandaran Ampang Jaya 68000",
+              "CONFIRM",
+              "ROUTE",
+              "20A, Jalan Majlis, 68000"
+            ],
+            [
+              "13 Jalan 6/2, Petaling Jaya, Selangor",
+              "CONFIRM",
+              "ROUTE",
+              "13, Jalan 6/2"
+            ],
+            [
+              "14, JLN. PUTR MURNI 3/1B, KUALA LUMPUR",
+              "CONFIRM",
+              "ROUTE",
+              "14, Jalan Putra Murni 3/1"
+            ],
+            [
+              "149 Jalan Koop Cuepacs 3F Cheras",
+              "CONFIRM",
+              "ROUTE",
+              "FLOOR 3F, 149, Jalan KOOP Cuepacs 2C, Cheras"
+            ]
+          ],
+          "静默错误": [
+            [
+              "160 Jalan PJU 5/14, Kota Damansara Kuala Lumpur",
+              "ACCEPT",
+              "ROUTE",
+              "160, Jalan Damansara, Kuala Lumpur"
+            ],
+            [
+              "Level 24, 10 Lebuh Puteri, Petaling Jaya, Selangor, 47140",
+              "ACCEPT",
+              "ROUTE",
+              "LEVEL 24, 10, Lebuh Puteri, Petaling Jaya, 47140"
+            ],
+            [
+              "58 JLN ARA SD 7/1B, BANDAR SRI DAMANSARA, WILAYAH PERSEKUTUAN KUALA LUMPUR",
+              "ACCEPT",
+              "ROUTE",
+              "58, Jalan Damansara, Kuala Lumpur"
+            ],
+            [
+              "No. 13, Lorong Camar 4/5R Kota Damansara, Wilayah Persekutuan Kuala Lumpur",
+              "ACCEPT",
+              "ROUTE",
+              "13, Jalan Damansara, Kuala Lumpur"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "125 Jalan 14, Cheras",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Jln 49, 帝沙再也花園, KL",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "PLUS, KL",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Homestay Yasmin - Bandar Tasik Selatan No. 3 Jalan Tasik Selaran 28, Bandar Tasik Selatan,",
+              "FIX",
+              "LOCALITY",
+              ""
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "PH": {
+    "rules": {
+      "real": {
+        "n": 600,
+        "outcomes": {
+          "正确·直接通过": 0.3283333333333333,
+          "正确·要求确认": 0.19833333333333333,
+          "判 FIX·片区对": 0.16166666666666665,
+          "判 FIX": 0.09666666666666666,
+          "错误建议": 0.17,
+          "静默错误": 0.045
+        },
+        "silent_over_1km": 0.02666666666666667,
+        "wrong_over_1km": 0.14833333333333334,
+        "granularity": {
+          "ROUTE": 0.645,
+          "LOCALITY": 0.25833333333333336,
+          "PREMISE_PROXIMITY": 0.09666666666666666
+        },
+        "median_error_m": 946.9305602034983,
+        "within_500m": 0.37333333333333335,
+        "ms": 2.714049305000117,
+        "examples": {
+          "错误建议": [
+            [
+              "Office no 415, 417 4/F Unit 4 C&D Commerce and Industry Plaza Building, Taguig, 1634",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "UNIT 4, Commerce and Industry Plaza, 415, 1634"
+            ],
+            [
+              "720 B Bulacan St, Manila, 002",
+              "CONFIRM",
+              "ROUTE",
+              "720, Bulacan Street, Manila"
+            ],
+            [
+              "53 Anonas, Quezon City, 1102",
+              "CONFIRM",
+              "ROUTE",
+              "53, Anonas, Quezon City, 1102"
+            ],
+            [
+              "Provident Vill, 170 Cambridge, Marikina, 1804",
+              "CONFIRM",
+              "ROUTE",
+              "170, Cambridge, 1804"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Sampaloc Manila, Manila",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Two E-com Bldg, Pasay City, 1300",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Manila, Manila, <<not-applicable>>",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Tomas Arguelles 53, Quezon City, 1113",
+              "FIX",
+              "LOCALITY",
+              ""
+            ]
+          ],
+          "静默错误": [
+            [
+              "486 Lt. Artiaga, San Juan, 1500",
+              "ACCEPT",
+              "ROUTE",
+              "486, Artiaga, San Juan, 1500"
+            ],
+            [
+              "303 building tullahan road, tandang sora extention, Santa Quiteria Rd, Caloocan City, 1402",
+              "ACCEPT",
+              "ROUTE",
+              "303, Santa Quiteria Road, Caloocan, 1402"
+            ],
+            [
+              "537 J Fabella St, Mandaluyong, 1550",
+              "ACCEPT",
+              "ROUTE",
+              "537, J. Fabella Street, Mandaluyong, 1550"
+            ],
+            [
+              "2521 a Isagani St, Bgy 370, Zone 037 STA Cruz, Manila, Manila, 1113",
+              "ACCEPT",
+              "ROUTE",
+              "2521, Isagani Street, Santa Cruz, 1113"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 600,
+        "outcomes": {
+          "正确·直接通过": 0.595,
+          "正确·要求确认": 0.23833333333333334,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.05,
+          "错误建议": 0.10666666666666667,
+          "静默错误": 0.01
+        },
+        "silent_over_1km": 0.01,
+        "wrong_over_1km": 0.09833333333333333,
+        "granularity": {
+          "ROUTE": 0.8916666666666667,
+          "PREMISE_PROXIMITY": 0.058333333333333334,
+          "LOCALITY": 0.04833333333333333,
+          "OTHER": 0.0016666666666666668
+        },
+        "median_error_m": 90.08693659400208,
+        "within_500m": 0.825,
+        "ms": 2.0735428699996796,
+        "examples": {
+          "错误建议": [
+            [
+              "65 Saint Joseph Streeet, Manila",
+              "CONFIRM",
+              "ROUTE",
+              "65, Saint Joseph Street, Manila"
+            ],
+            [
+              "200 Main St., Metro Manila",
+              "CONFIRM",
+              "ROUTE",
+              "200, Main Street"
+            ],
+            [
+              "No. 5 Sisa Street, Մանիլա, Makati City",
+              "CONFIRM",
+              "ROUTE",
+              "5, Sisa Street"
+            ],
+            [
+              "Floor 19, 3 P. Zamora St. Jesus Dela Peña, Quezon City",
+              "CONFIRM",
+              "ROUTE",
+              "FLOOR 19, 3, P. Zamora Street, Quezon City"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "33 Rayos Compound Rosario Metro Manila",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "52 Road 3, East Rembo, تاجيج, Quezon City, 1218",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "No. 7B Road 8 Metro Manila 2012",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Tekwork Multipurpose Cooperative No. 14 Normaandy Street Maybunga Quezon City",
+              "FIX",
+              "LOCALITY",
+              ""
+            ]
+          ],
+          "静默错误": [
+            [
+              "Unit 40, No. 8 Dizon Street Manila",
+              "ACCEPT",
+              "ROUTE",
+              "UNIT 40, 8, Dizon Street, Manila"
+            ],
+            [
+              "51 San Martin St., Makati Manila 1009/NATIONALCAPITALREGIONPHILIPPINES",
+              "ACCEPT",
+              "ROUTE",
+              "51, San Martin Street, Manila, 1009"
+            ],
+            [
+              "buoyant water refilling station, no. 78 sunflower st makati city",
+              "ACCEPT",
+              "ROUTE",
+              "78, Sunflower Street, Makati"
+            ],
+            [
+              "Unit 5, 46, Acacia Street, Makati City, 1633",
+              "ACCEPT",
+              "ROUTE",
+              "UNIT 5, 46, Acacia Street, Makati, 1633"
+            ]
+          ]
+        }
+      }
+    }
+  }
+}

@@ -313,12 +313,12 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
                 ref.street_keys[key(nm, market)].add(s.id)
             if core_key(nm, market):
                 ref.street_core[core_key(nm, market)].add(s.id)
-            if arabic and len(skeleton(nm)) >= 3:
+            if arabic and _is_arabic(nm) and len(skeleton(nm)) >= 3:  # 只收阿拉伯文名称：拉丁名称走容错检索
                 ref.street_skel[skeleton(nm)].add(s.id)
     if arabic:
         for a in ref.areas:
             for nm in a.names:
-                if len(skeleton(nm)) >= 3:
+                if _is_arabic(nm) and len(skeleton(nm)) >= 3:
                     ref.area_skel[skeleton(nm)].add(a.id)
 
     # ---- POI（留出 20% 作测试）
@@ -360,6 +360,10 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
     ref.poi_fuzzy = FuzzyIndex(poi_keys)
     ref.save()
     return ref
+
+
+def _is_arabic(text: str) -> bool:
+    return bool(re.search(r"[؀-ۿ]", text))
 
 
 def _densify(wkbs: list, step_deg: float = 0.0008) -> list[list[tuple[float, float]]]:

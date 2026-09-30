@@ -21,9 +21,15 @@ EMAIL = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
 URL = re.compile(r"https?://\S+|www\.\S+")
 PLUS_CODE = re.compile(r"\b[23456789CFGHJMPQRVWX]{4,8}\+[23456789CFGHJMPQRVWX]{2,3}\b", re.I)
 MAKANI = re.compile(r"(?<!\d)\d{5}\s\d{5}(?!\d)")
+PO_BOX = re.compile(r"(?:\bP\.?\s?O\.?\s?BOX|\bPOB|ص\.?\s?ب)\s*[.:#]?\s*(\d{2,7})\b", re.I)
+# 单独出现时不能当楼名 / 转写道路名的通用词
+GENERIC_WORDS = {"OFFICE", "SHOP", "BUILDING", "TOWER", "TOWERS", "MALL", "CENTER", "CENTRE", "HOTEL", "FLOOR",
+                 "GROUND", "LEVEL", "SUITE", "UNIT", "STORE", "PLAZA", "MARKET", "SHOPPING", "COMMERCIAL",
+                 "INDUSTRIAL", "AREA", "CITY", "COMPLEX", "RESIDENCE", "APARTMENTS", "VILLA", "WAREHOUSE"}
 UNIT_WORDS = {"UNIT", "APARTMENT", "SUITE", "SHOP", "FLAT", "LEVEL", "FLOOR", "LANTAI", "TANG", "ชั้น", "ห้อง",
               "الطابق", "شقه", "مكتب", "LOT", "ROOM", "KIOSK", "STALL", "OFFICE", "TOWER", "BLOCK", "BLOK"}
-NUMBER_MARKERS = {"NO", "NOMOR", "NUMBER", "BLK", "#", "رقم", "مبني", "SỐ", "SO", "เลขที่"}
+NUMBER_MARKERS = {"NO", "NOMOR", "NUMBER", "BLK", "#", "رقم", "مبني", "SỐ", "SO", "เลขที่", "VILLA", "فيلا"}
+MARKER_WORDS = {"NO", "NOMOR", "NUMBER", "KAV", "KAVLING", "KM", "رقم"}
 HOUSE_NO = re.compile(r"^\d{1,5}[A-Z]?(?:[/\-]\d{1,5}[A-Z]?){0,2}$")
 AU_STATES = {"NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"}
 FLOOR_TOKEN = re.compile(r"^(?:\d{1,2}(?:ST|ND|RD|TH)?F|G|GF|UG|LG|UGF|LGF|B\d)$")  # 2F、12F、GF：楼层，不是门牌
@@ -86,6 +92,10 @@ def strip_noise(raw: str) -> tuple[str, dict[str, list[str]], dict[str, str]]:
         if m:
             codes[name] = m.group(0).upper()
             text = text[:m.start()] + " " + text[m.end():]
+    boxes = PO_BOX.findall(text)
+    if boxes:  # 中东常把邮政信箱号填在邮编栏
+        noise["poBoxes"] = boxes
+        text = PO_BOX.sub(" ", text)
     phones = PHONE.findall(text)
     if phones:
         noise["phones"] = [p.strip() for p in phones]
@@ -101,6 +111,8 @@ class RuleParser:
         self.m = MARKETS[ref.market]
         self.pc_re = re.compile(self.m.postcode) if self.m.postcode else None
         self._thai = ref.market == "TH"
+        # 国家 / 大区 / 全城名的匹配键：容错检索时也不当片区
+        self.neutral = {key(x, ref.market) for x in REGION_WORDS.get(ref.market, []) + CITY_WORDS.get(ref.market, [])}
         self.omit_type = ref.market in ("MY", "ID", "VN", "TH", "AE", "SA")  # 这些市场常省略 Jalan / Đường / شارع
         self.type_after = ref.market in ("AU", "PH", "AE", "SA")  # 英文写法：类型词在名称后面（King Street）
         self._arabic = bool(getattr(ref, "street_skel", None))  # 阿拉伯文市场：拉丁转写 <-> 阿拉伯文
@@ -125,6 +137,8 @@ class RuleParser:
         seps = tokenize_seps(text)
         seps = seps if len(seps) == len(exp) else [False] * len(exp)
         self._regions(exp, used, seps)
+        if self.ref.market == "AE":
+            self._po_box_chunks(p, exp, used, seps)
         self._match(p, exp, used, "street", seps)
         self._match(p, exp, used, "area", seps)
         if self._thai:
@@ -152,12 +166,28 @@ class RuleParser:
             for i in range(n - size + 1):
                 if any(used[i:i + size]) or any(seps[i + 1:i + size]):
                     continue
+                if set(toks[i:i + size]) & (GENERIC_WORDS | UNIT_WORDS):
+                    continue
                 sk = skeleton(" ".join(toks[i:i + size]))
                 ids = table.get(sk)
-                if ids and len(sk) >= (4 if kind == "street" else 3) and len(ids) <= 30:
+                # 骨架越短越容易撞车：单个词至少 5 个辅音（片区 4 个），多个词至少 4 个
+                need = (5 if kind == "street" else 4) if size == 1 else 4
+                if ids and len(sk) >= need and len(ids) <= 30:
                     span = Span(sk, i, i + size, sorted(ids), 90.0, "translit")
                     (p.streets if kind == "street" else p.areas).append(span)
                     for j in range(i, i + size):
+                        used[j] = True
+
+    def _po_box_chunks(self, p: Parsed, exp: list[str], used: list[bool], seps: list[bool]) -> None:
+        """阿联酋没有邮编：除第一段外，只有数字（和城市 / 国家名）的一段是邮政信箱号，不当门牌。"""
+        starts = [i for i, s in enumerate(seps) if s] + [len(exp)]
+        for a, b in zip(starts[1:], starts[2:] + [len(exp)] if len(starts) > 1 else []):
+            idx = range(a, b)
+            if b > a and all(used[j] or exp[j].isdigit() or exp[j] in self.neutral for j in idx) \
+                    and any(exp[j].isdigit() for j in idx):
+                for j in idx:
+                    if exp[j].isdigit() and not used[j] and 3 <= len(exp[j]) <= 7:
+                        p.noise.setdefault("poBoxes", []).append(exp[j])
                         used[j] = True
 
     def _regions(self, exp: list[str], used: list[bool], seps: list[bool]) -> None:
@@ -234,6 +264,8 @@ class RuleParser:
                 used[i] = used[i + 1] = True
             elif re.fullmatch(r"(?:RT|RW)", t) and i + 1 < len(toks):  # 印尼 RT/RW：片区级信息，不作门牌
                 used[i] = used[i + 1] = True
+            elif t in MARKER_WORDS:  # No. / Kav. / KM 等门牌标记词本身不参与道路匹配（参考库里有叫 "Jalan N:O" 的路）
+                used[i] = True
         # 澳洲 5/12 Smith St：斜杠前是单元号
         if self.ref.market == "AU":
             for i, t in enumerate(toks):
@@ -256,6 +288,8 @@ class RuleParser:
                 words = merge_initials(" ".join(exp[i:i + size]))
                 if size == 1 and (len(words) < (5 if kind == "street" else 4) or words.isdigit()):
                     continue
+                if words in self.neutral:
+                    continue  # 全城名 / 国家名单独出现时不是片区证据（Dubai Marina 这类更长的名称仍会匹配）
                 how = None
                 if words in table:
                     how = "exact"
@@ -267,7 +301,8 @@ class RuleParser:
                     ck = core_key(words, self.ref.market, "area" if kind == "area" else "street")
                     # 核心键同时是片区名（Jakarta、Menteng）时不当道路：多半是在写片区
                     if ck in core_table and len(ck) >= 4 and not ck.isdigit() and not (
-                            kind == "street" and ck in self.ref.area_keys and not _has_type_word(words, self.ref.market)):
+                            kind == "street" and (ck in self.ref.area_keys or ck in self.ref.area_core)
+                            and not _has_type_word(words, self.ref.market)):
                         how, words = "core", ck
                         spans.append(Span(words, i, i + size, sorted(core_table[words]), 97.0, how))
                         for j in range(i, i + size):
@@ -318,11 +353,15 @@ class RuleParser:
                 continue  # 已识别为道路的片段，不再当片区找
             words = [w for w in key(seg, self.ref.market).split()
                      if not HOUSE_NO.match(w) and w not in UNIT_WORDS and w not in NUMBER_MARKERS]
+            if " ".join(words) in self.neutral or "".join(words) in {x.replace(" ", "") for x in self.neutral}:
+                continue
             for cand in {" ".join(words), core_key(" ".join(words), self.ref.market,
                                                     "area" if kind == "area" else "street")}:
                 if len(cand) < 5:
                     continue
                 for k, score, ids in index.search(cand, limit=3, min_score=86):
+                    if kind == "street" and k in self.ref.area_keys:
+                        continue  # 与片区同名的道路（Dubai Marina）：当片区
                     out.append(Span(k, -1, -1, ids, score, "fuzzy"))
         out.sort(key=lambda s: -s.score)
         if kind == "street":
@@ -341,7 +380,7 @@ class RuleParser:
                 continue  # 已认成道路 / 片区的片段
             words = [w for w in k.split() if not HOUSE_NO.match(w)]
             cand = " ".join(words)
-            if len(cand) < 6 or len(words) > 8:
+            if len(cand) < 6 or len(words) > 8 or all(w in GENERIC_WORDS or w in UNIT_WORDS for w in words):
                 continue
             found = False
             for hit, score, ids in self.ref.poi_fuzzy.search(cand, limit=2, min_score=90):
@@ -352,7 +391,8 @@ class RuleParser:
                 for size in range(min(5, len(words) - 1), 1, -1):
                     hits = [(" ".join(words[i:i + size]), self.ref.poi_fuzzy.get(" ".join(words[i:i + size])))
                             for i in range(len(words) - size + 1)]
-                    hits = [(h, ids) for h, ids in hits if ids and len(ids) <= 20 and len(h) >= 8]
+                    hits = [(h, ids) for h, ids in hits if ids and len(ids) <= 20 and len(h) >= 8
+                            and not all(w in GENERIC_WORDS or w in UNIT_WORDS for w in h.split())]
                     if hits:
                         p.buildings += [Span(h, -1, -1, ids, 100.0, "exact") for h, ids in hits]
                         break

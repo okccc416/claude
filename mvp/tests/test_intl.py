@@ -41,7 +41,7 @@ def _place_ids(n):
 
 def _write(d: Path, areas, segments, places, addresses=None):
     """areas: [(名称, 子类型, (xmin, ymin, xmax, ymax))]；segments: [(名称, 纬度, 经度)] 或 [(名称, [(纬度, 经度), …])]
-    （后者带线形）；places: [(名称, 类别, 纬度, 经度)]；addresses: [(门牌, 道路, 单元, 邮编, 纬度, 经度)]"""
+    （后者带线形）；places: [(名称, 类别, 纬度, 经度[, 邮编])]；addresses: [(门牌, 道路, 单元, 邮编, 纬度, 经度)]"""
     from shapely.geometry import LineString, box
 
     d.mkdir(parents=True)
@@ -67,8 +67,9 @@ def _write(d: Path, areas, segments, places, addresses=None):
     ids = _place_ids(len(places))
     pq.write_table(pa.Table.from_pylist([
         {"id": pid, "names": _names(n), "basic_category": c,
-         "addresses": [{"freeform": "", "locality": "", "postcode": ""}], "bbox": _bbox(lat, lng, 0.0001)}
-        for pid, (n, c, lat, lng) in zip(ids, places)]), d / "places.parquet")
+         "addresses": [{"freeform": "", "locality": "", "postcode": pc[0] if pc else ""}],
+         "bbox": _bbox(lat, lng, 0.0001)}
+        for pid, (n, c, lat, lng, *pc) in zip(ids, places)]), d / "places.parquet")
     if addresses:
         pq.write_table(pa.Table.from_pylist([
             {"number": n, "street": s, "unit": u, "postcode": pc, "address_levels": [{"value": "Sydney"}],
@@ -114,7 +115,9 @@ def sa(tmp_path_factory):
     segs = [(("طريق الملك فهد", "King Fahd Road"), [(24.685, 46.680), (24.700, 46.680)]),  # 两段各约 1.7 公里
             (("طريق الملك فهد", "King Fahd Road"), [(24.700, 46.680), (24.715, 46.680)]),
             ("شارع ابن تيمية", [(24.700, 46.685), (24.700, 46.690)])]  # 只有阿拉伯文名称
-    _write(root / "SA", [("العليا", "neighborhood", olaya)], segs, [("Olaya Pharmacy", "pharmacy", 24.69, 46.67)])
+    places = [("Olaya Pharmacy", "pharmacy", 24.69, 46.67)]
+    places += [(f"Shop {i}", "retail", 24.700 + 0.001 * i, 46.6805, "12211") for i in range(4)]  # 邮编 12211 的位置
+    _write(root / "SA", [("العليا", "neighborhood", olaya)], segs, places)
     return Engine("SA", "rules", build("SA", "B", log=lambda *_: None, root=root))
 
 
@@ -178,10 +181,11 @@ def test_ae_building_on_street_accepts(ae):
     assert r.components["premise_name"]["text"] == "Mall of the Emirates"
 
 
-def test_ae_street_with_area_accepts_at_route(ae):
+def test_ae_street_with_area_is_located_but_confirmed(ae):
     r = ae.validate("Villa 12, 6th Street, Al Barsha, Dubai")
-    assert (r.action, r.granularity) == (ACCEPT, "ROUTE")
-    assert r.lat > 25.1 and r.lat < 25.13  # 定位到 Al Barsha 的那条 6th Street
+    assert r.granularity == "ROUTE" and 25.1 < r.lat < 25.13  # 定位到 Al Barsha 的那条 6th Street
+    # 同名道路有两条、没有邮编印证：道路级结论要用户确认（开发集上这类直接通过的错误率在 10% 以上）
+    assert r.action == CONFIRM and "ROUTE_NOT_CORROBORATED" in r.reasons
 
 
 def test_ae_duplicate_street_without_area_needs_confirmation(ae):
@@ -195,9 +199,9 @@ def test_ae_area_only_is_fix(ae):
 
 
 def test_response_shape(ae):
-    out = ae.to_response(ae.validate("Villa 12, 6th Street, Al Barsha, Dubai, Makani 12345 67890"))
+    out = ae.to_response(ae.validate("Mall of the Emirates, Sheikh Zayed Road, Al Barsha, Dubai, Makani 12345 67890"))
     v = out["result"]["verdict"]
-    assert v["possibleNextAction"] == ACCEPT and v["validationGranularity"] == "ROUTE"
+    assert v["possibleNextAction"] == ACCEPT and v["validationGranularity"] == "PREMISE_PROXIMITY"
     assert all({"code", "message"} <= set(x) for x in v["reasons"])
     assert out["result"]["codes"]["makani"] == "12345 67890"
     assert out["result"]["metadata"]["regionCode"] == "AE"
@@ -230,6 +234,13 @@ def test_plus_code_locates_address(sa):
     assert "LOCATED_BY_PLUS_CODE" in r.reasons
     far = sa.validate(f"{full[4:]}, Ibn Taymiyyah Street, Riyadh")  # 与所写道路相距约 500 米
     assert far.action == CONFIRM and "PLUS_CODE_STREET_MISMATCH" in far.reasons
+
+
+def test_route_accept_needs_postcode_corroboration(sa):
+    r = sa.validate("12 King Fahd Road, Riyadh 12211")
+    assert (r.action, r.granularity) == (ACCEPT, "ROUTE")  # 道路名唯一、邮编就在道路旁
+    r = sa.validate("12 King Fahd Road, Riyadh")
+    assert r.action == CONFIRM and "ROUTE_NOT_CORROBORATED" in r.reasons
 
 
 def test_placeholder_postcode_is_ignored(sa):

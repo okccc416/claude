@@ -176,6 +176,9 @@ class Engine:
         if code:  # Plus Code：直接给出约 14 米见方的位置；与所写道路核对
             h = Hypothesis(6.0, code=code)
             h.notes.append("LOCATED_BY_PLUS_CODE")
+            areas = [ref.areas[a] for sp in p.areas for a in sp.ids[:5]]
+            if areas and all(haversine(a.lat, a.lng, code[0], code[1]) > max(a.radius_m * 1.5, 2000) for a in areas):
+                h.notes.append("PLUS_CODE_AREA_MISMATCH")
             streets = sorted((x for x in hyps if x.street is not None), key=lambda x: -x.score)
             near = [x for x in streets if dist_to_street(ref, x.street, code[0], code[1]) <= 300]
             if near:
@@ -355,21 +358,29 @@ class Engine:
         # B / C 类
         has_premise = bool(p.number or best.building or p.codes)
         if gran == "PREMISE_PROXIMITY" and best.code:
-            return CONFIRM if "PLUS_CODE_STREET_MISMATCH" in best.notes or strictness == "STRICT" else ACCEPT
+            conflict = {"PLUS_CODE_STREET_MISMATCH", "PLUS_CODE_AREA_MISMATCH"} & set(best.notes)
+            return CONFIRM if conflict or strictness == "STRICT" else ACCEPT
         if gran == "PREMISE_PROXIMITY":
             if best.street is None:
                 return CONFIRM if "BUILDING_ONLY" in best.notes and best.score < 3.0 else (
                     ACCEPT if strictness == "LENIENT" else CONFIRM)
             return CONFIRM if corrected else ACCEPT
         if gran == "ROUTE":
-            located = best.area is not None or (p.postcode and "POSTCODE_STREET_MISMATCH" not in best.notes) \
-                or best.score >= 3.0
             if not has_premise:
                 reasons.append("MISSING_PREMISE")
                 return CONFIRM
-            if corrected or not located:
+            if corrected:
                 return CONFIRM
-            return CONFIRM if strictness == "STRICT" else ACCEPT
+            # 道路级直接通过的条件（按开发集校准，见 docs/13）：邮编与道路相互印证、道路名在试点城市里唯一，
+            # 且名称完全一致或片区也印证。只有片区印证、或同名道路不止一条时，偏差超过 1 公里的比例在 10% 以上
+            span = best.street_span
+            unique = span is not None and len(span.ids) == 1
+            strong = "postcode" in best.support and unique and (span.how == "exact" or "area" in best.support)
+            if not strong or strictness == "STRICT":
+                if strictness != "LENIENT" or not (best.support and unique):
+                    reasons.append("ROUTE_NOT_CORROBORATED")
+                    return CONFIRM
+            return ACCEPT
         return FIX
 
     def _route_point(self, h: Hypothesis, p: Parsed) -> tuple[float, float]:
@@ -458,6 +469,8 @@ REASON_TEXT = {
     "STREET_TRANSLITERATED": "道路名是拉丁字母转写，已对应到阿拉伯文名称",
     "LOCATED_BY_PLUS_CODE": "按输入里的 Plus Code 定位",
     "PLUS_CODE_STREET_MISMATCH": "Plus Code 的位置与所写道路不符",
+    "PLUS_CODE_AREA_MISMATCH": "Plus Code 的位置不在所写片区附近",
+    "ROUTE_NOT_CORROBORATED": "只验证到道路：缺少邮编与道路相互印证，或同名道路不止一条，需要用户确认",
     "STREET_PARTIAL_MATCH": "道路名只匹配上一部分（后面还有没认出的词），可能是另一条路",
     "POSTCODE_NOT_FOUND": "官方地址表里没有这个邮编",
     "POSTCODE_STREET_MISMATCH": "邮编与道路相距很远，互相矛盾",
