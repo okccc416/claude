@@ -69,8 +69,11 @@ class LlamaCppLLM:
     def __init__(self, model_path: str, n_threads: int | None = None, n_ctx: int = 2048):
         from llama_cpp import Llama
 
+        import os
+
         self.name = model_path.rsplit("/", 1)[-1]
-        self.llm = Llama(model_path=model_path, n_ctx=n_ctx, n_threads=n_threads, verbose=False)
+        # llama-cpp-python 默认只用一半的核；地址解析是单请求低延迟场景，用满全部核
+        self.llm = Llama(model_path=model_path, n_ctx=n_ctx, n_threads=n_threads or os.cpu_count(), verbose=False)
 
     def extract(self, text: str, market: str) -> dict:
         out = self.llm.create_chat_completion(

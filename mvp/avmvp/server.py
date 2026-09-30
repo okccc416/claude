@@ -205,12 +205,20 @@ def main() -> None:
     ap.add_argument("--confidence-model", default=str(ROOT / "models" / "confidence_sg.json"),
                     help="新加坡贝叶斯置信度模型（scripts/evaluate_bayes.py 生成）；传空字符串则不输出置信度")
     ap.add_argument("--llm-endpoint", help="可选：本地模型服务地址（如 http://127.0.0.1:11434），开启新加坡小模型兜底")
-    ap.add_argument("--llm-model", default="qwen2.5:1.5b")
+    ap.add_argument("--llm-model", default="qwen2.5:1.5b", help="新加坡兜底 / --intl-llm 为接口地址时的模型名")
+    ap.add_argument("--intl-llm", help="可选：多市场引擎的本地小模型兜底。GGUF 文件路径（进程内 llama.cpp），"
+                                       "或 OpenAI 兼容接口地址（如 http://127.0.0.1:8081）。见 docs/13 第 6 节")
     ap.add_argument("--llm-api", default="ollama", choices=["ollama", "openai"])
     args = ap.parse_args()
     codes = [c.strip().upper() for c in args.markets.split(",") if c.strip()]
     sg = sg_factory(args) if "SG" in codes and Path(args.reference).exists() else None
-    router = MarketRouter(sg, codes, args.parser)
+    intl_llm = None
+    if args.intl_llm:
+        from .intl.llm import HTTPLLM, LlamaCppLLM
+        intl_llm = HTTPLLM(args.intl_llm, args.llm_model) if args.intl_llm.startswith("http") \
+            else LlamaCppLLM(args.intl_llm)
+        print(f"多市场引擎已开启本地小模型兜底：{intl_llm.name}")
+    router = MarketRouter(sg, codes, args.parser, llm=intl_llm)
     for m in router.describe():
         print(f"  {m['code']} {m['name']}（{m['cls']} 类）{'' if m['available'] else '：参考数据未构建，暂不可用'}")
     if args.preload:

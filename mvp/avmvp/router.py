@@ -27,11 +27,23 @@ class UnsupportedRegion(ValueError):
     pass
 
 
+class LockedLLM:
+    """模型实例不是线程安全的：多个市场的请求共用时串行调用。"""
+
+    def __init__(self, llm):
+        self.llm, self.name, self._lock = llm, getattr(llm, "name", "llm"), threading.Lock()
+
+    def extract(self, text: str, market: str) -> dict:
+        with self._lock:
+            return self.llm.extract(text, market)
+
+
 class MarketRouter:
     def __init__(self, sg_factory: Callable[[], object] | None, markets: list[str], parser: str = "hybrid",
-                 log=print):
+                 log=print, llm=None):
         self.sg_factory = sg_factory
         self.parser = parser
+        self.llm = LockedLLM(llm) if llm is not None else None  # 可选：本地小模型兜底（多市场共用一个实例）
         self.log = log
         self.codes = [c for c in markets if c == "SG" and sg_factory or c in MARKETS]
         self._engines: dict[str, object] = {}
@@ -73,7 +85,7 @@ class MarketRouter:
                 else:
                     from .intl.engine import Engine
                     parser = self.parser if (DATA / code / "crf.model").exists() else "rules"
-                    self._engines[code] = Engine(code, parser)
+                    self._engines[code] = Engine(code, parser, llm=self.llm)
                 self.log(f"已加载 {code} 校验引擎（{time.time() - t:.1f}s）")
         return self._engines[code]
 
