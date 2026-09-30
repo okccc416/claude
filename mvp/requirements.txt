@@ -2,3 +2,7 @@ rapidfuzz>=3.0
 numpy>=1.24
 pytest>=7.0
 pyarrow>=14.0
+# 多市场引擎（澳洲 / 欧洲 / 中东 / 东南亚）
+shapely>=2.0
+python-crfsuite>=0.9.9
+pythainlp>=5.0
