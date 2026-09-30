@@ -208,6 +208,8 @@ def main() -> None:
     ap.add_argument("--llm-model", default="qwen2.5:1.5b", help="新加坡兜底 / --intl-llm 为接口地址时的模型名")
     ap.add_argument("--intl-llm", help="可选：多市场引擎的本地小模型兜底。GGUF 文件路径（进程内 llama.cpp），"
                                        "或 OpenAI 兼容接口地址（如 http://127.0.0.1:8081）。见 docs/13 第 6 节")
+    ap.add_argument("--intl-llm-markets", default="PH,AE,SA",
+                    help="开启小模型兜底的市场（开发集上有提升的：菲律宾、阿联酋、沙特；泰国反而下降）；ALL = 全部")
     ap.add_argument("--llm-api", default="ollama", choices=["ollama", "openai"])
     args = ap.parse_args()
     codes = [c.strip().upper() for c in args.markets.split(",") if c.strip()]
@@ -218,7 +220,9 @@ def main() -> None:
         intl_llm = HTTPLLM(args.intl_llm, args.llm_model) if args.intl_llm.startswith("http") \
             else LlamaCppLLM(args.intl_llm)
         print(f"多市场引擎已开启本地小模型兜底：{intl_llm.name}")
-    router = MarketRouter(sg, codes, args.parser, llm=intl_llm)
+    llm_markets = None if args.intl_llm_markets.upper() == "ALL" else \
+        {c.strip().upper() for c in args.intl_llm_markets.split(",") if c.strip()}
+    router = MarketRouter(sg, codes, args.parser, llm=intl_llm, llm_markets=llm_markets)
     for m in router.describe():
         print(f"  {m['code']} {m['name']}（{m['cls']} 类）{'' if m['available'] else '：参考数据未构建，暂不可用'}")
     if args.preload:

@@ -62,6 +62,17 @@ curl -s -X POST http://127.0.0.1:8080/v1/address:validate -H 'Content-Type: appl
 curl -s http://127.0.0.1:8080/v1/markets  # 开放的市场及参考数据是否已构建
 ```
 
+多市场的本地小模型兜底（可选，见 [docs/13 第 6 节](../docs/13-multi-market-product.md)；测试集上菲律宾 +4、阿联酋 +2、沙特 +0.7 个百分点，泰国 −4，CPU 上 7–9 秒 / 次）：
+
+```bash
+pip install llama-cpp-python                  # 本机编译 llama.cpp（纯 CPU 可用）
+curl -L -o data/models/Qwen3-4B-Instruct-2507-Q4_K_M.gguf \
+  https://huggingface.co/unsloth/Qwen3-4B-Instruct-2507-GGUF/resolve/main/Qwen3-4B-Instruct-2507-Q4_K_M.gguf
+python -m avmvp.server --intl-llm data/models/Qwen3-4B-Instruct-2507-Q4_K_M.gguf   # 默认只在 PH / AE / SA 开启
+python scripts/evaluate_markets.py --markets PH --parsers hybrid,hybrid+llm --n 150 --split dev --real-only \
+  --llm-model data/models/Qwen3-4B-Instruct-2507-Q4_K_M.gguf   # 对比评测（模型输出缓存在 data/models/）
+```
+
 接口的 `verdict.confidence` 为贝叶斯置信度：规则结论所属类别在带标注数据里的实际正确率（服务器默认加载 `models/confidence_sg.json`）。
 
 可选：本地小模型兜底（如 Qwen，见 [08 文档](../docs/08-ai-local-model.md)）：
@@ -136,6 +147,7 @@ mvp/
 │       ├── crf.py          机器学习解析（条件随机场）：特征、训练、解析
 │       ├── render.py       按各国写法把参考库渲染成带标签地址（训练数据 + 合成测试集）
 │       ├── engine.py       证据打分、结论与粒度、Google AV 风格响应
+│       ├── llm.py          本地小模型解析器（llama.cpp / OpenAI 兼容接口）+ 防编造 + 输出缓存
 │       ├── pluscode.py     Plus Code 解码（含短码按城市补齐）
 │       └── fuzzy.py        三元组倒排索引 + 容错检索
 ├── scripts/

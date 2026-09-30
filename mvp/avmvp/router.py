@@ -40,10 +40,11 @@ class LockedLLM:
 
 class MarketRouter:
     def __init__(self, sg_factory: Callable[[], object] | None, markets: list[str], parser: str = "hybrid",
-                 log=print, llm=None):
+                 log=print, llm=None, llm_markets: set[str] | None = None):
         self.sg_factory = sg_factory
         self.parser = parser
         self.llm = LockedLLM(llm) if llm is not None else None  # 可选：本地小模型兜底（多市场共用一个实例）
+        self.llm_markets = llm_markets  # 开启兜底的市场（None = 全部）
         self.log = log
         self.codes = [c for c in markets if c == "SG" and sg_factory or c in MARKETS]
         self._engines: dict[str, object] = {}
@@ -85,7 +86,8 @@ class MarketRouter:
                 else:
                     from .intl.engine import Engine
                     parser = self.parser if (DATA / code / "crf.model").exists() else "rules"
-                    self._engines[code] = Engine(code, parser, llm=self.llm)
+                    use_llm = self.llm if self.llm_markets is None or code in self.llm_markets else None
+                    self._engines[code] = Engine(code, parser, llm=use_llm)
                 self.log(f"已加载 {code} 校验引擎（{time.time() - t:.1f}s）")
         return self._engines[code]
 
