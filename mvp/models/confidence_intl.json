@@ -1,0 +1,4929 @@
+{
+ "strength": 10.0,
+ "table": {
+  "AU|ACCEPT|PREMISE|area+point+postcode|exact|uN|-": [
+   221,
+   227
+  ],
+  "A|ACCEPT|PREMISE|area+point+postcode|exact|uN|-": [
+   322,
+   331
+  ],
+  "A|ACCEPT|PREMISE": [
+   1832,
+   1869
+  ],
+  "ACCEPT|PREMISE": [
+   1832,
+   1869
+  ],
+  "AU|ACCEPT|PREMISE|area+point+postcode|exact|u1|-": [
+   101,
+   104
+  ],
+  "A|ACCEPT|PREMISE|area+point+postcode|exact|u1|-": [
+   188,
+   193
+  ],
+  "AU|CONFIRM_ADD_SUBPREMISES|PREMISE|area+point|exact|uN|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   6,
+   7
+  ],
+  "A|CONFIRM_ADD_SUBPREMISES|PREMISE|area+point|exact|uN|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   7,
+   8
+  ],
+  "A|CONFIRM_ADD_SUBPREMISES|PREMISE": [
+   220,
+   226
+  ],
+  "CONFIRM_ADD_SUBPREMISES|PREMISE": [
+   220,
+   226
+  ],
+  "AU|FIX|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE": [
+   0,
+   163
+  ],
+  "FIX|ROUTE": [
+   0,
+   163
+  ],
+  "AU|FIX|LOCALITY|-": [
+   6,
+   10
+  ],
+  "A|FIX|LOCALITY|-": [
+   11,
+   16
+  ],
+  "A|FIX|LOCALITY": [
+   11,
+   16
+  ],
+  "FIX|LOCALITY": [
+   275,
+   466
+  ],
+  "AU|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "A|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "A|CONFIRM|ROUTE": [
+   3,
+   11
+  ],
+  "CONFIRM|ROUTE": [
+   1538,
+   2600
+  ],
+  "AU|CONFIRM|PREMISE|area+point+postcode|exact|uN|POSTCODE_REPLACED": [
+   1,
+   7
+  ],
+  "A|CONFIRM|PREMISE|area+point+postcode|exact|uN|POSTCODE_REPLACED": [
+   2,
+   8
+  ],
+  "A|CONFIRM|PREMISE": [
+   69,
+   107
+  ],
+  "CONFIRM|PREMISE": [
+   69,
+   107
+  ],
+  "AU|ACCEPT|PREMISE|area+point|exact|u1|-": [
+   15,
+   16
+  ],
+  "A|ACCEPT|PREMISE|area+point|exact|u1|-": [
+   22,
+   23
+  ],
+  "AU|CONFIRM_ADD_SUBPREMISES|PREMISE|area+point+postcode|exact|uN|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   63,
+   65
+  ],
+  "A|CONFIRM_ADD_SUBPREMISES|PREMISE|area+point+postcode|exact|uN|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   65,
+   67
+  ],
+  "AU|FIX|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
+   0,
+   7
+  ],
+  "A|FIX|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
+   0,
+   11
+  ],
+  "AU|CONFIRM|PREMISE|point+postcode|exact|u1|AREA_STREET_MISMATCH": [
+   2,
+   2
+  ],
+  "A|CONFIRM|PREMISE|point+postcode|exact|u1|AREA_STREET_MISMATCH": [
+   4,
+   4
+  ],
+  "AU|CONFIRM_ADD_SUBPREMISES|PREMISE|area+point+postcode|exact|u1|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   22,
+   23
+  ],
+  "A|CONFIRM_ADD_SUBPREMISES|PREMISE|area+point+postcode|exact|u1|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   27,
+   28
+  ],
+  "AU|CONFIRM_ADD_SUBPREMISES|PREMISE|area+building+point+postcode|exact|uN|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   1,
+   1
+  ],
+  "A|CONFIRM_ADD_SUBPREMISES|PREMISE|area+building+point+postcode|exact|uN|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   1,
+   1
+  ],
+  "AU|FIX|ROUTE|area|exact|u1|MISSING_PREMISE": [
+   0,
+   4
+  ],
+  "A|FIX|ROUTE|area|exact|u1|MISSING_PREMISE": [
+   0,
+   4
+  ],
+  "AU|ACCEPT|PREMISE|area+point|exact|uN|-": [
+   17,
+   18
+  ],
+  "A|ACCEPT|PREMISE|area+point|exact|uN|-": [
+   28,
+   29
+  ],
+  "AU|FIX|ROUTE|area+postcode|exact|uN|PREMISE_NOT_FOUND": [
+   0,
+   20
+  ],
+  "A|FIX|ROUTE|area+postcode|exact|uN|PREMISE_NOT_FOUND": [
+   0,
+   20
+  ],
+  "AU|CONFIRM|ROUTE|area+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "A|CONFIRM|ROUTE|area+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "AU|CONFIRM|ROUTE|area|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "A|CONFIRM|ROUTE|area|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "AU|FIX|ROUTE|area+postcode|exact|u1|PREMISE_NOT_FOUND": [
+   0,
+   12
+  ],
+  "A|FIX|ROUTE|area+postcode|exact|u1|PREMISE_NOT_FOUND": [
+   0,
+   20
+  ],
+  "AU|CONFIRM_ADD_SUBPREMISES|PREMISE|area+point|exact|u1|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   6,
+   7
+  ],
+  "A|CONFIRM_ADD_SUBPREMISES|PREMISE|area+point|exact|u1|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   7,
+   8
+  ],
+  "AU|ACCEPT|PREMISE|point+postcode|exact|uN|-": [
+   1,
+   1
+  ],
+  "A|ACCEPT|PREMISE|point+postcode|exact|uN|-": [
+   268,
+   276
+  ],
+  "AU|CONFIRM|PREMISE|area+point|exact|uN|POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "A|CONFIRM|PREMISE|area+point|exact|uN|POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "AU|CONFIRM|PREMISE|area+point|exact|uN|POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH": [
+   0,
+   7
+  ],
+  "A|CONFIRM|PREMISE|area+point|exact|uN|POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH": [
+   0,
+   7
+  ],
+  "AU|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
+   1,
+   1
+  ],
+  "A|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
+   2,
+   2
+  ],
+  "A|CONFIRM|PREMISE_PROXIMITY": [
+   2,
+   2
+  ],
+  "CONFIRM|PREMISE_PROXIMITY": [
+   90,
+   219
+  ],
+  "AU|FIX|ROUTE|area+postcode|exact|uN|MISSING_PREMISE": [
+   0,
+   19
+  ],
+  "A|FIX|ROUTE|area+postcode|exact|uN|MISSING_PREMISE": [
+   0,
+   20
+  ],
+  "AU|FIX|ROUTE|postcode|exact|uN|AREA_STREET_MISMATCH+PREMISE_NOT_FOUND": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|postcode|exact|uN|AREA_STREET_MISMATCH+PREMISE_NOT_FOUND": [
+   0,
+   1
+  ],
+  "AU|CONFIRM|ROUTE|area|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   2
+  ],
+  "A|CONFIRM|ROUTE|area|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   2
+  ],
+  "AU|FIX|ROUTE|area|exact|uN|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|area|exact|uN|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "AU|CONFIRM|PREMISE|point+postcode|exact|uN|AREA_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "A|CONFIRM|PREMISE|point+postcode|exact|uN|AREA_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "AU|CONFIRM|PREMISE|area+point+postcode|exact|u1|POSTCODE_REPLACED": [
+   1,
+   3
+  ],
+  "A|CONFIRM|PREMISE|area+point+postcode|exact|u1|POSTCODE_REPLACED": [
+   2,
+   4
+  ],
+  "AU|FIX|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH+PREMISE_NOT_FOUND": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH+PREMISE_NOT_FOUND": [
+   0,
+   1
+  ],
+  "AU|CONFIRM|PREMISE|area+point+postcode|exact|u1|POSTCODE_REPLACED+UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   1,
+   1
+  ],
+  "A|CONFIRM|PREMISE|area+point+postcode|exact|u1|POSTCODE_REPLACED+UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   1,
+   1
+  ],
+  "AU|ACCEPT|PREMISE|point+postcode|exact|u1|-": [
+   2,
+   3
+  ],
+  "A|ACCEPT|PREMISE|point+postcode|exact|u1|-": [
+   947,
+   959
+  ],
+  "AU|CONFIRM|PREMISE|area+point|exact|uN|POSTCODE_REPLACED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "A|CONFIRM|PREMISE|area+point|exact|uN|POSTCODE_REPLACED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "AU|CONFIRM_ADD_SUBPREMISES|PREMISE|area+building+point+postcode|exact|u1|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   1,
+   1
+  ],
+  "A|CONFIRM_ADD_SUBPREMISES|PREMISE|area+building+point+postcode|exact|u1|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   1,
+   1
+  ],
+  "AU|CONFIRM|ROUTE|none|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_NOT_FOUND": [
+   0,
+   1
+  ],
+  "A|CONFIRM|ROUTE|none|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_NOT_FOUND": [
+   0,
+   1
+  ],
+  "AU|CONFIRM|PREMISE|area+point+postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   2,
+   2
+  ],
+  "A|CONFIRM|PREMISE|area+point+postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   3,
+   3
+  ],
+  "AU|FIX|ROUTE|area|exact|u1|PREMISE_NOT_FOUND": [
+   0,
+   2
+  ],
+  "A|FIX|ROUTE|area|exact|u1|PREMISE_NOT_FOUND": [
+   0,
+   2
+  ],
+  "AU|CONFIRM|PREMISE|point|core|uN|POSTCODE_REPLACED": [
+   0,
+   1
+  ],
+  "A|CONFIRM|PREMISE|point|core|uN|POSTCODE_REPLACED": [
+   0,
+   1
+  ],
+  "AU|CONFIRM|PREMISE|point+postcode|exact|uN|AREA_STREET_MISMATCH+UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   1,
+   1
+  ],
+  "A|CONFIRM|PREMISE|point+postcode|exact|uN|AREA_STREET_MISMATCH+UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   1,
+   1
+  ],
+  "AU|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH": [
+   0,
+   2
+  ],
+  "A|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH": [
+   0,
+   2
+  ],
+  "AU|FIX|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+PREMISE_NOT_FOUND": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+PREMISE_NOT_FOUND": [
+   0,
+   1
+  ],
+  "AU|CONFIRM|PREMISE|point|exact|u1|AREA_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "A|CONFIRM|PREMISE|point|exact|u1|AREA_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "AU|CONFIRM|PREMISE|point|exact|uN|AREA_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "A|CONFIRM|PREMISE|point|exact|uN|AREA_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "AU|CONFIRM|PREMISE|area+point|exact|uN|POSTCODE_REPLACED": [
+   0,
+   2
+  ],
+  "A|CONFIRM|PREMISE|area+point|exact|uN|POSTCODE_REPLACED": [
+   0,
+   2
+  ],
+  "AU|CONFIRM|PREMISE|area+point|exact|u1|POSTCODE_REPLACED": [
+   1,
+   1
+  ],
+  "A|CONFIRM|PREMISE|area+point|exact|u1|POSTCODE_REPLACED": [
+   3,
+   3
+  ],
+  "AU|CONFIRM|PREMISE|area+point+postcode|core|uN|POSTCODE_REPLACED": [
+   0,
+   1
+  ],
+  "A|CONFIRM|PREMISE|area+point+postcode|core|uN|POSTCODE_REPLACED": [
+   0,
+   3
+  ],
+  "AU|CONFIRM|PREMISE|area+point|exact|u1|POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "A|CONFIRM|PREMISE|area+point|exact|u1|POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "AU|FIX|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "AU|CONFIRM|PREMISE|point|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_REPLACED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "A|CONFIRM|PREMISE|point|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_REPLACED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "AU|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "A|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "DE|ACCEPT|PREMISE|point+postcode|exact|u1|-": [
+   326,
+   329
+  ],
+  "DE|ACCEPT|PREMISE|point+postcode|exact|uN|-": [
+   191,
+   194
+  ],
+  "DE|ACCEPT|PREMISE|area+point+postcode|exact|uN|-": [
+   21,
+   21
+  ],
+  "DE|ACCEPT|PREMISE|building+point+postcode|exact|uN|-": [
+   2,
+   2
+  ],
+  "A|ACCEPT|PREMISE|building+point+postcode|exact|uN|-": [
+   2,
+   2
+  ],
+  "DE|ACCEPT|PREMISE|area+point|exact|uN|-": [
+   6,
+   6
+  ],
+  "DE|CONFIRM|PREMISE|point+postcode|exact|uN|POSTCODE_REPLACED": [
+   2,
+   2
+  ],
+  "A|CONFIRM|PREMISE|point+postcode|exact|uN|POSTCODE_REPLACED": [
+   7,
+   7
+  ],
+  "DE|ACCEPT|PREMISE|point|exact|u1|-": [
+   8,
+   8
+  ],
+  "A|ACCEPT|PREMISE|point|exact|u1|-": [
+   47,
+   48
+  ],
+  "DE|ACCEPT|PREMISE|area+point+postcode|exact|u1|-": [
+   5,
+   5
+  ],
+  "DE|FIX|ROUTE|area|exact|uN|PREMISE_NOT_FOUND": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|area|exact|uN|PREMISE_NOT_FOUND": [
+   0,
+   1
+  ],
+  "DE|FIX|ROUTE|postcode|exact|u1|PREMISE_NOT_FOUND": [
+   0,
+   5
+  ],
+  "A|FIX|ROUTE|postcode|exact|u1|PREMISE_NOT_FOUND": [
+   0,
+   20
+  ],
+  "DE|CONFIRM|PREMISE|none|-|-|-": [
+   0,
+   1
+  ],
+  "A|CONFIRM|PREMISE|none|-|-|-": [
+   3,
+   4
+  ],
+  "DE|CONFIRM|PREMISE|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   4,
+   5
+  ],
+  "A|CONFIRM|PREMISE|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   7,
+   8
+  ],
+  "DE|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "DE|ACCEPT|PREMISE|area+point|exact|u1|-": [
+   6,
+   6
+  ],
+  "DE|CONFIRM|PREMISE|point|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "A|CONFIRM|PREMISE|point|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "DE|CONFIRM|PREMISE|point|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   2
+  ],
+  "A|CONFIRM|PREMISE|point|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   3
+  ],
+  "DE|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "A|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "DE|FIX|ROUTE|postcode|exact|uN|PREMISE_NOT_FOUND": [
+   0,
+   2
+  ],
+  "A|FIX|ROUTE|postcode|exact|uN|PREMISE_NOT_FOUND": [
+   0,
+   2
+  ],
+  "DE|FIX|ROUTE|postcode|exact|u1|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|postcode|exact|u1|MISSING_PREMISE": [
+   0,
+   30
+  ],
+  "DE|FIX|ROUTE|none|exact|u1|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|none|exact|u1|MISSING_PREMISE": [
+   0,
+   6
+  ],
+  "DE|CONFIRM|PREMISE|point+postcode|exact|u1|AREA_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "DE|CONFIRM|PREMISE|point|exact|u1|POSTCODE_REPLACED": [
+   1,
+   1
+  ],
+  "A|CONFIRM|PREMISE|point|exact|u1|POSTCODE_REPLACED": [
+   4,
+   4
+  ],
+  "DE|CONFIRM|PREMISE|area+point|exact|uN|POSTCODE_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "A|CONFIRM|PREMISE|area+point|exact|uN|POSTCODE_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "DE|FIX|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
+   0,
+   4
+  ],
+  "DE|FIX|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "FR|ACCEPT|PREMISE|point+postcode|exact|u1|-": [
+   337,
+   342
+  ],
+  "FR|ACCEPT|PREMISE|point|exact|u1|-": [
+   15,
+   16
+  ],
+  "FR|ACCEPT|PREMISE|point+postcode|exact|uN|-": [
+   59,
+   61
+  ],
+  "FR|FIX|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+PREMISE_NOT_FOUND": [
+   0,
+   2
+  ],
+  "A|FIX|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+PREMISE_NOT_FOUND": [
+   0,
+   2
+  ],
+  "FR|ACCEPT|PREMISE|area+point+postcode|exact|u1|-": [
+   36,
+   37
+  ],
+  "FR|ACCEPT|PREMISE|area+point+postcode|exact|uN|-": [
+   64,
+   67
+  ],
+  "FR|FIX|ROUTE|postcode|exact|u1|PREMISE_NOT_FOUND": [
+   0,
+   10
+  ],
+  "FR|FIX|ROUTE|postcode|exact|u1|MISSING_PREMISE": [
+   0,
+   13
+  ],
+  "FR|CONFIRM|PREMISE|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   2,
+   2
+  ],
+  "A|CONFIRM|PREMISE|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   2,
+   3
+  ],
+  "FR|FIX|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "FR|ACCEPT|PREMISE|point+postcode|core|u1|-": [
+   2,
+   2
+  ],
+  "A|ACCEPT|PREMISE|point+postcode|core|u1|-": [
+   2,
+   2
+  ],
+  "FR|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED": [
+   2,
+   3
+  ],
+  "A|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED": [
+   2,
+   3
+  ],
+  "FR|CONFIRM|PREMISE|point|exact|u1|POSTCODE_REPLACED": [
+   3,
+   3
+  ],
+  "FR|FIX|ROUTE|none|exact|u1|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "FR|ACCEPT|PREMISE|building+point+postcode|exact|u1|-": [
+   1,
+   1
+  ],
+  "A|ACCEPT|PREMISE|building+point+postcode|exact|u1|-": [
+   1,
+   1
+  ],
+  "FR|CONFIRM|PREMISE|point|exact|u1|POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "A|CONFIRM|PREMISE|point|exact|u1|POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "FR|ACCEPT|PREMISE|point+postcode|core|uN|-": [
+   2,
+   2
+  ],
+  "A|ACCEPT|PREMISE|point+postcode|core|uN|-": [
+   2,
+   2
+  ],
+  "FR|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_NOT_FOUND": [
+   0,
+   2
+  ],
+  "A|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_NOT_FOUND": [
+   0,
+   3
+  ],
+  "FR|ACCEPT|PREMISE|area+point+postcode|core|u1|-": [
+   1,
+   1
+  ],
+  "A|ACCEPT|PREMISE|area+point+postcode|core|u1|-": [
+   1,
+   1
+  ],
+  "FR|CONFIRM|PREMISE|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   3,
+   3
+  ],
+  "FR|ACCEPT|PREMISE|area+point|exact|uN|-": [
+   5,
+   5
+  ],
+  "FR|CONFIRM|PREMISE|point+postcode|exact|u1|POSTCODE_REPLACED": [
+   3,
+   3
+  ],
+  "A|CONFIRM|PREMISE|point+postcode|exact|u1|POSTCODE_REPLACED": [
+   17,
+   17
+  ],
+  "FR|CONFIRM|PREMISE|area+point|exact|u1|POSTCODE_REPLACED": [
+   2,
+   2
+  ],
+  "FR|ACCEPT|PREMISE|point|exact|uN|-": [
+   1,
+   1
+  ],
+  "A|ACCEPT|PREMISE|point|exact|uN|-": [
+   1,
+   1
+  ],
+  "FR|FIX|ROUTE|area+postcode|exact|u1|PREMISE_NOT_FOUND": [
+   0,
+   3
+  ],
+  "FR|FIX|ROUTE|postcode|core|u1|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|postcode|core|u1|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "FR|FIX|ROUTE|area+postcode|exact|uN|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "FR|CONFIRM|PREMISE|point+postcode|exact|u1|AREA_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "FR|FIX|ROUTE|none|core|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|none|core|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "FR|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "A|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "FR|FIX|ROUTE|none|exact|u1|PREMISE_NOT_FOUND": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|none|exact|u1|PREMISE_NOT_FOUND": [
+   0,
+   5
+  ],
+  "FR|CONFIRM|PREMISE|area+point+postcode|core|uN|POSTCODE_REPLACED": [
+   0,
+   2
+  ],
+  "FR|CONFIRM|PREMISE|point+postcode|exact|uN|POSTCODE_REPLACED": [
+   1,
+   1
+  ],
+  "FR|FIX|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+PREMISE_NOT_FOUND": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+PREMISE_NOT_FOUND": [
+   0,
+   1
+  ],
+  "FR|CONFIRM|PREMISE|area+point+postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "FR|FIX|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "NL|CONFIRM_ADD_SUBPREMISES|PREMISE|point+postcode|exact|u1|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   93,
+   94
+  ],
+  "A|CONFIRM_ADD_SUBPREMISES|PREMISE|point+postcode|exact|u1|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   93,
+   94
+  ],
+  "NL|CONFIRM|PREMISE|point+postcode|exact|u1|POSTCODE_REPLACED+UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   3,
+   3
+  ],
+  "A|CONFIRM|PREMISE|point+postcode|exact|u1|POSTCODE_REPLACED+UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   3,
+   3
+  ],
+  "NL|ACCEPT|PREMISE|point+postcode|exact|u1|-": [
+   282,
+   285
+  ],
+  "NL|FIX|ROUTE|none|exact|u1|MISSING_PREMISE": [
+   0,
+   4
+  ],
+  "NL|FIX|ROUTE|postcode|exact|u1|MISSING_PREMISE": [
+   0,
+   16
+  ],
+  "NL|ACCEPT|PREMISE|area+point+postcode|exact|uN|-": [
+   16,
+   16
+  ],
+  "NL|CONFIRM_ADD_SUBPREMISES|PREMISE|point+postcode|exact|uN|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   9,
+   9
+  ],
+  "A|CONFIRM_ADD_SUBPREMISES|PREMISE|point+postcode|exact|uN|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   9,
+   9
+  ],
+  "NL|CONFIRM_ADD_SUBPREMISES|PREMISE|point|exact|u1|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   10,
+   10
+  ],
+  "A|CONFIRM_ADD_SUBPREMISES|PREMISE|point|exact|u1|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   10,
+   10
+  ],
+  "NL|ACCEPT|PREMISE|point+postcode|exact|uN|-": [
+   17,
+   20
+  ],
+  "NL|CONFIRM|PREMISE|point+postcode|exact|u1|POSTCODE_REPLACED": [
+   14,
+   14
+  ],
+  "NL|FIX|LOCALITY|-": [
+   5,
+   6
+  ],
+  "NL|CONFIRM_ADD_SUBPREMISES|PREMISE|area+point+postcode|exact|u1|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   5,
+   5
+  ],
+  "NL|ACCEPT|PREMISE|point|exact|u1|-": [
+   24,
+   24
+  ],
+  "NL|ACCEPT|PREMISE|area+point+postcode|exact|u1|-": [
+   46,
+   47
+  ],
+  "NL|CONFIRM|PREMISE|none|-|-|-": [
+   3,
+   3
+  ],
+  "NL|FIX|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "NL|FIX|ROUTE|postcode|exact|u1|PREMISE_NOT_FOUND": [
+   0,
+   5
+  ],
+  "NL|FIX|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "A|FIX|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "NL|ACCEPT|PREMISE|area+point|exact|u1|-": [
+   1,
+   1
+  ],
+  "NL|CONFIRM_ADD_SUBPREMISES|PREMISE|area+point|exact|uN|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   1,
+   1
+  ],
+  "NL|FIX|ROUTE|none|exact|u1|PREMISE_NOT_FOUND": [
+   0,
+   4
+  ],
+  "NL|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_NOT_FOUND": [
+   0,
+   1
+  ],
+  "NL|FIX|ROUTE|area+postcode|exact|u1|PREMISE_NOT_FOUND": [
+   0,
+   5
+  ],
+  "NL|FIX|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "NL|CONFIRM_ADD_SUBPREMISES|PREMISE|area+point+postcode|exact|uN|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   2,
+   2
+  ],
+  "NL|ACCEPT|PREMISE|building+point+postcode|exact|u1|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "A|ACCEPT|PREMISE|building+point+postcode|exact|u1|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "NL|CONFIRM|PREMISE|point+postcode|exact|uN|POSTCODE_REPLACED": [
+   4,
+   4
+  ],
+  "NL|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
+   1,
+   1
+  ],
+  "NL|FIX|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "NL|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "A|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "NL|CONFIRM|PREMISE|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "NL|CONFIRM|PREMISE|area+point+postcode|exact|u1|POSTCODE_REPLACED": [
+   1,
+   1
+  ],
+  "NL|CONFIRM|PREMISE|area+point+postcode|exact|uN|POSTCODE_REPLACED": [
+   1,
+   1
+  ],
+  "NL|FIX|ROUTE|postcode|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|postcode|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "NL|CONFIRM|PREMISE|point|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "NL|CONFIRM_ADD_SUBPREMISES|PREMISE|area+point|exact|u1|UNIT_MISSING_MULTI_UNIT_BUILDING": [
+   1,
+   1
+  ],
+  "NL|CONFIRM|PREMISE|point|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "A|CONFIRM|PREMISE|point|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "NL|FIX|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_NOT_FOUND": [
+   0,
+   1
+  ],
+  "A|FIX|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_NOT_FOUND": [
+   0,
+   1
+  ],
+  "AE|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   5
+  ],
+  "B|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   14
+  ],
+  "B|CONFIRM|ROUTE": [
+   343,
+   721
+  ],
+  "AE|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   24,
+   70
+  ],
+  "B|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   29,
+   112
+  ],
+  "AE|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH": [
+   0,
+   2
+  ],
+  "AE|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
+   15,
+   21
+  ],
+  "B|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
+   16,
+   22
+  ],
+  "AE|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
+   16,
+   34
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
+   20,
+   59
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY": [
+   38,
+   112
+  ],
+  "AE|FIX|LOCALITY|-": [
+   64,
+   109
+  ],
+  "B|FIX|LOCALITY|-": [
+   117,
+   180
+  ],
+  "B|FIX|LOCALITY": [
+   117,
+   180
+  ],
+  "AE|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
+   24,
+   37
+  ],
+  "B|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
+   25,
+   43
+  ],
+  "AE|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
+   4,
+   6
+  ],
+  "B|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
+   5,
+   7
+  ],
+  "AE|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+LANDMARK_RELATIVE": [
+   2,
+   6
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+LANDMARK_RELATIVE": [
+   2,
+   6
+  ],
+  "AE|CONFIRM|ROUTE|none|core|u1|MISSING_PREMISE": [
+   11,
+   19
+  ],
+  "B|CONFIRM|ROUTE|none|core|u1|MISSING_PREMISE": [
+   12,
+   26
+  ],
+  "AE|CONFIRM|ROUTE|area|core|u1|ROUTE_NOT_CORROBORATED": [
+   1,
+   3
+  ],
+  "B|CONFIRM|ROUTE|area|core|u1|ROUTE_NOT_CORROBORATED": [
+   1,
+   4
+  ],
+  "AE|CONFIRM|ROUTE|none|exact|u1|MISSING_PREMISE": [
+   25,
+   31
+  ],
+  "B|CONFIRM|ROUTE|none|exact|u1|MISSING_PREMISE": [
+   32,
+   45
+  ],
+  "AE|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   4,
+   10
+  ],
+  "B|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   6,
+   19
+  ],
+  "AE|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
+   3,
+   3
+  ],
+  "B|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
+   3,
+   5
+  ],
+  "AE|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "AE|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
+   6,
+   7
+  ],
+  "B|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
+   6,
+   7
+  ],
+  "AE|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   4
+  ],
+  "B|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   7
+  ],
+  "AE|CONFIRM|ROUTE|area|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   6
+  ],
+  "B|CONFIRM|ROUTE|area|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   8
+  ],
+  "AE|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
+   5,
+   16
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
+   7,
+   21
+  ],
+  "AE|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH": [
+   1,
+   5
+  ],
+  "B|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH": [
+   1,
+   5
+  ],
+  "AE|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   9
+  ],
+  "B|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   18
+  ],
+  "AE|CONFIRM|ROUTE|none|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   5
+  ],
+  "B|CONFIRM|ROUTE|none|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   6
+  ],
+  "AE|CONFIRM|ROUTE|area|core|uN|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area|core|uN|MISSING_PREMISE": [
+   3,
+   4
+  ],
+  "AE|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "AE|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   4,
+   10
+  ],
+  "B|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   11,
+   30
+  ],
+  "AE|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "B|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "AE|ACCEPT|PREMISE_PROXIMITY|building|exact|uN|-": [
+   6,
+   7
+  ],
+  "B|ACCEPT|PREMISE_PROXIMITY|building|exact|uN|-": [
+   6,
+   8
+  ],
+  "B|ACCEPT|PREMISE_PROXIMITY": [
+   19,
+   31
+  ],
+  "ACCEPT|PREMISE_PROXIMITY": [
+   58,
+   75
+  ],
+  "AE|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "B|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "AE|ACCEPT|PREMISE_PROXIMITY|none|code|-|LOCATED_BY_PLUS_CODE": [
+   0,
+   2
+  ],
+  "B|ACCEPT|PREMISE_PROXIMITY|none|code|-|LOCATED_BY_PLUS_CODE": [
+   4,
+   8
+  ],
+  "AE|CONFIRM|ROUTE|none|core|u1|ROUTE_NOT_CORROBORATED": [
+   8,
+   10
+  ],
+  "B|CONFIRM|ROUTE|none|core|u1|ROUTE_NOT_CORROBORATED": [
+   9,
+   12
+  ],
+  "AE|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   4
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   5
+  ],
+  "AE|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   1,
+   3
+  ],
+  "B|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   7,
+   14
+  ],
+  "AE|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   4
+  ],
+  "B|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   8
+  ],
+  "AE|CONFIRM|ROUTE|none|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "B|CONFIRM|ROUTE|none|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   4
+  ],
+  "AE|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH": [
+   2,
+   3
+  ],
+  "B|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH": [
+   2,
+   3
+  ],
+  "AE|ACCEPT|PREMISE_PROXIMITY|area+building|exact|u1|-": [
+   1,
+   2
+  ],
+  "B|ACCEPT|PREMISE_PROXIMITY|area+building|exact|u1|-": [
+   1,
+   2
+  ],
+  "AE|ACCEPT|PREMISE_PROXIMITY|building|exact|u1|-": [
+   3,
+   4
+  ],
+  "B|ACCEPT|PREMISE_PROXIMITY|building|exact|u1|-": [
+   3,
+   4
+  ],
+  "AE|ACCEPT|PREMISE_PROXIMITY|area+building|exact|uN|-": [
+   2,
+   4
+  ],
+  "B|ACCEPT|PREMISE_PROXIMITY|area+building|exact|uN|-": [
+   2,
+   4
+  ],
+  "AE|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+MISSING_PREMISE": [
+   1,
+   4
+  ],
+  "B|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+MISSING_PREMISE": [
+   4,
+   9
+  ],
+  "AE|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+ROUTE_NOT_CORROBORATED": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+ROUTE_NOT_CORROBORATED": [
+   3,
+   6
+  ],
+  "AE|CONFIRM|ROUTE|area|exact|uN|MISSING_PREMISE": [
+   5,
+   6
+  ],
+  "B|CONFIRM|ROUTE|area|exact|uN|MISSING_PREMISE": [
+   6,
+   8
+  ],
+  "AE|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   1,
+   5
+  ],
+  "B|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   2,
+   7
+  ],
+  "AE|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|BUILDING_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|BUILDING_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "AE|CONFIRM|PREMISE_PROXIMITY|building|exact|u1|BUILDING_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|building|exact|u1|BUILDING_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "AE|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "AE|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "AE|CONFIRM|ROUTE|area|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "AE|CONFIRM|PREMISE_PROXIMITY|none|code|-|LOCATED_BY_PLUS_CODE": [
+   4,
+   5
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|none|code|-|LOCATED_BY_PLUS_CODE": [
+   5,
+   8
+  ],
+  "AE|ACCEPT|PREMISE_PROXIMITY|area+building|translit|uN|STREET_TRANSLITERATED": [
+   0,
+   1
+  ],
+  "B|ACCEPT|PREMISE_PROXIMITY|area+building|translit|uN|STREET_TRANSLITERATED": [
+   0,
+   1
+  ],
+  "AE|CONFIRM|PREMISE_PROXIMITY|area+building|partial|u1|STREET_PARTIAL_MATCH+LANDMARK_RELATIVE": [
+   0,
+   2
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|area+building|partial|u1|STREET_PARTIAL_MATCH+LANDMARK_RELATIVE": [
+   0,
+   2
+  ],
+  "AE|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "AE|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "AE|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "B|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "AE|CONFIRM|ROUTE|area|core|uN|ROUTE_NOT_CORROBORATED": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area|core|uN|ROUTE_NOT_CORROBORATED": [
+   1,
+   2
+  ],
+  "AE|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|LANDMARK_RELATIVE": [
+   0,
+   1
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|LANDMARK_RELATIVE": [
+   0,
+   1
+  ],
+  "AE|CONFIRM|PREMISE_PROXIMITY|building|core|uN|LANDMARK_RELATIVE": [
+   0,
+   1
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|building|core|uN|LANDMARK_RELATIVE": [
+   0,
+   1
+  ],
+  "AE|ACCEPT|PREMISE_PROXIMITY|building|core|u1|-": [
+   1,
+   1
+  ],
+  "B|ACCEPT|PREMISE_PROXIMITY|building|core|u1|-": [
+   1,
+   1
+  ],
+  "AE|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+LANDMARK_RELATIVE+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+LANDMARK_RELATIVE+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "AE|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "AE|CONFIRM|ROUTE|area|translit|u1|STREET_TRANSLITERATED+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area|translit|u1|STREET_TRANSLITERATED+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "AE|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "AE|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "AE|CONFIRM|ROUTE|none|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "AE|CONFIRM|ROUTE|area|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|postcode|translit|uN|STREET_TRANSLITERATED+MISSING_PREMISE": [
+   16,
+   20
+  ],
+  "B|CONFIRM|ROUTE|postcode|translit|uN|STREET_TRANSLITERATED+MISSING_PREMISE": [
+   16,
+   20
+  ],
+  "SA|FIX|LOCALITY|-": [
+   53,
+   71
+  ],
+  "SA|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
+   2,
+   5
+  ],
+  "SA|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   2,
+   9
+  ],
+  "SA|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   7,
+   20
+  ],
+  "SA|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
+   1,
+   6
+  ],
+  "SA|CONFIRM|ROUTE|postcode|core|u1|MISSING_PREMISE": [
+   8,
+   8
+  ],
+  "B|CONFIRM|ROUTE|postcode|core|u1|MISSING_PREMISE": [
+   8,
+   8
+  ],
+  "SA|CONFIRM|ROUTE|postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   7,
+   8
+  ],
+  "B|CONFIRM|ROUTE|postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   7,
+   8
+  ],
+  "SA|CONFIRM|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
+   11,
+   13
+  ],
+  "B|CONFIRM|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
+   11,
+   13
+  ],
+  "SA|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   5,
+   5
+  ],
+  "B|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   5,
+   5
+  ],
+  "SA|CONFIRM|ROUTE|postcode|translit|u1|STREET_TRANSLITERATED+MISSING_PREMISE": [
+   6,
+   6
+  ],
+  "B|CONFIRM|ROUTE|postcode|translit|u1|STREET_TRANSLITERATED+MISSING_PREMISE": [
+   6,
+   6
+  ],
+  "SA|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   6,
+   11
+  ],
+  "SA|CONFIRM|ROUTE|none|core|u1|MISSING_PREMISE": [
+   1,
+   7
+  ],
+  "SA|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
+   4,
+   25
+  ],
+  "SA|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   4
+  ],
+  "B|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   4
+  ],
+  "SA|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   5,
+   42
+  ],
+  "SA|CONFIRM|ROUTE|none|exact|u1|MISSING_PREMISE": [
+   7,
+   14
+  ],
+  "SA|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   9
+  ],
+  "SA|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   2,
+   3
+  ],
+  "B|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   2,
+   3
+  ],
+  "SA|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   3,
+   3
+  ],
+  "B|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   3,
+   3
+  ],
+  "SA|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   7
+  ],
+  "B|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   7
+  ],
+  "SA|CONFIRM|ROUTE|none|core|u1|ROUTE_NOT_CORROBORATED": [
+   1,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|postcode|core|uN|MISSING_PREMISE": [
+   8,
+   8
+  ],
+  "B|CONFIRM|ROUTE|postcode|core|uN|MISSING_PREMISE": [
+   8,
+   8
+  ],
+  "SA|CONFIRM|ROUTE|none|translit|uN|STREET_TRANSLITERATED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   15
+  ],
+  "B|CONFIRM|ROUTE|none|translit|uN|STREET_TRANSLITERATED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   15
+  ],
+  "SA|CONFIRM|PREMISE_PROXIMITY|none|code|-|LOCATED_BY_PLUS_CODE": [
+   1,
+   3
+  ],
+  "SA|CONFIRM|ROUTE|postcode|translit|uN|STREET_TRANSLITERATED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   6
+  ],
+  "B|CONFIRM|ROUTE|postcode|translit|uN|STREET_TRANSLITERATED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   6
+  ],
+  "SA|ACCEPT|PREMISE_PROXIMITY|none|code|-|LOCATED_BY_PLUS_CODE": [
+   4,
+   6
+  ],
+  "SA|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   3
+  ],
+  "B|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   3
+  ],
+  "SA|CONFIRM|PREMISE_PROXIMITY|building+postcode|partial|uN|STREET_PARTIAL_MATCH+BUILDING_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|building+postcode|partial|uN|STREET_PARTIAL_MATCH+BUILDING_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|area+postcode|partial|uN|STREET_PARTIAL_MATCH": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area+postcode|partial|uN|STREET_PARTIAL_MATCH": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   6
+  ],
+  "B|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   6
+  ],
+  "SA|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|postcode|exact|u1|MISSING_PREMISE": [
+   6,
+   10
+  ],
+  "B|CONFIRM|ROUTE|postcode|exact|u1|MISSING_PREMISE": [
+   6,
+   10
+  ],
+  "SA|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   2,
+   3
+  ],
+  "B|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   2,
+   3
+  ],
+  "SA|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "SA|ACCEPT|ROUTE|postcode|exact|u1|-": [
+   5,
+   5
+  ],
+  "B|ACCEPT|ROUTE|postcode|exact|u1|-": [
+   5,
+   5
+  ],
+  "B|ACCEPT|ROUTE": [
+   7,
+   7
+  ],
+  "ACCEPT|ROUTE": [
+   626,
+   706
+  ],
+  "SA|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "B|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "SA|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "B|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "B|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+ROUTE_NOT_CORROBORATED": [
+   3,
+   5
+  ],
+  "SA|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   4
+  ],
+  "SA|CONFIRM|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
+   3,
+   4
+  ],
+  "B|CONFIRM|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
+   3,
+   4
+  ],
+  "SA|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "B|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
+   0,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|area+postcode|exact|uN|MISSING_PREMISE": [
+   5,
+   5
+  ],
+  "B|CONFIRM|ROUTE|area+postcode|exact|uN|MISSING_PREMISE": [
+   5,
+   5
+  ],
+  "SA|CONFIRM|ROUTE|area|core|uN|MISSING_PREMISE": [
+   3,
+   3
+  ],
+  "SA|CONFIRM|ROUTE|area|core|u1|ROUTE_NOT_CORROBORATED": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|area+postcode|translit|u1|STREET_TRANSLITERATED+MISSING_PREMISE": [
+   2,
+   2
+  ],
+  "B|CONFIRM|ROUTE|area+postcode|translit|u1|STREET_TRANSLITERATED+MISSING_PREMISE": [
+   2,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|postcode|translit|uN|STREET_TRANSLITERATED+ROUTE_NOT_CORROBORATED": [
+   7,
+   7
+  ],
+  "B|CONFIRM|ROUTE|postcode|translit|uN|STREET_TRANSLITERATED+ROUTE_NOT_CORROBORATED": [
+   7,
+   7
+  ],
+  "SA|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|translit|uN|STREET_TRANSLITERATED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   4
+  ],
+  "B|CONFIRM|ROUTE|none|translit|uN|STREET_TRANSLITERATED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   4
+  ],
+  "SA|CONFIRM|ROUTE|postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   5
+  ],
+  "B|CONFIRM|ROUTE|postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   5
+  ],
+  "SA|CONFIRM|ROUTE|postcode|partial|uN|STREET_PARTIAL_MATCH": [
+   2,
+   3
+  ],
+  "B|CONFIRM|ROUTE|postcode|partial|uN|STREET_PARTIAL_MATCH": [
+   2,
+   3
+  ],
+  "SA|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   9
+  ],
+  "SA|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   2
+  ],
+  "B|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|area+postcode|translit|uN|STREET_TRANSLITERATED+ROUTE_NOT_CORROBORATED": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area+postcode|translit|uN|STREET_TRANSLITERATED+ROUTE_NOT_CORROBORATED": [
+   1,
+   1
+  ],
+  "SA|ACCEPT|PREMISE_PROXIMITY|street|exact|uN|LOCATED_BY_PLUS_CODE": [
+   1,
+   1
+  ],
+  "B|ACCEPT|PREMISE_PROXIMITY|street|exact|uN|LOCATED_BY_PLUS_CODE": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   3,
+   6
+  ],
+  "B|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   3,
+   6
+  ],
+  "SA|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   5,
+   5
+  ],
+  "B|CONFIRM|ROUTE|postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   5,
+   5
+  ],
+  "SA|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   3,
+   3
+  ],
+  "B|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   3,
+   3
+  ],
+  "SA|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   2
+  ],
+  "B|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|area|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "B|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   2
+  ],
+  "B|CONFIRM|ROUTE|postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "B|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "SA|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "B|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   1,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+MISSING_PREMISE": [
+   3,
+   5
+  ],
+  "SA|CONFIRM|ROUTE|area|exact|uN|MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|postcode|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|postcode|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|area|translit|uN|STREET_TRANSLITERATED+ROUTE_NOT_CORROBORATED": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area|translit|uN|STREET_TRANSLITERATED+ROUTE_NOT_CORROBORATED": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|POSTCODE_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|POSTCODE_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|postcode|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   3
+  ],
+  "B|CONFIRM|ROUTE|postcode|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   3
+  ],
+  "SA|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|postcode|core|u1|ROUTE_NOT_CORROBORATED": [
+   2,
+   2
+  ],
+  "B|CONFIRM|ROUTE|postcode|core|u1|ROUTE_NOT_CORROBORATED": [
+   2,
+   2
+  ],
+  "SA|ACCEPT|PREMISE_PROXIMITY|building|exact|uN|-": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|area+postcode|core|uN|MISSING_PREMISE": [
+   2,
+   3
+  ],
+  "B|CONFIRM|ROUTE|area+postcode|core|uN|MISSING_PREMISE": [
+   2,
+   3
+  ],
+  "SA|CONFIRM|ROUTE|area|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "B|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "B|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "SA|ACCEPT|PREMISE_PROXIMITY|street|core|u1|LOCATED_BY_PLUS_CODE": [
+   0,
+   1
+  ],
+  "B|ACCEPT|PREMISE_PROXIMITY|street|core|u1|LOCATED_BY_PLUS_CODE": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|translit|uN|STREET_TRANSLITERATED+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|translit|uN|STREET_TRANSLITERATED+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   1,
+   2
+  ],
+  "B|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   1,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|area|core|uN|ROUTE_NOT_CORROBORATED": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|postcode|partial|uN|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|postcode|partial|uN|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|postcode|translit|u1|STREET_TRANSLITERATED+ROUTE_NOT_CORROBORATED": [
+   3,
+   3
+  ],
+  "B|CONFIRM|ROUTE|postcode|translit|u1|STREET_TRANSLITERATED+ROUTE_NOT_CORROBORATED": [
+   3,
+   3
+  ],
+  "SA|CONFIRM|ROUTE|none|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|area+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "SA|ACCEPT|ROUTE|area+postcode|exact|u1|-": [
+   2,
+   2
+  ],
+  "B|ACCEPT|ROUTE|area+postcode|exact|u1|-": [
+   2,
+   2
+  ],
+  "SA|CONFIRM|ROUTE|area+postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area+postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED+LANDMARK_RELATIVE": [
+   0,
+   1
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED+LANDMARK_RELATIVE": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|area+postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|area+postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|area+postcode|translit|uN|STREET_TRANSLITERATED+MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "B|CONFIRM|ROUTE|area+postcode|translit|uN|STREET_TRANSLITERATED+MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "SA|ACCEPT|PREMISE_PROXIMITY|street|translit|uN|LOCATED_BY_PLUS_CODE": [
+   1,
+   1
+  ],
+  "B|ACCEPT|PREMISE_PROXIMITY|street|translit|uN|LOCATED_BY_PLUS_CODE": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|PREMISE_PROXIMITY|building+postcode|core|uN|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|building+postcode|core|uN|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "MY|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
+   6,
+   8
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
+   23,
+   61
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY": [
+   50,
+   105
+  ],
+  "MY|ACCEPT|ROUTE|postcode|exact|u1|-": [
+   75,
+   82
+  ],
+  "C|ACCEPT|ROUTE|postcode|exact|u1|-": [
+   202,
+   230
+  ],
+  "C|ACCEPT|ROUTE": [
+   619,
+   699
+  ],
+  "MY|CONFIRM|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
+   22,
+   24
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
+   64,
+   71
+  ],
+  "C|CONFIRM|ROUTE": [
+   1192,
+   1868
+  ],
+  "MY|ACCEPT|ROUTE|area+postcode|exact|u1|-": [
+   108,
+   119
+  ],
+  "C|ACCEPT|ROUTE|area+postcode|exact|u1|-": [
+   346,
+   387
+  ],
+  "MY|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
+   24,
+   25
+  ],
+  "C|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
+   93,
+   109
+  ],
+  "MY|CONFIRM|ROUTE|area|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   5
+  ],
+  "C|CONFIRM|ROUTE|area|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   8
+  ],
+  "MY|FIX|LOCALITY|-": [
+   22,
+   42
+  ],
+  "C|FIX|LOCALITY|-": [
+   147,
+   270
+  ],
+  "C|FIX|LOCALITY": [
+   147,
+   270
+  ],
+  "MY|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   18,
+   24
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   128,
+   151
+  ],
+  "MY|CONFIRM|ROUTE|none|core|u1|ROUTE_NOT_CORROBORATED": [
+   2,
+   6
+  ],
+  "C|CONFIRM|ROUTE|none|core|u1|ROUTE_NOT_CORROBORATED": [
+   25,
+   37
+  ],
+  "MY|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   5,
+   5
+  ],
+  "C|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   8,
+   11
+  ],
+  "MY|CONFIRM|ROUTE|postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   11,
+   15
+  ],
+  "C|CONFIRM|ROUTE|postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   34,
+   49
+  ],
+  "MY|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   2,
+   3
+  ],
+  "C|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   5,
+   11
+  ],
+  "MY|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH": [
+   1,
+   2
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH": [
+   6,
+   10
+  ],
+  "MY|ACCEPT|PREMISE_PROXIMITY|building+postcode|exact|u1|-": [
+   4,
+   4
+  ],
+  "C|ACCEPT|PREMISE_PROXIMITY|building+postcode|exact|u1|-": [
+   7,
+   7
+  ],
+  "C|ACCEPT|PREMISE_PROXIMITY": [
+   39,
+   44
+  ],
+  "MY|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
+   46,
+   48
+  ],
+  "C|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
+   90,
+   104
+  ],
+  "MY|CONFIRM|ROUTE|area+postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   3
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   10,
+   10
+  ],
+  "MY|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
+   10,
+   11
+  ],
+  "C|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
+   38,
+   49
+  ],
+  "MY|CONFIRM|PREMISE_PROXIMITY|building+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|building+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+BUILDING_SPELL_CORRECTED": [
+   2,
+   2
+  ],
+  "MY|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
+   5,
+   5
+  ],
+  "C|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
+   20,
+   32
+  ],
+  "MY|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "MY|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   2,
+   7
+  ],
+  "MY|ACCEPT|PREMISE_PROXIMITY|area+building+postcode|exact|u1|-": [
+   6,
+   6
+  ],
+  "C|ACCEPT|PREMISE_PROXIMITY|area+building+postcode|exact|u1|-": [
+   18,
+   19
+  ],
+  "MY|CONFIRM|ROUTE|none|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   5,
+   6
+  ],
+  "C|CONFIRM|ROUTE|none|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   6,
+   8
+  ],
+  "MY|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   5
+  ],
+  "C|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   5,
+   22
+  ],
+  "MY|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "C|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "MY|CONFIRM|ROUTE|area|exact|uN|MISSING_PREMISE": [
+   3,
+   4
+  ],
+  "C|CONFIRM|ROUTE|area|exact|uN|MISSING_PREMISE": [
+   9,
+   15
+  ],
+  "MY|CONFIRM|ROUTE|none|core|u1|MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "C|CONFIRM|ROUTE|none|core|u1|MISSING_PREMISE": [
+   9,
+   20
+  ],
+  "MY|CONFIRM|ROUTE|none|exact|u1|MISSING_PREMISE": [
+   6,
+   6
+  ],
+  "C|CONFIRM|ROUTE|none|exact|u1|MISSING_PREMISE": [
+   19,
+   22
+  ],
+  "MY|CONFIRM|ROUTE|postcode|exact|u1|MISSING_PREMISE": [
+   7,
+   7
+  ],
+  "C|CONFIRM|ROUTE|postcode|exact|u1|MISSING_PREMISE": [
+   24,
+   25
+  ],
+  "MY|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "C|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   2,
+   6
+  ],
+  "MY|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   5,
+   7
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   25,
+   30
+  ],
+  "MY|CONFIRM|ROUTE|postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   2
+  ],
+  "C|CONFIRM|ROUTE|postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   4
+  ],
+  "MY|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   2,
+   2
+  ],
+  "C|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   2,
+   3
+  ],
+  "MY|CONFIRM|ROUTE|area|core|uN|MISSING_PREMISE": [
+   0,
+   5
+  ],
+  "C|CONFIRM|ROUTE|area|core|uN|MISSING_PREMISE": [
+   2,
+   10
+  ],
+  "MY|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "MY|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH": [
+   2,
+   3
+  ],
+  "C|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH": [
+   10,
+   22
+  ],
+  "MY|CONFIRM|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
+   6,
+   6
+  ],
+  "C|CONFIRM|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
+   13,
+   15
+  ],
+  "MY|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH": [
+   1,
+   11
+  ],
+  "MY|CONFIRM|ROUTE|area+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   2
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   10,
+   13
+  ],
+  "MY|ACCEPT|PREMISE_PROXIMITY|area+building+postcode|core|u1|-": [
+   1,
+   1
+  ],
+  "C|ACCEPT|PREMISE_PROXIMITY|area+building+postcode|core|u1|-": [
+   2,
+   3
+  ],
+  "MY|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|exact|u1|BUILDING_SPELL_CORRECTED": [
+   2,
+   2
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|exact|u1|BUILDING_SPELL_CORRECTED": [
+   4,
+   4
+  ],
+  "MY|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   6,
+   12
+  ],
+  "C|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   15,
+   43
+  ],
+  "MY|CONFIRM|ROUTE|area|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   3
+  ],
+  "C|CONFIRM|ROUTE|area|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   14
+  ],
+  "MY|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   12
+  ],
+  "MY|ACCEPT|PREMISE_PROXIMITY|area+building+postcode|exact|uN|-": [
+   2,
+   2
+  ],
+  "C|ACCEPT|PREMISE_PROXIMITY|area+building+postcode|exact|uN|-": [
+   6,
+   7
+  ],
+  "MY|CONFIRM|ROUTE|area|core|u1|ROUTE_NOT_CORROBORATED": [
+   1,
+   2
+  ],
+  "C|CONFIRM|ROUTE|area|core|u1|ROUTE_NOT_CORROBORATED": [
+   12,
+   18
+  ],
+  "MY|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "C|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   9,
+   12
+  ],
+  "MY|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   5
+  ],
+  "MY|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   2,
+   2
+  ],
+  "C|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   16,
+   21
+  ],
+  "MY|CONFIRM|ROUTE|none|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   6
+  ],
+  "MY|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   2,
+   2
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   7,
+   8
+  ],
+  "MY|CONFIRM|ROUTE|area|core|uN|ROUTE_NOT_CORROBORATED": [
+   0,
+   5
+  ],
+  "C|CONFIRM|ROUTE|area|core|uN|ROUTE_NOT_CORROBORATED": [
+   2,
+   9
+  ],
+  "MY|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH": [
+   34,
+   42
+  ],
+  "MY|ACCEPT|PREMISE_PROXIMITY|building+postcode|exact|uN|-": [
+   0,
+   1
+  ],
+  "C|ACCEPT|PREMISE_PROXIMITY|building+postcode|exact|uN|-": [
+   0,
+   1
+  ],
+  "MY|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "MY|CONFIRM|ROUTE|area+postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   19,
+   24
+  ],
+  "MY|CONFIRM|PREMISE_PROXIMITY|building+postcode|exact|u1|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|building+postcode|exact|u1|BUILDING_SPELL_CORRECTED": [
+   2,
+   2
+  ],
+  "MY|CONFIRM|ROUTE|area+postcode|exact|uN|MISSING_PREMISE": [
+   2,
+   3
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|exact|uN|MISSING_PREMISE": [
+   34,
+   44
+  ],
+  "MY|ACCEPT|ROUTE|area+postcode|core|u1|-": [
+   3,
+   4
+  ],
+  "C|ACCEPT|ROUTE|area+postcode|core|u1|-": [
+   71,
+   81
+  ],
+  "MY|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "MY|CONFIRM|ROUTE|area+postcode|partial|uN|STREET_PARTIAL_MATCH": [
+   1,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|partial|uN|STREET_PARTIAL_MATCH": [
+   2,
+   2
+  ],
+  "MY|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH": [
+   0,
+   5
+  ],
+  "MY|CONFIRM|ROUTE|postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   6,
+   17
+  ],
+  "MY|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "MY|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   5
+  ],
+  "MY|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH": [
+   1,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH": [
+   13,
+   14
+  ],
+  "MY|CONFIRM|ROUTE|none|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   6
+  ],
+  "MY|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH": [
+   1,
+   2
+  ],
+  "C|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH": [
+   4,
+   6
+  ],
+  "MY|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   2
+  ],
+  "MY|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   3,
+   6
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   13,
+   18
+  ],
+  "MY|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
+   5,
+   11
+  ],
+  "MY|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   3
+  ],
+  "C|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   3
+  ],
+  "MY|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
+   1,
+   3
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
+   6,
+   18
+  ],
+  "MY|CONFIRM|ROUTE|area+postcode|core|u1|MISSING_PREMISE": [
+   2,
+   2
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|core|u1|MISSING_PREMISE": [
+   16,
+   20
+  ],
+  "MY|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH": [
+   10,
+   13
+  ],
+  "MY|CONFIRM|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   3,
+   4
+  ],
+  "MY|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "MY|CONFIRM|ROUTE|area|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "MY|CONFIRM|ROUTE|postcode|core|u1|ROUTE_NOT_CORROBORATED": [
+   1,
+   3
+  ],
+  "C|CONFIRM|ROUTE|postcode|core|u1|ROUTE_NOT_CORROBORATED": [
+   40,
+   52
+  ],
+  "MY|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH": [
+   1,
+   4
+  ],
+  "MY|CONFIRM|ROUTE|area+postcode|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "MY|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   1,
+   2
+  ],
+  "MY|CONFIRM|PREMISE_PROXIMITY|building+postcode|partial|uN|STREET_PARTIAL_MATCH": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|building+postcode|partial|uN|STREET_PARTIAL_MATCH": [
+   1,
+   1
+  ],
+  "MY|ACCEPT|PREMISE_PROXIMITY|area+building|exact|u1|-": [
+   1,
+   1
+  ],
+  "C|ACCEPT|PREMISE_PROXIMITY|area+building|exact|u1|-": [
+   4,
+   5
+  ],
+  "MY|CONFIRM|ROUTE|postcode|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "C|CONFIRM|ROUTE|postcode|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   2,
+   2
+  ],
+  "MY|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   4
+  ],
+  "MY|CONFIRM|ROUTE|postcode|core|u1|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|postcode|core|u1|MISSING_PREMISE": [
+   10,
+   15
+  ],
+  "MY|CONFIRM|ROUTE|postcode|exact|uN|AREA_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "C|CONFIRM|ROUTE|postcode|exact|uN|AREA_STREET_MISMATCH": [
+   28,
+   34
+  ],
+  "ID|CONFIRM|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
+   5,
+   6
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   2,
+   3
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   3,
+   4
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|core|u1|MISSING_PREMISE": [
+   8,
+   9
+  ],
+  "ID|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
+   10,
+   15
+  ],
+  "ID|ACCEPT|ROUTE|area+postcode|exact|u1|-": [
+   103,
+   112
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   33,
+   38
+  ],
+  "ID|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   4,
+   5
+  ],
+  "ID|ACCEPT|ROUTE|postcode|exact|u1|-": [
+   35,
+   42
+  ],
+  "ID|CONFIRM|ROUTE|postcode|core|u1|AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|postcode|core|u1|AREA_STREET_MISMATCH": [
+   45,
+   55
+  ],
+  "ID|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
+   2,
+   7
+  ],
+  "ID|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   2,
+   4
+  ],
+  "ID|CONFIRM|ROUTE|postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   5,
+   5
+  ],
+  "C|CONFIRM|ROUTE|postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   13,
+   13
+  ],
+  "ID|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
+   5,
+   6
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|exact|uN|MISSING_PREMISE": [
+   11,
+   14
+  ],
+  "ID|CONFIRM|ROUTE|none|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|none|core|u1|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "ID|FIX|LOCALITY|-": [
+   10,
+   25
+  ],
+  "ID|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "ID|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
+   1,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   8,
+   21
+  ],
+  "ID|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   11,
+   14
+  ],
+  "ID|CONFIRM|ROUTE|postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   12,
+   17
+  ],
+  "ID|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH": [
+   0,
+   3
+  ],
+  "ID|CONFIRM|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH": [
+   0,
+   6
+  ],
+  "C|CONFIRM|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH": [
+   1,
+   10
+  ],
+  "ID|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   3
+  ],
+  "ID|CONFIRM|ROUTE|postcode|core|u1|ROUTE_NOT_CORROBORATED": [
+   5,
+   7
+  ],
+  "ID|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "ID|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
+   2,
+   7
+  ],
+  "ID|ACCEPT|ROUTE|area+postcode|core|u1|-": [
+   19,
+   24
+  ],
+  "ID|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "ID|CONFIRM|ROUTE|area|exact|uN|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|postcode|exact|u1|MISSING_PREMISE": [
+   9,
+   9
+  ],
+  "ID|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   9
+  ],
+  "ID|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   5
+  ],
+  "ID|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   1,
+   7
+  ],
+  "ID|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "ID|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   6,
+   8
+  ],
+  "ID|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   5
+  ],
+  "C|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   10
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
+   19,
+   21
+  ],
+  "ID|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   2,
+   2
+  ],
+  "C|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   2,
+   2
+  ],
+  "ID|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "ID|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   4
+  ],
+  "C|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   6
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   8,
+   9
+  ],
+  "ID|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|none|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "ID|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH": [
+   0,
+   3
+  ],
+  "C|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH": [
+   0,
+   4
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   5
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   7
+  ],
+  "ID|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH": [
+   1,
+   3
+  ],
+  "ID|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "C|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   6
+  ],
+  "ID|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   6
+  ],
+  "ID|ACCEPT|PREMISE_PROXIMITY|area+building|exact|u1|-": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH": [
+   2,
+   7
+  ],
+  "ID|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
+   1,
+   4
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   4,
+   6
+  ],
+  "ID|CONFIRM|ROUTE|postcode|core|uN|AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|postcode|core|uN|AREA_STREET_MISMATCH": [
+   10,
+   17
+  ],
+  "ID|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "ID|CONFIRM|ROUTE|area|core|uN|POSTCODE_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|core|uN|POSTCODE_STREET_MISMATCH": [
+   1,
+   2
+  ],
+  "ID|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH": [
+   0,
+   4
+  ],
+  "ID|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH": [
+   0,
+   7
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "ID|CONFIRM|ROUTE|postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   4
+  ],
+  "ID|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   2
+  ],
+  "ID|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   4
+  ],
+  "C|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   9
+  ],
+  "ID|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|core|uN|MISSING_PREMISE": [
+   3,
+   4
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|core|uN|MISSING_PREMISE": [
+   4,
+   5
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   3
+  ],
+  "ID|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   1,
+   4
+  ],
+  "ID|CONFIRM|ROUTE|postcode|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "C|CONFIRM|ROUTE|postcode|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   4
+  ],
+  "ID|CONFIRM|ROUTE|area|core|uN|MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "ID|CONFIRM|ROUTE|postcode|core|u1|MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "ID|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|exact|u1|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "ID|ACCEPT|PREMISE_PROXIMITY|area+building+postcode|exact|u1|-": [
+   1,
+   1
+  ],
+  "ID|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "ID|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "ID|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   7
+  ],
+  "ID|CONFIRM|ROUTE|postcode|core|uN|MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "C|CONFIRM|ROUTE|postcode|core|uN|MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "ID|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "ID|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|postcode|exact|u1|AREA_STREET_MISMATCH": [
+   2,
+   2
+  ],
+  "C|CONFIRM|ROUTE|postcode|exact|u1|AREA_STREET_MISMATCH": [
+   61,
+   73
+  ],
+  "ID|CONFIRM|ROUTE|postcode|exact|uN|AREA_STREET_MISMATCH": [
+   2,
+   2
+  ],
+  "ID|CONFIRM|PREMISE_PROXIMITY|building+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "C|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "ID|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   4
+  ],
+  "ID|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "C|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   4
+  ],
+  "ID|CONFIRM|ROUTE|none|exact|u1|MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   5,
+   8
+  ],
+  "ID|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH": [
+   1,
+   2
+  ],
+  "ID|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|area|core|u1|ROUTE_NOT_CORROBORATED": [
+   1,
+   5
+  ],
+  "ID|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   0,
+   3
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|partial|uN|STREET_PARTIAL_MATCH": [
+   1,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH": [
+   1,
+   1
+  ],
+  "ID|CONFIRM|PREMISE_PROXIMITY|building+postcode|exact|uN|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|building+postcode|exact|uN|BUILDING_SPELL_CORRECTED": [
+   2,
+   2
+  ],
+  "ID|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "ID|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "ID|ACCEPT|PREMISE_PROXIMITY|building+postcode|exact|u1|-": [
+   1,
+   1
+  ],
+  "ID|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED+LANDMARK_RELATIVE": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED+LANDMARK_RELATIVE": [
+   1,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|area|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|PREMISE_PROXIMITY|building+postcode|core|u1|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|building+postcode|core|u1|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|postcode|partial|uN|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|postcode|partial|uN|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|area+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "ID|CONFIRM|ROUTE|area|core|uN|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|core|uN|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "TH|FIX|LOCALITY|-": [
+   64,
+   106
+  ],
+  "TH|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
+   62,
+   71
+  ],
+  "TH|ACCEPT|ROUTE|postcode|exact|u1|-": [
+   84,
+   94
+  ],
+  "TH|CONFIRM|ROUTE|none|core|u1|MISSING_PREMISE": [
+   9,
+   12
+  ],
+  "TH|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   7,
+   12
+  ],
+  "TH|CONFIRM|ROUTE|postcode|core|u1|ROUTE_NOT_CORROBORATED": [
+   20,
+   26
+  ],
+  "TH|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   4,
+   6
+  ],
+  "TH|CONFIRM|ROUTE|none|core|u1|ROUTE_NOT_CORROBORATED": [
+   20,
+   26
+  ],
+  "TH|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH": [
+   0,
+   4
+  ],
+  "TH|CONFIRM|ROUTE|none|exact|u1|MISSING_PREMISE": [
+   11,
+   13
+  ],
+  "TH|CONFIRM|PREMISE_PROXIMITY|building+postcode|exact|uN|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   5,
+   8
+  ],
+  "TH|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH": [
+   9,
+   11
+  ],
+  "TH|CONFIRM|ROUTE|postcode|exact|u1|MISSING_PREMISE": [
+   8,
+   9
+  ],
+  "TH|ACCEPT|ROUTE|area+postcode|exact|u1|-": [
+   9,
+   12
+  ],
+  "TH|CONFIRM|ROUTE|area+postcode|core|u1|MISSING_PREMISE": [
+   2,
+   3
+  ],
+  "TH|CONFIRM|ROUTE|area|core|u1|ROUTE_NOT_CORROBORATED": [
+   2,
+   2
+  ],
+  "TH|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   2,
+   4
+  ],
+  "TH|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH": [
+   1,
+   2
+  ],
+  "TH|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
+   2,
+   14
+  ],
+  "TH|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|none|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "TH|CONFIRM|ROUTE|postcode|partial|uN|STREET_PARTIAL_MATCH": [
+   3,
+   3
+  ],
+  "C|CONFIRM|ROUTE|postcode|partial|uN|STREET_PARTIAL_MATCH": [
+   3,
+   3
+  ],
+  "TH|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "TH|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "TH|CONFIRM|ROUTE|postcode|core|uN|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "TH|CONFIRM|ROUTE|area|thai|uN|ROUTE_NOT_CORROBORATED": [
+   1,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|thai|uN|ROUTE_NOT_CORROBORATED": [
+   1,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "TH|CONFIRM|ROUTE|postcode|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   3
+  ],
+  "TH|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   2
+  ],
+  "TH|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH": [
+   12,
+   13
+  ],
+  "TH|ACCEPT|ROUTE|area+postcode|thai|u1|-": [
+   0,
+   1
+  ],
+  "C|ACCEPT|ROUTE|area+postcode|thai|u1|-": [
+   0,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   2,
+   2
+  ],
+  "TH|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
+   2,
+   3
+  ],
+  "TH|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH": [
+   1,
+   2
+  ],
+  "TH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   3,
+   7
+  ],
+  "TH|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
+   1,
+   4
+  ],
+  "TH|ACCEPT|PREMISE_PROXIMITY|area+building+postcode|exact|u1|-": [
+   1,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH": [
+   2,
+   3
+  ],
+  "C|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH": [
+   13,
+   20
+  ],
+  "TH|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH": [
+   2,
+   6
+  ],
+  "TH|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH": [
+   3,
+   11
+  ],
+  "C|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH": [
+   3,
+   11
+  ],
+  "TH|CONFIRM|ROUTE|postcode|core|u1|MISSING_PREMISE": [
+   8,
+   10
+  ],
+  "TH|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH": [
+   1,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "TH|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "TH|CONFIRM|ROUTE|postcode|thai|u1|ROUTE_NOT_CORROBORATED": [
+   8,
+   8
+  ],
+  "C|CONFIRM|ROUTE|postcode|thai|u1|ROUTE_NOT_CORROBORATED": [
+   8,
+   8
+  ],
+  "TH|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|none|thai|u1|ROUTE_NOT_CORROBORATED": [
+   2,
+   4
+  ],
+  "C|CONFIRM|ROUTE|none|thai|u1|ROUTE_NOT_CORROBORATED": [
+   2,
+   4
+  ],
+  "TH|CONFIRM|ROUTE|area+postcode|exact|uN|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|none|thai|u1|POSTCODE_STREET_MISMATCH": [
+   0,
+   3
+  ],
+  "C|CONFIRM|ROUTE|none|thai|u1|POSTCODE_STREET_MISMATCH": [
+   0,
+   3
+  ],
+  "TH|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
+   6,
+   9
+  ],
+  "TH|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   1,
+   3
+  ],
+  "TH|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   1,
+   3
+  ],
+  "TH|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
+   2,
+   2
+  ],
+  "TH|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   1,
+   3
+  ],
+  "TH|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   2,
+   2
+  ],
+  "TH|ACCEPT|PREMISE_PROXIMITY|building+postcode|exact|u1|-": [
+   1,
+   1
+  ],
+  "TH|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|none|thai|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|none|thai|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "TH|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   2,
+   2
+  ],
+  "TH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "TH|CONFIRM|ROUTE|area+postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   2,
+   2
+  ],
+  "TH|CONFIRM|ROUTE|none|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   11,
+   32
+  ],
+  "TH|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH": [
+   2,
+   2
+  ],
+  "TH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|area|thai|u1|MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|thai|u1|MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|postcode|exact|uN|AREA_STREET_MISMATCH": [
+   25,
+   31
+  ],
+  "VN|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH": [
+   32,
+   40
+  ],
+  "VN|CONFIRM|ROUTE|none|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   11,
+   28
+  ],
+  "VN|CONFIRM|ROUTE|postcode|core|u1|AREA_STREET_MISMATCH": [
+   45,
+   54
+  ],
+  "VN|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   10,
+   16
+  ],
+  "VN|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|postcode|exact|u1|AREA_STREET_MISMATCH": [
+   59,
+   71
+  ],
+  "VN|ACCEPT|ROUTE|area+postcode|core|u1|-": [
+   29,
+   33
+  ],
+  "VN|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
+   17,
+   19
+  ],
+  "VN|FIX|LOCALITY|-": [
+   9,
+   32
+  ],
+  "VN|CONFIRM|ROUTE|postcode|core|u1|ROUTE_NOT_CORROBORATED": [
+   7,
+   9
+  ],
+  "VN|ACCEPT|ROUTE|area+postcode|exact|u1|-": [
+   32,
+   37
+  ],
+  "VN|CONFIRM|ROUTE|postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   6,
+   9
+  ],
+  "VN|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
+   7,
+   11
+  ],
+  "VN|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   3
+  ],
+  "VN|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
+   6,
+   12
+  ],
+  "VN|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "VN|CONFIRM|ROUTE|area|exact|uN|MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "VN|CONFIRM|ROUTE|none|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   5
+  ],
+  "VN|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
+   3,
+   4
+  ],
+  "VN|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH": [
+   11,
+   17
+  ],
+  "VN|CONFIRM|ROUTE|none|exact|u1|MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "VN|CONFIRM|ROUTE|area|core|u1|ROUTE_NOT_CORROBORATED": [
+   4,
+   4
+  ],
+  "VN|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
+   3,
+   5
+  ],
+  "VN|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   8,
+   16
+  ],
+  "VN|CONFIRM|ROUTE|postcode|core|uN|AREA_STREET_MISMATCH": [
+   10,
+   16
+  ],
+  "VN|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   5
+  ],
+  "VN|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "C|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "VN|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   2,
+   6
+  ],
+  "C|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   2,
+   7
+  ],
+  "VN|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH": [
+   6,
+   8
+  ],
+  "VN|CONFIRM|ROUTE|postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   5,
+   10
+  ],
+  "VN|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   3
+  ],
+  "VN|CONFIRM|ROUTE|postcode|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|area+postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   5,
+   5
+  ],
+  "VN|CONFIRM|ROUTE|postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   9
+  ],
+  "VN|CONFIRM|ROUTE|none|core|u1|MISSING_PREMISE": [
+   0,
+   4
+  ],
+  "VN|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "VN|CONFIRM|ROUTE|area|core|uN|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH": [
+   1,
+   3
+  ],
+  "C|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH": [
+   1,
+   3
+  ],
+  "VN|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
+   2,
+   6
+  ],
+  "VN|ACCEPT|ROUTE|postcode|exact|u1|-": [
+   8,
+   12
+  ],
+  "VN|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH": [
+   2,
+   2
+  ],
+  "VN|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "VN|CONFIRM|ROUTE|postcode|core|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   2,
+   2
+  ],
+  "C|CONFIRM|ROUTE|postcode|core|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   2,
+   2
+  ],
+  "VN|CONFIRM|ROUTE|postcode|exact|uN|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "C|CONFIRM|ROUTE|postcode|exact|uN|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|area|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   3
+  ],
+  "C|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   3
+  ],
+  "VN|CONFIRM|ROUTE|none|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|none|core|u1|ROUTE_NOT_CORROBORATED": [
+   2,
+   4
+  ],
+  "VN|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
+   0,
+   2
+  ],
+  "VN|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|area+postcode|core|u1|MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "VN|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   0,
+   3
+  ],
+  "VN|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH": [
+   0,
+   2
+  ],
+  "VN|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|postcode|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|postcode|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "VN|CONFIRM|ROUTE|postcode|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   2
+  ],
+  "C|CONFIRM|ROUTE|postcode|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   2
+  ],
+  "VN|CONFIRM|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH": [
+   1,
+   2
+  ],
+  "VN|CONFIRM|ROUTE|area+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|postcode|core|u1|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "VN|CONFIRM|PREMISE_PROXIMITY|building+postcode|exact|u1|AREA_STREET_MISMATCH+BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|building+postcode|exact|u1|AREA_STREET_MISMATCH+BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH": [
+   1,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|area|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "VN|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   65,
+   71
+  ],
+  "PH|ACCEPT|PREMISE_PROXIMITY|none|code|-|LOCATED_BY_COORDINATES": [
+   1,
+   1
+  ],
+  "C|ACCEPT|PREMISE_PROXIMITY|none|code|-|LOCATED_BY_COORDINATES": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
+   19,
+   24
+  ],
+  "PH|ACCEPT|ROUTE|area+postcode|exact|u1|-": [
+   94,
+   107
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|exact|uN|MISSING_PREMISE": [
+   21,
+   26
+  ],
+  "PH|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
+   4,
+   8
+  ],
+  "PH|FIX|LOCALITY|-": [
+   42,
+   65
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   4,
+   4
+  ],
+  "PH|ACCEPT|PREMISE_PROXIMITY|area+building+postcode|exact|u1|-": [
+   10,
+   11
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
+   21,
+   23
+  ],
+  "PH|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
+   10,
+   27
+  ],
+  "PH|CONFIRM|PREMISE_PROXIMITY|building+postcode|exact|u1|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   10
+  ],
+  "PH|CONFIRM|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH": [
+   0,
+   2
+  ],
+  "PH|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   0,
+   4
+  ],
+  "PH|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "PH|CONFIRM|ROUTE|postcode|core|u1|ROUTE_NOT_CORROBORATED": [
+   7,
+   7
+  ],
+  "PH|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH": [
+   0,
+   2
+  ],
+  "PH|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   4
+  ],
+  "PH|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   3,
+   5
+  ],
+  "PH|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "PH|CONFIRM|ROUTE|area|exact|uN|MISSING_PREMISE": [
+   6,
+   7
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH": [
+   3,
+   3
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|core|u1|MISSING_PREMISE": [
+   3,
+   4
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   9,
+   10
+  ],
+  "PH|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "PH|ACCEPT|ROUTE|area+postcode|core|u1|-": [
+   20,
+   20
+  ],
+  "PH|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "PH|ACCEPT|PREMISE_PROXIMITY|area+building+postcode|exact|uN|-": [
+   4,
+   5
+  ],
+  "PH|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   2,
+   2
+  ],
+  "PH|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   4
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   5
+  ],
+  "PH|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "PH|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
+   4,
+   6
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   10,
+   10
+  ],
+  "PH|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH": [
+   0,
+   4
+  ],
+  "PH|CONFIRM|ROUTE|area|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   2
+  ],
+  "C|CONFIRM|ROUTE|area|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   2
+  ],
+  "PH|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "PH|CONFIRM|ROUTE|area|core|uN|ROUTE_NOT_CORROBORATED": [
+   2,
+   4
+  ],
+  "PH|ACCEPT|PREMISE_PROXIMITY|area+building|exact|uN|-": [
+   1,
+   1
+  ],
+  "C|ACCEPT|PREMISE_PROXIMITY|area+building|exact|uN|-": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   3
+  ],
+  "PH|CONFIRM|ROUTE|area|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   2
+  ],
+  "PH|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
+   11,
+   13
+  ],
+  "PH|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   6,
+   6
+  ],
+  "PH|CONFIRM|ROUTE|area|core|u1|ROUTE_NOT_CORROBORATED": [
+   4,
+   5
+  ],
+  "PH|CONFIRM|ROUTE|postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   6,
+   6
+  ],
+  "PH|CONFIRM|ROUTE|postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area|core|uN|MISSING_PREMISE": [
+   1,
+   2
+  ],
+  "PH|ACCEPT|PREMISE_PROXIMITY|building+postcode|exact|u1|-": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|none|core|u1|ROUTE_NOT_CORROBORATED": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "PH|ACCEPT|PREMISE_PROXIMITY|area+building+postcode|core|u1|-": [
+   1,
+   2
+  ],
+  "PH|CONFIRM|ROUTE|area|core|uN|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|partial|u1|STREET_PARTIAL_MATCH+BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|partial|u1|STREET_PARTIAL_MATCH+BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH": [
+   0,
+   2
+  ],
+  "PH|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH": [
+   0,
+   5
+  ],
+  "PH|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|exact|u1|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "C|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   2
+  ],
+  "PH|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|exact|uN|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|exact|uN|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "PH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|none|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   3
+  ],
+  "PH|CONFIRM|PREMISE_PROXIMITY|area+building|exact|uN|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+building|exact|uN|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "PH|ACCEPT|PREMISE_PROXIMITY|area+building|exact|u1|-": [
+   3,
+   3
+  ],
+  "PH|CONFIRM|ROUTE|area|core|uN|POSTCODE_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|core|uN|MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|PREMISE_PROXIMITY|area+building|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+building|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|postcode|core|u1|MISSING_PREMISE": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   1,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|partial|uN|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|partial|uN|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   2
+  ],
+  "C|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   2
+  ],
+  "PH|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|ROUTE|area|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|PREMISE_PROXIMITY|area+building|exact|u1|POSTCODE_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+building|exact|u1|POSTCODE_STREET_MISMATCH": [
+   1,
+   1
+  ]
+ }
+}
