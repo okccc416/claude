@@ -59,8 +59,15 @@ python -m avmvp.server            # http://127.0.0.1:8080/  演示页面（可�
 | 接口 | 说明 |
 |---|---|
 | `POST /v1/address:validate` | 请求体与 Google AV 相同：`{"address": {"regionCode": "AE", "addressLines": ["…"], "locality": "…", "postalCode": "…"}, "strictness": "BALANCED"}`；`regionCode` 决定用哪个市场的引擎，缺省为 SG |
+| `POST /v1/address:batchValidate` | 批量：`{"requests": [与单条相同的请求体, …]}`，最多 1,000 条，单条出错只影响该条（Google AV 没有原生批量接口，Loqate 有） |
 | `GET /v1/markets` | 开放的市场、类别（A / B / C）、覆盖城市、参考数据是否已构建 / 已加载 |
 | `GET /healthz` | 健康检查 |
+
+完整接口说明见 [openapi.yaml](openapi.yaml)（OpenAPI 3，可直接导入 Postman / Swagger 生成调用代码）。
+
+**离线批量清洗**（主数据清洗、历史订单回扫）：`python scripts/batch_validate.py input.csv output.csv --region AE --column address`，在原表后追加结论、粒度、标准化地址、坐标、原因码和候选；离线场景可以接受本地小模型的延迟（`--intl-llm`）。
+
+**部署**：[`mvp/Dockerfile`](../mvp/Dockerfile)。参考数据不打进镜像、运行时挂载（`docker run -p 8080:8080 -v $PWD/data:/app/data address-validation`），数据更新不用重新发版；`--build-arg WITH_LLM=1` 构建带本地小模型的镜像。镜像约 660 MB，已在本机用真实参考数据验证。
 
 响应字段与新加坡引擎一致（`verdict.possibleNextAction / validationGranularity / reasons`、`address.formattedAddress / addressComponents / missingComponentTypes`、`geocode.location / plusCode`、`nonAddressInfo`、`candidates`），多市场引擎另有：
 - `result.codes`：从输入里识别出的地址编码（Plus Code、迪拜 Makani 10 位号码、沙特国家地址短码）

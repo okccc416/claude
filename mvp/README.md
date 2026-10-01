@@ -73,6 +73,18 @@ python scripts/evaluate_markets.py --markets PH --parsers hybrid,hybrid+llm --n 
   --llm-model data/models/Qwen3-4B-Instruct-2507-Q4_K_M.gguf   # 对比评测（模型输出缓存在 data/models/）
 ```
 
+批量与部署：
+
+```bash
+curl -s -X POST http://127.0.0.1:8080/v1/address:batchValidate -H 'Content-Type: application/json' \
+  -d '{"requests":[{"address":{"regionCode":"DE","addressLines":["Invalidenstr. 117, 10115 Berlin"]}},
+                   {"address":{"regionCode":"SG","addressLines":["10 Bayfront Ave 018956"]}}]}'
+python scripts/batch_validate.py input.csv output.csv --region AE --column address   # CSV 批量清洗
+docker build -t address-validation . && docker run -p 8080:8080 -v $PWD/data:/app/data address-validation
+```
+
+接口说明（OpenAPI 3）：[docs/openapi.yaml](../docs/openapi.yaml)。
+
 接口的 `verdict.confidence` 为贝叶斯置信度：规则结论所属类别在带标注数据里的实际正确率（服务器默认加载 `models/confidence_sg.json`）。
 
 可选：本地小模型兜底（如 Qwen，见 [08 文档](../docs/08-ai-local-model.md)）：
@@ -150,7 +162,9 @@ mvp/
 │       ├── llm.py          本地小模型解析器（llama.cpp / OpenAI 兼容接口）+ 防编造 + 输出缓存
 │       ├── pluscode.py     Plus Code 解码（含短码按城市补齐）
 │       └── fuzzy.py        三元组倒排索引 + 容错检索
+├── Dockerfile          服务镜像（参考数据运行时挂载；可选带本地小模型）
 ├── scripts/
+│   ├── batch_validate.py   CSV 批量清洗
 │   ├── fetch_data.py       下载并构建参考库
 │   ├── make_golden_set.py  按错误类别生成评测集
 │   ├── evaluate.py         评测 + 消融 + 严格度 + 数据时效实验
