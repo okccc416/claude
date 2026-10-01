@@ -1,0 +1,7 @@
+data/
+reports/
+labeled/
+tests/
+.venv/
+**/__pycache__/
+*.pyc

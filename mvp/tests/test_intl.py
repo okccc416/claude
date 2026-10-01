@@ -321,6 +321,28 @@ def test_llm_cascade_only_when_rules_fail_and_is_capped(ae):
     assert ok.action == ACCEPT and eng.llm.calls == calls  # 规则已经直接通过：不调用模型
 
 
+# ---------------------------------------------------------------------------------------------- 批量清洗
+def test_batch_csv_script(au, tmp_path):
+    import csv
+    import os
+    import subprocess
+    import sys
+
+    src = tmp_path / "in.csv"
+    src.write_text("id,address\n1,\"100 Crown St, Surry Hills NSW 2010\"\n2,\"999 Crown St, Surry Hills 2010\"\n3,\n",
+                   encoding="utf-8")
+    out = tmp_path / "out.csv"
+    root = Path(__file__).resolve().parents[1]
+    env = {**os.environ, "AV_MARKETS_DIR": str(au.ref.dir.parent)}
+    subprocess.run([sys.executable, str(root / "scripts" / "batch_validate.py"), str(src), str(out), "--region", "AU",
+                    "--parser", "rules"], check=True, env=env, capture_output=True)
+    rows = list(csv.DictReader(open(out, encoding="utf-8")))
+    assert [r["id"] for r in rows] == ["1", "2", "3"]  # 原有列保留
+    assert rows[0]["av_action"] == ACCEPT and rows[0]["av_granularity"] == "PREMISE" and rows[0]["av_lat"]
+    assert rows[1]["av_action"] == FIX and "PREMISE_NOT_FOUND" in rows[1]["av_reasons"]
+    assert rows[2]["av_error"]  # 空地址：记录原因，不中断
+
+
 # ---------------------------------------------------------------------------------------------- 服务
 def test_router_and_http(au, monkeypatch):
     from avmvp import router as router_mod
@@ -342,6 +364,14 @@ def test_router_and_http(au, monkeypatch):
         assert out["result"]["metadata"]["regionCode"] == "AU"
         markets = json.loads(urlopen(f"{base}/v1/markets").read())["markets"]
         assert {"code": "DE", "available": False} .items() <= next(m for m in markets if m["code"] == "DE").items()
+        batch = json.dumps({"requests": [
+            {"address": {"regionCode": "AU", "addressLines": ["100 Crown St, Surry Hills NSW 2010"]}},
+            {"address": {"regionCode": "JP", "addressLines": ["1-1 Chiyoda"]}}]}).encode()
+        out = json.loads(urlopen(Request(f"{base}/v1/address:batchValidate", batch,
+                                         {"Content-Type": "application/json"})).read())
+        assert len(out["responses"]) == 2  # 单条出错不影响其他条
+        assert out["responses"][0]["result"]["verdict"]["possibleNextAction"] == ACCEPT
+        assert "JP" in out["responses"][1]["error"]
         bad = json.dumps({"address": {"regionCode": "JP", "addressLines": ["1-1 Chiyoda"]}}).encode()
         with pytest.raises(Exception) as e:
             urlopen(Request(f"{base}/v1/address:validate", bad, {"Content-Type": "application/json"}))

@@ -1,0 +1,206 @@
+openapi: 3.0.3
+info:
+  title: Address Validation API
+  version: "0.3"
+  description: |
+    地址校验服务（对应 mvp/avmvp/server.py）。请求结构与 Google Address Validation API 相同，响应在 Google 字段之外
+    增加了原因码、候选地址、非地址信息、地址编码等扩展字段。
+
+    - 新加坡（SG）：专用引擎，逐门牌验真，带贝叶斯置信度（docs/07、09）
+    - 澳洲、德国、法国、荷兰（A 类）：官方地址表逐门牌验真
+    - 阿联酋、沙特（B 类）、马来西亚、印尼、泰国、越南、菲律宾（C 类）：道路 / 楼宇 / 片区验真（docs/13）
+servers:
+  - url: http://127.0.0.1:8080
+paths:
+  /v1/address:validate:
+    post:
+      summary: 校验一个地址
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/ValidateRequest" }
+            examples:
+              dubai:
+                value:
+                  address: { regionCode: AE, addressLines: ["Latifa Tower, Ground Floor - Sheikh Zayed Rd"], locality: Dubai }
+              sydney:
+                value:
+                  address: { regionCode: AU, addressLines: ["Unit 2/360 Lonsdale St"], locality: Melbourne, postalCode: "3000" }
+                  strictness: BALANCED
+      responses:
+        "200":
+          description: 校验结果
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/ValidateResponse" }
+        "400":
+          description: 请求不合法，或不支持的 regionCode
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+  /v1/address:batchValidate:
+    post:
+      summary: 批量校验（最多 1,000 条；单条出错只影响该条）
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [requests]
+              properties:
+                requests:
+                  type: array
+                  minItems: 1
+                  maxItems: 1000
+                  items: { $ref: "#/components/schemas/ValidateRequest" }
+      responses:
+        "200":
+          description: 与 requests 一一对应
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responses:
+                    type: array
+                    items:
+                      oneOf:
+                        - { $ref: "#/components/schemas/ValidateResponse" }
+                        - { $ref: "#/components/schemas/Error" }
+                  serverTimeMs: { type: number }
+        "400":
+          description: requests 缺失、为空或超过 1,000 条
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+  /v1/markets:
+    get:
+      summary: 开放的市场及参考数据状态
+      responses:
+        "200":
+          description: 市场列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  markets:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        code: { type: string, example: AE }
+                        name: { type: string, example: 阿联酋 }
+                        cls: { type: string, enum: [A, B, C] }
+                        cities: { type: array, items: { type: string } }
+                        available: { type: boolean, description: 参考数据是否已构建 }
+                        loaded: { type: boolean, description: 引擎是否已加载到内存 }
+  /healthz:
+    get:
+      summary: 健康检查
+      responses:
+        "200": { description: ok }
+components:
+  schemas:
+    ValidateRequest:
+      type: object
+      properties:
+        address:
+          type: object
+          properties:
+            regionCode: { type: string, description: "SG / AU / DE / FR / NL / AE / SA / MY / ID / TH / VN / PH；缺省 SG" }
+            addressLines: { type: array, items: { type: string } }
+            locality: { type: string }
+            administrativeArea: { type: string }
+            postalCode: { type: string }
+        text: { type: string, description: 也可以直接传一整段地址文字（代替 address.addressLines） }
+        strictness:
+          type: string
+          enum: [STRICT, BALANCED, LENIENT]
+          default: BALANCED
+          description: STRICT 更多要求确认；LENIENT 更多直接通过
+    ValidateResponse:
+      type: object
+      properties:
+        responseId: { type: string }
+        serverTimeMs: { type: number }
+        result:
+          type: object
+          properties:
+            verdict:
+              type: object
+              properties:
+                possibleNextAction:
+                  type: string
+                  enum: [ACCEPT, CONFIRM, FIX, CONFIRM_ADD_SUBPREMISES]
+                  description: ACCEPT 直接通过；CONFIRM 请用户确认（给出候选）；FIX 请用户修改；CONFIRM_ADD_SUBPREMISES 地址对但缺单元号
+                validationGranularity:
+                  type: string
+                  enum: [SUB_PREMISE, PREMISE, PREMISE_PROXIMITY, ROUTE, LOCALITY, OTHER]
+                geocodeGranularity: { type: string }
+                addressComplete: { type: boolean }
+                hasUnconfirmedComponents: { type: boolean }
+                hasInferredComponents: { type: boolean }
+                hasReplacedComponents: { type: boolean }
+                hasSpellCorrectedComponents: { type: boolean }
+                confidence: { type: number, description: 仅新加坡：结论的贝叶斯置信度（同类结论在标注数据上的实际正确率） }
+                reasons:
+                  type: array
+                  description: 原因码，如 STREET_SPELL_CORRECTED、POSTCODE_REPLACED、AMBIGUOUS_MULTIPLE_CANDIDATES、ROUTE_NOT_CORROBORATED、LOCATED_BY_PLUS_CODE、LLM_UNVERIFIED
+                  items:
+                    type: object
+                    properties:
+                      code: { type: string }
+                      message: { type: string }
+            address:
+              type: object
+              properties:
+                formattedAddress: { type: string }
+                addressComponents:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      componentType: { type: string, example: route }
+                      componentName: { type: object, properties: { text: { type: string } } }
+                      confirmationLevel:
+                        type: string
+                        enum: [CONFIRMED, UNCONFIRMED_BUT_PLAUSIBLE, UNCONFIRMED_AND_SUSPICIOUS]
+                      inferred: { type: boolean }
+                      replaced: { type: boolean }
+                      spellCorrected: { type: boolean }
+                missingComponentTypes: { type: array, items: { type: string } }
+            geocode:
+              type: object
+              nullable: true
+              properties:
+                location: { type: object, properties: { latitude: { type: number }, longitude: { type: number } } }
+                plusCode: { type: object, properties: { globalCode: { type: string } } }
+            nonAddressInfo:
+              type: object
+              nullable: true
+              description: 从输入里分离出来的电话、邮箱、网址、邮政信箱、收件人、备注等
+            codes:
+              type: object
+              nullable: true
+              description: 识别出的地址编码：plus_code、makani（迪拜）、short_address（沙特）、latlng
+            candidates:
+              type: array
+              description: 结论不是 ACCEPT 时的候选地址
+              items:
+                type: object
+                properties:
+                  formattedAddress: { type: string }
+                  location: { type: object, properties: { latitude: { type: number }, longitude: { type: number } } }
+            metadata:
+              type: object
+              properties:
+                regionCode: { type: string }
+                marketClass: { type: string, enum: [A, B, C] }
+                parser: { type: string, description: "rules / crf / hybrid / hybrid+llm" }
+    Error:
+      type: object
+      properties:
+        error: { type: string }

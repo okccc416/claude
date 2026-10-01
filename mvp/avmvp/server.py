@@ -1,4 +1,5 @@
-"""本地 HTTP 服务：POST /v1/address:validate（请求结构对齐 Google AV），GET /v1/markets 市场列表，GET / 演示页面。
+"""本地 HTTP 服务：POST /v1/address:validate（请求结构对齐 Google AV）、POST /v1/address:batchValidate（批量），
+GET /v1/markets 市场列表，GET / 演示页面。接口说明见 docs/openapi.yaml。
 
 按请求里的 address.regionCode 分给对应市场的引擎（见 router.py）：SG 用新加坡专用引擎，
 AU / DE / FR / NL / AE / SA / MY / ID / TH / VN / PH 用多市场引擎。
@@ -145,30 +146,60 @@ def make_handler(router: MarketRouter):
                 self._json(404, {"error": "not found"})
 
         def do_POST(self):  # noqa: N802
-            if self.path != "/v1/address:validate":
+            if self.path not in ("/v1/address:validate", "/v1/address:batchValidate"):
                 return self._json(404, {"error": "not found"})
             try:
                 body = json.loads(self.rfile.read(int(self.headers.get("Content-Length", 0))) or b"{}")
-                address = body.get("address") or {}
-                text = body.get("text") or ", ".join(x for x in [
-                    *address.get("addressLines", []), address.get("locality", ""),
-                    address.get("administrativeArea", ""), address.get("postalCode", "")] if x).strip(", ")
-                region = (address.get("regionCode") or body.get("regionCode") or "SG").upper()
-                strictness = (body.get("strictness") or "BALANCED").upper()
-                if not text or strictness not in ("STRICT", "BALANCED", "LENIENT"):
-                    raise ValueError("需要 address.addressLines（或 text），strictness 取 STRICT/BALANCED/LENIENT")
-                router.engine(region)  # 第一次请求某个市场时加载参考数据，不计入耗时
-                t = time.perf_counter()
-                out = router.validate(region, text, strictness)
-            except (ValueError, json.JSONDecodeError) as e:  # UnsupportedRegion 也是 ValueError
-                return self._json(400, {"error": str(e)})
-            out["serverTimeMs"] = round((time.perf_counter() - t) * 1000, 2)
-            self._json(200, out)
+            except (ValueError, json.JSONDecodeError) as e:
+                return self._json(400, {"error": f"请求体不是合法 JSON：{e}"})
+            if self.path == "/v1/address:validate":
+                try:
+                    out = validate_one(router, body)
+                except ValueError as e:  # UnsupportedRegion 也是 ValueError
+                    return self._json(400, {"error": str(e)})
+                return self._json(200, out)
+            # 批量：{"requests": [与单条相同的请求体, ...]}，最多 MAX_BATCH 条；单条出错不影响其他条
+            reqs = body.get("requests")
+            if not isinstance(reqs, list) or not reqs or len(reqs) > MAX_BATCH:
+                return self._json(400, {"error": f"需要 requests 数组，1–{MAX_BATCH} 条"})
+            t = time.perf_counter()
+            responses = []
+            for r in reqs:
+                try:
+                    responses.append(validate_one(router, r if isinstance(r, dict) else {}))
+                except ValueError as e:
+                    responses.append({"error": str(e)})
+            self._json(200, {"responses": responses, "serverTimeMs": round((time.perf_counter() - t) * 1000, 2)})
 
         def log_message(self, fmt, *args):
             pass
 
     return Handler
+
+
+MAX_BATCH = 1000
+
+
+def request_text(body: dict) -> tuple[str, str, str]:
+    """请求体（与 Google AV 相同）-> (国家 / 地区代码, 地址文字, 严格度)。"""
+    address = body.get("address") or {}
+    text = body.get("text") or ", ".join(x for x in [
+        *address.get("addressLines", []), address.get("locality", ""),
+        address.get("administrativeArea", ""), address.get("postalCode", "")] if x).strip(", ")
+    region = (address.get("regionCode") or body.get("regionCode") or "SG").upper()
+    strictness = (body.get("strictness") or "BALANCED").upper()
+    if not text or strictness not in ("STRICT", "BALANCED", "LENIENT"):
+        raise ValueError("需要 address.addressLines（或 text），strictness 取 STRICT/BALANCED/LENIENT")
+    return region, text, strictness
+
+
+def validate_one(router: MarketRouter, body: dict) -> dict:
+    region, text, strictness = request_text(body)
+    router.engine(region)  # 第一次请求某个市场时加载参考数据，不计入耗时
+    t = time.perf_counter()
+    out = router.validate(region, text, strictness)
+    out["serverTimeMs"] = round((time.perf_counter() - t) * 1000, 2)
+    return out
 
 
 def sg_factory(args) -> Callable[[], object]:

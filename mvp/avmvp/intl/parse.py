@@ -12,7 +12,7 @@ import re
 from dataclasses import dataclass, field
 
 from .markets import MARKETS
-from .reference import MarketReference
+from .reference import BUILDING_WORDS, MarketReference
 from .text import TYPE_WORDS, core_key, fold, key, merge_initials, script_of, skeleton, tokenize
 
 PHONE = re.compile(r"(?:\+|00)\d{1,3}[\s\-]?\(?\d{1,4}\)?(?:[\s\-]?\d{2,4}){2,4}|(?<![\d/])0\d{8,10}(?![\d/])|"
@@ -152,6 +152,20 @@ class RuleParser:
         if self._thai:
             self._thai_nospace(p, exp)
         if self._arabic:
+            weak = [sp for sp in p.streets if sp.how in ("core", "partial") and sp.end - sp.start <= 1]
+            if p.streets and len(weak) == len(p.streets):
+                # 只匹配上一个词（Prince Ahmad Bin Abdulaziz St -> "Ahmad"）：放开这些词，看转写能否匹配上更长的名称
+                saved = p.streets
+                for sp in weak:
+                    used[sp.start:sp.end] = [False] * (sp.end - sp.start)
+                p.streets = []
+                self._translit(p, used, seps, "street")
+                if not p.streets or max(sp.end - sp.start for sp in p.streets) < 2:
+                    for sp in p.streets:
+                        used[sp.start:sp.end] = [False] * (sp.end - sp.start)
+                    p.streets = saved
+                    for sp in saved:
+                        used[sp.start:sp.end] = [True] * (sp.end - sp.start)
             self._translit(p, used, seps, "street")
             self._translit(p, used, seps, "area")
         if not p.streets:
@@ -386,8 +400,9 @@ class RuleParser:
         taken = {s.text for s in p.streets + p.areas}
         for seg in re.split(r"[,\n;|]+|\s-\s", text):
             k = key(seg, self.ref.market)
-            if any(t and t in k for t in taken):
-                continue  # 已认成道路 / 片区的片段
+            inside = [sp for sp in p.streets if sp.text and sp.text in k and sp.how != "exact"]
+            if any(t and t in k for t in taken) and not (inside and BUILDING_WORDS.search(seg)):
+                continue  # 已认成道路 / 片区的片段（但 "Mall of Emirates" 这种带楼宇词的片段仍要找楼名）
             words = [w for w in k.split() if not HOUSE_NO.match(w)]
             cand = " ".join(words)
             if len(cand) < 6 or len(words) > 8 or all(w in GENERIC_WORDS or w in UNIT_WORDS for w in words):
@@ -397,6 +412,8 @@ class RuleParser:
                 if len(ids) <= 20:
                     p.buildings.append(Span(hit, -1, -1, ids, score, "exact" if score == 100 else "fuzzy"))
                     found = True
+            if found:  # 楼名里的词被当成了道路（Mall of Emirates -> Emirates Street）：去掉这些道路候选
+                p.streets = [sp for sp in p.streets if sp not in inside]
             if not found and hasattr(self.ref.poi_fuzzy, "pos"):  # 片段里嵌着楼名：Riyadh Park-inside Debenhams
                 for size in range(min(5, len(words) - 1), 1, -1):
                     hits = [(" ".join(words[i:i + size]), self.ref.poi_fuzzy.get(" ".join(words[i:i + size])))

@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import hashlib
 import math
+import os
 import pickle
 import re
 import sqlite3
@@ -25,7 +26,7 @@ from .fuzzy import FuzzyIndex
 from .text import MARKET_LANG, core_key, key, skeleton
 
 ROOT = Path(__file__).resolve().parents[2]
-DATA = ROOT / "data" / "markets"
+DATA = Path(os.environ.get("AV_MARKETS_DIR") or ROOT / "data" / "markets")  # 部署时可指定参考数据目录
 _RT_RW = re.compile(r"^(RT|RW)\s?\d+$")
 # 可以当"楼宇"引用的 POI：商场、酒店、医院、学校、车站、公寓等（普通商户不算，很多商户直接以街道命名）
 BUILDING_CATS = {"shopping_mall", "hotel", "hospital", "specialty_hospital", "college_university", "campus_building",
@@ -307,10 +308,14 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
         st = ref.streets[sid]
         st.areas.extend(a for a in arr if a not in st.areas)
     arabic = MARKET_LANG.get(market) == "AR"
+    initials = market in INITIALS_MARKETS
     for s in ref.streets:
         for nm in s.names:
             if key(nm, market):
                 ref.street_keys[key(nm, market)].add(s.id)
+            if initials:  # 人名道路的缩写别名：JALAN MOHAMMAD HUSNI THAMRIN -> JALAN MH THAMRIN
+                for alias in initial_aliases(key(nm, market), market):
+                    ref.street_keys[alias].add(s.id)
             if core_key(nm, market):
                 ref.street_core[core_key(nm, market)].add(s.id)
             if arabic and _is_arabic(nm) and len(skeleton(nm)) >= 3:  # 只收阿拉伯文名称：拉丁名称走容错检索
@@ -360,6 +365,24 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
     ref.poi_fuzzy = FuzzyIndex(poi_keys)
     ref.save()
     return ref
+
+
+INITIALS_MARKETS = {"ID", "MY", "PH"}  # 道路多以人名命名、人名常写成缩写（M.H. Thamrin、K.H. Mas Mansyur）
+
+
+def initial_aliases(k: str, market: str) -> list[str]:
+    """把名称中间连续 2–3 个人名词换成首字母（最后一个词保留）：HAJI RANGKAYO RASUNA SAID -> HR RASUNA SAID。"""
+    from .text import TYPE_WORDS
+    types = TYPE_WORDS.get(MARKET_LANG.get(market, "EN"), set())
+    toks = k.split()
+    out = []
+    for size in (2, 3):
+        for i in range(len(toks) - size):  # 不含最后一个词
+            run = toks[i:i + size]
+            if any(t in types or not t.isalpha() or len(t) < 2 for t in run):
+                continue
+            out.append(" ".join(toks[:i] + ["".join(t[0] for t in run)] + toks[i + size:]))
+    return out
 
 
 def _is_arabic(text: str) -> bool:
