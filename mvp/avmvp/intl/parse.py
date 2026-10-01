@@ -26,7 +26,8 @@ PO_BOX = re.compile(r"(?:\bP\.?\s?O\.?\s?BOX|\bPOB|\bPOSTBUS|\bPOSTFACH|\bBOITE 
 # 单独出现时不能当楼名 / 转写道路名的通用词
 GENERIC_WORDS = {"OFFICE", "SHOP", "BUILDING", "TOWER", "TOWERS", "MALL", "CENTER", "CENTRE", "HOTEL", "FLOOR",
                  "GROUND", "LEVEL", "SUITE", "UNIT", "STORE", "PLAZA", "MARKET", "SHOPPING", "COMMERCIAL",
-                 "INDUSTRIAL", "AREA", "CITY", "COMPLEX", "RESIDENCE", "APARTMENTS", "VILLA", "WAREHOUSE"}
+                 "INDUSTRIAL", "AREA", "CITY", "COMPLEX", "RESIDENCE", "APARTMENTS", "VILLA", "WAREHOUSE", "THE",
+                 "BUSINESS", "BOULEVARD", "CORNER"}
 UNIT_WORDS = {"UNIT", "APARTMENT", "SUITE", "SHOP", "FLAT", "LEVEL", "FLOOR", "LANTAI", "TANG", "ชั้น", "ห้อง",
               "الطابق", "شقه", "مكتب", "LOT", "ROOM", "KIOSK", "STALL", "OFFICE", "TOWER", "BLOCK", "BLOK"}
 NUMBER_MARKERS = {"NO", "NOMOR", "NUMBER", "BLK", "#", "رقم", "مبني", "SỐ", "SO", "เลขที่", "VILLA", "فيلا"}
@@ -456,8 +457,9 @@ class RuleParser:
 
 
 def generic_name(name: str) -> bool:
-    """只由通用词和数字组成的楼名（Building 9、Tower 2）：不能当楼名证据。"""
-    return all(w in GENERIC_WORDS or w in UNIT_WORDS or w.isdigit() or len(w) == 1 for w in name.split())
+    """只由通用词和编号组成的楼名（Building 9、Tower A4、Business Center）：不能当楼名证据。"""
+    return all(w in GENERIC_WORDS or w in UNIT_WORDS or w.isdigit() or len(w) == 1
+               or (len(w) <= 3 and any(ch.isdigit() for ch in w)) for w in name.split())  # A4、B2 这类编号
 
 
 def tokenize_seps(text: str) -> list[bool]:

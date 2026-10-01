@@ -321,6 +321,22 @@ def test_llm_cascade_only_when_rules_fail_and_is_capped(ae):
     assert ok.action == ACCEPT and eng.llm.calls == calls  # 规则已经直接通过：不调用模型
 
 
+# ---------------------------------------------------------------------------------------------- 置信度
+def test_confidence_is_calibrated_and_shrinks(au):
+    from avmvp.intl.confidence import IntlConfidence, signatures
+
+    r_ok = au.validate("100 Crown Street, Surry Hills NSW 2010")
+    r_fix = au.validate("999 Crown Street, Surry Hills NSW 2010")
+    s_ok, s_fix = signatures(r_ok, "AU", "A"), signatures(r_fix, "AU", "A")
+    assert s_ok[0].startswith("AU|ACCEPT|PREMISE|") and s_ok[-1] == "ACCEPT|PREMISE"
+    model = IntlConfidence().fit([(s_ok, True)] * 90 + [(s_ok, False)] * 10 + [(s_fix, False)] * 3)
+    assert abs(model.confidence(r_ok, "AU", "A") - 0.9) < 0.02  # 样本多：接近实际比例 90/100
+    rare = model.from_signatures(["XX|ACCEPT|PREMISE|z", "A|ACCEPT|PREMISE|z", "A|ACCEPT|PREMISE", "ACCEPT|PREMISE"])
+    assert 0.85 < rare < 0.95  # 没见过的细类：退回到粗一级的估计
+    out = Engine("AU", "rules", au.ref, confidence=model).to_response(r_ok)
+    assert 0 < out["result"]["verdict"]["confidence"] <= 1 and "100" in out["result"]["verdict"]["confidenceNote"]
+
+
 # ---------------------------------------------------------------------------------------------- 批量清洗
 def test_batch_csv_script(au, tmp_path):
     import csv

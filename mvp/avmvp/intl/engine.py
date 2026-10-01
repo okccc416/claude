@@ -100,9 +100,11 @@ class Engine:
     """parser：rules / crf / hybrid（规则 + 机器学习都出候选）/ llm（只用本地小模型）。
     llm：可选的本地小模型客户端（见 llm.py）。给了它，hybrid 在没有直接通过时再请模型拆一次字段（级联）。"""
 
-    def __init__(self, market: str, parser: str = "rules", ref: MarketReference | None = None, llm=None):
+    def __init__(self, market: str, parser: str = "rules", ref: MarketReference | None = None, llm=None,
+                 confidence=None):
         self.market = market
         self.m = MARKETS[market]
+        self.conf_model = confidence  # 可选：IntlConfidence（校准过的置信度，见 confidence.py）
         self.ref = ref or MarketReference.load(market)
         self.rules = RuleParser(self.ref)
         self.crf = None
@@ -236,13 +238,17 @@ class Engine:
                 hyps.append(h)
         return sorted(hyps, key=lambda h: -h.score)
 
-    @staticmethod
-    def _building_notes(h: Hypothesis, b: Span, p: Parsed) -> None:
-        """楼名靠纠错才对上（FMC -> NMC Medical Center），或只是参照物（Behind / Opposite Mall of Emirates）：不能直接通过。"""
+    def _building_notes(self, h: Hypothesis, b: Span, p: Parsed) -> None:
+        """楼名靠纠错才对上（FMC -> NMC Medical Center）、只是参照物（Behind Mall of Emirates）、
+        或同名楼宇分布在相距 1 公里以上的多处（迪拜的 Galleria Mall、The Boulevard）：靠楼宇定位时不能直接通过。"""
         if b.score < 97:
             h.notes.append("BUILDING_SPELL_CORRECTED")
         if LANDMARK.search(fold(p.raw)):
             h.notes.append("LANDMARK_RELATIVE")
+        if len(b.ids) > 1:
+            pts = [self.ref.poi(i) for i in b.ids[:10]]
+            if any(haversine(a["lat"], a["lng"], c["lat"], c["lng"]) > 1000 for a in pts for c in pts):
+                h.notes.append("BUILDING_NAME_AMBIGUOUS")
 
     def _plus_code(self, p: Parsed) -> tuple[float, float, float] | None:
         if "latlng" in p.codes:  # 直接贴的坐标：与 Plus Code 同样处理
@@ -416,8 +422,8 @@ class Engine:
     def _action(self, p: Parsed, best: Hypothesis, gran: str, ambiguous: bool, reasons: list[str],
                 strictness: str) -> str:
         # 楼名纠错 / 参照物只在"靠楼宇定位"（PREMISE_PROXIMITY）时影响结论；门牌已由官方地址点确认时不影响
-        weak_building = gran == "PREMISE_PROXIMITY" and bool({"BUILDING_SPELL_CORRECTED", "LANDMARK_RELATIVE"}
-                                                            & set(best.notes))
+        weak_building = gran == "PREMISE_PROXIMITY" and bool(
+            {"BUILDING_SPELL_CORRECTED", "LANDMARK_RELATIVE", "BUILDING_NAME_AMBIGUOUS"} & set(best.notes))
         corrected = weak_building or any(n in best.notes for n in (
             "STREET_SPELL_CORRECTED", "STREET_PARTIAL_MATCH", "POSTCODE_REPLACED", "POSTCODE_NOT_FOUND",
             "POSTCODE_STREET_MISMATCH", "AREA_STREET_MISMATCH", "STREET_INFERRED"))
@@ -518,6 +524,9 @@ class Engine:
         levels = [c["confirmationLevel"] for c in comps]
         return {"responseId": str(uuid.uuid4()), "result": {
             "verdict": {"possibleNextAction": res.action, "validationGranularity": res.granularity,
+                        **({"confidence": round(self.conf_model.confidence(res, self.market, self.m.cls), 4),
+                            "confidenceNote": self.conf_model.explain(res, self.market, self.m.cls)}
+                           if self.conf_model is not None and res.lat is not None else {}),
                         "geocodeGranularity": res.granularity,
                         "addressComplete": res.action == ACCEPT,
                         "hasUnconfirmedComponents": any(x != "CONFIRMED" for x in levels) or res.best is None,
@@ -577,6 +586,7 @@ REASON_TEXT = {
     "STREET_PARTIAL_MATCH": "道路名只匹配上一部分（后面还有没认出的词），可能是另一条路",
     "BUILDING_SPELL_CORRECTED": "楼名是纠错后才对上的，需要用户确认",
     "LANDMARK_RELATIVE": "输入用参照物描述位置（在某楼后面 / 对面 / 附近），楼宇只是参照物",
+    "BUILDING_NAME_AMBIGUOUS": "同名楼宇有多处，需要用户确认是哪一处",
     "POSTCODE_NOT_FOUND": "官方地址表里没有这个邮编",
     "POSTCODE_STREET_MISMATCH": "邮编与道路相距很远，互相矛盾",
     "POSTCODE_REPLACED": "邮编与门牌地址不符，已替换为官方邮编",

@@ -45,6 +45,12 @@ class MarketRouter:
         self.parser = parser
         self.llm = LockedLLM(llm) if llm is not None else None  # 可选：本地小模型兜底（多市场共用一个实例）
         self.llm_markets = llm_markets  # 开启兜底的市场（None = 全部）
+        conf_path = ROOT / "models" / "confidence_intl.json"  # 多市场置信度（scripts/fit_intl_confidence.py 生成）
+        if conf_path.exists():
+            from .intl.confidence import IntlConfidence
+            self.confidence = IntlConfidence.load(conf_path)
+        else:
+            self.confidence = None
         self.log = log
         self.codes = [c for c in markets if c == "SG" and sg_factory or c in MARKETS]
         self._engines: dict[str, object] = {}
@@ -87,7 +93,7 @@ class MarketRouter:
                     from .intl.engine import Engine
                     parser = self.parser if (DATA / code / "crf.model").exists() else "rules"
                     use_llm = self.llm if self.llm_markets is None or code in self.llm_markets else None
-                    self._engines[code] = Engine(code, parser, llm=use_llm)
+                    self._engines[code] = Engine(code, parser, llm=use_llm, confidence=self.confidence)
                 self.log(f"已加载 {code} 校验引擎（{time.time() - t:.1f}s）")
         return self._engines[code]
 
