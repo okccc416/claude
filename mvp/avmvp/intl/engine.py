@@ -27,9 +27,12 @@ from .markets import MARKETS
 from .parse import Parsed, RuleParser, Span
 from .pluscode import encode, recover
 from .reference import MarketReference, haversine
-from .text import script_of
+from .text import fold, script_of
 
 ACCEPT, CONFIRM, FIX, ADD_SUB = "ACCEPT", "CONFIRM", "FIX", "CONFIRM_ADD_SUBPREMISES"
+# 参照物描述：说明写的楼不是地址本身（behind / opposite / near …，阿拉伯文 خلف / مقابل / بجانب / قرب）
+LANDMARK = re.compile(r"\b(?:BEHIND|OPPOSITE|OPP|NEAR|NEXT TO|BESIDE|ACROSS|IN FRONT OF|ADJACENT TO|"
+                      r"DEPAN|BELAKANG|SEBELAH|DEKAT|BERHADAPAN|TRUOC|SAU|GAN|KE BEN)\b|خلف|مقابل|بجانب|قرب|امام", re.I)
 BASE = {"exact": 3.0, "core": 2.6, "thai": 2.4, "partial": 2.2, "crf": 2.2, "translit": 2.2}
 
 
@@ -194,6 +197,7 @@ class Engine:
                         h.score += 1.5 if b.score >= 97 else 1.0
                         h.building = poi
                         h.support.add("building")
+                        self._building_notes(h, b, p)
                         break
                 if ref.has_addresses:
                     self._premise(h, p)
@@ -201,6 +205,7 @@ class Engine:
         for b, poi in buildings:  # 只凭楼宇 / POI
             h = Hypothesis(1.5 + (0.8 if b.score >= 97 else 0), building=poi)
             h.notes.append("BUILDING_ONLY")
+            self._building_notes(h, b, p)
             if area_ids and poi["area"] in area_ids:
                 h.score += 1.5
             if pc and haversine(poi["lat"], poi["lng"], pc[0], pc[1]) <= 2000:
@@ -230,6 +235,14 @@ class Engine:
                 h.notes.append("STREET_INFERRED")
                 hyps.append(h)
         return sorted(hyps, key=lambda h: -h.score)
+
+    @staticmethod
+    def _building_notes(h: Hypothesis, b: Span, p: Parsed) -> None:
+        """楼名靠纠错才对上（FMC -> NMC Medical Center），或只是参照物（Behind / Opposite Mall of Emirates）：不能直接通过。"""
+        if b.score < 97:
+            h.notes.append("BUILDING_SPELL_CORRECTED")
+        if LANDMARK.search(fold(p.raw)):
+            h.notes.append("LANDMARK_RELATIVE")
 
     def _plus_code(self, p: Parsed) -> tuple[float, float, float] | None:
         if "latlng" in p.codes:  # 直接贴的坐标：与 Plus Code 同样处理
@@ -402,10 +415,12 @@ class Engine:
 
     def _action(self, p: Parsed, best: Hypothesis, gran: str, ambiguous: bool, reasons: list[str],
                 strictness: str) -> str:
-        corrected = any(n in best.notes for n in ("STREET_SPELL_CORRECTED", "STREET_PARTIAL_MATCH",
-                                                   "POSTCODE_REPLACED", "POSTCODE_NOT_FOUND",
-                                                   "POSTCODE_STREET_MISMATCH", "AREA_STREET_MISMATCH",
-                                                   "STREET_INFERRED"))
+        # 楼名纠错 / 参照物只在"靠楼宇定位"（PREMISE_PROXIMITY）时影响结论；门牌已由官方地址点确认时不影响
+        weak_building = gran == "PREMISE_PROXIMITY" and bool({"BUILDING_SPELL_CORRECTED", "LANDMARK_RELATIVE"}
+                                                            & set(best.notes))
+        corrected = weak_building or any(n in best.notes for n in (
+            "STREET_SPELL_CORRECTED", "STREET_PARTIAL_MATCH", "POSTCODE_REPLACED", "POSTCODE_NOT_FOUND",
+            "POSTCODE_STREET_MISMATCH", "AREA_STREET_MISMATCH", "STREET_INFERRED"))
         if ambiguous:
             reasons.append("AMBIGUOUS_MULTIPLE_CANDIDATES")
             return CONFIRM
@@ -560,6 +575,8 @@ REASON_TEXT = {
     "PLUS_CODE_AREA_MISMATCH": "Plus Code 的位置不在所写片区附近",
     "ROUTE_NOT_CORROBORATED": "只验证到道路：缺少邮编与道路相互印证，或同名道路不止一条，需要用户确认",
     "STREET_PARTIAL_MATCH": "道路名只匹配上一部分（后面还有没认出的词），可能是另一条路",
+    "BUILDING_SPELL_CORRECTED": "楼名是纠错后才对上的，需要用户确认",
+    "LANDMARK_RELATIVE": "输入用参照物描述位置（在某楼后面 / 对面 / 附近），楼宇只是参照物",
     "POSTCODE_NOT_FOUND": "官方地址表里没有这个邮编",
     "POSTCODE_STREET_MISMATCH": "邮编与道路相距很远，互相矛盾",
     "POSTCODE_REPLACED": "邮编与门牌地址不符，已替换为官方邮编",
@@ -577,9 +594,22 @@ REASON_TEXT = {
 def _display(names: list[str], raw: str) -> str:
     """返回与输入同一种文字的名称（输入写英文就给英文名，写阿拉伯文 / 泰文就给当地文字）。"""
     counts = {"arabic": len(re.findall(r"[؀-ۿ]", raw)), "thai": len(re.findall(r"[฀-๿]", raw)),
-              "latin": len(re.findall(r"[A-Za-zÀ-ỹ]", raw))}
+              "latin": len(LATIN.findall(raw))}
     want = max(counts, key=counts.get)  # 混写时按字数多的文字（"Sheikh Zayed Rd, دبي" -> 英文）
-    return next((n for n in names if script_of(n) == want), names[0])
+    return next((n for n in names if _script(n) == want), names[0])
+
+
+def _script(name: str) -> str:
+    """名称的文字：arabic / thai / latin（只含拉丁字母）/ other（马拉雅拉姆文、中文等，不当作拉丁文）。"""
+    if re.search(r"[؀-ۿ]", name):
+        return "arabic"
+    if re.search(r"[฀-๿]", name):
+        return "thai"
+    letters = [c for c in name if c.isalpha()]
+    return "latin" if letters and all(LATIN.match(c) for c in letters) else "other"
+
+
+LATIN = re.compile(r"[A-Za-z\u00C0-\u024F\u1E00-\u1EFF]")  # 拉丁字母（含越南文、德法重音）；不能写成 À-ỹ，那会包含印度诸文字
 
 
 AU_STATE = {"2": "NSW", "3": "VIC", "4": "QLD", "5": "SA", "6": "WA", "7": "TAS", "8": "NT"}

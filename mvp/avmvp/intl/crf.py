@@ -14,7 +14,8 @@ import re
 import pycrfsuite
 
 from .markets import MARKETS
-from .parse import CITY_WORDS, HOUSE_NO, NUMBER_MARKERS, REGION_WORDS, UNIT_WORDS, Parsed, Span, strip_noise
+from .parse import (CITY_WORDS, HOUSE_NO, NUMBER_MARKERS, REGION_WORDS, UNIT_WORDS, Parsed, Span, generic_name,
+                    strip_noise)
 from .reference import MarketReference
 from .text import TYPE_WORDS, core_key, fold, key, script_of, skeleton, tokenize
 
@@ -129,7 +130,7 @@ class CRFParser:
             elif lab == "BLDG" and self.ref.poi_fuzzy is not None:
                 k = key(words, self.ref.market)
                 for hit, score, ids in self.ref.poi_fuzzy.search(k, limit=2, min_score=88):
-                    if len(ids) <= 20:
+                    if len(ids) <= 20 and not generic_name(hit):
                         p.buildings.append(Span(hit, a, b, ids, score, "exact" if score == 100 else "fuzzy"))
         if self.ref.market == "AU" and p.unit is None:  # 5/12 形式
             for t in toks:

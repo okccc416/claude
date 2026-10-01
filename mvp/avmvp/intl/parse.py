@@ -409,7 +409,7 @@ class RuleParser:
                 continue
             found = False
             for hit, score, ids in self.ref.poi_fuzzy.search(cand, limit=2, min_score=90):
-                if len(ids) <= 20:
+                if len(ids) <= 20 and not generic_name(hit):
                     p.buildings.append(Span(hit, -1, -1, ids, score, "exact" if score == 100 else "fuzzy"))
                     found = True
             if found:  # 楼名里的词被当成了道路（Mall of Emirates -> Emirates Street）：去掉这些道路候选
@@ -419,7 +419,7 @@ class RuleParser:
                     hits = [(" ".join(words[i:i + size]), self.ref.poi_fuzzy.get(" ".join(words[i:i + size])))
                             for i in range(len(words) - size + 1)]
                     hits = [(h, ids) for h, ids in hits if ids and len(ids) <= 20 and len(h) >= 8
-                            and not all(w in GENERIC_WORDS or w in UNIT_WORDS for w in h.split())]
+                            and not generic_name(h)]
                     if hits:
                         p.buildings += [Span(h, -1, -1, ids, 100.0, "exact") for h, ids in hits]
                         break
@@ -453,6 +453,11 @@ class RuleParser:
             m = re.fullmatch(r"(\d+)(?:(HS|BG|BV|[A-Z])|-(\w+))", p.number)
             if m:
                 p.number, p.unit = m.group(1), p.unit or (m.group(2) or m.group(3))
+
+
+def generic_name(name: str) -> bool:
+    """只由通用词和数字组成的楼名（Building 9、Tower 2）：不能当楼名证据。"""
+    return all(w in GENERIC_WORDS or w in UNIT_WORDS or w.isdigit() or len(w) == 1 for w in name.split())
 
 
 def tokenize_seps(text: str) -> list[bool]:

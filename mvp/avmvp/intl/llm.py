@@ -21,7 +21,7 @@ import urllib.request
 from rapidfuzz import fuzz
 
 from .markets import MARKETS
-from .parse import HOUSE_NO, Parsed, Span, strip_noise
+from .parse import HOUSE_NO, Parsed, Span, generic_name, strip_noise
 from .reference import MarketReference
 from .text import core_key, fold, key, skeleton
 
@@ -196,7 +196,7 @@ class LLMParser:
         if fields.get("building") and self.ref.poi_fuzzy is not None:
             k = key(fields["building"], self.ref.market)
             for hit, score, ids in self.ref.poi_fuzzy.search(k, limit=2, min_score=88):
-                if len(ids) <= 20:
+                if len(ids) <= 20 and not generic_name(hit):
                     p.buildings.append(Span(hit, -1, -1, ids, score, "exact" if score == 100 else "fuzzy"))
         return p
 
