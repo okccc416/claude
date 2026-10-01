@@ -62,6 +62,8 @@ class Result:
     components: dict[str, dict]
     candidates: list[dict]
     parser: str
+    confidence: float | None = None  # 校准过的置信度（有置信度模型时在 validate 里算好）
+    confidence_note: str = ""
 
     @property
     def location(self):
@@ -121,11 +123,12 @@ class Engine:
     def validate(self, text: str, strictness: str = "BALANCED", min_confidence: float | None = None) -> Result:
         """min_confidence：可选门槛。结论是 ACCEPT（或只提示补单元号）但置信度低于门槛时，改为 CONFIRM（LOW_CONFIDENCE）。"""
         res = self._validate(text, strictness)
-        if min_confidence is not None and self.conf_model is not None and res.lat is not None \
-                and res.action in (ACCEPT, ADD_SUB) \
-                and self.conf_model.confidence(res, self.market, self.m.cls) < min_confidence:
-            res.action = CONFIRM
-            res.reasons.append("LOW_CONFIDENCE")
+        if self.conf_model is not None and res.lat is not None:
+            res.confidence = self.conf_model.confidence(res, self.market, self.m.cls)
+            res.confidence_note = self.conf_model.explain(res, self.market, self.m.cls)
+            if min_confidence is not None and res.action in (ACCEPT, ADD_SUB) and res.confidence < min_confidence:
+                res.action = CONFIRM  # 置信度保持按原结论计算，让调用方看得到为什么被降级
+                res.reasons.append("LOW_CONFIDENCE")
         return res
 
     def _validate(self, text: str, strictness: str) -> Result:
@@ -534,9 +537,9 @@ class Engine:
         levels = [c["confirmationLevel"] for c in comps]
         return {"responseId": str(uuid.uuid4()), "result": {
             "verdict": {"possibleNextAction": res.action, "validationGranularity": res.granularity,
-                        **({"confidence": round(self.conf_model.confidence(res, self.market, self.m.cls), 4),
-                            "confidenceNote": self.conf_model.explain(res, self.market, self.m.cls)}
-                           if self.conf_model is not None and res.lat is not None else {}),
+                        **({"confidence": round(res.confidence, 4),
+                            "confidenceNote": res.confidence_note}
+                           if res.confidence is not None else {}),
                         "geocodeGranularity": res.granularity,
                         "addressComplete": res.action == ACCEPT,
                         "hasUnconfirmedComponents": any(x != "CONFIRMED" for x in levels) or res.best is None,

@@ -334,10 +334,11 @@ def test_confidence_is_calibrated_and_shrinks(au):
     rare = model.from_signatures(["XX|ACCEPT|PREMISE|z", "A|ACCEPT|PREMISE|z", "A|ACCEPT|PREMISE", "ACCEPT|PREMISE"])
     assert 0.85 < rare < 0.95  # 没见过的细类：退回到粗一级的估计
     eng = Engine("AU", "rules", au.ref, confidence=model)
-    out = eng.to_response(r_ok)
+    out = eng.to_response(eng.validate("100 Crown Street, Surry Hills NSW 2010"))
     assert 0 < out["result"]["verdict"]["confidence"] <= 1 and "100" in out["result"]["verdict"]["confidenceNote"]
     strict = eng.validate("100 Crown Street, Surry Hills NSW 2010", min_confidence=0.95)  # 置信度约 0.9 < 门槛
     assert strict.action == CONFIRM and "LOW_CONFIDENCE" in strict.reasons
+    assert abs(strict.confidence - 0.9) < 0.02  # 降级后仍报告原结论的置信度
     assert eng.validate("100 Crown Street, Surry Hills NSW 2010", min_confidence=0.8).action == ACCEPT
 
 
