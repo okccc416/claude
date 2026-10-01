@@ -102,11 +102,14 @@ class MarketRouter:
             if self.available(c):
                 self.engine(c)
 
-    def validate(self, code: str, text: str, strictness: str = "BALANCED") -> dict:
+    def validate(self, code: str, text: str, strictness: str = "BALANCED", min_confidence: float | None = None) -> dict:
         code = (code or "SG").upper()
         eng = self.engine(code)
         with self._locks[code]:
-            res = eng.validate(text, strictness=strictness)
+            if code == "SG":  # 新加坡引擎的置信度门槛在 ConfidenceValidator 里配置
+                res = eng.validate(text, strictness=strictness)
+            else:
+                res = eng.validate(text, strictness=strictness, min_confidence=min_confidence)
             out = eng.to_response(res)
         if code == "SG":
             out["result"].setdefault("metadata", None)

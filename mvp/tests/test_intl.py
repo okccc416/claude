@@ -333,8 +333,12 @@ def test_confidence_is_calibrated_and_shrinks(au):
     assert abs(model.confidence(r_ok, "AU", "A") - 0.9) < 0.02  # 样本多：接近实际比例 90/100
     rare = model.from_signatures(["XX|ACCEPT|PREMISE|z", "A|ACCEPT|PREMISE|z", "A|ACCEPT|PREMISE", "ACCEPT|PREMISE"])
     assert 0.85 < rare < 0.95  # 没见过的细类：退回到粗一级的估计
-    out = Engine("AU", "rules", au.ref, confidence=model).to_response(r_ok)
+    eng = Engine("AU", "rules", au.ref, confidence=model)
+    out = eng.to_response(r_ok)
     assert 0 < out["result"]["verdict"]["confidence"] <= 1 and "100" in out["result"]["verdict"]["confidenceNote"]
+    strict = eng.validate("100 Crown Street, Surry Hills NSW 2010", min_confidence=0.95)  # 置信度约 0.9 < 门槛
+    assert strict.action == CONFIRM and "LOW_CONFIDENCE" in strict.reasons
+    assert eng.validate("100 Crown Street, Surry Hills NSW 2010", min_confidence=0.8).action == ACCEPT
 
 
 # ---------------------------------------------------------------------------------------------- 批量清洗

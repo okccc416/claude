@@ -118,7 +118,17 @@ class Engine:
             self.llm = LLMParser(self.ref, llm)
 
     # ------------------------------------------------------------------ 入口
-    def validate(self, text: str, strictness: str = "BALANCED") -> Result:
+    def validate(self, text: str, strictness: str = "BALANCED", min_confidence: float | None = None) -> Result:
+        """min_confidence：可选门槛。结论是 ACCEPT（或只提示补单元号）但置信度低于门槛时，改为 CONFIRM（LOW_CONFIDENCE）。"""
+        res = self._validate(text, strictness)
+        if min_confidence is not None and self.conf_model is not None and res.lat is not None \
+                and res.action in (ACCEPT, ADD_SUB) \
+                and self.conf_model.confidence(res, self.market, self.m.cls) < min_confidence:
+            res.action = CONFIRM
+            res.reasons.append("LOW_CONFIDENCE")
+        return res
+
+    def _validate(self, text: str, strictness: str) -> Result:
         if self.parser == "llm":
             p = self.llm.parse(text)
             parses = [p] if p is not None else [self.rules.parse(text)]
@@ -579,6 +589,7 @@ REASON_TEXT = {
     "LOCATED_BY_PLUS_CODE": "按输入里的 Plus Code 定位",
     "LOCATED_BY_COORDINATES": "按输入里的经纬度定位",
     "LLM_REWRITTEN": "本地小模型改写过输入里的字段（不是原文照抄），需要用户确认",
+    "LOW_CONFIDENCE": "置信度低于请求里设定的门槛（confidenceThreshold），改为请用户确认",
     "LLM_UNVERIFIED": "地址是本地小模型读出来的，这个市场没有官方地址表可以核实门牌，需要用户确认",
     "PLUS_CODE_STREET_MISMATCH": "Plus Code 的位置与所写道路不符",
     "PLUS_CODE_AREA_MISMATCH": "Plus Code 的位置不在所写片区附近",

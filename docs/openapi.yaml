@@ -121,6 +121,11 @@ components:
           enum: [STRICT, BALANCED, LENIENT]
           default: BALANCED
           description: STRICT 更多要求确认；LENIENT 更多直接通过
+        confidenceThreshold:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: 可选（多市场引擎）。结论是 ACCEPT 但置信度低于此值时改为 CONFIRM（原因码 LOW_CONFIDENCE）；门槛与自动通过率 / 错误率的关系见 mvp/reports/intl_confidence_report.md
     ValidateResponse:
       type: object
       properties:
@@ -145,7 +150,8 @@ components:
                 hasInferredComponents: { type: boolean }
                 hasReplacedComponents: { type: boolean }
                 hasSpellCorrectedComponents: { type: boolean }
-                confidence: { type: number, description: 仅新加坡：结论的贝叶斯置信度（同类结论在标注数据上的实际正确率） }
+                confidence: { type: number, description: 结论的置信度（同类结论在标注 / 开发数据上的实际正确率，已校准）；只有给出位置时才有 }
+                confidenceNote: { type: string, description: 多市场引擎：置信度的来历，如"开发集上同类结论 N 条中位置给对了 M 条" }
                 reasons:
                   type: array
                   description: 原因码，如 STREET_SPELL_CORRECTED、POSTCODE_REPLACED、AMBIGUOUS_MULTIPLE_CANDIDATES、ROUTE_NOT_CORROBORATED、LOCATED_BY_PLUS_CODE、LLM_UNVERIFIED

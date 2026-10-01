@@ -180,6 +180,15 @@ def make_handler(router: MarketRouter):
 MAX_BATCH = 1000
 
 
+def request_threshold(body: dict) -> float | None:
+    v = body.get("confidenceThreshold")
+    if v is None:
+        return None
+    if not isinstance(v, (int, float)) or not 0 <= v <= 1:
+        raise ValueError("confidenceThreshold 取 0–1 之间的数")
+    return float(v)
+
+
 def request_text(body: dict) -> tuple[str, str, str]:
     """请求体（与 Google AV 相同）-> (国家 / 地区代码, 地址文字, 严格度)。"""
     address = body.get("address") or {}
@@ -195,9 +204,10 @@ def request_text(body: dict) -> tuple[str, str, str]:
 
 def validate_one(router: MarketRouter, body: dict) -> dict:
     region, text, strictness = request_text(body)
+    threshold = request_threshold(body)
     router.engine(region)  # 第一次请求某个市场时加载参考数据，不计入耗时
     t = time.perf_counter()
-    out = router.validate(region, text, strictness)
+    out = router.validate(region, text, strictness, threshold)
     out["serverTimeMs"] = round((time.perf_counter() - t) * 1000, 2)
     return out
 
