@@ -306,8 +306,8 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
         kcache: dict[str, tuple[str, str]] = {}
         aid = 0
         for i, r in enumerate(rows):
-            if not r["street"] or not r["number"]:
-                continue
+            if not r["street"] or not r["number"] or not re.search(r"\d", str(r["number"])):
+                continue  # 没有门牌号的记录（维也纳市营住宅 "STG."、楼名）不当地址点
             lat, lng = center(r["bbox"])
             k, ck = kcache.get(r["street"]) or kcache.setdefault(
                 r["street"], (key(r["street"], market), core_key(r["street"], market)))

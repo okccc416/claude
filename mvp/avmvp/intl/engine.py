@@ -634,6 +634,10 @@ class Engine:
         if self.market == "NL":  # 荷兰写法：Rozengracht 162A、Aalsmeerderweg 283-30、邮编 1016 NK
             if num and unit and len(unit) <= 4:
                 num, unit = (num + unit if len(unit) == 1 and unit.isalpha() else f"{num}-{unit.upper()}"), ""
+        if self.market == "JP":  # 〒150-0041 渋谷区神南一丁目12（从大到小连写）
+            head = f"{loc or ''}{route or ''}{num or ''}"
+            return " ".join(x for x in (f"〒{pc}" if pc else "", head, t.get("premise_name"), unit,
+                                        t.get("plus_code")) if x)
         line = " ".join(x for x in ((num, route) if self.m.number_first else (route, num)) if x)
         if self.market == "CO" and num and route:  # Calle 72 # 8-24
             line = f"{route} # {num}"

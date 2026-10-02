@@ -1,6 +1,6 @@
-# 地址校验（Address Validation）：新加坡 + 澳洲 / 欧洲 / 中东 / 东南亚 11 个市场
+# 地址校验（Address Validation）：45 个市场（Google AV 覆盖的全部国家 / 地区，美国除外，外加中东和东南亚）
 
-> 多市场部分（澳洲、德国、法国、荷兰、阿联酋、沙特、马来西亚、印尼、泰国、越南、菲律宾）的架构、评测与"规则 vs AI"结论见 **[docs/13](../docs/13-multi-market-product.md)**；下文前半部分是新加坡引擎。
+> 多市场部分（新加坡以外的 44 个市场：澳洲、新西兰、日本、印度、美洲 7 国、欧洲 25 国、中东 2 国、东南亚 5 国）的架构、评测与"规则 vs AI"结论见 **[docs/13](../docs/13-multi-market-product.md)**；下文前半部分是新加坡引擎。
 
 一个可在本地运行的地址校验服务（新加坡引擎）：输入任意写法的新加坡地址（可以混着电话、收件人、配送备注、本地缩写、粘连和错拼），返回**结论**（ACCEPT / CONFIRM / FIX / CONFIRM_ADD_SUBPREMISES）、**标准化地址**、**逐组件判断**、**原因码**和坐标，并把电话 / 邮箱 / 订单号 / 收件人 / 公司名 / 备注单独拆出来放在 `nonAddressInfo` 里。接口字段语义对齐 Google Address Validation API，并带上 [05 文档](../docs/05-prd-and-roadmap.md) 规划的扩展字段（严格度档位、原因码、纠错前粒度、改动幅度、校验码、候选地址）。
 
@@ -45,15 +45,17 @@ python scripts/evaluate_labeled.py --orders labeled/testset_sg_research_v1.csv -
 python scripts/evaluate_real_strings.py   # 8,000 条真实人写地址评测
 python scripts/whatif_current_reference.py  # 参考库换成 2026 年数据的效果
 python scripts/profile_countries.py   # 澳洲 / 中东 / 东南亚 / 欧洲 17 个城市的地址画像（见 docs/12）
-pytest -q                             # 100 个单元测试（新加坡用真实数据夹具，多市场用微型悉尼 / 迪拜 / 利雅得夹具，无需下载）
+pytest -q                             # 109 个单元测试（新加坡用真实数据夹具，多市场用微型悉尼 / 迪拜 / 利雅得 / 布拉格 / 波哥大 / 东京夹具，无需下载）
 ```
 
-多市场（澳洲、欧洲、中东、东南亚，见 [docs/13](../docs/13-multi-market-product.md)）：
+多市场（44 个市场，见 [docs/13](../docs/13-multi-market-product.md)）：
 
 ```bash
-python scripts/fetch_markets.py           # 下载 11 个市场试点城市的 Overture 数据（道路线形、片区边界、POI、A 类官方地址点），约 1.4GB
+python scripts/fetch_markets.py           # 下载 44 个市场试点城市的 Overture 数据（道路线形、片区边界、POI、A 类官方地址点），约 3GB
 python scripts/build_market_reference.py  # 构建参考库（约 7 分钟，澳洲最大）
-python scripts/train_market_parsers.py    # 训练各市场的机器学习解析器（CRF，约 15 分钟）
+python scripts/train_market_parsers.py    # 训练各市场的机器学习解析器（CRF，每个市场约 30 秒）
+python scripts/fit_accept_policy.py       # 按市场在开发集上校准直接通过的放宽规则 -> models/accept_policy.json
+python scripts/fit_intl_confidence.py     # 置信度（开发集拟合、测试集检验）-> models/confidence_intl.json
 python scripts/evaluate_markets.py --split dev --n 600    # 开发集：规则 / 机器学习 / 混合三种解析对比
 python scripts/evaluate_markets.py --split test --n 1000  # 测试集（留到最后跑）-> reports/markets_eval.md
 
@@ -152,7 +154,7 @@ mvp/
 │   ├── router.py       按 regionCode 分发：SG -> 新加坡引擎，其余 -> 多市场引擎（参考数据按需加载）
 │   ├── server.py       本地 HTTP 服务 + 演示页面（可选国家）
 │   └── intl/           多市场引擎（docs/13）
-│       ├── markets.py      11 个市场的配置：类别、试点城市范围、邮编格式、门牌位置、缩写
+│       ├── markets.py      44 个市场的配置：类别、试点城市范围、邮编格式与识别规则、门牌位置、类型词习惯、全城名 / 大区名
 │       ├── text.py         多语种规范化：去声调、阿拉伯文字形、泰文分词、缩写展开、人名缩写、转写骨架
 │       ├── reference.py    参考库：道路（沿线形取点、同名路段合并）、片区边界、POI、A 类官方地址点
 │       ├── parse.py        规则解析：噪声 / 编码识别、邮编、单元、道路 / 片区 / 楼宇匹配、门牌
@@ -184,10 +186,11 @@ mvp/
 │   ├── fetch_markets.py        下载多市场 Overture 数据
 │   ├── build_market_reference.py  构建多市场参考库
 │   ├── train_market_parsers.py    训练多市场机器学习解析器
-│   └── evaluate_markets.py        多市场评测（真实商户地址 + 合成地址，规则 / 机器学习 / 混合）
+│   ├── evaluate_markets.py        多市场评测（真实商户地址 + 合成地址，规则 / 机器学习 / 混合）
+│   └── fit_accept_policy.py       按市场校准直接通过的放宽规则（开发集）
 ├── labeled/            标注数据（模拟订单 orders_sg_v1.csv、调研测试集 testset_sg_research_v1.csv）、数据说明、标注规范
 ├── models/             贝叶斯参数（证据权重、置信度统计表）
-├── tests/              100 个单元测试（新加坡 58 条真实地址夹具；多市场微型夹具）
+├── tests/              109 个单元测试（新加坡 58 条真实地址夹具；多市场微型夹具）
 └── reports/            评测报告与演示截图
 ```
 
@@ -196,7 +199,9 @@ mvp/
 多市场数据来自 [Overture Maps](https://overturemaps.org/)（release 2026-09-23.1），各主题许可不同，商用前需法务确认：
 - 道路、片区：来自 OpenStreetMap 等，ODbL（衍生数据库需按 ODbL 共享）。
 - POI：CDLA-Permissive-2.0 等。
-- 官方地址点（A 类）：澳洲 G-NAF（Overture 标注为 `LicenseRef-Proprietary`，即 G-NAF 最终用户许可，限制用于邮寄地址的生成）；德国柏林 `DL-DE-ZERO-2.0`、勃兰登堡 `DL-DE-BY-2.0`（需署名）；法国 BAN `etalab-2.0`；荷兰 BAG `CC0-1.0`。
+- 官方地址点（A 类，逐市场来源见 [docs/13 第 4 节](../docs/13-multi-market-product.md)）：
+  - Overture 标注为 `LicenseRef-Proprietary`（**商用前必须法务确认**）：澳洲 G-NAF（G-NAF 最终用户许可，限制用于邮寄地址的生成）、巴西、加拿大、墨西哥、丹麦、爱沙尼亚、克罗地亚、瑞士；
+  - 开放许可：德国柏林 `DL-DE-ZERO-2.0`、勃兰登堡 `DL-DE-BY-2.0`（需署名）；法国 BAN `etalab-2.0`；荷兰 BAG、卢森堡、斯洛伐克 `CC0-1.0`；波兰（测绘法公有领域）；智利、哥伦比亚、比利时、奥地利、意大利、西班牙、葡萄牙、挪威、芬兰、拉脱维亚、立陶宛、捷克、斯洛文尼亚、新西兰、日本（OpenAddresses jp/tokyo）`CC-BY-4.0`（需署名）。
 
 新加坡数据：
 

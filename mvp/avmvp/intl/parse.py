@@ -348,7 +348,7 @@ class RuleParser:
                     # 避免把片区名（Mosman）当成同名道路（Mosman Street）
                     ck = core_key(words, self.ref.market, "area" if kind == "area" else "street")
                     # 核心键同时是片区名（Jakarta、Menteng）时不当道路：多半是在写片区
-                    if ck in core_table and len(ck) >= 4 and not ck.isdigit() and not (
+                    if ck in core_table and len(ck) >= 4 and not ck.isdigit() and ck not in self.neutral and not (
                             kind == "street" and (ck in self.ref.area_keys or ck in self.ref.area_core)
                             and not _has_type_word(words, self.ref.market)):
                         how, words = "core", ck
