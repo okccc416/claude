@@ -53,7 +53,7 @@ table{width:100%;border-collapse:collapse;font-size:14px}td,th{text-align:left;p
 <div id="out"></div>
 <script>
 const EXAMPLES=__EXAMPLES__;
-const CLS={A:'A 类：官方地址表，逐门牌验真',B:'B 类（中东）：道路 / 楼宇 / 片区验真，门牌号无法证实',C:'C 类（东南亚）：道路 / 楼宇 / 片区验真，门牌号无法证实'};
+const CLS={A:'A 类：官方地址表，逐门牌验真',B:'B 类（中东）：道路 / 楼宇 / 片区验真，门牌号无法证实',C:'C 类（没有开放地址表）：道路 / 楼宇 / 片区验真，门牌号无法证实'};
 const $=id=>document.getElementById(id);const q=$('q'),s=$('s'),m=$('m'),out=$('out'),ex=$('ex');
 const esc=x=>String(x??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let MK=[];

@@ -1,9 +1,11 @@
 """按国家 / 地区代码（regionCode）把请求分给对应的校验引擎。
 
   SG                      新加坡专用引擎（逐门牌验真 + 置信度 + 可选小模型兜底）
-  AU DE FR NL             多市场引擎，A 类：官方地址表逐门牌验真
-  AE SA                   多市场引擎，B 类（中东）：道路 / 楼宇 / 片区验真
-  MY ID TH VN PH          多市场引擎，C 类（东南亚）：道路 / 楼宇 / 片区验真
+  其余 44 个市场          多市场引擎（avmvp/intl/markets.py）：
+    A 类（官方地址表逐门牌验真）  AU DE FR NL CA MX BR CL CO BE LU CH AT IT ES PT DK NO FI EE LV LT PL CZ SK SI HR NZ JP
+    B 类（中东）                  AE SA
+    C 类（没有开放地址表）        MY ID TH VN PH GB IE SE HU BG AR IN PR
+  即 Google Address Validation 覆盖的全部国家 / 地区（美国除外），外加中东和东南亚。
 
 参考数据较大（澳洲约 600 MB），默认在第一次请求某个市场时才加载；--preload 启动时全部加载。
 同一市场的请求串行执行（参考库的 SQLite 连接在线程间共享）。

@@ -23,12 +23,21 @@ from rapidfuzz import fuzz
 from .markets import MARKETS
 from .parse import HOUSE_NO, Parsed, Span, generic_name, strip_noise
 from .reference import MarketReference
-from .text import core_key, fold, key, skeleton
+from .text import core_key, fold, key, norm_postcode, skeleton
 
 FIELDS = ["house_number", "unit", "building", "street", "area", "postcode"]
 COUNTRY = {"AU": "Australia", "DE": "Germany", "FR": "France", "NL": "the Netherlands", "AE": "the UAE (Dubai)",
            "SA": "Saudi Arabia (Riyadh)", "MY": "Malaysia", "ID": "Indonesia", "TH": "Thailand", "VN": "Vietnam",
-           "PH": "the Philippines"}
+           "PH": "the Philippines", "CA": "Canada (Toronto)", "MX": "Mexico (Mexico City)", "PR": "Puerto Rico",
+           "BR": "Brazil (São Paulo)", "AR": "Argentina (Buenos Aires)", "CL": "Chile (Santiago)",
+           "CO": "Colombia (Bogotá)", "GB": "the United Kingdom (London)", "IE": "Ireland (Dublin)",
+           "BE": "Belgium (Brussels)", "LU": "Luxembourg", "CH": "Switzerland (Zürich)", "AT": "Austria (Vienna)",
+           "IT": "Italy (Milan)", "ES": "Spain (Madrid)", "PT": "Portugal (Lisbon)", "DK": "Denmark (Copenhagen)",
+           "SE": "Sweden (Stockholm)", "NO": "Norway (Oslo)", "FI": "Finland (Helsinki)", "EE": "Estonia (Tallinn)",
+           "LV": "Latvia (Riga)", "LT": "Lithuania (Vilnius)", "PL": "Poland (Warsaw)", "CZ": "Czechia (Prague)",
+           "SK": "Slovakia (Bratislava)", "HU": "Hungary (Budapest)", "SI": "Slovenia (Ljubljana)",
+           "HR": "Croatia (Zagreb)", "BG": "Bulgaria (Sofia)", "NZ": "New Zealand (Auckland)", "JP": "Japan (Tokyo)",
+           "IN": "India (Mumbai)"}
 SCHEMA = {"type": "object", "properties": {k: {"type": "string"} for k in FIELDS}, "required": FIELDS,
           "additionalProperties": False}
 
@@ -188,7 +197,7 @@ class LLMParser:
             p.unit = fold(fields["unit"])
         pc = fields.get("postcode", "")
         if pc and self.pc_re and self.pc_re.search(fold(pc)) and fold(pc).strip("0"):
-            p.postcode = self.pc_re.search(fold(pc)).group(0).replace(" ", "")
+            p.postcode = norm_postcode(self.pc_re.search(fold(pc)).group(0), self.ref.market)
         if fields.get("street"):
             p.streets = self._lookup(fields["street"], "street")
         if fields.get("area"):

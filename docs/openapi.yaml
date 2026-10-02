@@ -6,9 +6,11 @@ info:
     地址校验服务（对应 mvp/avmvp/server.py）。请求结构与 Google Address Validation API 相同，响应在 Google 字段之外
     增加了原因码、候选地址、非地址信息、地址编码等扩展字段。
 
+    覆盖 Google Address Validation 覆盖的全部国家 / 地区（美国除外），外加中东和东南亚，共 45 个市场：
     - 新加坡（SG）：专用引擎，逐门牌验真，带贝叶斯置信度（docs/07、09）
-    - 澳洲、德国、法国、荷兰（A 类）：官方地址表逐门牌验真
-    - 阿联酋、沙特（B 类）、马来西亚、印尼、泰国、越南、菲律宾（C 类）：道路 / 楼宇 / 片区验真（docs/13）
+    - A 类（官方地址表逐门牌验真）：澳洲、新西兰、日本、加拿大、墨西哥、巴西、智利、哥伦比亚，以及欧洲 21 国
+    - B 类（中东）：阿联酋、沙特；C 类（没有开放地址表）：东南亚 5 国、英国、爱尔兰、瑞典、匈牙利、保加利亚、阿根廷、印度、波多黎各
+      道路 / 楼宇 / 片区验真（docs/13）
 servers:
   - url: http://127.0.0.1:8080
 paths:
@@ -110,7 +112,7 @@ components:
         address:
           type: object
           properties:
-            regionCode: { type: string, description: "SG / AU / DE / FR / NL / AE / SA / MY / ID / TH / VN / PH；缺省 SG" }
+            regionCode: { type: string, description: "45 个市场（ISO 国家代码，英国写 GB）：SG；A 类 AU DE FR NL CA MX BR CL CO BE LU CH AT IT ES PT DK NO FI EE LV LT PL CZ SK SI HR NZ JP；B 类 AE SA；C 类 MY ID TH VN PH GB IE SE HU BG AR IN PR。缺省 SG。完整列表见 GET /v1/markets" }
             addressLines: { type: array, items: { type: string } }
             locality: { type: string }
             administrativeArea: { type: string }

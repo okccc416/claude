@@ -26,8 +26,8 @@ import numpy as np
 from .markets import MARKETS
 from .parse import Parsed, RuleParser, Span
 from .pluscode import encode, recover
-from .reference import MarketReference, haversine
-from .text import fold, script_of
+from .reference import MarketReference, haversine, number_key
+from .text import fmt_postcode, fold, postcode_prefix, script_of
 
 ACCEPT, CONFIRM, FIX, ADD_SUB = "ACCEPT", "CONFIRM", "FIX", "CONFIRM_ADD_SUBPREMISES"
 # 参照物描述：说明写的楼不是地址本身（behind / opposite / near …，阿拉伯文 خلف / مقابل / بجانب / قرب）
@@ -103,9 +103,11 @@ class Engine:
     llm：可选的本地小模型客户端（见 llm.py）。给了它，hybrid 在没有直接通过时再请模型拆一次字段（级联）。"""
 
     def __init__(self, market: str, parser: str = "rules", ref: MarketReference | None = None, llm=None,
-                 confidence=None):
+                 confidence=None, policy: dict | None = None):
         self.market = market
         self.m = MARKETS[market]
+        # 直接通过的放宽规则（按市场在开发集上校准，见 scripts/fit_accept_policy.py）；policy={} 表示不用
+        self.policy = set((load_policy() if policy is None else policy).get(market, []))
         self.conf_model = confidence  # 可选：IntlConfidence（校准过的置信度，见 confidence.py）
         self.ref = ref or MarketReference.load(market)
         self.rules = RuleParser(self.ref)
@@ -175,7 +177,10 @@ class Engine:
     def _hypotheses(self, p: Parsed) -> list[Hypothesis]:
         ref = self.ref
         pc = ref.postcodes.get(p.postcode) if p.postcode and self.m.postcode else None
-        pc_unknown = bool(p.postcode and self.m.postcode and ref.has_addresses and pc is None)
+        if pc is None and p.postcode and self.m.postcode:  # 一户一码的邮编（爱尔兰、英国）：按上一级片区印证
+            pc = getattr(ref, "postcode_prefix", {}).get(postcode_prefix(p.postcode, self.market))
+        pc_unknown = bool(p.postcode and self.m.postcode and getattr(ref, "pc_complete", ref.has_addresses)
+                          and pc is None)
         area_ids = [a for s in p.areas for a in s.ids][:30]
         hyps: list[Hypothesis] = []
         buildings = []
@@ -325,7 +330,17 @@ class Engine:
         for num in self._number_variants(p.number):
             pts = self.ref.addresses([h.street], num)
             if pts:
+                # 门牌原样一致的地址点优先于"只是其中一部分号码"一致的（Kopli 16 优先于 Kopli 103/16）
+                pts.sort(key=lambda x: number_key(x["number"]) != number_key(num))
                 break
+        if not pts:
+            near = self._nearby_number(h.street, p.number)
+            if near is not None:  # 门牌不在官方表里，但同一条路上紧挨着的门牌在：位置可信，请用户确认门牌
+                h.point = near
+                h.score += 2.5
+                h.notes.append("PREMISE_INTERPOLATED")
+                h.support.add("point")
+                return
         if pts and p.unit:  # 同一门牌下优先取单元号一致的地址点
             want = re.sub(r"^(?:UNIT|APARTMENT|SUITE|FLAT|SHOP)\s*", "", p.unit.upper())
             pts = [x for x in pts if (x["unit"] or "").upper().replace("UNIT ", "") == want] or pts
@@ -333,7 +348,7 @@ class Engine:
             h.score -= 1.0
             h.notes.append("PREMISE_NOT_FOUND")
             return
-        if p.postcode:
+        if p.postcode and any(x["postcode"] for x in pts):  # 有的国家地址表不带邮编，就不比
             same = [x for x in pts if x["postcode"] == p.postcode]
             if same:
                 pts = same
@@ -344,13 +359,51 @@ class Engine:
         h.score += 4.0
         h.support.add("point")
 
+    def _nearby_number(self, street: int, number: str) -> dict | None:
+        """门牌不在官方表里时，找同一条路上紧挨着的门牌（同侧优先）：
+        - 一般门牌：±2、±4、±6，再试 ±1、±3、±5（12A 先试 12）
+        - 哥伦比亚 # 31-10：同一个街区（31-*）里距离数最接近的门牌（相差 40 米以内）
+        日本的街区号不按位置顺序编排，不推算。"""
+        n = number.replace(" ", "").upper()
+        if self.market == "JP":
+            return None
+        m = re.fullmatch(r"(\d+[A-Z]?)-(\d+)", n)
+        if self.market == "CO" and m:
+            rows = self.ref.db.execute(
+                "SELECT id, number, street, unit, postcode, locality, lat, lng FROM addr WHERE street=? AND "
+                "number_key LIKE ? LIMIT 200", (street, m.group(1) + "-%")).fetchall()
+            best = None
+            for r in rows:
+                tail = r[1].split("-")[-1]
+                if tail.isdigit() and abs(int(tail) - int(m.group(2))) <= 40 and (
+                        best is None or abs(int(tail) - int(m.group(2))) < abs(int(best[1].split("-")[-1]) - int(m.group(2)))):
+                    best = r
+            return dict(zip(("id", "number", "street", "unit", "postcode", "locality", "lat", "lng"), best)) \
+                if best else None
+        m = re.fullmatch(r"(\d+)([A-Z]?)", n)
+        if not m:
+            return None
+        base = int(m.group(1))
+        tries = ([str(base)] if m.group(2) else []) + [str(base + d) for d in (2, -2, 4, -4, 6, -6, 1, -1, 3, -3, 5, -5)
+                                                       if base + d > 0]
+        for t in tries:
+            pts = self.ref.addresses([street], t)
+            if pts:
+                return pts[0]
+        return None
+
     def _number_variants(self, number: str) -> list[str]:
         """门牌号的等价写法：51-55（区间，官方表可能只记首尾之一）、12 A / 12A。"""
         n = number.replace(" ", "").upper()
         out = [n]
         m = re.fullmatch(r"(\d+[A-Z]?)-(\d+[A-Z]?)", n)
-        if m and self.market != "NL":
+        if m and self.market == "JP":  # 日本 7-9（番地-号）：地址表只到街区（番地），按街区查
+            out.append(m.group(1))
+        elif m and self.market not in ("NL", "CO"):  # 哥伦比亚 66-33 是一个整体
             out += [m.group(1), m.group(2)]
+        m = re.fullmatch(r"(\d+[A-Z]?)/(\d+[A-Z]?)", n)
+        if m:  # 斯洛伐克 / 捷克 2132/1：只写了其中一个号码时也能查到（参考库三种写法都有）
+            out += [m.group(2), m.group(1)]
         return out
 
     # ------------------------------------------------------------------ 结论
@@ -386,7 +439,8 @@ class Engine:
 
         reasons += best.notes
         if best.point:
-            gran, lat, lng = "PREMISE", best.point["lat"], best.point["lng"]
+            gran = "PREMISE_PROXIMITY" if "PREMISE_INTERPOLATED" in best.notes else "PREMISE"
+            lat, lng = best.point["lat"], best.point["lng"]
         elif best.code:
             gran, lat, lng = "PREMISE_PROXIMITY", best.code[0], best.code[1]
         elif best.building and best.street is None:
@@ -415,8 +469,9 @@ class Engine:
         if best.building:
             comps["premise_name"] = {"text": best.building["name"], "level": "CONFIRMED"}
         if p.number:
-            comps["street_number"] = {"text": best.point["number"] if best.point else p.number,
-                                      "level": "CONFIRMED" if best.point else "UNCONFIRMED_BUT_PLAUSIBLE"}
+            exact = best.point and "PREMISE_INTERPOLATED" not in best.notes
+            comps["street_number"] = {"text": best.point["number"] if exact else p.number,
+                                      "level": "CONFIRMED" if exact else "UNCONFIRMED_BUT_PLAUSIBLE"}
         if p.postcode:
             comps["postal_code"] = {"text": best.point["postcode"] if best.point else p.postcode,
                                     "level": "CONFIRMED" if (best.point and best.point["postcode"] == p.postcode)
@@ -445,6 +500,10 @@ class Engine:
             return CONFIRM
         if self.ref.has_addresses:  # A 类
             if gran == "PREMISE":
+                # 只有邮编被替换、而这个市场开发集上"门牌对上 + 邮编被替换"的结论几乎都对（萨格勒布通写 10000、
+                # 立陶宛邮编细到路段）：不算纠正
+                if corrected and strictness != "STRICT" and policy_key_premise(best) in self.policy:
+                    corrected = False
                 if not p.unit and best.point and self.ref.units_at(best.point["street"], best.point["number"]) > 1:
                     reasons.append("UNIT_MISSING_MULTI_UNIT_BUILDING")
                     return CONFIRM if corrected else ADD_SUB
@@ -477,6 +536,8 @@ class Engine:
             span = best.street_span
             unique = span is not None and len(span.ids) == 1
             strong = "postcode" in best.support and unique and (span.how == "exact" or "area" in best.support)
+            if not strong and policy_key_route(best) in self.policy:
+                strong = True  # 这个市场开发集上同样证据组合的道路级结论几乎都对（见 fit_accept_policy.py）
             if not strong or strictness == "STRICT":
                 if strictness != "LENIENT" or not (best.support and unique):
                     reasons.append("ROUTE_NOT_CORROBORATED")
@@ -529,7 +590,8 @@ class Engine:
                  "plus_code": "plus_code"}
         comps = []
         for k, v in res.components.items():
-            c = {"componentType": names[k], "componentName": {"text": v["text"]}, "confirmationLevel": v["level"]}
+            text = fmt_postcode(v["text"], self.market) if k == "postal_code" else v["text"]
+            c = {"componentType": names[k], "componentName": {"text": text}, "confirmationLevel": v["level"]}
             c.update({f: True for f in ("inferred", "spellCorrected", "replaced") if v.get(f)})
             comps.append(c)
         missing = [t for t, k in (("route", "route"), ("street_number", "street_number"))
@@ -568,16 +630,19 @@ class Engine:
         unit = t.get("subpremise", "")
         unit = unit.title() if unit.isupper() and len(unit) > 2 and any(c.isalpha() for c in unit) else unit
         num, route = t.get("street_number"), t.get("route")
-        pc, loc = t.get("postal_code"), t.get("locality")
+        pc, loc = fmt_postcode(t.get("postal_code"), self.market), t.get("locality")
         if self.market == "NL":  # 荷兰写法：Rozengracht 162A、Aalsmeerderweg 283-30、邮编 1016 NK
             if num and unit and len(unit) <= 4:
                 num, unit = (num + unit if len(unit) == 1 and unit.isalpha() else f"{num}-{unit.upper()}"), ""
-            pc = re.sub(r"^(\d{4})([A-Z]{2})$", r"\1 \2", pc) if pc else pc
         line = " ".join(x for x in ((num, route) if self.m.number_first else (route, num)) if x)
-        if self.market in ("DE", "FR", "NL"):
+        if self.market == "CO" and num and route:  # Calle 72 # 8-24
+            line = f"{route} # {num}"
+        if self.m.postcode_first:
             tail = " ".join(x for x in (pc, loc) if x)
         elif self.market == "AU" and pc:
             tail = " ".join(x for x in (loc, AU_STATE.get(pc[:1], ""), pc) if x)
+        elif self.m.state and pc:  # Toronto ON M5V 2K4
+            tail = " ".join(x for x in (loc, self.m.state, pc) if x)
         else:
             tail = ", ".join(x for x in (loc, pc) if x)
         return ", ".join(x for x in (unit, t.get("premise_name"), line, tail, t.get("plus_code")) if x)
@@ -609,6 +674,7 @@ REASON_TEXT = {
     "BUILDING_ONLY": "只凭楼宇 / 地点名定位，没有可核对的道路",
     "STREET_INFERRED": "输入没有道路名，按邮编 + 门牌推断",
     "PREMISE_NOT_FOUND": "这条路上没有这个门牌号",
+    "PREMISE_INTERPOLATED": "官方地址表里没有这个门牌，但同一条路上紧挨着的门牌在，位置按相邻门牌给出，需要用户确认门牌",
     "MISSING_PREMISE": "缺少门牌号或楼宇名",
     "AMBIGUOUS_MULTIPLE_CANDIDATES": "有多个相距较远、可信度接近的候选地址，需要用户确认",
     "UNIT_MISSING_MULTI_UNIT_BUILDING": "该门牌下有多个单元，但没有写单元号",
@@ -637,6 +703,39 @@ LATIN = re.compile(r"[A-Za-z\u00C0-\u024F\u1E00-\u1EFF]")  # 拉丁字母（含�
 
 
 AU_STATE = {"2": "NSW", "3": "VIC", "4": "QLD", "5": "SA", "6": "WA", "7": "TAS", "8": "NT"}
+
+
+# ---------------------------------------------------------------------------------------------- 放宽规则
+_POLICY: dict | None = None
+
+
+def load_policy() -> dict:
+    """models/accept_policy.json：{市场: [允许直接通过的证据组合]}，由 scripts/fit_accept_policy.py 在开发集上生成。"""
+    global _POLICY
+    if _POLICY is None:
+        import json
+        from pathlib import Path
+        path = Path(__file__).resolve().parents[2] / "models" / "accept_policy.json"
+        _POLICY = json.loads(path.read_text(encoding="utf-8")).get("allow", {}) if path.exists() else {}
+    return _POLICY
+
+
+_CORRECTION_NOTES = ("STREET_SPELL_CORRECTED", "STREET_PARTIAL_MATCH", "POSTCODE_REPLACED", "POSTCODE_NOT_FOUND",
+                     "POSTCODE_STREET_MISMATCH", "AREA_STREET_MISMATCH", "STREET_INFERRED")
+
+
+def policy_key_premise(h: Hypothesis) -> str | None:
+    """A 类：门牌已由官方地址点确认，唯一的"纠正"是邮编被替换。"""
+    notes = {n for n in h.notes if n in _CORRECTION_NOTES}
+    return "PREMISE|POSTCODE_REPLACED" if notes == {"POSTCODE_REPLACED"} else None
+
+
+def policy_key_route(h: Hypothesis) -> str:
+    """B / C 类道路级：哪些字段相互印证 + 道路名是否唯一 + 名称怎么对上的。"""
+    sp = h.street_span
+    sup = ("pc" if "postcode" in h.support else "-") + ("+area" if "area" in h.support else "") + \
+          ("+bldg" if "building" in h.support else "")
+    return f"ROUTE|{sup}|{'u1' if sp is not None and len(sp.ids) == 1 else 'uN'}|{sp.how if sp else '-'}"
 
 
 def _merge(base: Parsed, extra: Parsed) -> Parsed:

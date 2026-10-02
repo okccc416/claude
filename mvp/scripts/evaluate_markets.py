@@ -29,12 +29,12 @@ sys.path.insert(0, str(ROOT))
 
 from avmvp.intl.engine import ACCEPT, ADD_SUB, CONFIRM, Engine, dist_to_street  # noqa: E402
 from avmvp.intl.markets import MARKETS  # noqa: E402
-from avmvp.intl.reference import DATA, MarketReference, center, haversine, is_test_place  # noqa: E402
+from avmvp.intl.reference import DATA, MarketReference, center, haversine, is_test_place, number_key  # noqa: E402
 from avmvp.intl.render import Renderer  # noqa: E402
 
 DEV_START, TEST_START = 600, 1200
 OUTCOMES = ["正确·直接通过", "正确·要求确认", "判 FIX·片区对", "判 FIX", "错误建议", "静默错误"]
-CLASS_NAME = {"A": "A 类（有官方地址表）", "B": "B 类（中东）", "C": "C 类（东南亚）"}
+CLASS_NAME = {"A": "A 类（有官方地址表）", "B": "B 类（中东）", "C": "C 类（没有开放地址表）"}
 
 
 def real_cases(market: str, n: int, split: str = "test") -> list[dict]:
@@ -97,8 +97,10 @@ def judge_synth(eng: Engine, res, case) -> str:
     b = res.best
     if b is not None:
         if "point" in case:
+            # 同一门牌在地址表里可能有多个点（多个入口、芬兰文 / 瑞典文各一条、日本同一街区多个点）：门牌一致即可
             ok = b.point is not None and (b.point["id"] == case["point"] or (
-                haversine(b.point["lat"], b.point["lng"], case["lat"], case["lng"]) <= 30))
+                haversine(b.point["lat"], b.point["lng"], case["lat"], case["lng"]) <= 30) or (
+                b.point["street"] == case["street"] and number_key(b.point["number"]) == number_key(case["number"] or "")))
             if not ok and b.point is None and b.street is not None and res.action != ACCEPT:
                 ok = False
         elif b.street is not None:

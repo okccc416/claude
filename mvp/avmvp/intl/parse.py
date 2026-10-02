@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 
 from .markets import MARKETS
 from .reference import BUILDING_WORDS, MarketReference
-from .text import TYPE_WORDS, core_key, fold, key, merge_initials, script_of, skeleton, tokenize
+from .text import TYPE_WORDS, core_key, fold, key, merge_initials, norm_postcode, script_of, skeleton, tokenize
 
 PHONE = re.compile(r"(?:\+|00)\d{1,3}[\s\-]?\(?\d{1,4}\)?(?:[\s\-]?\d{2,4}){2,4}|(?<![\d/])0\d{8,10}(?![\d/])|"
                    r"(?<![\d/])[89]\d{3}\s?\d{4}(?![\d/])")
@@ -27,9 +27,17 @@ PO_BOX = re.compile(r"(?:\bP\.?\s?O\.?\s?BOX|\bPOB|\bPOSTBUS|\bPOSTFACH|\bBOITE 
 GENERIC_WORDS = {"OFFICE", "SHOP", "BUILDING", "TOWER", "TOWERS", "MALL", "CENTER", "CENTRE", "HOTEL", "FLOOR",
                  "GROUND", "LEVEL", "SUITE", "UNIT", "STORE", "PLAZA", "MARKET", "SHOPPING", "COMMERCIAL",
                  "INDUSTRIAL", "AREA", "CITY", "COMPLEX", "RESIDENCE", "APARTMENTS", "VILLA", "WAREHOUSE", "THE",
-                 "BUSINESS", "BOULEVARD", "CORNER"}
+                 "BUSINESS", "BOULEVARD", "CORNER", "EDIFICIO", "TORRE", "CENTRO", "COMERCIAL", "LOCAL", "OFICINA",
+                 "PISO", "SALA", "LOJA", "HOUSE", "HAUS", "GEBAUDE", "PALAZZO", "CONDOMINIO", "GALERIA", "PASSAGE"}
 UNIT_WORDS = {"UNIT", "APARTMENT", "SUITE", "SHOP", "FLAT", "LEVEL", "FLOOR", "LANTAI", "TANG", "ชั้น", "ห้อง",
-              "الطابق", "شقه", "مكتب", "LOT", "ROOM", "KIOSK", "STALL", "OFFICE", "TOWER", "BLOCK", "BLOK"}
+              "الطابق", "شقه", "مكتب", "LOT", "ROOM", "KIOSK", "STALL", "OFFICE", "TOWER", "BLOCK", "BLOK",
+              # 欧洲 / 拉美 / 日本的单元、楼层写法
+              "PISO", "OFICINA", "LOCAL", "DEPARTAMENTO", "INTERIOR", "DESPACHO", "PLANTA", "APTO", "APARTAMENTO",
+              "ANDAR", "SALA", "LOJA", "BLOCO", "CONJUNTO", "PIANO", "INTERNO", "SCALA", "ETAGE", "BUS", "BTE",
+              "BOITE", "WHG", "WOHNUNG", "TOP", "STIEGE", "OG", "LGH", "LAGENHET", "LOKAL", "BYT", "EMELET", "AJTO",
+              "KAT", "STAN", "ET", "AP", "APT",
+              # 缩写原样（解析单元时还没展开缩写）
+              "INT", "OF", "OFIC", "LOC", "DEPTO", "DPTO", "LJ", "SL", "UND", "LOK", "WHG", "BTE"}
 NUMBER_MARKERS = {"NO", "NOMOR", "NUMBER", "BLK", "#", "رقم", "مبني", "SỐ", "SO", "เลขที่", "VILLA", "فيلا"}
 MARKER_WORDS = {"NO", "NOMOR", "NUMBER", "KAV", "KAVLING", "KM", "رقم"}
 HOUSE_NO = re.compile(r"^\d{1,5}(?:[A-Z]|HS|BG|BV)?(?:[/\-]\d{1,5}[A-Z]?){0,2}$")
@@ -51,6 +59,14 @@ REGION_WORDS = {
 CITY_WORDS = {"AE": ["DUBAI", "دبي"], "SA": ["RIYADH", "الرياض"], "DE": ["BERLIN"], "FR": ["PARIS"],
               "NL": ["AMSTERDAM"], "ID": ["JAKARTA"], "TH": ["BANGKOK", "กรุงเทพมหานคร", "กรุงเทพฯ", "กรุงเทพ"],
               "VN": ["THANH PHO HO CHI MINH", "HO CHI MINH", "SAI GON"]}
+
+
+def region_words(market: str) -> list[str]:
+    return REGION_WORDS.get(market) or list(MARKETS[market].region_words) if market in MARKETS else []
+
+
+def city_words(market: str) -> list[str]:
+    return CITY_WORDS.get(market) or list(MARKETS[market].city_words) if market in MARKETS else []
 
 
 @dataclass
@@ -118,9 +134,9 @@ class RuleParser:
         self.pc_re = re.compile(self.m.postcode) if self.m.postcode else None
         self._thai = ref.market == "TH"
         # 国家 / 大区 / 全城名的匹配键：容错检索时也不当片区
-        self.neutral = {key(x, ref.market) for x in REGION_WORDS.get(ref.market, []) + CITY_WORDS.get(ref.market, [])}
-        self.omit_type = ref.market in ("MY", "ID", "VN", "TH", "AE", "SA")  # 这些市场常省略 Jalan / Đường / شارع
-        self.type_after = ref.market in ("AU", "PH", "AE", "SA")  # 英文写法：类型词在名称后面（King Street）
+        self.neutral = {key(x, ref.market) for x in region_words(ref.market) + city_words(ref.market)}
+        self.omit_type = self.m.omit_type  # 常省略 Jalan / Đường / شارع / ulica / tänav 的市场
+        self.type_after = self.m.type_after  # 英文写法：类型词在名称后面（King Street）
         # 菲律宾商户地址常见"路名 门牌"且不写 St（Kapiligan 84, Quezon City）：段首名称紧跟门牌号时允许省略类型词
         #（开发集上本地小模型读对、规则漏掉的主要写法）
         self.street_number_order = ref.market == "PH"
@@ -133,6 +149,7 @@ class RuleParser:
     # ------------------------------------------------------------------ 主流程
     def parse(self, raw: str) -> Parsed:
         text, noise, codes = strip_noise(raw)
+        text = fold(text)  # 统一写法后再找邮编、切词（日文町丁目、西里尔文转写都在这一步）
         if self.ref.market == "SA":  # 沙特国家地址短码：4 个字母 + 4 位楼号（RCTB4359）
             m = re.search(r"\b(?!SHOP|UNIT|ROOM|FLAT|SUIT|BLOK|TOWR|GATE|EXIT)([A-Z]{4})\s?(\d{4})\b", fold(text))
             if m:
@@ -215,13 +232,13 @@ class RuleParser:
 
     def _regions(self, exp: list[str], used: list[bool], seps: list[bool]) -> None:
         n = len(exp)
-        for phrase in REGION_WORDS.get(self.ref.market, []):
+        for phrase in region_words(self.ref.market):
             words = key(phrase, self.ref.market).split()
             for i in range(n - len(words) + 1):
                 if exp[i:i + len(words)] == words:
                     for j in range(i, i + len(words)):
                         used[j] = True
-        for phrase in CITY_WORDS.get(self.ref.market, []):
+        for phrase in city_words(self.ref.market):
             words = key(phrase, self.ref.market).split()
             for i in range(n - len(words) + 1):
                 e = i + len(words)
@@ -241,19 +258,25 @@ class RuleParser:
 
     # ------------------------------------------------------------------ 各组件
     def _postcode(self, text: str) -> tuple[str, str | None]:
+        """text 已经过 fold。"""
         if not self.pc_re:
             return text, None
-        up = fold(text)
-        hits = list(self.pc_re.finditer(up))
+        market, rule = self.ref.market, self.m.pc_rule
+        hits = list(self.pc_re.finditer(text))
         if not hits:
             return text, None
-        if self.ref.market == "AU":  # 澳洲 4 位邮编和门牌易混：只认州缩写后面、或整段末尾的 4 位数
-            hits = [h for h in hits if re.search(r"(?:" + "|".join(AU_STATES) + r")\W*$", up[:h.start()])
-                    or not up[h.end():].strip(" ,.")]
+        known = [h for h in hits if norm_postcode(h.group(0), market) in self.ref.postcodes] if rule else []
+        if known:  # 参考库里有的邮编优先（与门牌同为 4 位数的市场）
+            hits = known[-1:]
+        elif market == "AU" or rule == "end":  # 4 位邮编和门牌易混：只认州缩写后面、或整段末尾的 4 位数
+            hits = [h for h in hits if re.search(r"(?:" + "|".join(AU_STATES) + r")\W*$", text[:h.start()])
+                    or not text[h.end():].strip(" ,.")]
+        elif rule == "chunk":  # 欧洲写法（1070 Wien）：不认识的 4 位数只有单独成段时才当邮编，否则多半是门牌
+            hits = [h for h in hits if not text[:h.start()].strip() or re.search(r"[,;\n|]\s*$", text[:h.start()])]
         if not hits:
             return text, None
         h = hits[-1]
-        pc = h.group(0).replace(" ", "")
+        pc = norm_postcode(h.group(0), market)
         if not pc.strip("0"):  # 00000：线上表单的占位邮编（阿联酋没有邮编）
             return text[:h.start()] + " " + text[h.end():], None
         text = text[:h.start()] + " " + text[h.end():]
@@ -282,7 +305,7 @@ class RuleParser:
                     continue
                 p.unit = f"{t} {toks[i + 1]}"
                 used[i] = used[i + 1] = True
-            elif t == "#" and i + 1 < len(toks):
+            elif t == "#" and i + 1 < len(toks) and not self.m.hash_number:  # 拉美的 # 标门牌，不是单元
                 p.unit = "#" + toks[i + 1]
                 used[i] = used[i + 1] = True
             elif re.fullmatch(r"(?:RT|RW)", t) and i + 1 < len(toks):  # 印尼 RT/RW：片区级信息，不作门牌
@@ -341,8 +364,9 @@ class RuleParser:
         if kind == "street":
             spans = [s for s in spans if not _all_type_words(s.text, self.ref.market)]
             # 既是道路名又是片区名（Jakarta Timur、Sydney）且没写类型词：当片区处理
-            area_like = [s for s in spans if s.text in self.ref.area_keys
+            area_like = [s for s in spans if s.text in self.ref.area_keys and self.ref.market != "JP"
                          and not _has_type_word(" ".join(exp[s.start:s.end]), self.ref.market)]
+            # （日本的"町丁目"既是地址表里的道路，也是片区，按道路处理）
             spans = [s for s in spans if s not in area_like]
             p.streets = sorted(spans, key=lambda s: -(s.end - s.start))
         else:
@@ -449,6 +473,11 @@ class RuleParser:
         for i, t in cand:
             if t == p.number:
                 used[i] = True
+                # 哥伦比亚 "# 75 35" = 75-35（交叉街编号 + 距离），中间漏了连字符
+                if self.ref.market == "CO" and re.fullmatch(r"\d{1,3}[A-Z]?", t) and i + 1 < len(p.tokens) \
+                        and not used[i + 1] and re.fullmatch(r"\d{1,3}", p.tokens[i + 1]):
+                    p.number = f"{t}-{p.tokens[i + 1]}"
+                    used[i + 1] = True
                 break
         if self.ref.market == "NL" and p.number:  # 荷兰：35hs、162A、283-30 = 门牌 + 附加（官方表里记在单元里）
             m = re.fullmatch(r"(\d+)(?:(HS|BG|BV|[A-Z])|-(\w+))", p.number)
@@ -476,11 +505,16 @@ def _has_type_word(text: str, market: str) -> bool:
     return bool(set(text.split()) & TYPE_WORDS.get(MARKET_LANG.get(market, "EN"), set()))
 
 
+# 最初的 11 个市场：只由类型词 + 数字组成的名称（JALAN 3）不当道路名；其他市场的编号道路是正常路名
+#（哥伦比亚 Carrera 14、墨西哥 Calle 5、日本 丸の内 2 CHOME）
+_DIGIT_IS_TYPE = {"AU", "DE", "FR", "NL", "AE", "SA", "MY", "ID", "TH", "VN", "PH"}
+
+
 def _all_type_words(text: str, market: str) -> bool:
     from .text import TYPE_WORDS, MARKET_LANG
     words = text.split()
     tw = TYPE_WORDS.get(MARKET_LANG.get(market, "EN"), set()) | TYPE_WORDS["AREA"]
-    return all(w in tw or w.isdigit() for w in words)
+    return all(w in tw or (w.isdigit() and market in _DIGIT_IS_TYPE) for w in words)
 
 
 def describe_script(text: str) -> str:

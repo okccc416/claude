@@ -1,0 +1,19 @@
+{
+ "criteria": {
+  "min_n": 25,
+  "min_ok": 0.95,
+  "min_wilson_lower": 0.88,
+  "max_over_1km": 0.02
+ },
+ "allow": {
+  "GB": [
+   "ROUTE|pc|uN|exact"
+  ],
+  "LT": [
+   "PREMISE|POSTCODE_REPLACED"
+  ],
+  "BG": [
+   "ROUTE|pc|u1|core"
+  ]
+ }
+}

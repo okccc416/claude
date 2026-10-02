@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 import time
 from collections import Counter
@@ -57,7 +58,17 @@ def main() -> None:
         L.append(f"| {MARKETS[code].name}（{code}） | {args.n:,} | {took:.0f}s | {100 * ok / tot:.1f}% | "
                  f"{100 * r('STREET'):.1f}% | {100 * r('NUM'):.1f}% | {100 * r('AREA'):.1f}% |")
         print(L[-1], flush=True)
-    (ROOT / "reports" / "crf_training.md").write_text("\n".join(L) + "\n", encoding="utf-8")
+    # 只重训部分市场时，保留报告里其他市场的行（按市场代码合并，按 markets.py 的顺序排列）
+    out = ROOT / "reports" / "crf_training.md"
+    rows = {}
+    if out.exists():
+        for line in out.read_text(encoding="utf-8").splitlines():
+            m = re.search(r"（([A-Z]{2})） \|", line)
+            if m:
+                rows[m.group(1)] = line
+    for line in L[4:]:
+        rows[re.search(r"（([A-Z]{2})） \|", line).group(1)] = line
+    out.write_text("\n".join(L[:4] + [rows[c] for c in MARKETS if c in rows]) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

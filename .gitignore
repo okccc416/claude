@@ -10,3 +10,5 @@ mvp/reports/markets_eval_dev_llm*_??.md
 mvp/reports/markets_eval_dev_llm*_??.json
 mvp/reports/markets_eval_test_llm*_??.md
 mvp/reports/markets_eval_test_llm*_??.json
+mvp/reports/markets_eval_dev_g_*
+mvp/reports/markets_eval_*_tmp*

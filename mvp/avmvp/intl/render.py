@@ -15,7 +15,9 @@ import random
 import re
 from dataclasses import dataclass
 
+from .markets import MARKETS
 from .reference import MarketReference
+from .text import fmt_postcode
 
 CITY = {"AU": ["Sydney", "Melbourne"], "DE": ["Berlin"], "FR": ["Paris"], "NL": ["Amsterdam"],
         "AE": ["Dubai", "دبي", "Dubai, UAE"], "SA": ["Riyadh", "الرياض", "Riyadh, Saudi Arabia"],
@@ -35,7 +37,13 @@ STREET_ABBR = {"STREET": ["St", "St."], "ROAD": ["Rd", "Rd."], "AVENUE": ["Ave",
                "HIGHWAY": ["Hwy"], "PARADE": ["Pde"], "CRESCENT": ["Cres"], "PLACE": ["Pl"], "LANE": ["Ln"],
                "STRASSE": ["Str."], "RUE": ["r."], "BOULEVARD": ["Bd", "Blvd"], "JALAN": ["Jl.", "Jln", "Jln."],
                "DUONG": ["Đ.", "Đường"], "THANON": ["ถ."], "SOI": ["ซ."], "LORONG": ["Lrg", "Lor."],
-               "PERSIARAN": ["Psn"], "GANG": ["Gg."]}
+               "PERSIARAN": ["Psn"], "GANG": ["Gg."],
+               "CALLE": ["C/", "Cl.", "C."], "AVENIDA": ["Av.", "Avda.", "Ave."], "RUA": ["R."], "PLAZA": ["Pza."],
+               "CARRERA": ["Cra.", "Kr", "Cr."], "TRANSVERSAL": ["Tv."], "DIAGONAL": ["Dg."], "TRAVESSA": ["Tv."],
+               "LARGO": ["Lg."], "ALAMEDA": ["Al."], "PRAÇA": ["Pç."], "VIALE": ["V.le"], "CORSO": ["C.so"],
+               "PIAZZA": ["P.za"], "ULICA": ["ul."], "ALEJA": ["al."], "TÄNAV": ["tn"], "GATVĖ": ["g."],
+               "PROSPEKTAS": ["pr."], "NÁMĚSTÍ": ["nám."], "NÁMESTIE": ["nám."], "UTCA": ["u."], "KÖRÚT": ["krt."],
+               "CESTA": ["c."], "GATE": ["gt."], "ULITSA": ["ul."]}
 
 
 @dataclass
@@ -72,6 +80,7 @@ def _abbrev(name: str, rng: random.Random, p: float) -> str:
     out = []
     for w in name.split():
         up = re.sub(r"[^\w]", "", w.upper()).replace("ĐƯỜNG", "DUONG").replace("STRAßE", "STRASSE")
+        up = {"ÁVENIDA": "AVENIDA", "TANAV": "TÄNAV"}.get(up, up)
         if up in STREET_ABBR and rng.random() < p:
             out.append(rng.choice(STREET_ABBR[up]))
         elif up.endswith("STRASSE") and len(up) > 8 and rng.random() < p:
@@ -89,6 +98,9 @@ class Renderer:
         self.split = split
         self.street_ids = [s.id for s in ref.streets if street_split(s.name) == split and len(s.name) >= 4]
         self.area_names = {a.id: a for a in ref.areas}
+        m = MARKETS[self.market]
+        self.cities = CITY.get(self.market) or list(m.cities) or [m.regions[0][0]]
+        self.units = UNIT_FMT.get(self.market) or list(m.unit_fmt)
 
     # ------------------------------------------------------------------ 组件
     def _street_name(self, s) -> str:
@@ -141,15 +153,15 @@ class Renderer:
             "area": area if rng.random() < 0.85 else None,
             "district": district if rng.random() < 0.5 else None,
             "building": self._building_near(s) if rng.random() < 0.25 else None,
-            "unit": None, "postcode": None, "city": rng.choice(CITY[self.market]) if rng.random() < 0.7 else None,
+            "unit": None, "postcode": None, "city": rng.choice(self.cities) if rng.random() < 0.7 else None,
         }
-        if rng.random() < 0.2 and UNIT_FMT.get(self.market):
-            parts["unit"] = rng.choice(UNIT_FMT[self.market]).format(u=rng.randint(1, 40), f=rng.randint(1, 30),
-                                                                     b=rng.choice("ABCD"))
+        if rng.random() < 0.2 and self.units:
+            parts["unit"] = rng.choice(self.units).format(u=rng.randint(1, 40), f=rng.randint(1, 30),
+                                                          b=rng.choice("ABCD"))
         if self.market not in ("AE",) and rng.random() < 0.5:
             pcs = [pc for pc, (a, b, n) in ref.postcodes.items()
                    if abs(a - s.lat) < 0.01 and abs(b - s.lng) < 0.01 and n >= 5]
-            parts["postcode"] = rng.choice(pcs) if pcs else None
+            parts["postcode"] = fmt_postcode(rng.choice(pcs), self.market) if pcs else None
         truth = {"street": s.id, "lat": s.lat, "lng": s.lng, "number": parts["number"]}
         return self._compose(parts, truth, noise)
 
@@ -164,19 +176,32 @@ class Renderer:
             return None
         pt = rng.choice(pts)
         s = ref.streets[sid]
-        city = rng.choice(CITY[self.market])
-        parts = {"street": _abbrev(s.name.title() if s.name.isupper() else s.name, rng, 0.6),
+        city = rng.choice(self.cities)
+        name = rng.choice(s.names[:3]) if len(s.names) > 1 and rng.random() < 0.3 else s.name  # 地址表 / 路网两种写法
+        pc = pt["postcode"] or (self._nearest_postcode(pt["lat"], pt["lng"]) if not getattr(ref, "pc_complete", True) else "")
+        parts = {"street": _abbrev(name.title() if name.isupper() else name, rng, 0.6),
                  "number": pt["number"] if rng.random() > 0.05 else None,
                  "area": pt["locality"].title() if pt["locality"] and rng.random() < 0.7 else None,
                  "district": None, "building": None,
                  "unit": (pt["unit"].title() if pt["unit"] else None) if rng.random() < 0.8 else None,
-                 "postcode": pt["postcode"] if rng.random() > 0.08 else None,
+                 "postcode": fmt_postcode(pc, self.market) if pc and rng.random() > 0.08 else None,
                  "city": city if rng.random() < 0.3 else None}
         if self.market == "AU" and parts["postcode"]:
             parts["postcode"] = f"{AU_STATE.get(city, 'NSW')} {parts['postcode']}" if rng.random() < 0.6 \
                 else parts["postcode"]
+        elif MARKETS[self.market].state and parts["postcode"] and rng.random() < 0.6:
+            parts["postcode"] = f"{MARKETS[self.market].state} {parts['postcode']}"
         truth = {"street": sid, "point": pt["id"], "lat": pt["lat"], "lng": pt["lng"], "number": pt["number"]}
         return self._compose(parts, truth, noise)
+
+    def _nearest_postcode(self, lat: float, lng: float) -> str:
+        """地址表不带邮编的市场：取最近的 POI 邮编（合成地址里有邮编的比例与真实写法接近）。"""
+        best, bd = "", 0.004
+        for pc, (a, b, n) in self.ref.postcodes.items():
+            d = abs(a - lat) + abs(b - lng)
+            if d < bd and n >= 5:
+                best, bd = pc, d
+        return best
 
     def _compose(self, parts: dict, truth: dict, noise: float) -> Sample:
         """按市场语序拼接，逐段打标签；再按比例加噪声（错拼、大小写、漏逗号）。"""
@@ -193,11 +218,8 @@ class Renderer:
             seq.append((parts["building"], "BLDG"))
         if parts["unit"]:
             seq.append((parts["unit"], "UNIT"))
-        if m in ("DE", "NL"):
-            seq.append((st, "STREET"))
-            if num:
-                seq.append((num, "NUM"))
-        elif m == "ID":
+        mk = MARKETS[m]
+        if m == "ID":
             seq.append((st, "STREET"))
             if num:
                 seq += [("No.", "O"), (num, "NUM")]
@@ -206,6 +228,15 @@ class Renderer:
         elif m == "AU" and num and parts["unit"] and parts["unit"].startswith("Unit") and rng.random() < 0.6:
             u = parts["unit"].split()[-1]
             seq = [x for x in seq if x[1] != "UNIT"] + [(f"{u}/", "UNIT"), (num, "NUM"), (st, "STREET")]
+        elif not mk.number_first:  # 门牌在道路名后：Musterstraße 12、Calle 72 # 8-24、Rua Augusta, 12
+            seq.append((st, "STREET"))
+            if num:
+                mark = ("#" if m == "CO" and rng.random() < 0.7 else "No." if m == "CO" and rng.random() < 0.5
+                        else "#" if mk.hash_number and rng.random() < 0.2 else "nº" if m in ("BR", "PT")
+                        and rng.random() < 0.1 else "")
+                if mark:
+                    seq.append((mark, "O"))
+                seq.append((num, "NUM"))
         else:
             if num:
                 prefix = rng.choice(["", "", "No. "]) if m in ("MY", "PH") else ("Building " if m == "SA" and
@@ -220,9 +251,9 @@ class Renderer:
                 if m == "VN" and rng.random() < 0.5:
                     word = rng.choice(["P.", "Phường "]) if k == "area" else rng.choice(["Q.", "Quận "])
                 seq.append((word + parts[k], lab))
-        if m in ("DE", "FR", "NL") and parts["postcode"]:
+        if mk.postcode_first and parts["postcode"]:
             seq.append((parts["postcode"], "PC"))
-            seq.append((parts["city"] or CITY[m][0], "CITY"))
+            seq.append((parts["city"] or self.cities[0], "CITY"))
         else:
             if parts["city"]:
                 seq.append((parts["city"], "CITY"))

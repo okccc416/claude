@@ -14,10 +14,10 @@ import re
 import pycrfsuite
 
 from .markets import MARKETS
-from .parse import (CITY_WORDS, HOUSE_NO, NUMBER_MARKERS, REGION_WORDS, UNIT_WORDS, Parsed, Span, generic_name,
+from .parse import (HOUSE_NO, NUMBER_MARKERS, UNIT_WORDS, Parsed, Span, city_words, generic_name, region_words,
                     strip_noise)
 from .reference import MarketReference
-from .text import TYPE_WORDS, core_key, fold, key, script_of, skeleton, tokenize
+from .text import MARKET_LANG, TYPE_WORDS, core_key, fold, key, norm_postcode, script_of, skeleton, tokenize
 
 SEP = re.compile(r"[,;\n|،]+")
 
@@ -45,7 +45,7 @@ class Vocab:
         self.street = {w for k in ref.street_keys for w in k.split()}
         self.area = {w for k in ref.area_keys for w in k.split()}
         self.poi = {w for k in (ref.poi_fuzzy.keys if ref.poi_fuzzy else []) for w in k.split()}
-        lang = {"AU": "EN", "PH": "EN", "AE": "AR", "SA": "AR"}.get(ref.market, ref.market)
+        lang = MARKET_LANG.get(ref.market, "EN")
         self.types = TYPE_WORDS.get(lang, set()) | TYPE_WORDS.get("EN", set())
         self.area_types = TYPE_WORDS["AREA"]
 
@@ -94,7 +94,7 @@ class CRFParser:
         self.tagger = pycrfsuite.Tagger()
         self.tagger.open(str(ref.dir / "crf.model"))
         self.pc_re = re.compile(self.m.postcode) if self.m.postcode else None
-        self.neutral = {key(x, ref.market) for x in REGION_WORDS.get(ref.market, []) + CITY_WORDS.get(ref.market, [])}
+        self.neutral = {key(x, ref.market) for x in region_words(ref.market) + city_words(ref.market)}
 
     def tag(self, text: str) -> tuple[list[str], list[str]]:
         toks, seps = tokenize_with_sep(text)
@@ -117,7 +117,7 @@ class CRFParser:
             if key(words, self.ref.market) in self.neutral:
                 continue  # 国家 / 大区 / 全城名：不作片区证据（与规则解析一致）
             if lab == "PC" and self.pc_re and self.pc_re.search(fold(words)):
-                pc = self.pc_re.search(fold(words)).group(0).replace(" ", "")
+                pc = norm_postcode(self.pc_re.search(fold(words)).group(0), self.ref.market)
                 p.postcode = pc if pc.strip("0") else p.postcode
             elif lab == "NUM" and p.number is None and re.search(r"\d", words):
                 p.number = toks[b - 1] if HOUSE_NO.match(toks[b - 1]) else words

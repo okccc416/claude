@@ -23,7 +23,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from .fuzzy import FuzzyIndex
-from .text import MARKET_LANG, core_key, key, skeleton
+from .text import MARKET_LANG, TYPE_WORDS, core_key, fold, key, norm_postcode, postcode_prefix, skeleton
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = Path(os.environ.get("AV_MARKETS_DIR") or ROOT / "data" / "markets")  # 部署时可指定参考数据目录
@@ -35,8 +35,12 @@ BUILDING_CATS = {"shopping_mall", "hotel", "hospital", "specialty_hospital", "co
                  "corporate_or_business_office", "industrial_facility_or_service", "cultural_center"}
 BUILDING_WORDS = re.compile(r"\b(?:TOWER|TOWERS|PLAZA|BUILDING|BLDG|MALL|CENTRE|CENTER|COMPLEX|RESIDENCES?|"
                             r"APARTMENTS?|CONDO|MENARA|WISMA|GEDUNG|APARTEMEN|CITY|SQUARE|HOUSE|COURT|HOTEL|"
-                            r"HOSPITAL|UNIVERSITY|MARKET|TERMINAL|STATION)\b|برج|مبنى|مجمع|فندق|مول|อาคาร|ตึก|คอนโด|"
-                            r"TÒA|CHUNG CƯ|CAO ỐC", re.I)
+                            r"HOSPITAL|UNIVERSITY|MARKET|TERMINAL|STATION|EDIF[IÍ]CIO|TORRE|CONDOM[IÍ]NIO|PALAZZO|"
+                            r"SHOPPING|GALERIA|CENTRO COMERCIAL)\b|برج|مبنى|مجمع|فندق|مول|อาคาร|ตึก|คอนโด|"
+                            r"TÒA|CHUNG CƯ|CAO ỐC|ビル|タワー|センター|プラザ|ヒルズ|会館|ホテル", re.I)
+# 冠词（核心键里也会去掉，但不能算"类型词"）：判断两个路名的类型词是否一致时不看它们
+ARTICLES = {"DE", "DEL", "LA", "LAS", "LOS", "EL", "DA", "DO", "DAS", "DOS", "DI", "D", "DU", "L", "DES", "LE",
+            "DELLA", "DEI", "DEGLI", "DELLE", "DELLO", "E"}
 
 
 def is_test_place(place_id: str) -> bool:
@@ -107,6 +111,7 @@ class MarketReference:
         self.street_core: dict[str, set[int]] = defaultdict(set)  # 核心键（去掉类型词）-> 道路
         self.area_core: dict[str, set[int]] = defaultdict(set)
         self.postcodes: dict[str, tuple[float, float, int]] = {}  # 邮编 -> (纬度, 经度, 条数)
+        self.postcode_prefix: dict[str, tuple[float, float, int]] = {}  # 分级邮编的上一级（见 text.postcode_prefix）
         self.street_skel: dict[str, set[int]] = defaultdict(set)  # 阿拉伯文市场：转写骨架 -> 道路（见 text.skeleton）
         self.area_skel: dict[str, set[int]] = defaultdict(set)
         self.street_fuzzy: FuzzyIndex | None = None
@@ -114,6 +119,7 @@ class MarketReference:
         self.poi_fuzzy: FuzzyIndex | None = None
         self.poi_ids: list[int] = []
         self.has_addresses = False
+        self.pc_complete = False  # 邮编表来自官方地址表（全量）：查无此邮编可以当作邮编错误
         self._db: sqlite3.Connection | None = None
 
     # ------------------------------------------------------------------ 查询
@@ -175,6 +181,32 @@ class MarketReference:
 def number_key(n: str) -> str:
     """门牌号规范化：去空格、统一大写（1 D -> 1D，110T 保留，190-200 保留）。"""
     return re.sub(r"\s+", "", str(n)).upper()
+
+
+SLASH_BOTH = {"CZ", "SK", "PL", "LV", "LT"}  # 登记号 / 街道号（捷克、斯洛伐克）、转角楼的两个门牌（波兰、波罗的海）
+
+
+def address_numbers(market: str, number: str, unit: str) -> tuple[str, list[str], str]:
+    """官方地址表的门牌 -> (显示写法, 可查询的写法, 单元)。
+
+    - 数字之间是空格的写成连字符：哥伦比亚 "66 33"（# 66-33）、葡萄牙 "8 10"（8-10）
+    - 捷克：登记号 + 街道号（772 / 2）合写为 772/2，日常只写街道号 2，三种写法都能查到
+    - 带斜杠的：斯洛伐克 145/4、波兰 100/102 每一部分都能查到；其他国家只有斜杠前的号码能单独查到
+    """
+    num = re.sub(r"^(\d+[A-Z]?)\s+(\d+[A-Z]?)$", r"\1-\2", str(number).strip().upper())
+    unit = (unit or "").strip()
+    if market == "JP":  # 日本的地址表是街区级（OpenAddresses jp/tokyo）：号码写作"街区-9"，只有街区号有意义
+        num = num.split("-")[0]
+    if market == "CZ" and unit and re.fullmatch(r"\d+[A-Za-z]?", unit):
+        num, unit = f"{num}/{unit.upper()}", ""
+    keys = [num]
+    if "/" in num:
+        parts = [x for x in num.split("/") if x]
+        if market in SLASH_BOTH:  # 斜杠两边都是日常会单独写的号码
+            keys += parts[::-1] if market in ("CZ", "SK") else parts  # 捷克 / 斯洛伐克：街道号（斜杠后）在前
+        else:  # 其他国家斜杠后是附属号（爱沙尼亚 Kopli 103/16、克罗地亚 23/1），只有斜杠前的号码单独可查
+            keys.append(parts[0])
+    return num, list(dict.fromkeys(number_key(k) for k in keys)), unit
 
 
 # ---------------------------------------------------------------------------------------------- 构建
@@ -258,23 +290,37 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
                      "CREATE TABLE poi(id INTEGER PRIMARY KEY, name TEXT, category TEXT, lat REAL, lng REAL, "
                      "street INTEGER, area INTEGER, postcode TEXT, is_bldg INTEGER);")
     street_by_key_near: dict[str, list[int]] = defaultdict(list)
+    street_by_core_near: dict[str, list[int]] = defaultdict(list)
     for s in ref.streets:
         street_by_key_near[key(s.name, market)].append(s.id)
+        for nm in s.names:
+            street_by_core_near[core_key(nm, market)].append(s.id)
     if cls == "A" and (d / "addresses.parquet").exists():
         ref.has_addresses = True
         pc_acc: dict[str, list[float]] = defaultdict(lambda: [0.0, 0.0, 0])
-        rows = pq.read_table(d / "addresses.parquet", columns=["number", "street", "unit", "postcode",
-                                                               "address_levels", "bbox"]).to_pylist()
+        cols = ["number", "street", "unit", "postcode", "address_levels", "bbox"]
+        if "postal_city" in pq.read_schema(d / "addresses.parquet").names:
+            cols.append("postal_city")
+        rows = pq.read_table(d / "addresses.parquet", columns=cols).to_pylist()
         batch = []
-        kcache: dict[str, str] = {}
+        kcache: dict[str, tuple[str, str]] = {}
+        aid = 0
         for i, r in enumerate(rows):
             if not r["street"] or not r["number"]:
                 continue
             lat, lng = center(r["bbox"])
-            k = kcache.get(r["street"])
-            if k is None:
-                k = kcache[r["street"]] = key(r["street"], market)
+            k, ck = kcache.get(r["street"]) or kcache.setdefault(
+                r["street"], (key(r["street"], market), core_key(r["street"], market)))
             sid = _nearest_street(ref, street_by_key_near.get(k, []), lat, lng)
+            if sid is None and len(ck) >= 4 and not ck.isdigit():
+                # 写法不同的同一条路（地址表 CALLE MADERA / 路网 Calle de la Madera、ulica Złota / Złota）：
+                # 去掉类型词和冠词后一致、类型词不冲突、就在旁边，才算同一条路；地址表的写法记为别名
+                near = [x for x in street_by_core_near.get(ck, []) if _same_type(r["street"], ref.streets[x].name, market)]
+                sid = _nearest_street(ref, near, lat, lng, max_m=300)
+                if sid is not None:
+                    street_by_key_near[k].append(sid)
+                    if r["street"] not in ref.streets[sid].names:
+                        ref.streets[sid].names.append(r["street"])
             if sid is None:  # 官方地址表里有、路网里没有名字的道路：新建一条
                 sid = len(ref.streets)
                 ref.streets.append(Street(sid, r["street"], [r["street"]], lat, lng, (lng, lat, lng, lat),
@@ -285,9 +331,12 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
             if len(s.points) < 400 and i % 7 == 0:
                 s.points.append((lat, lng))
             levels = [x["value"] for x in (r["address_levels"] or []) if x.get("value")]
-            pc = (r["postcode"] or "").replace(" ", "").upper()
-            batch.append((i, str(r["number"]), number_key(r["number"]), sid, r["street"], r["unit"] or "", pc,
-                          levels[-1] if levels else "", lat, lng))
+            locality = r.get("postal_city") or (levels[-1] if levels else "")
+            pc = norm_postcode(r["postcode"], market)
+            num, keys, unit = address_numbers(market, r["number"], r["unit"])
+            for nk in keys:
+                batch.append((aid, num, nk, sid, r["street"], unit, pc, locality, lat, lng))
+                aid += 1
             if pc:
                 acc = pc_acc[pc]
                 acc[0] += lat
@@ -300,6 +349,8 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
         db.execute("CREATE INDEX addr_street ON addr(street, number_key)")
         db.execute("CREATE INDEX addr_pc ON addr(postcode, number_key)")
         ref.postcodes = {pc: (a[0] / a[2], a[1] / a[2], int(a[2])) for pc, a in pc_acc.items()}
+        # 有的国家地址表不带邮编（意大利、爱沙尼亚、新西兰、智利、哥伦比亚、日本）：邮编改从 POI 统计
+        ref.pc_complete = len(ref.postcodes) >= 10
         log(f"  官方地址点 {len(rows):,} 条，邮编 {len(ref.postcodes):,} 个")
 
     # ---- 道路所属片区：道路上任一路段中点落在片区内即算（长路会跨多个片区）
@@ -325,6 +376,9 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
             for nm in a.names:
                 if _is_arabic(nm) and len(skeleton(nm)) >= 3:
                     ref.area_skel[skeleton(nm)].add(a.id)
+    if market == "JP":
+        n = _japanese_aliases(ref)
+        log(f"  町丁目罗马字别名 {n:,} 个")
 
     # ---- POI（留出 20% 作测试）
     places = pq.read_table(d / "places.parquet", columns=["id", "names", "basic_category", "addresses",
@@ -336,11 +390,11 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
     batch = []
     for i, (p, (lat, lng), ar) in enumerate(zip(keep, locs, parea)):
         addr = (p["addresses"] or [{}])[0]
-        pc = (addr.get("postcode") or "").replace(" ", "").upper()
+        pc = norm_postcode(addr.get("postcode"), market)
         cat = p.get("basic_category") or ""
         is_bldg = int(cat in BUILDING_CATS or bool(BUILDING_WORDS.search(p["names"]["primary"])))
         batch.append((i, p["names"]["primary"], cat, lat, lng, -1, ar[0] if ar else -1, pc, is_bldg))
-        if pc and not ref.has_addresses:
+        if pc and not ref.pc_complete:
             acc = pc_acc2[pc]
             acc[0] += lat
             acc[1] += lng
@@ -348,8 +402,16 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
     db.executemany("INSERT INTO poi VALUES (?,?,?,?,?,?,?,?,?)", batch)
     db.commit()
     db.close()
-    if not ref.has_addresses:
+    if not ref.pc_complete:
         ref.postcodes = {pc: (a[0] / a[2], a[1] / a[2], int(a[2])) for pc, a in pc_acc2.items() if a[2] >= 3}
+        pre: dict[str, list[float]] = defaultdict(lambda: [0.0, 0.0, 0])
+        for pc, a in pc_acc2.items():
+            k = postcode_prefix(pc, market)
+            if k:
+                pre[k][0] += a[0]
+                pre[k][1] += a[1]
+                pre[k][2] += a[2]
+        ref.postcode_prefix = {k: (a[0] / a[2], a[1] / a[2], int(a[2])) for k, a in pre.items() if a[2] >= 5}
     ref.poi_ids = list(range(len(keep)))
     log(f"  POI {len(keep):,} 个（留出测试 {len(places) - len(keep):,} 个），邮编 {len(ref.postcodes):,} 个")
 
@@ -383,6 +445,40 @@ def initial_aliases(k: str, market: str) -> list[str]:
                 continue
             out.append(" ".join(toks[:i] + ["".join(t[0] for t in run)] + toks[i + size:]))
     return out
+
+
+def _same_type(a: str, b: str, market: str) -> bool:
+    """两个路名的类型词（去掉冠词）一致，或其中一个没写类型词（CALLE MADERA ≈ Calle de la Madera ≠ Plaza Madera）。"""
+    types = TYPE_WORDS.get(MARKET_LANG.get(market, "EN"), set()) - ARTICLES
+    ta, tb = set(key(a, market).split()) & types, set(key(b, market).split()) & types
+    return not ta or not tb or ta == tb
+
+
+def _japanese_aliases(ref: MarketReference) -> int:
+    """日本：町丁目名只有日文（丸の内二丁目）。片区（町）有罗马字名称时，给道路加罗马字别名（MARUNOUCHI 2 CHOME），
+    让 "2 Chome-7-9 Marunouchi" 这类写法也能对上。"""
+    latin: dict[str, str] = {}  # 町名（日文）-> 罗马字：上高田一丁目 / Kami Takada 1 -> 上高田 -> KAMI TAKADA
+    for a in ref.areas:
+        ja = [n for n in a.names if re.search(r"[\u3040-\u30ff\u3400-\u9fff]", n)]
+        en = [n for n in a.names if re.fullmatch(r"[A-Za-z0-9\u00C0-\u024F\s'\-]+", n)]
+        if not ja or not en:
+            continue
+        town_en = re.sub(r"\s*\d+(?:\s*CHOME)?$", "", " ".join(key(en[0], ref.market).split())).strip()
+        for j in ja:
+            m = re.fullmatch(r"(.+?) \d+ CHOME", key(j, ref.market))
+            if town_en:
+                latin.setdefault(m.group(1) if m else key(j, ref.market), town_en)
+    added = 0
+    for s in ref.streets:
+        m = re.fullmatch(r"(.+?) (\d+) CHOME", key(s.name, ref.market))
+        town, chome = (m.group(1), m.group(2)) if m else (key(s.name, ref.market), None)
+        en = latin.get(town)
+        if not en:
+            continue
+        for name in {en, en.replace(" ", "")}:  # Minami Senju / Minamisenju
+            ref.street_keys[f"{name} {chome} CHOME" if chome else name].add(s.id)
+            added += 1
+    return added
 
 
 def _is_arabic(text: str) -> bool:

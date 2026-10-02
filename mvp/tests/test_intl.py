@@ -46,7 +46,7 @@ def _write(d: Path, areas, segments, places, addresses=None):
 
     d.mkdir(parents=True)
     pq.write_table(pa.Table.from_pylist([
-        {"id": f"d{i}", "names": _names(n), "subtype": st,
+        {"id": f"d{i}", "names": _names(*n) if isinstance(n, tuple) else _names(n), "subtype": st,
          "bbox": {"xmin": b[0], "ymin": b[1], "xmax": b[2], "ymax": b[3]}} for i, (n, st, b) in enumerate(areas)]),
         d / "divisions.parquet")
     pq.write_table(pa.Table.from_pylist([
@@ -399,3 +399,100 @@ def test_router_and_http(au, monkeypatch):
         assert getattr(e.value, "code", None) == 400
     finally:
         srv.shutdown()
+
+
+# ---------------------------------------------------------------------------------------------- Google 覆盖的其他国家
+def test_new_language_normalization():
+    from avmvp.intl.text import fmt_postcode, norm_postcode
+    # 日文：漢数字丁目、番地 / 号、全角数字与各种横线都统一成 "町名 N CHOME 番地-号"
+    assert key("東京都千代田区丸の内二丁目7番9号", "JP") == key("東京都千代田区丸の内2-7-9", "JP") \
+        == "東京都 千代田区 丸の内 2 CHOME 7-9"
+    assert key("2 Chome-7-1 Yurakucho, Chiyoda City", "JP").startswith("YURAKUCHO 2 CHOME 7-1")
+    assert key("銀座１丁目４−６", "JP") == "銀座 1 CHOME 4-6"
+    # 保加利亚：西里尔文按官方规则转写，与拉丁写法对得上；ул. / St 都是 ULITSA
+    assert core_key("ул. Пиротска", "BG") == core_key("Pirotska St", "BG") == "PIROTSKA"
+    # 意大利文带点缩写、哥伦比亚 Cra. / Cl.、波兰 ł、丹麦 ø
+    assert key("V.le Monza", "IT") == "VIALE MONZA" and key("C.so Buenos Aires", "IT") == "CORSO BUENOS AIRES"
+    assert key("Cra. 14 # 66 - 33", "CO") == "CARRERA 14 # 66-33"
+    assert key("ul. Marszałkowska", "PL") == key("ULICA MARSZALKOWSKA", "PL")
+    assert key("Nørre Voldgade", "DK") == "NORRE VOLDGADE"
+    # 邮编：存储时去掉空格 / 连字符 / 国家前缀，显示时按当地写法
+    assert norm_postcode("LT-01120", "LT") == "01120" and norm_postcode("〒104-0028", "JP") == "1040028"
+    assert norm_postcode("C1043AAZ", "AR") == "1043" and norm_postcode("M5V 2K4", "CA") == "M5V2K4"
+    assert fmt_postcode("M5V2K4", "CA") == "M5V 2K4" and fmt_postcode("01310100", "BR") == "01310-100"
+    assert fmt_postcode("11000", "CZ") == "110 00" and fmt_postcode("1040028", "JP") == "104-0028"
+
+
+@pytest.fixture(scope="module")
+def cz(tmp_path_factory):
+    root = tmp_path_factory.mktemp("markets")
+    nove = (14.41, 50.07, 14.44, 50.09)
+    segs = [("Vodičkova", 50.080 + 0.0005 * i, 14.424) for i in range(4)]
+    addrs = [("1935", "Vodičkova", "38", "11000", 50.0805, 14.4241),  # 登记号 1935 / 街道号 38
+             ("699", "Vodičkova", "36", "11000", 50.0810, 14.4241)]
+    _write(root / "CZ", [("Nové Město", "neighborhood", nove)], segs, [("Kavárna", "cafe", 50.075, 14.415)], addrs)
+    return Engine("CZ", "rules", build("CZ", "A", log=lambda *_: None, root=root))
+
+
+def test_czech_house_numbers(cz):
+    """捷克门牌 = 登记号 / 街道号：只写街道号（日常写法）、写全两种都能逐门牌验真；单元字段不当作单元号。"""
+    for text in ("Vodičkova 38, 110 00 Praha", "Vodičkova 1935/38, 110 00 Praha 1"):
+        res = cz.validate(text)
+        assert res.action == ACCEPT and res.granularity == "PREMISE", (text, res.reasons)
+        assert res.best.point["number"] == "1935/38"
+    assert "UNIT_MISSING_MULTI_UNIT_BUILDING" not in cz.validate("Vodičkova 38, Praha").reasons
+    resp = cz.to_response(cz.validate("Vodičkova 38, 11000 Praha"))
+    assert "110 00" in resp["result"]["address"]["formattedAddress"]
+
+
+@pytest.fixture(scope="module")
+def co(tmp_path_factory):
+    root = tmp_path_factory.mktemp("markets")
+    chapinero = (-74.07, 4.63, -74.05, 4.67)
+    segs = [("Carrera 14", 4.640 + 0.001 * i, -74.062) for i in range(6)]
+    segs += [("Calle 66", 4.647, -74.065 + 0.001 * i) for i in range(6)]
+    addrs = [("66 33", "KR 14", "", "", 4.6475, -74.0620), ("66 45", "KR 14", "", "", 4.6478, -74.0620)]
+    _write(root / "CO", [("Chapinero", "neighborhood", chapinero)], segs, [("Café", "cafe", 4.635, -74.068)], addrs)
+    return Engine("CO", "rules", build("CO", "A", log=lambda *_: None, root=root))
+
+
+def test_colombian_addresses(co):
+    """哥伦比亚：Cra. 14 # 66-33 里的 # 标门牌（不是单元号）；地址表的 KR 14 / 66 33 与路网的 Carrera 14 是同一条路。"""
+    for text in ("Cra. 14 # 66-33, Bogotá", "Carrera 14 #66 - 33, Chapinero, Bogotá D.C.", "KR 14 66-33"):
+        res = co.validate(text)
+        assert res.action == ACCEPT and res.granularity == "PREMISE", (text, res.reasons)
+    assert co.validate("Cra. 14 # 66-99, Bogotá").action == FIX  # 门牌不存在
+    assert "Carrera 14 # 66-33" in co.to_response(co.validate("Cra 14 # 66-33"))["result"]["address"][
+        "formattedAddress"]
+
+
+@pytest.fixture(scope="module")
+def jp(tmp_path_factory):
+    root = tmp_path_factory.mktemp("markets")
+    m2 = (139.760, 35.675, 139.768, 35.682)
+    areas = [(("丸の内二丁目", "Marunouchi 2"), "neighborhood", m2), (("千代田区", "Chiyoda"), "locality",
+                                                                    (139.74, 35.66, 139.78, 35.70))]
+    addrs = [("7-9", "丸の内二丁目", "", "", 35.6800, 139.7640), ("3-9", "丸の内二丁目", "", "", 35.6790, 139.7630)]
+    _write(root / "JP", areas, [("外堀通り", 35.678 + 0.001 * i, 139.766) for i in range(3)],
+           [("喫茶店", "cafe", 35.676, 139.761)], addrs)
+    return Engine("JP", "rules", build("JP", "A", log=lambda *_: None, root=root))
+
+
+def test_japanese_addresses(jp):
+    """日本：町丁目 + 街区号验真；日文全写、简写、罗马字（片区英文名生成的别名）都能对上。"""
+    for text in ("〒100-0005 東京都千代田区丸の内二丁目7番3号", "丸の内2-7-3, 千代田区", "東京都千代田区丸の内２丁目７−３",
+                 "2 Chome-7-3 Marunouchi, Chiyoda City, Tokyo"):
+        res = jp.validate(text)
+        assert res.granularity == "PREMISE" and res.action == ACCEPT, (text, res.reasons, res.parsed.streets)
+        assert abs(res.lat - 35.68) < 1e-3
+    assert jp.validate("丸の内2-99-1, 千代田区").action == FIX  # 街区不存在
+
+
+def test_four_digit_postcode_vs_house_number():
+    """欧洲 4 位邮编与门牌同形：单独成段（1070 Wien）才当邮编，道路后面的 4 位数是门牌。"""
+    from avmvp.intl.reference import MarketReference
+    ref = MarketReference("AT")
+    rp = RuleParser(ref)
+    assert rp.parse("Mariahilfer Straße 1200, Wien").postcode is None
+    assert rp.parse("Mariahilfer Straße 120, 1070 Wien").postcode == "1070"
+    assert rp.parse("1070 Wien, Mariahilfer Straße 120").postcode == "1070"

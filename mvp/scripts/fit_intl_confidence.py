@@ -41,12 +41,23 @@ def collect(code: str, n_dev: int, n_test: int) -> dict:
 
 
 def auroc(scores: list[float], labels: list[bool]) -> float:
-    pos = [s for s, y in zip(scores, labels) if y]
-    neg = [s for s, y in zip(scores, labels) if not y]
-    if not pos or not neg:
+    """按秩计算（Mann–Whitney U），并列取平均秩；45 个市场的样本量下逐对比较太慢。"""
+    n_pos = sum(labels)
+    n_neg = len(labels) - n_pos
+    if not n_pos or not n_neg:
         return float("nan")
-    wins = sum((p > q) + 0.5 * (p == q) for p in pos for q in neg)
-    return wins / (len(pos) * len(neg))
+    order = sorted(range(len(scores)), key=lambda i: scores[i])
+    ranks = [0.0] * len(scores)
+    i = 0
+    while i < len(order):
+        j = i
+        while j + 1 < len(order) and scores[order[j + 1]] == scores[order[i]]:
+            j += 1
+        for k in range(i, j + 1):
+            ranks[order[k]] = (i + j) / 2 + 1
+        i = j + 1
+    rank_pos = sum(r for r, y in zip(ranks, labels) if y)
+    return (rank_pos - n_pos * (n_pos + 1) / 2) / (n_pos * n_neg)
 
 
 def main() -> None:
