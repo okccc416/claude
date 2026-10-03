@@ -461,7 +461,9 @@ def test_colombian_addresses(co):
     for text in ("Cra. 14 # 66-33, Bogotá", "Carrera 14 #66 - 33, Chapinero, Bogotá D.C.", "KR 14 66-33"):
         res = co.validate(text)
         assert res.action == ACCEPT and res.granularity == "PREMISE", (text, res.reasons)
-    assert co.validate("Cra. 14 # 66-99, Bogotá").action == FIX  # 门牌不存在
+    assert co.validate("Cra. 14 # 70-10, Bogotá").action == FIX  # 这个街区没有任何门牌
+    near = co.validate("Cra. 14 # 66-99, Bogotá")  # 同一街区（66-*）里有门牌：按相邻门牌给位置，请用户确认
+    assert near.action == CONFIRM and near.granularity == "PREMISE_PROXIMITY" and "PREMISE_INTERPOLATED" in near.reasons
     assert "Carrera 14 # 66-33" in co.to_response(co.validate("Cra 14 # 66-33"))["result"]["address"][
         "formattedAddress"]
 

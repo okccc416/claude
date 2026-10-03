@@ -122,6 +122,9 @@ ABBREV: dict[str, dict[str, str]] = {
 }
 # 比利时：法文 + 荷兰文
 ABBREV["BE"] = {**ABBREV["NL"], **ABBREV["FR"]}
+# 只在个别市场成立的缩写（优先于语种缩写）：哥伦比亚地址表把 Sur / Este / Norte 写成 S / E / N（CL 18 S = Calle 18 Sur）
+MARKET_ABBREV: dict[str, dict[str, str]] = {"CO": {"S": "SUR", "E": "ESTE", "N": "NORTE", "OE": "OESTE"},
+                                             "AR": {"CABA": "CIUDAD AUTONOMA DE BUENOS AIRES"}}
 # 道路 / 片区的类型词：核心键里去掉（写没写都能匹配上）
 TYPE_WORDS: dict[str, set[str]] = {
     "EN": {"STREET", "ROAD", "AVENUE", "DRIVE", "PLACE", "LANE", "CRESCENT", "COURT", "PARADE", "HIGHWAY",
@@ -181,7 +184,7 @@ EN_BASE = {"PR", "IN"}  # 这些市场在本语种缩写之外，也用英文缩
 
 def fold(text: str) -> str:
     """数字统一、去重音、阿拉伯文字形统一、西里尔文转写、日文町丁目统一、转大写。"""
-    t = unicodedata.normalize("NFKC", text).translate(_DIGITS)
+    t = unicodedata.normalize("NFKC", text).translate(_DIGITS).replace("ヶ", "ケ").replace("ヵ", "カ")
     t = t.replace("ß", "SS").replace("đ", "d").replace("Đ", "D").translate(_LATIN_EXTRA)
     if _ARABIC.search(t):
         t = _AR_DIACRITICS.sub("", t).translate(_AR_MAP)
@@ -223,6 +226,9 @@ def _japanese(t: str) -> str:
     t = re.sub(r"(\d+)番地?", r"\1 ", t)
     t = re.sub(r"(?<=\d)号", " ", t)
     t = re.sub(f"(?<=[{_CJK_CHARS}])(\\d{{1,2}})-(\\d+(?:-\\d+)?)", r" \1CHOME \2", t)  # 八重洲2-1、丸の内2-7-9
+    t = re.sub(r"\b([A-Z]{4,})\s+(\d{1,2})-(\d+(?:-\d+)?)\b", r"\1 \2CHOME \3", t)  # TAMAGAWA 1-18-1
+    t = re.sub(r"(?<!CHOME )(?<![\d-])\b(\d{1,2})-(\d+(?:-\d+)?)\s+([A-Z]{4,})\b(?!\s(?:CITY|KU|WARD)\b)",
+               r"\3 \1CHOME \2", t)  # 1-9-1 HONCHO
     t = re.sub(r"\b([A-Z]{3,}),?\s+(\d+CHOME)", r"\1 \2", t)  # YURAKUCHO, 2CHOME
     t = re.sub(r"(\d+CHOME)\s+(\d+(?:-\d+)*)\s+([A-Z]{4,})\b(?!\s(?:CITY|KU|WARD)\b)", r"\3 \1 \2", t)
     t = re.sub(r"(東京都|北海道|京都府|大阪府|[^\s\d]{2,3}県)(?=\S)", r"\1 ", t, count=1)  # 都道府県
@@ -249,6 +255,7 @@ def tokenize(text: str) -> list[str]:
     # 8 - 24 / 64 – 67 -> 8-24（哥伦比亚门牌、区间）；"1079 - 8º andar" 不合并（后面是楼层）
     t = re.sub(r"(?:(?<=\d)|(?<=\d[A-Z]))(?:\s*[–—]\s*|\s+-\s*|\s*-\s+)(?=\d+(?![\dA-Z]))|(?<=\d)\s*[–—]\s*(?=\d)",
                "-", t)
+    t = re.sub(r"\b(\d{1,5})\s?/\s?([A-Z])\b(?![/\-])", r"\1\2", t)  # 136/A -> 136A（斯洛伐克、捷克）
     t = re.sub(r"(?<=\d)(?=[A-Z]{3,})(?!(?:ST|ND|RD|TH|HS|BG|BV)\b)", " ", t)  # 500OXFORD -> 500 OXFORD
     t = re.sub(r"\b(SHOP|UNIT|LEVEL|SUITE|LOT|BLOCK|BLK|OFFICE)(?=\d)", r"\1 ", t)  # SHOP4068 -> SHOP 4068
     for m in _TOKEN.finditer(t):
@@ -269,13 +276,20 @@ def expand(tokens: list[str], market: str) -> list[str]:
     table = ABBREV.get(lang, {})
     base = ABBREV["EN"] if lang in ("EN", "AR") or market in EN_BASE else {}
     out = []
-    for t in _merge_initials(tokens):
+    merged = _merge_initials(tokens)
+    for i, t in enumerate(merged):
+        if t == "ST" and lang == "EN" and i + 1 < len(merged) and merged[i + 1].isalpha() \
+                and merged[i + 1] not in TYPE_WORDS["EN"] and (i == 0 or not merged[i - 1].isalpha()):
+            out.append("SAINT")  # St Agnes Road、St James's Hospital：名字前的 St 是 Saint，名字后的才是 Street
+            continue
         if lang == "DE" and len(t) > 4 and t.endswith("STR"):
             t = t + "ASSE"  # Yorckstr. -> YORCKSTRASSE
         if market == "TH" and len(t) > 2 and t[:3] in ("ซอย", "ถนน") and t not in ("ซอย", "ถนน"):
             out.extend([t[:3], t[3:]])  # ซอยร่วมพัฒนา -> ซอย ร่วมพัฒนา
             continue
-        e = table.get(t) or base.get(t) or t
+        if lang == "JA" and t.isascii() and t.isalpha():
+            t = re.sub(r"M(?=[BMP])", "N", t)
+        e = MARKET_ABBREV.get(market, {}).get(t) or table.get(t) or base.get(t) or t
         out.extend(e.split())
     return out
 
@@ -398,4 +412,4 @@ def postcode_prefix(pc: str, market: str) -> str:
     if market == "GB":  # WC2H7AS -> WC2H7（邮区 + 小区数字）
         return pc[:-2] if len(pc) >= 5 else ""
     n = _PC_PREFIX.get(market)
-    return pc[:n] if n and len(pc) > n else ""
+    return pc[:n] if n and len(pc) >= n else ""

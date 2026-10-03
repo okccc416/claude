@@ -94,6 +94,12 @@ def names_of(n: dict | None) -> list[str]:
     return out
 
 
+def name_variants(name: str) -> list[str]:
+    """带括号的路名拆成两个名称：EJE VIAL 1 ORIENTE (AVENIDA CANAL DE MIRAMONTES) -> 外面的正式名 + 括号里的常用名。"""
+    m = re.fullmatch(r"\s*(.+?)\s*\((.+?)\)\s*", name or "")
+    return [name] if not m else [name, m.group(2), m.group(1)]
+
+
 def center(bbox: dict) -> tuple[float, float]:
     return (bbox["ymin"] + bbox["ymax"]) / 2, (bbox["xmin"] + bbox["xmax"]) / 2
 
@@ -120,6 +126,7 @@ class MarketReference:
         self.poi_ids: list[int] = []
         self.has_addresses = False
         self.pc_complete = False  # 邮编表来自官方地址表（全量）：查无此邮编可以当作邮编错误
+        self.poi_addr_count = 0  # 商户地址门牌点的个数（poiaddr.py）
         self._db: sqlite3.Connection | None = None
 
     # ------------------------------------------------------------------ 查询
@@ -174,7 +181,8 @@ class MarketReference:
     def __getstate__(self):
         s = self.__dict__.copy()
         s["_db"] = None
-        s.pop("_np", None)
+        for k in ("_np", "_core_fuzzy", "_suffix"):
+            s.pop(k, None)
         return s
 
 
@@ -193,7 +201,8 @@ def address_numbers(market: str, number: str, unit: str) -> tuple[str, list[str]
     - 捷克：登记号 + 街道号（772 / 2）合写为 772/2，日常只写街道号 2，三种写法都能查到
     - 带斜杠的：斯洛伐克 145/4、波兰 100/102 每一部分都能查到；其他国家只有斜杠前的号码能单独查到
     """
-    num = re.sub(r"^(\d+[A-Z]?)\s+(\d+[A-Z]?)$", r"\1-\2", str(number).strip().upper())
+    num = re.sub(r"^(\d+)\s*-\s*([A-Z])$", r"\1\2", str(number).strip().upper())  # 墨西哥 27-A -> 27A
+    num = re.sub(r"^(\d+[A-Z]?)\s+(\d+[A-Z]?)$", r"\1-\2", num)
     unit = (unit or "").strip()
     if market == "JP":  # 日本的地址表是街区级（OpenAddresses jp/tokyo）：号码写作"街区-9"，只有街区号有意义
         num = num.split("-")[0]
@@ -309,23 +318,33 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
             if not r["street"] or not r["number"] or not re.search(r"\d", str(r["number"])):
                 continue  # 没有门牌号的记录（维也纳市营住宅 "STG."、楼名）不当地址点
             lat, lng = center(r["bbox"])
-            k, ck = kcache.get(r["street"]) or kcache.setdefault(
-                r["street"], (key(r["street"], market), core_key(r["street"], market)))
-            sid = _nearest_street(ref, street_by_key_near.get(k, []), lat, lng)
-            if sid is None and len(ck) >= 4 and not ck.isdigit():
+            variants = kcache.get(r["street"]) or kcache.setdefault(
+                r["street"], [(v, key(v, market), core_key(v, market)) for v in name_variants(r["street"])])
+            sid = None
+            for _, k, _ in variants:  # 括号里的常用名也试（EJE VIAL 1 ORIENTE (AVENIDA CANAL DE MIRAMONTES)）
+                sid = _nearest_street(ref, street_by_key_near.get(k, []), lat, lng)
+                if sid is not None:
+                    break
+            if sid is None:
                 # 写法不同的同一条路（地址表 CALLE MADERA / 路网 Calle de la Madera、ulica Złota / Złota）：
                 # 去掉类型词和冠词后一致、类型词不冲突、就在旁边，才算同一条路；地址表的写法记为别名
-                near = [x for x in street_by_core_near.get(ck, []) if _same_type(r["street"], ref.streets[x].name, market)]
-                sid = _nearest_street(ref, near, lat, lng, max_m=300)
-                if sid is not None:
-                    street_by_key_near[k].append(sid)
-                    if r["street"] not in ref.streets[sid].names:
-                        ref.streets[sid].names.append(r["street"])
+                for v, _, ck in variants:
+                    if len(ck) < 4 or ck.isdigit():
+                        continue
+                    near = [x for x in street_by_core_near.get(ck, []) if _same_type(v, ref.streets[x].name, market)]
+                    sid = _nearest_street(ref, near, lat, lng, max_m=300)
+                    if sid is not None:
+                        for v2, _, _ in variants:
+                            if v2 not in ref.streets[sid].names:
+                                ref.streets[sid].names.append(v2)
+                        break
             if sid is None:  # 官方地址表里有、路网里没有名字的道路：新建一条
                 sid = len(ref.streets)
-                ref.streets.append(Street(sid, r["street"], [r["street"]], lat, lng, (lng, lat, lng, lat),
-                                          points=[(lat, lng)]))
-                street_by_key_near[k].append(sid)
+                ref.streets.append(Street(sid, r["street"], [v for v, _, _ in variants], lat, lng,
+                                          (lng, lat, lng, lat), points=[(lat, lng)]))
+            for _, k, _ in variants:
+                if sid not in street_by_key_near[k]:
+                    street_by_key_near[k].append(sid)
             s = ref.streets[sid]
             s.bbox = (min(s.bbox[0], lng), min(s.bbox[1], lat), max(s.bbox[2], lng), max(s.bbox[3], lat))
             if len(s.points) < 400 and i % 7 == 0:
@@ -426,6 +445,10 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
             poi_keys[k].append(i)
     ref.poi_fuzzy = FuzzyIndex(poi_keys)
     ref.save()
+    # ---- 商户地址门牌点（第二层门牌数据，见 poiaddr.py）
+    from .poiaddr import derive
+    derive(ref, log)
+    ref.save()
     return ref
 
 
@@ -451,7 +474,7 @@ def _same_type(a: str, b: str, market: str) -> bool:
     """两个路名的类型词（去掉冠词）一致，或其中一个没写类型词（CALLE MADERA ≈ Calle de la Madera ≠ Plaza Madera）。"""
     types = TYPE_WORDS.get(MARKET_LANG.get(market, "EN"), set()) - ARTICLES
     ta, tb = set(key(a, market).split()) & types, set(key(b, market).split()) & types
-    return not ta or not tb or ta == tb
+    return not ta or not tb or ta <= tb or tb <= ta  # AVENIDA CALZADA DE LAS ARMAS ≈ Calzada de las Armas
 
 
 def _japanese_aliases(ref: MarketReference) -> int:
@@ -533,6 +556,17 @@ def _clusters(items: list, radius: float, cell_deg: float = 0.0015) -> list[list
             j = owner.setdefault(c, i)
             if j != i:
                 parent[find(i)] = find(j)
+    # 路网里同一条路常有断口（路口、桥、数据缺段）：约 100 米的细格子里相邻格子有同名路段，也算连通（断口 ≤ 约 200 米）
+    fine: dict[tuple[int, int], int] = {}
+    for i, it in enumerate(items):
+        for lat, lng in (it[4] if len(it) > 4 else []):
+            fine.setdefault((int(lat // 0.001), int(lng // 0.001)), i)
+    for (a, b), i in fine.items():
+        for da in (-1, 0, 1):
+            for db in (-1, 0, 1):
+                j = fine.get((a + da, b + db))
+                if j is not None and j != i:
+                    parent[find(i)] = find(j)
 
     cell = radius / 111000
     grid: dict[tuple[int, int], list[int]] = defaultdict(list)

@@ -155,7 +155,8 @@ class CRFParser:
         if index is not None and len(k) >= 4:
             for cand in {k, ck}:
                 for hit, score, ids in index.search(cand, limit=2, min_score=84):
-                    out.append(Span(hit, a, b, ids, score, "fuzzy"))
+                    if re.findall(r"\d+", hit) == re.findall(r"\d+", cand):  # 数字不做容错
+                        out.append(Span(hit, a, b, ids, score, "fuzzy"))
         skel = getattr(self.ref, "street_skel" if kind == "street" else "area_skel", None)
         if not out and skel:  # 阿拉伯文市场：拉丁转写 <-> 阿拉伯文
             sk = skeleton(words)

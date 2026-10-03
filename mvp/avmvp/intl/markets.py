@@ -106,9 +106,10 @@ _GOOGLE = [
            region_words=("ESTADO DE SAO PAULO",), city_words=("SAO PAULO", "SAO PAULO SP", "SP", "BRASIL", "BRAZIL"), cities=("São Paulo", "São Paulo - SP"),
            unit_fmt=("Sala {u}", "{f}º andar", "Loja {u}", "Apto {u}")),
     Market("AR", "阿根廷", "C", (("布宜诺斯艾利斯", (-58.53, -34.71, -58.33, -34.53)),),
-           r"\b[A-HJ-NP-Z]\d{4}(?:[A-Z]{3})?\b", False, ("es",), "Av. Corrientes 1234, C1043AAZ CABA；门牌常为 4 位",
-           **EU, omit_type=True, hash_number=True,
-           region_words=("PROVINCIA DE BUENOS AIRES",), city_words=("CABA", "BUENOS AIRES", "CIUDAD AUTONOMA DE BUENOS AIRES", "CIUDAD DE BUENOS AIRES", "ARGENTINA"),
+           r"\b[A-HJ-NP-Z]?\d{4}(?:[A-Z]{3})?\b", False, ("es",), "Av. Corrientes 1234, C1043AAZ CABA；门牌常为 4 位",
+           **EU, omit_type=True, hash_number=True, pc_rule="chunk",
+           # 试点范围含大布宜诺斯艾利斯的郊区：写 CABA / Ciudad de Buenos Aires 能区分市内和郊区的同名道路，当片区证据
+           region_words=("PROVINCIA DE BUENOS AIRES",), city_words=("ARGENTINA",),
            cities=("CABA", "Buenos Aires"), unit_fmt=("Piso {f}", "Dto. {b}", "Local {u}")),
     Market("CL", "智利", "A", (("圣地亚哥", (-70.75, -33.55, -70.50, -33.35)),), r"\b\d{7}\b", False, ("es",),
            "Moneda 788, Santiago；Av. Providencia 1234", omit_type=True, hash_number=True,

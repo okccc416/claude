@@ -2,6 +2,7 @@
 
 两类规则（其余情况仍按 engine._action 的默认规则）：
   A 类  PREMISE|POSTCODE_REPLACED        门牌由官方地址点确认、只有邮编被替换（萨格勒布通写 10000、立陶宛邮编细到路段）
+  全部  POI|<几家商户印证>|<邮编是否印证>       门牌位置来自商户地址门牌点（官方表没有这个门牌，或没有官方表）
   B/C   ROUTE|<印证字段>|<是否唯一>|<名称怎么对上>
         道路级结论：默认要"邮编印证 + 道路名唯一 + 名称完全一致（或片区也印证）"，有的市场别的组合同样可靠
         （保加利亚多数地址不写 ul.，"邮编印证 + 唯一 + 去类型词一致"在开发集上 97% 正确）
@@ -25,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from avmvp.intl.engine import Engine, policy_key_premise, policy_key_route  # noqa: E402
+from avmvp.intl.engine import Engine, policy_key_poi, policy_key_premise, policy_key_route  # noqa: E402
 from avmvp.intl.markets import MARKETS  # noqa: E402
 from evaluate_markets import error_m, judge_real, real_cases  # noqa: E402
 
@@ -50,7 +51,11 @@ def collect(code: str) -> dict:
         if b is None or any(r in res.reasons for r in BLOCKING):
             continue
         key = None
-        if eng.ref.has_addresses and res.granularity == "PREMISE":
+        if res.granularity == "PREMISE_PROXIMITY" and "PREMISE_FROM_POI" in res.reasons and not (
+                {"STREET_SPELL_CORRECTED", "STREET_PARTIAL_MATCH", "AREA_STREET_MISMATCH", "POSTCODE_STREET_MISMATCH",
+                 "POSTCODE_REPLACED", "POSTCODE_NOT_FOUND", "STREET_INFERRED"} & set(res.reasons)):
+            key = policy_key_poi(b)
+        elif eng.ref.has_addresses and res.granularity == "PREMISE":
             key = policy_key_premise(b)
         elif not eng.ref.has_addresses and res.granularity == "ROUTE" and res.parsed.number and \
                 "ROUTE_NOT_CORROBORATED" in res.reasons and not ({"STREET_SPELL_CORRECTED", "STREET_PARTIAL_MATCH",
