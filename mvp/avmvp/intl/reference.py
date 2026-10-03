@@ -6,6 +6,7 @@
   POI    places 主题；按编号哈希留出 20% 作测试，**不进参考库**
   邮编   A 类取官方地址表；B / C 类取 POI 邮编的中位位置（只能定位到片区）
   地址点 A 类官方地址表（门牌 + 道路 + 邮编 + 单元），存在 SQLite
+  OSM 门牌 所有类别的第二门牌来源（scripts/fetch_osm_addresses.py），同一张表，编号从 OSM_ID_BASE 起
 
 构建：python scripts/build_market_reference.py --markets AU,DE,...
 """
@@ -23,11 +24,12 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from .fuzzy import FuzzyIndex
-from .text import MARKET_LANG, TYPE_WORDS, core_key, fold, key, norm_postcode, postcode_prefix, skeleton
+from .text import MARKET_LANG, TYPE_WORDS, core_key, fold, key, norm_postcode, postcode_prefix, skeleton, type_words
 
 ROOT = Path(__file__).resolve().parents[2]
 DATA = Path(os.environ.get("AV_MARKETS_DIR") or ROOT / "data" / "markets")  # 部署时可指定参考数据目录
 _RT_RW = re.compile(r"^(RT|RW)\s?\d+$")
+OSM_ID_BASE = 1_000_000_000  # 地址点编号 >= 这个数的来自 OSM（不是官方地址表）
 # 可以当"楼宇"引用的 POI：商场、酒店、医院、学校、车站、公寓等（普通商户不算，很多商户直接以街道命名）
 BUILDING_CATS = {"shopping_mall", "hotel", "hospital", "specialty_hospital", "college_university", "campus_building",
                  "high_school", "middle_school", "elementary_school", "airport", "train_station", "condominium",
@@ -94,6 +96,17 @@ def names_of(n: dict | None) -> list[str]:
     return out
 
 
+def street_names(n: dict | None) -> list[str]:
+    """道路名称：括号里的常用名也单独作为名称（RK Patkar Marg (Waterfield Road) -> Waterfield Road / RK Patkar Marg）；
+    括号里只有一个词的（(Peatonal)、(Norte)）是注释，不拆。"""
+    out: list[str] = []
+    for nm in names_of(n):
+        for v in name_variants(nm):
+            if v not in out and (v == nm or len(v.split()) >= 2):
+                out.append(v)
+    return out
+
+
 def name_variants(name: str) -> list[str]:
     """带括号的路名拆成两个名称：EJE VIAL 1 ORIENTE (AVENIDA CANAL DE MIRAMONTES) -> 外面的正式名 + 括号里的常用名。"""
     m = re.fullmatch(r"\s*(.+?)\s*\((.+?)\)\s*", name or "")
@@ -127,6 +140,7 @@ class MarketReference:
         self.has_addresses = False
         self.pc_complete = False  # 邮编表来自官方地址表（全量）：查无此邮编可以当作邮编错误
         self.poi_addr_count = 0  # 商户地址门牌点的个数（poiaddr.py）
+        self.osm_count = 0  # OSM 门牌点的个数（官方表已有的门牌不重复收）
         self._db: sqlite3.Connection | None = None
 
     # ------------------------------------------------------------------ 查询
@@ -142,7 +156,7 @@ class MarketReference:
         return dict(zip(("id", "name", "category", "lat", "lng", "street", "area", "postcode"), r))
 
     def addresses(self, street_ids: list[int], number: str | None = None, postcode: str | None = None) -> list[dict]:
-        """A 类：按道路（+ 门牌 / 邮编）查官方地址点。"""
+        """按道路（+ 门牌 / 邮编）查地址点（官方地址表 + OSM 门牌，编号 >= OSM_ID_BASE 的来自 OSM）。"""
         if not street_ids:
             return []
         q = f"SELECT id, number, street, unit, postcode, locality, lat, lng FROM addr WHERE street IN " \
@@ -239,8 +253,15 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
     polys, poly_area = [], []
     for r in pq.read_table(d / "division_areas.parquet").to_pylist():
         aid = div_index.get(r["division_id"])
-        if aid is None or r["geometry"] is None:
+        if r["geometry"] is None:
             continue
+        if aid is None:  # 边界跨进试点范围、但标注点在范围外的区（墨西哥城的 Tlalpan、Iztapalapa）：按边界补上
+            nm = names_of(r["names"])
+            if not nm or _RT_RW.match(nm[0].upper()):
+                continue
+            lat, lng = center(r["bbox"])
+            aid = div_index[r["division_id"]] = len(ref.areas)
+            ref.areas.append(Area(aid, nm[0], nm, r["subtype"], lat, lng))
         g = from_wkb(r["geometry"])
         polys.append(g)
         poly_area.append(aid)
@@ -271,7 +292,7 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
     seg_pts = _densify([s.get("geometry") for s in segs])
     by_name: dict[str, list[tuple]] = defaultdict(list)
     for s, pts in zip(segs, seg_pts):
-        nm = names_of(s["names"])
+        nm = street_names(s["names"])
         if not nm:
             continue
         lat, lng = center(s["bbox"])
@@ -290,6 +311,7 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
             ref.streets.append(Street(len(ref.streets), names[0], names[:6], lat, lng, bb, length_m=length,
                                       points=pts))
     log(f"  道路 {len(ref.streets):,} 条（路段 {len(segs):,}）")
+    _add_road_refs(ref, log)
 
     # ---- 官方地址点（A 类）
     db = sqlite3.connect(d / "reference.sqlite")
@@ -304,6 +326,7 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
         street_by_key_near[key(s.name, market)].append(s.id)
         for nm in s.names:
             street_by_core_near[core_key(nm, market)].append(s.id)
+    official: set[tuple[int, str]] = set()  # 官方表已有的"道路 + 门牌"（OSM 不重复收）
     if cls == "A" and (d / "addresses.parquet").exists():
         ref.has_addresses = True
         pc_acc: dict[str, list[float]] = defaultdict(lambda: [0.0, 0.0, 0])
@@ -355,6 +378,7 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
             num, keys, unit = address_numbers(market, r["number"], r["unit"])
             for nk in keys:
                 batch.append((aid, num, nk, sid, r["street"], unit, pc, locality, lat, lng))
+                official.add((sid, nk))
                 aid += 1
             if pc:
                 acc = pc_acc[pc]
@@ -365,12 +389,14 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
                 db.executemany("INSERT INTO addr VALUES (?,?,?,?,?,?,?,?,?,?)", batch)
                 batch = []
         db.executemany("INSERT INTO addr VALUES (?,?,?,?,?,?,?,?,?,?)", batch)
-        db.execute("CREATE INDEX addr_street ON addr(street, number_key)")
-        db.execute("CREATE INDEX addr_pc ON addr(postcode, number_key)")
         ref.postcodes = {pc: (a[0] / a[2], a[1] / a[2], int(a[2])) for pc, a in pc_acc.items()}
         # 有的国家地址表不带邮编（意大利、爱沙尼亚、新西兰、智利、哥伦比亚、日本）：邮编改从 POI 统计
         ref.pc_complete = len(ref.postcodes) >= 10
         log(f"  官方地址点 {len(rows):,} 条，邮编 {len(ref.postcodes):,} 个")
+        del rows, batch, kcache  # 澳洲地址表 360 万条：先释放再读 OSM 门牌
+    osm_pc = _add_osm(ref, db, official, street_by_key_near, street_by_core_near, log)
+    db.execute("CREATE INDEX addr_street ON addr(street, number_key)")
+    db.execute("CREATE INDEX addr_pc ON addr(postcode, number_key)")
 
     # ---- 道路所属片区：道路上任一路段中点落在片区内即算（长路会跨多个片区）
     flat = [(s.id, pt) for s in ref.streets for pt in (s.points or [(s.lat, s.lng)])]
@@ -407,6 +433,12 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
     parea = areas_containing([x[0] for x in locs], [x[1] for x in locs])
     pc_acc2: dict[str, list[float]] = defaultdict(lambda: [0.0, 0.0, 0])
     batch = []
+    if not ref.pc_complete:  # OSM 门牌上的邮编比商户自填的准，一起统计
+        for pc, a in osm_pc.items():
+            acc = pc_acc2[pc]
+            acc[0] += a[0]
+            acc[1] += a[1]
+            acc[2] += a[2]
     for i, (p, (lat, lng), ar) in enumerate(zip(keep, locs, parea)):
         addr = (p["addresses"] or [{}])[0]
         pc = norm_postcode(addr.get("postcode"), market)
@@ -458,7 +490,7 @@ INITIALS_MARKETS = {"ID", "MY", "PH"}  # 道路多以人名命名、人名常写
 def initial_aliases(k: str, market: str) -> list[str]:
     """把名称中间连续 2–3 个人名词换成首字母（最后一个词保留）：HAJI RANGKAYO RASUNA SAID -> HR RASUNA SAID。"""
     from .text import TYPE_WORDS
-    types = TYPE_WORDS.get(MARKET_LANG.get(market, "EN"), set())
+    types = type_words(market)
     toks = k.split()
     out = []
     for size in (2, 3):
@@ -472,7 +504,7 @@ def initial_aliases(k: str, market: str) -> list[str]:
 
 def _same_type(a: str, b: str, market: str) -> bool:
     """两个路名的类型词（去掉冠词）一致，或其中一个没写类型词（CALLE MADERA ≈ Calle de la Madera ≠ Plaza Madera）。"""
-    types = TYPE_WORDS.get(MARKET_LANG.get(market, "EN"), set()) - ARTICLES
+    types = type_words(market) - ARTICLES
     ta, tb = set(key(a, market).split()) & types, set(key(b, market).split()) & types
     return not ta or not tb or ta <= tb or tb <= ta  # AVENIDA CALZADA DE LAS ARMAS ≈ Calzada de las Armas
 
@@ -498,7 +530,13 @@ def _japanese_aliases(ref: MarketReference) -> int:
         en = latin.get(town)
         if not en:
             continue
-        for name in {en, en.replace(" ", "")}:  # Minami Senju / Minamisenju
+        names = {en, en.replace(" ", "")}  # Minami Senju / Minamisenju
+        for nm in list(names):  # 町的两种读法：本町 HONCHO / HONMACHI
+            if nm.endswith("CHO"):
+                names.add(nm[:-3] + "MACHI")
+            elif nm.endswith("MACHI"):
+                names.add(nm[:-5] + "CHO")
+        for name in names:
             ref.street_keys[f"{name} {chome} CHOME" if chome else name].add(s.id)
             added += 1
     return added
@@ -582,6 +620,166 @@ def _clusters(items: list, radius: float, cell_deg: float = 0.0015) -> list[list
     for i, it in enumerate(items):
         groups[find(i)].append(it)
     return list(groups.values())
+
+
+# 商户地址里常只写道路编号的市场（其他市场的 A10 / S100 这类编号容易和单元号混淆，不收）
+ROAD_REF_MARKETS = {"PR", "IE", "GB"}
+
+
+def _road_ref_names(market: str, ref_tag: str) -> list[str]:
+    """OSM 道路编号 -> 可匹配的名称：波多黎各 PR-25 -> CARRETERA 25（解析时 PR-25 / Carr 25 都改写成这个）；
+    其他市场原样（N11、A40、M50）。只收"字母 + 数字"的编号，纯数字编号会和门牌号混淆。"""
+    out = []
+    for r in ref_tag.split(";"):
+        m = re.fullmatch(r"([A-Z]{1,3})[- ]?(\d{1,4}[A-Z]?)", r.strip().upper())
+        if not m:
+            continue
+        out.append(f"CARRETERA {m.group(2)}" if market == "PR" else f"{m.group(1)}{m.group(2)}")
+    return out
+
+
+def _add_road_refs(ref: MarketReference, log) -> int:
+    """带编号的道路（data/markets/{市场}/osm_road_refs.parquet）：按编号建道路（同编号的路段 400 米连通合并），
+    名称为编号（和路名）。商户常只写编号：1822 PR-25、Carr 199、Unit 5, N7 Business Park。"""
+    import pyarrow.parquet as pq
+
+    path = ref.dir / "osm_road_refs.parquet"
+    if ref.market not in ROAD_REF_MARKETS or not path.exists():
+        return 0
+    by_ref: dict[str, list[tuple]] = defaultdict(list)
+    for r in pq.read_table(path).to_pylist():
+        names = _road_ref_names(ref.market, r["ref"] or "")
+        if not names:
+            continue
+        pts = list(zip(r["lats"], r["lngs"]))
+        lats, lngs = r["lats"], r["lngs"]
+        bb = {"xmin": min(lngs), "ymin": min(lats), "xmax": max(lngs), "ymax": max(lats)}
+        for nm in names:
+            by_ref[nm].append((sum(lats) / len(lats), sum(lngs) / len(lngs), bb,
+                               [nm] + ([r["name"]] if r["name"] else []), pts))
+    n = 0
+    for nm, items in by_ref.items():
+        for cluster in _clusters(items, 400.0):
+            lat = sum(x[0] for x in cluster) / len(cluster)
+            lng = sum(x[1] for x in cluster) / len(cluster)
+            bb = (min(x[2]["xmin"] for x in cluster), min(x[2]["ymin"] for x in cluster),
+                  max(x[2]["xmax"] for x in cluster), max(x[2]["ymax"] for x in cluster))
+            names: list[str] = []
+            for x in cluster:
+                names += [v for v in x[3] if v not in names]
+            ref.streets.append(Street(len(ref.streets), nm, names[:6], lat, lng, bb,
+                                      length_m=haversine(bb[1], bb[0], bb[3], bb[2]),
+                                      points=_thin([p for x in cluster for p in x[4]])))
+            n += 1
+    log(f"  带编号的道路 {n:,} 条（{len(by_ref):,} 个编号）")
+    return n
+
+
+def _osm_number(market: str, number: str, unit: str) -> tuple[str, str]:
+    """OSM 的 addr:housenumber：多个号码只取第一个（12;14）；澳洲 / 新西兰的 14/59 是"单元 / 门牌"。"""
+    number = number.split(";")[0].strip()
+    m = re.fullmatch(r"([A-Za-z]?\d+[A-Za-z]?)\s*/\s*(\d+[A-Za-z]?)", number)
+    if m and market in ("AU", "NZ"):
+        return m.group(2), unit or m.group(1)
+    return number, unit
+
+
+def _add_osm(ref: MarketReference, db, official: set, by_key: dict, by_core: dict, log) -> dict:
+    """OSM 门牌（data/markets/{市场}/osm_addresses.parquet）并入地址点表：
+    - 道路名与路网一致（或去类型词后一致、类型词不冲突）且就在 300 米内才收；对不上的不新建道路
+    - 官方表已有的"道路 + 门牌"不重复收
+    - 带名称的商户节点，如果与留出测试的商户同名（相似度 >= 70）且相距 40 米内，不收：不能让测试商户的孪生记录替它作证
+    返回 OSM 门牌上的邮编统计 {邮编: [纬度和, 经度和, 个数]}。"""
+    import pyarrow.parquet as pq
+    from rapidfuzz import fuzz
+
+    path = ref.dir / "osm_addresses.parquet"
+    if not path.exists():
+        return {}
+    market = ref.market
+    cell = 0.0005
+    test_grid: dict[tuple[int, int], list[tuple[float, float, str]]] = defaultdict(list)
+    for p in pq.read_table(ref.dir / "places.parquet", columns=["id", "names", "bbox"]).to_pylist():
+        if is_test_place(p["id"]):
+            lat, lng = center(p["bbox"])
+            test_grid[(int(lat // cell), int(lng // cell))].append((lat, lng, key((p["names"] or {}).get("primary")
+                                                                               or "", market)))
+    rows = pq.read_table(path).to_pylist()
+    kcache: dict[str, list] = {}
+    seen: set[tuple[int, str, str]] = set()
+    pc_acc: dict[str, list[float]] = defaultdict(lambda: [0.0, 0.0, 0])
+    batch, twins, unlinked = [], 0, 0
+    orphans: dict[tuple[str, int, int], list[dict]] = defaultdict(list)
+    aid = OSM_ID_BASE
+    for r in rows:
+        if not r["number"] or not re.search(r"\d", r["number"]) or len(r["number"]) > 12:
+            continue
+        lat, lng = r["lat"], r["lng"]
+        if r["name"]:
+            nk = key(r["name"], market)
+            a, b = int(lat // cell), int(lng // cell)
+            if any(haversine(lat, lng, t[0], t[1]) <= 40 and fuzz.token_set_ratio(nk, t[2]) >= 70
+                   for i in (-1, 0, 1) for j in (-1, 0, 1) for t in test_grid.get((a + i, b + j), ())):
+                twins += 1
+                continue
+        variants = kcache.get(r["street"]) or kcache.setdefault(
+            r["street"], [(v, key(v, market), core_key(v, market)) for v in name_variants(r["street"])])
+        sid = None
+        for _, k, _ in variants:
+            sid = _nearest_street(ref, by_key.get(k, []), lat, lng, max_m=300)
+            if sid is not None:
+                break
+        if sid is None:
+            for v, _, ck in variants:
+                if len(ck) < 4 or ck.isdigit():
+                    continue
+                near = [x for x in by_core.get(ck, []) if _same_type(v, ref.streets[x].name, market)]
+                sid = _nearest_street(ref, near, lat, lng, max_m=300)
+                if sid is not None:
+                    break
+        if sid is None:
+            unlinked += 1
+            orphans[(r["street"], int(lat // 0.03), int(lng // 0.03))].append(r)
+            continue
+        pc = norm_postcode(r["postcode"], market) if r["postcode"] else ""
+        num, keys, unit = address_numbers(market, *_osm_number(market, r["number"], r["unit"]))
+        for nk in keys:
+            if (sid, nk) in official or (sid, nk, unit) in seen:
+                continue
+            seen.add((sid, nk, unit))
+            batch.append((aid, num, nk, sid, r["street"], unit, pc, r["city"], lat, lng))
+            aid += 1
+        if pc:
+            acc = pc_acc[pc]
+            acc[0] += lat
+            acc[1] += lng
+            acc[2] += 1
+    # 门牌挂在片区 / 小区名下（索非亚 ж.к. Младост 1 бл. 12、都柏林的住宅区、吉隆坡的 Taman）：路网里没有这个名字，
+    # 同一名称在约 3 公里内有 3 个以上门牌时，按"道路"建一条，门牌照收
+    estates = 0
+    for (name, _, _), grp in orphans.items():
+        if len(grp) < 3 or not key(name, market) or key(name, market).isdigit():
+            continue
+        lats, lngs = [g["lat"] for g in grp], [g["lng"] for g in grp]
+        sid = len(ref.streets)
+        ref.streets.append(Street(sid, name, [name], sum(lats) / len(lats), sum(lngs) / len(lngs),
+                                  (min(lngs), min(lats), max(lngs), max(lats)),
+                                  length_m=haversine(min(lats), min(lngs), max(lats), max(lngs)),
+                                  points=[(g["lat"], g["lng"]) for g in grp[:400]]))
+        estates += 1
+        for g in grp:
+            num, keys, unit = address_numbers(market, *_osm_number(market, g["number"], g["unit"]))
+            pc = norm_postcode(g["postcode"], market) if g["postcode"] else ""
+            for nk in keys:
+                if (sid, nk, unit) not in seen:
+                    seen.add((sid, nk, unit))
+                    batch.append((aid, num, nk, sid, name, unit, pc, g["city"], g["lat"], g["lng"]))
+                    aid += 1
+    db.executemany("INSERT INTO addr VALUES (?,?,?,?,?,?,?,?,?,?)", batch)
+    ref.osm_count = len(batch)
+    log(f"  OSM 门牌点 {len(batch):,} 个（共 {len(rows):,} 条；道路对不上 {unlinked:,}，其中按片区名建道路 {estates:,} 条；"
+        f"测试商户孪生记录 {twins:,}）")
+    return pc_acc
 
 
 def _nearest_street(ref: MarketReference, ids: list[int], lat: float, lng: float, max_m: float = 1500) -> int | None:

@@ -162,9 +162,10 @@ def test_au_multi_unit_building_asks_for_unit(au):
     assert au.validate("2/102 Crown St, Surry Hills NSW 2010").action == ACCEPT
 
 
-def test_au_missing_or_unknown_number_is_fix(au):
+def test_au_missing_number_is_fix_unknown_number_is_route_confirm(au):
+    # 与 Google 一致：门牌不在表里 -> 道路级位置 + CONFIRM（门牌未确认）；没写门牌 -> FIX
     r = au.validate("999 Crown Street, Surry Hills NSW 2010")
-    assert r.action == FIX and "PREMISE_NOT_FOUND" in r.reasons
+    assert r.action == CONFIRM and r.granularity == "ROUTE" and "PREMISE_NOT_FOUND" in r.reasons
     assert au.validate("Crown Street, Surry Hills NSW 2010").action == FIX
 
 
@@ -360,7 +361,7 @@ def test_batch_csv_script(au, tmp_path):
     rows = list(csv.DictReader(open(out, encoding="utf-8")))
     assert [r["id"] for r in rows] == ["1", "2", "3"]  # 原有列保留
     assert rows[0]["av_action"] == ACCEPT and rows[0]["av_granularity"] == "PREMISE" and rows[0]["av_lat"]
-    assert rows[1]["av_action"] == FIX and "PREMISE_NOT_FOUND" in rows[1]["av_reasons"]
+    assert rows[1]["av_action"] == CONFIRM and "PREMISE_NOT_FOUND" in rows[1]["av_reasons"]
     assert rows[2]["av_error"]  # 空地址：记录原因，不中断
 
 
@@ -461,7 +462,8 @@ def test_colombian_addresses(co):
     for text in ("Cra. 14 # 66-33, Bogotá", "Carrera 14 #66 - 33, Chapinero, Bogotá D.C.", "KR 14 66-33"):
         res = co.validate(text)
         assert res.action == ACCEPT and res.granularity == "PREMISE", (text, res.reasons)
-    assert co.validate("Cra. 14 # 70-10, Bogotá").action == FIX  # 这个街区没有任何门牌
+    far = co.validate("Cra. 14 # 70-10, Bogotá")  # 这个街区没有任何门牌：道路级 + 请用户确认
+    assert far.action == CONFIRM and far.granularity == "ROUTE" and "PREMISE_NOT_FOUND" in far.reasons
     near = co.validate("Cra. 14 # 66-99, Bogotá")  # 同一街区（66-*）里有门牌：按相邻门牌给位置，请用户确认
     assert near.action == CONFIRM and near.granularity == "PREMISE_PROXIMITY" and "PREMISE_INTERPOLATED" in near.reasons
     assert "Carrera 14 # 66-33" in co.to_response(co.validate("Cra 14 # 66-33"))["result"]["address"][
@@ -487,7 +489,8 @@ def test_japanese_addresses(jp):
         res = jp.validate(text)
         assert res.granularity == "PREMISE" and res.action == ACCEPT, (text, res.reasons, res.parsed.streets)
         assert abs(res.lat - 35.68) < 1e-3
-    assert jp.validate("丸の内2-99-1, 千代田区").action == FIX  # 街区不存在
+    bad = jp.validate("丸の内2-99-1, 千代田区")  # 街区不存在：町丁目级 + 请用户确认
+    assert bad.action == CONFIRM and "PREMISE_NOT_FOUND" in bad.reasons
 
 
 def test_four_digit_postcode_vs_house_number():

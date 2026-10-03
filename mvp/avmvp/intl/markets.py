@@ -169,9 +169,9 @@ _GOOGLE = [
     Market("EE", "爱沙尼亚", "A", (("塔林", (24.55, 59.35, 24.95, 59.50)),), r"\b\d{5}\b", False, ("et",),
            "Pikk tn 33, 10133 Tallinn；常省略 tänav", **EU, omit_type=True,
            city_words=("TALLINN", "EESTI", "ESTONIA", "HARJU MAAKOND", "HARJUMAA"), cities=("Tallinn",)),
-    Market("LV", "拉脱维亚", "A", (("里加", (23.95, 56.88, 24.30, 57.05)),), r"\bLV-?\d{4}\b", False, ("lv",),
-           "Brīvības iela 33, Rīga, LV-1010", **EU, omit_type=True, city_words=("RIGA", "LATVIJA", "LATVIA"),
-           cities=("Rīga",)),
+    Market("LV", "拉脱维亚", "A", (("里加", (23.95, 56.88, 24.30, 57.05)),), r"\b(?:LV-?)?\d{4}\b", False, ("lv",),
+           "Brīvības iela 33, Rīga, LV-1010", **EU, omit_type=True, pc_rule="chunk",  # 商户常省略 LV- 前缀
+           city_words=("RIGA", "LATVIJA", "LATVIA"), cities=("Rīga",)),
     Market("LT", "立陶宛", "A", (("维尔纽斯", (25.15, 54.62, 25.40, 54.78)),), r"\b(?:LT-?)?\d{5}\b", False, ("lt",),
            "Gedimino pr. 9, LT-01103 Vilnius；g. = gatvė", **EU, omit_type=True,
            city_words=("VILNIUS", "LIETUVA", "LITHUANIA", "VILNIAUS M"), cities=("Vilnius",)),

@@ -54,7 +54,7 @@ ABBREV: dict[str, dict[str, str]] = {
     "DE": {"STR": "STRASSE", "STRAßE": "STRASSE", "PL": "PLATZ", "STRASE": "STRASSE"},
     "FR": {"R": "RUE", "AV": "AVENUE", "AVE": "AVENUE", "BD": "BOULEVARD", "BLVD": "BOULEVARD", "PL": "PLACE",
            "ST": "SAINT", "STE": "SAINTE", "QU": "QUAI", "IMP": "IMPASSE", "CHE": "CHEMIN", "SQ": "SQUARE",
-           "FG": "FAUBOURG", "FBG": "FAUBOURG", "PASS": "PASSAGE", "ALL": "ALLEE", "CRS": "COURS"},
+           "FG": "FAUBOURG", "FBG": "FAUBOURG", "PASS": "PASSAGE", "ALL": "ALLEE", "CRS": "COURS", "RTE": "ROUTE"},
     "NL": {"STR": "STRAAT", "PLN": "PLEIN"},
     "MY": {"JLN": "JALAN", "JL": "JALAN", "LOR": "LORONG", "LRG": "LORONG", "PSN": "PERSIARAN", "LBH": "LEBUH",
            "TMN": "TAMAN", "BDR": "BANDAR", "KG": "KAMPUNG", "KPG": "KAMPUNG", "BT": "BUKIT", "BKT": "BUKIT",
@@ -87,6 +87,8 @@ ABBREV: dict[str, dict[str, str]] = {
            "DPTO": "DEPARTAMENTO", "LOC": "LOCAL", "INT": "INTERIOR"},
     "PT": {"R": "RUA", "AV": "AVENIDA", "AVEN": "AVENIDA", "AL": "ALAMEDA", "TV": "TRAVESSA", "TRAV": "TRAVESSA",
            "PC": "PRACA", "PCA": "PRACA", "PRC": "PRACA", "LG": "LARGO", "LGO": "LARGO", "EST": "ESTRADA",
+           "DQ": "DUQUE", "MQ": "MARQUES", "VISC": "VISCONDE", "AZ": "AZINHAGA", "VL": "VILA", "PTO": "PATEO",
+           "ESCNH": "ESCADINHAS", "BR": "BAIRRO", "D": "DOM", "DONA": "DOM",  # 地址表 R D INÊS DE CASTRO = Rua Dona Inês
            "ESTR": "ESTRADA", "ROD": "RODOVIA", "CC": "CALCADA", "CALC": "CALCADA", "BC": "BECO", "PCT": "PRACETA",
            "ESC": "ESCADINHAS", "QTA": "QUINTA", "S": "SAO", "STA": "SANTA", "STO": "SANTO", "DR": "DOUTOR",
            "DRA": "DOUTORA", "ENG": "ENGENHEIRO", "PROF": "PROFESSOR", "GEN": "GENERAL", "GAL": "GENERAL",
@@ -123,7 +125,7 @@ ABBREV: dict[str, dict[str, str]] = {
 # 比利时：法文 + 荷兰文
 ABBREV["BE"] = {**ABBREV["NL"], **ABBREV["FR"]}
 # 只在个别市场成立的缩写（优先于语种缩写）：哥伦比亚地址表把 Sur / Este / Norte 写成 S / E / N（CL 18 S = Calle 18 Sur）
-MARKET_ABBREV: dict[str, dict[str, str]] = {"CO": {"S": "SUR", "E": "ESTE", "N": "NORTE", "OE": "OESTE"},
+MARKET_ABBREV: dict[str, dict[str, str]] = {"CO": {"S": "SUR", "E": "ESTE", "N": "NORTE", "OE": "OESTE", "AU": "AUTOPISTA"},
                                              "AR": {"CABA": "CIUDAD AUTONOMA DE BUENOS AIRES"}}
 # 道路 / 片区的类型词：核心键里去掉（写没写都能匹配上）
 TYPE_WORDS: dict[str, set[str]] = {
@@ -180,6 +182,17 @@ MARKET_LANG = {"AU": "EN", "PH": "EN", "AE": "AR", "SA": "AR", "DE": "DE", "FR":
                "LT": "LT", "PL": "PL", "CZ": "CS", "SK": "SK", "HU": "HU", "SI": "SL", "HR": "HR", "BG": "BG",
                "JP": "JA"}
 EN_BASE = {"PR", "IN"}  # 这些市场在本语种缩写之外，也用英文缩写（Ave. / St. / Apt.）
+# 个别市场与语种默认不同的类型词：智利的 Carrera 是人名（Avenida José Miguel Carrera），不是哥伦比亚式的道路类型
+TYPE_REMOVE: dict[str, set[str]] = {"CL": {"CARRERA", "TRANSVERSAL", "DIAGONAL"}, "MX": {"CARRERA"},
+                                    "AR": {"CARRERA"}, "PR": {"CARRERA"}}
+# 市场特有的类型词：印度的 Marg / Path / Gali（= Road / Lane），Sane Guruji Road = Sane Guruji Marg
+TYPE_ADD: dict[str, set[str]] = {"IN": {"MARG", "PATH", "GALI", "GALLI", "CHOWK"}}
+
+
+def type_words(market: str) -> set[str]:
+    """一个市场的道路类型词（语种默认 + 市场特有 − 市场例外）。"""
+    return (TYPE_WORDS.get(MARKET_LANG.get(market, "EN"), set()) | TYPE_ADD.get(market, set())) \
+        - TYPE_REMOVE.get(market, set())
 
 
 def fold(text: str) -> str:
@@ -194,6 +207,7 @@ def fold(text: str) -> str:
     t = "".join(c for c in unicodedata.normalize("NFD", t)
                 if not (unicodedata.combining(c) and not _THAI.match(c) and c not in "\u3099\u309a"))
     t = unicodedata.normalize("NFC", t).upper()
+    t = re.sub(r"(?<=[A-Z])['’`´](?=[A-Z])", "", t)  # KING'S = KINGS、O'HIGGINS = OHIGGINS、D'AOSTA = DAOSTA
     if _CJK.search(t) or "CHOME" in t:
         t = _japanese(t)
     return t
@@ -221,7 +235,7 @@ def _japanese(t: str) -> str:
     t = re.sub(f"(?<=\\d)[{_DASHES}](?=\\d)", "-", t)
     t = re.sub("([〇一二三四五六七八九十]+)(?=丁目)", lambda m: str(_kanji_number(m.group(1))), t)
     t = re.sub(r"(\d+)丁目\s*", r" \1CHOME ", t)
-    t = re.sub(f"(\\d+)\\s*CHOME\\b[\\s{_DASHES}]*", r" \1CHOME ", t)
+    t = re.sub(f"(\\d+)[\\s{_DASHES}]*CHOME\\b[\\s{_DASHES}]*", r" \1CHOME ", t)  # 2-chōme-17 Asakusa
     t = re.sub(r"(\d+)番地?(?=\d)", r"\1-", t)
     t = re.sub(r"(\d+)番地?", r"\1 ", t)
     t = re.sub(r"(?<=\d)号", " ", t)
@@ -229,8 +243,10 @@ def _japanese(t: str) -> str:
     t = re.sub(r"\b([A-Z]{4,})\s+(\d{1,2})-(\d+(?:-\d+)?)\b", r"\1 \2CHOME \3", t)  # TAMAGAWA 1-18-1
     t = re.sub(r"(?<!CHOME )(?<![\d-])\b(\d{1,2})-(\d+(?:-\d+)?)\s+([A-Z]{4,})\b(?!\s(?:CITY|KU|WARD)\b)",
                r"\3 \1CHOME \2", t)  # 1-9-1 HONCHO
-    t = re.sub(r"\b([A-Z]{3,}),?\s+(\d+CHOME)", r"\1 \2", t)  # YURAKUCHO, 2CHOME
-    t = re.sub(r"(\d+CHOME)\s+(\d+(?:-\d+)*)\s+([A-Z]{4,})\b(?!\s(?:CITY|KU|WARD)\b)", r"\3 \1 \2", t)
+    t = re.sub(f"(?<=[{_CJK_CHARS}])([1-9])(?=\\s*(?:,|$))", r" \1CHOME", t)  # 九段北4（只写丁目）
+    t = re.sub(r"\b(?!(?:TOKYO|JAPAN|TO)\b)([A-Z]{3,}),?\s+(\d+CHOME)", r"\1 \2", t)  # YURAKUCHO, 2CHOME
+    t = re.sub(f"([{_CJK_CHARS}]{{2,}})\\s*,\\s*(\\d+CHOME)", r"\1 \2", t)  # 上目黒, 3丁目32-5
+    t = re.sub(r"(?<![A-Z]\s)\b(\d+CHOME)\s+(\d+(?:-\d+)*)\s+([A-Z]{4,})\b(?!\s(?:CITY|KU|WARD)\b)", r"\3 \1 \2", t)
     t = re.sub(r"(東京都|北海道|京都府|大阪府|[^\s\d]{2,3}県)(?=\S)", r"\1 ", t, count=1)  # 都道府県
     t = re.sub(r"([^\s\d]{1,5}?[区市])(?=[^\s\d])", r"\1 ", t, count=1)  # 千代田区丸の内 -> 千代田区 丸の内
     return re.sub(r"\s+", " ", t).strip()
@@ -256,6 +272,8 @@ def tokenize(text: str) -> list[str]:
     t = re.sub(r"(?:(?<=\d)|(?<=\d[A-Z]))(?:\s*[–—]\s*|\s+-\s*|\s*-\s+)(?=\d+(?![\dA-Z]))|(?<=\d)\s*[–—]\s*(?=\d)",
                "-", t)
     t = re.sub(r"\b(\d{1,5})\s?/\s?([A-Z])\b(?![/\-])", r"\1\2", t)  # 136/A -> 136A（斯洛伐克、捷克）
+    t = re.sub(r"(?<=[A-Z]{3})G\.(?=[\s,]|$)", "GASSE", t)  # 奥地利 Kreuzg. -> KREUZGASSE
+    t = re.sub(r"(?<=[A-Z]{3})PL\.(?=[\s,]|$)", "PLATZ", t)  # Yppenpl. -> YPPENPLATZ
     t = re.sub(r"(?<=\d)(?=[A-Z]{3,})(?!(?:ST|ND|RD|TH|HS|BG|BV)\b)", " ", t)  # 500OXFORD -> 500 OXFORD
     t = re.sub(r"\b(SHOP|UNIT|LEVEL|SUITE|LOT|BLOCK|BLK|OFFICE)(?=\d)", r"\1 ", t)  # SHOP4068 -> SHOP 4068
     for m in _TOKEN.finditer(t):
@@ -289,9 +307,64 @@ def expand(tokens: list[str], market: str) -> list[str]:
             continue
         if lang == "JA" and t.isascii() and t.isalpha():
             t = re.sub(r"M(?=[BMP])", "N", t)
-        e = MARKET_ABBREV.get(market, {}).get(t) or table.get(t) or base.get(t) or t
+        e = MARKET_ABBREV.get(market, {}).get(t) or table.get(t) or base.get(t) or NUMBER_WORDS.get(lang, {}).get(t) or t
         out.extend(e.split())
+    join_set = _DE_JOIN if lang == "DE" else _NL_JOIN if lang in ("NL", "BE") else None
+    if join_set:  # 德语 / 荷兰语复合路名连写分写都有（Brünnerstrasse = Brünner Straße、Waverse Steenweg = Waversesteenweg）
+        joined: list[str] = []
+        for w in out:
+            if w in join_set and joined and joined[-1].isalpha() and joined[-1] not in join_set:
+                joined[-1] += w
+            else:
+                joined.append(w)
+        out = joined
+    out = phrase_norm(out, market)
+    if market == "CO":  # 波哥大的 Avenida Carrera 14（AK 14）就是 Carrera 14：地址表、路网、用户三种写法统一
+        out = [w for i, w in enumerate(out) if not (w == "AVENIDA" and i + 1 < len(out) and out[i + 1] in ("CARRERA", "CALLE"))]
     return out
+
+
+# 西 / 葡语路名里的数字常写成词：Avenida Diez de Julio = Avenida 10 de Julio、Rua Quinze de Novembro = Rua 15 de Novembro
+_ES_NUM = ("PRIMERO DOS TRES CUATRO CINCO SEIS SIETE OCHO NUEVE DIEZ ONCE DOCE TRECE CATORCE QUINCE DIECISEIS DIECISIETE "
+           "DIECIOCHO DIECINUEVE VEINTE VEINTIUNO VEINTIDOS VEINTITRES VEINTICUATRO VEINTICINCO VEINTISEIS VEINTISIETE "
+           "VEINTIOCHO VEINTINUEVE TREINTA").split()
+_PT_NUM = ("PRIMEIRO DOIS TRES QUATRO CINCO SEIS SETE OITO NOVE DEZ ONZE DOZE TREZE QUATORZE QUINZE DEZESSEIS DEZESSETE "
+           "DEZOITO DEZENOVE VINTE").split()
+NUMBER_WORDS = {"ES": {w: str(i) for i, w in enumerate(_ES_NUM, 1)} | {"UNO": "1"},
+                "PT": {w: str(i) for i, w in enumerate(_PT_NUM, 1)} | {"CATORZE": "14"}}
+
+
+def phrase_norm(toks: list[str], market: str) -> list[str]:
+    """跨词的写法统一（expand 之后；解析时逐词展开，拼成短语后也要再做一遍）。"""
+    if market == "IE":
+        toks = reorder_qualifiers(toks)
+    elif market == "BG":  # ж.к. Младост（住宅小区）：ж / к 分开写时拆成了 ZHK K，合回一个词
+        toks = [w for i, w in enumerate(toks) if not (w == "K" and i > 0 and toks[i - 1] == "ZHK")]
+    return toks
+
+
+_QUALIFIERS = {"LOWER", "UPPER", "MIDDLE", "NORTH", "SOUTH", "EAST", "WEST", "GREAT", "LITTLE"}
+
+
+def reorder_qualifiers(toks: list[str]) -> list[str]:
+    """爱尔兰：Baggot Street Lower = Lower Baggot Street、Frederick St S = South Frederick Street（两种写法都常见，
+    路网和地址表也不统一）。统一成限定词在前：路名 + 类型词 + 限定词 -> 限定词 + 路名 + 类型词。"""
+    out = list(toks)
+    types = TYPE_WORDS["EN"]
+    for j in range(1, len(out) - 1):
+        if out[j] in types and out[j + 1] in _QUALIFIERS:
+            i = j
+            while i > 0 and j - i < 3 and out[i - 1].isalpha() and out[i - 1] not in types | _QUALIFIERS:
+                i -= 1
+            if i < j:
+                out[i:j + 2] = [out[j + 1]] + out[i:j + 1]
+    return out
+
+
+_NL_JOIN = {"STRAAT", "STEENWEG", "LAAN", "PLEIN", "WEG", "DREEF", "KAAI", "LEI", "SINGEL", "GRACHT", "DIJK", "KADE",
+            "PAD", "MARKT", "BRUG", "STRAATJE", "STEEG", "HOF"}
+_DE_JOIN = {"STRASSE", "GASSE", "PLATZ", "WEG", "ALLEE", "RING", "DAMM", "UFER", "STEIG", "PFAD", "MARKT", "CHAUSSEE",
+            "ZEILE", "BRUCKE", "PROMENADE", "STIEGE"}
 
 
 def _merge_initials(tokens: list[str]) -> list[str]:
@@ -321,7 +394,7 @@ def key(text: str, market: str) -> str:
 def core_key(text: str, market: str, kind: str = "street") -> str:
     """核心键：再去掉类型词（Jalan / Đường / Rue / شارع …），全部是类型词时保留原样。"""
     toks = key(text, market).split()
-    drop = TYPE_WORDS["AREA"] if kind == "area" else TYPE_WORDS.get(MARKET_LANG.get(market, "EN"), set())
+    drop = TYPE_WORDS["AREA"] if kind == "area" else type_words(market)
     kept = [t for t in toks if t not in drop]
     if MARKET_LANG.get(market) == "AR":
         kept = [t[2:] if t.startswith("ال") and len(t) > 3 else t for t in kept]  # 去掉阿拉伯文冠词 ال

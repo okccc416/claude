@@ -13,7 +13,8 @@ from dataclasses import dataclass, field
 
 from .markets import MARKETS
 from .reference import BUILDING_WORDS, MarketReference
-from .text import TYPE_WORDS, core_key, fold, key, merge_initials, norm_postcode, script_of, skeleton, tokenize
+from .text import (TYPE_WORDS, core_key, fold, key, merge_initials, norm_postcode, phrase_norm, script_of,
+                   skeleton, tokenize, type_words)
 
 PHONE = re.compile(r"(?:\+|00)\d{1,3}[\s\-]?\(?\d{1,4}\)?(?:[\s\-]?\d{2,4}){2,4}|(?<![\d/])0\d{8,10}(?![\d/])|"
                    r"(?<![\d/])[89]\d{3}\s?\d{4}(?![\d/])")
@@ -38,8 +39,9 @@ UNIT_WORDS = {"UNIT", "APARTMENT", "SUITE", "SHOP", "FLAT", "LEVEL", "FLOOR", "L
               "KAT", "STAN", "ET", "AP", "APT",
               # 缩写原样（解析单元时还没展开缩写）
               "INT", "OF", "OFIC", "LOC", "DEPTO", "DPTO", "LJ", "SL", "UND", "LOK", "WHG", "BTE"}
-NUMBER_MARKERS = {"NO", "NOMOR", "NUMBER", "BLK", "#", "رقم", "مبني", "SỐ", "SO", "เลขที่", "VILLA", "فيلا"}
-MARKER_WORDS = {"NO", "NOMOR", "NUMBER", "KAV", "KAVLING", "KM", "رقم"}
+# BL：保加利亚的楼号（ж.к. Младост 1, бл. 505 = 小区 + 楼号）
+NUMBER_MARKERS = {"NO", "NOMOR", "NUMBER", "BLK", "#", "رقم", "مبني", "SỐ", "SO", "เลขที่", "VILLA", "فيلا", "BL"}
+MARKER_WORDS = {"NO", "NOMOR", "NUMBER", "KAV", "KAVLING", "KM", "رقم", "BL"}
 HOUSE_NO = re.compile(r"^\d{1,5}(?:[A-Z]|HS|BG|BV)?(?:[/\-]\d{1,5}[A-Z]?){0,2}$")
 AU_STATES = {"NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"}
 FLOOR_TOKEN = re.compile(r"^(?:\d{1,2}(?:ST|ND|RD|TH)?F|G|GF|UG|LG|UGF|LGF|B\d)$")  # 2F、12F、GF：楼层，不是门牌
@@ -147,6 +149,7 @@ class RuleParser:
                 self.nospace.setdefault(k.replace(" ", ""), set()).update(v)
         self.core_fuzzy = core_fuzzy(ref)
         self.suffix = street_suffixes(ref) if ref.market in SUFFIX_MARKETS else {}
+        self.stems = possessive_stems(ref) if ref.market in STEM_MARKETS else {}
 
     # ------------------------------------------------------------------ 主流程
     def parse(self, raw: str) -> Parsed:
@@ -156,16 +159,20 @@ class RuleParser:
             m = re.search(r"\b(?!SHOP|UNIT|ROOM|FLAT|SUIT|BLOK|TOWR|GATE|EXIT)([A-Z]{4})\s?(\d{4})\b", fold(text))
             if m:
                 codes["short_address"] = m.group(1) + m.group(2)
+        if self.ref.market == "PR":  # 州道编号：PR-25 / Road PR 167 = Carretera 25 / 167（5 位数的 PR 00909 是邮编，不动）
+            text = re.sub(r"\bPR[- ]?(\d{1,4}[A-Z]?)\b(?!\d)", r"CARRETERA \1", text)
+        if self.ref.market == "CO":  # Carrera 24-30 = Carrera 24 # 30-…（漏了 #，后面的是交叉街编号）
+            text = _CO_TRUNC.sub(r"\1 \2 # \3", text)
         text, postcode = self._postcode(text)
         toks = tokenize(text)
+        seps = tokenize_seps(text)
+        seps = seps if len(seps) == len(toks) else [False] * len(toks)
+        if self.ref.market == "JP":
+            self._japan_no_chome(toks, seps)
         p = Parsed(raw=raw, tokens=toks, postcode=postcode, codes=codes, noise=noise)
         used = [False] * len(toks)
-        if self.ref.market == "JP":
-            self._japan_no_chome(toks)
         self._units(p, used)
         exp = [" ".join(key(t, self.ref.market).split()) or t for t in toks]
-        seps = tokenize_seps(text)
-        seps = seps if len(seps) == len(exp) else [False] * len(exp)
         self._regions(exp, used, seps)
         if self.ref.market == "AE":
             self._po_box_chunks(p, exp, used, seps)
@@ -293,8 +300,11 @@ class RuleParser:
         if not pc.strip("0"):  # 00000：线上表单的占位邮编（阿联酋没有邮编）
             return text[:h.start()] + " " + text[h.end():], None
         text = text[:h.start()] + " " + text[h.end():]
-        # 同一个邮编写了两遍（"47400 Petaling Jaya, 47400"）：都去掉，免得被当成门牌
-        return re.sub(rf"(?<![\w/-]){re.escape(h.group(0))}(?![\w/-])", " ", text), pc
+        # 同一个邮编写了两遍（"47400 Petaling Jaya, 47400"、"L-1337 Luxembourg, 1337"）：都去掉，免得被当成门牌
+        text = re.sub(rf"(?<![\w/-]){re.escape(h.group(0))}(?![\w/-])", " ", text)
+        if pc.isdigit() and pc != h.group(0):
+            text = re.sub(rf"(?<![\w/-]){re.escape(pc)}(?![\w/-])", " ", text)
+        return text, pc
 
     def _units(self, p: Parsed, used: list[bool]) -> None:
         toks = p.tokens
@@ -345,7 +355,13 @@ class RuleParser:
                 if any(taken[i:i + size]) or any(used[i:i + size]) or any(seps[i + 1:i + size]):
                     continue  # 名称不会跨过逗号
                 words = merge_initials(" ".join(exp[i:i + size]))
-                if size == 1 and (len(words) < (5 if kind == "street" else 4) or words.isdigit()):
+                if self.ref.market in ("IE", "BG"):
+                    words = " ".join(phrase_norm(words.split(), self.ref.market))
+                min_len = 2 if _CJK_RE.match(words) else (5 if kind == "street" else 4)  # 日文町名 2–3 个字（円山町）
+                if kind == "street" and size == 1 and 3 <= len(words) < min_len and words.isalpha() \
+                        and self._number_next(exp, Span(words, i, i + 1, [], 0, "")):
+                    min_len = 3  # 短路名紧跟门牌号（塔林 Jõe 5、Aia 10a）
+                if size == 1 and (len(words) < min_len or words.isdigit()):
                     continue
                 if words in self.neutral:
                     continue  # 全城名 / 国家名单独出现时不是片区证据（Dubai Marina 这类更长的名称仍会匹配）
@@ -363,7 +379,8 @@ class RuleParser:
                     # 核心键同时是片区名（Jakarta、Menteng）时不当道路：多半是在写片区
                     if ck in core_table and len(ck) >= 4 and not ck.isdigit() and ck not in self.neutral and not (
                             kind == "street" and (ck in self.ref.area_keys or ck in self.ref.area_core)
-                            and not _has_type_word(words, self.ref.market)):
+                            and not _has_type_word(words, self.ref.market)
+                            and not self._number_next(exp, Span(ck, i, i + size, [], 0, ""))):
                         how, words = "core", ck
                         spans.append(Span(words, i, i + size, sorted(core_table[words]), 97.0, how))
                         for j in range(i, i + size):
@@ -373,14 +390,31 @@ class RuleParser:
                     # 人名道路的简称 / 全称：Freire = Capitán General Ramón Freire、Via Rossini = Via Gioachino Rossini、
                     # VIA GENERALE GUSTAVO FARA = Via Gustavo Fara（拉美、伊比利亚、意大利、波兰）
                     ck = core_key(words, self.ref.market)
-                    toks_c = ck.split()
+                    # 去掉名字的首字母（K. Kärberi、F.D. Roosevelt 合并成的 FD、Jesús T. Piñero 的 T）
+                    toks_c = [t for t in ck.split() if t.isdigit() or (len(t) > 1 and not (
+                        len(t) <= 3 and t.isalpha() and not re.search(r"[AEIOUY]", t)))]
+                    ck = " ".join(toks_c) or ck
                     ids = None
                     if ck in self.suffix and len(toks_c) <= 2:
                         ids = self.suffix[ck]
                     elif len(toks_c) >= 3 and " ".join(toks_c[-2:]) in self.ref.street_core:
                         ids = self.ref.street_core[" ".join(toks_c[-2:])]
+                    elif 0 < len(toks_c) <= 2 and all(t.isalpha() for t in toks_c) and len(toks_c[-1]) >= 5 \
+                            and len(words.split()) > len(toks_c) + (
+                            1 if _has_type_word(words, self.ref.market) else 0):
+                        # 去掉了首字母才对不上（Avenida FD Roosevelt = Avenida Franklin Delano Roosevelt）：按姓找，类型词要相容
+                        ids = {x for x in last_names(self.ref).get(toks_c[-1], ()) if self._types_compatible(words, x)}
                     if ids and len(ids) <= 40:
                         spans.append(Span(ck, i, i + size, sorted(ids), 95.0, "suffix"))
+                        for j in range(i, i + size):
+                            taken[j] = True
+                        continue
+                if how is None and kind == "street" and self.stems and size <= 4 and (
+                        _has_type_word(words, self.ref.market) or self._number_next(exp, Span(words, i, i + size, [], 0, ""))):
+                    # 斯拉夫语人名道路的两种写法：Heinzelova / Ulica Vjekoslava Heinzela、Iblerov trg / Trg Drage Iblera
+                    ids = self._stem_match(words)
+                    if ids:
+                        spans.append(Span(words, i, i + size, ids, 95.0, "suffix"))
                         for j in range(i, i + size):
                             taken[j] = True
                         continue
@@ -392,17 +426,23 @@ class RuleParser:
                     # 常省略类型词的市场：输入 "Chihuahua 222" 完全对上一条叫 Chihuahua 的路，城市另一头的
                     # Calle Chihuahua 去掉类型词后也一致，同样放进候选，由门牌 / 邮编 / 片区裁决
                     # （类型词要相容：ул. Опълченска 也找名为 Опълченска 的路，但不找 бул. Опълченска）
-                    if kind == "street" and self.omit_type and size <= 5:
+                    # 写了类型词的市场同样处理冠词差异（Av. Manuel Maia = Avenida Manuel da Maia，而地址表的
+                    # AV MANUEL MAIA 恰好对上城市另一头的同名路）：类型词相容的同核心道路也进候选
+                    typed = not self.omit_type and _has_type_word(words, self.ref.market)
+                    if kind == "street" and (self.omit_type or typed) and size <= 5:
                         ck = core_key(words, self.ref.market)
                         extra = [x for x in set(core_table.get(ck, ())) - set(table[words])
-                                 if self._types_compatible(words, x)]
-                        if extra and len(extra) <= 40:
+                                 if self._types_compatible(words, x)] if len(ck) >= 4 and not ck.isdigit() else []
+                        if extra and len(extra) <= (10 if typed else 40):
                             spans.append(Span(ck, i, i + size, sorted(extra), 97.0, "core"))
         if kind == "street":
             spans = [s for s in spans if not _all_type_words(s.text, self.ref.market)]
             # 既是道路名又是片区名（Jakarta Timur、Sydney）且没写类型词：当片区处理
-            area_like = [s for s in spans if s.text in self.ref.area_keys and self.ref.market != "JP"
-                         and not _has_type_word(" ".join(exp[s.start:s.end]), self.ref.market)
+            # （冠词不算类型词：La Florida 是圣地亚哥的区）
+            area_like = [s for s in spans if (s.text in self.ref.area_keys
+                                              or " ".join(exp[s.start:s.end]) in self.ref.area_keys)
+                         and self.ref.market != "JP"
+                         and not (set(exp[s.start:s.end]) & (type_words(self.ref.market) - _ARTICLES))
                          and not self._number_next(exp, s)]
             # （日本的"町丁目"既是地址表里的道路，也是片区，按道路处理）
             spans = [s for s in spans if s not in area_like]
@@ -413,7 +453,7 @@ class RuleParser:
             for j in range(s.start, s.end):
                 used[j] = True
 
-    def _japan_no_chome(self, toks: list[str]) -> None:
+    def _japan_no_chome(self, toks: list[str], seps: list[bool]) -> None:
         """日文规范化把"町名 + 数字-数字"一律读成"町名 N 丁目 番地"；没有丁目的町（円山町 15-14、宇田川町 33-13）
         参考库里只有"町名"，这时改回"町名 + 番地 15-14"。"""
         i = 0
@@ -423,12 +463,24 @@ class RuleParser:
                 chome = f"{town} {toks[i + 1]} CHOME"
                 if chome not in self.ref.street_keys and town in self.ref.street_keys:
                     rest = toks[i + 3] if i + 3 < len(toks) and HOUSE_NO.match(toks[i + 3]) else ""
-                    toks[i + 1:i + 4 if rest else i + 3] = [f"{toks[i + 1]}-{rest}" if rest else toks[i + 1]]
+                    end = i + 4 if rest else i + 3
+                    toks[i + 1:end] = [f"{toks[i + 1]}-{rest}" if rest else toks[i + 1]]
+                    seps[i + 1:end] = [seps[i + 1]]
             i += 1
+
+    def _stem_match(self, words: str) -> list[int]:
+        types = type_words(self.ref.market)
+        toks = [t for t in words.split() if t not in types]
+        if not toks or not all(t.isalpha() for t in toks) or words in self.neutral:
+            return []  # 门牌号不能并进路名（25 Panónska cesta）
+        mine = set(words.split()) & types
+        ids = [sid for sid, theirs in self.stems.get(possessive_stem(toks[-1]), ())
+               if not mine or not theirs or mine <= theirs or theirs <= mine]
+        return sorted(set(ids)) if 0 < len(set(ids)) <= 10 else []
 
     def _types_compatible(self, words: str, sid: int) -> bool:
         from .text import MARKET_LANG
-        types = TYPE_WORDS.get(MARKET_LANG.get(self.ref.market, "EN"), set()) - _ARTICLES
+        types = type_words(self.ref.market) - _ARTICLES
         mine = set(words.split()) & types
         if not mine:
             return True
@@ -505,6 +557,8 @@ class RuleParser:
             cand = " ".join(words)
             if len(cand) < 6 or len(words) > 8 or all(w in GENERIC_WORDS or w in UNIT_WORDS for w in words):
                 continue
+            if cand in self.neutral:  # 只写了城市名（Bratislava）：不能纠错成同名的商户 / 机构（Bratislava I.）
+                continue
             found = False
             for hit, score, ids in self.ref.poi_fuzzy.search(cand, limit=2, min_score=90):
                 if len(ids) <= 20 and not generic_name(hit):
@@ -558,10 +612,46 @@ class RuleParser:
                 p.number, p.unit = m.group(1), p.unit or (m.group(2) or m.group(3))
 
 
+_CO_TRUNC = re.compile(r"\b(CALLE|CARRERA|CRA|KR|CL|CLL|AK|AC|TRANSVERSAL|TV|DIAGONAL|DG)\.?\s+(\d{1,3}[A-Z]?)"
+                       r"\s*-\s*(\d{1,3}[A-Z]?)\b(?!\s*-)")
+_CJK_RE = re.compile(r"[\u3040-\u30ff\u3400-\u9fff]")
 _ARTICLES = {"DE", "DEL", "LA", "LAS", "LOS", "EL", "DA", "DO", "DAS", "DOS", "DI", "D", "DU", "L", "DES", "LE",
              "DELLA", "DEI", "DEGLI", "DELLE", "DELLO", "E"}
 # 人名道路常用简称的市场（Capitán General Ramón Freire -> Freire、Avenida Doctor Tristán Achával Rodríguez -> Achával Rodríguez）
-SUFFIX_MARKETS = {"AR", "MX", "CL", "CO", "PR", "ES", "BR", "PT", "IT", "PL"}
+SUFFIX_MARKETS = {"AR", "MX", "CL", "CO", "PR", "ES", "BR", "PT", "IT", "PL", "EE", "LV", "LT"}
+
+
+# 斯拉夫语：人名道路有"物主形容词"和"名 + 姓（属格）"两种写法（Gajeva ulica = Ulica Ljudevita Gaja、Štúrova = Ulica
+# Ľudovíta Štúra、Čapkova = Karla Čapka），两者去掉词尾后的词干相同
+STEM_MARKETS = {"HR", "SI", "SK", "CZ"}
+_POSS_ENDINGS = ("OVA", "EVA", "OVO", "EVO", "INA", "OV", "EV", "IN", "A", "E")
+
+
+def possessive_stem(tok: str) -> str:
+    for suf in _POSS_ENDINGS:
+        if tok.endswith(suf) and len(tok) - len(suf) >= 3:
+            tok = tok[:-len(suf)]
+            break
+    # 词尾的"游移 e"：Basariček -> Basaričeka / Basarička、Sadovec -> Sadovca，统一去掉
+    return re.sub(r"(?<=[A-Z]{2})E([BCDFGHJKLMNPRSTVZ])$", r"\1", tok)
+
+
+def possessive_stems(ref: MarketReference) -> dict[str, list[tuple[int, frozenset]]]:
+    """词干 -> [(道路, 道路名里的类型词)]：取去掉类型词后最后一个词（≥ 4 个字母）的词干。"""
+    out = ref.__dict__.get("_stems")
+    if out is not None:
+        return out
+    out = {}
+    types = type_words(ref.market)
+    for s in ref.streets:
+        for nm in s.names[:4]:
+            k = key(nm, ref.market)
+            toks = [t for t in k.split() if t not in types]
+            if not toks or not toks[-1].isalpha() or len(toks[-1]) < 4:
+                continue
+            out.setdefault(possessive_stem(toks[-1]), []).append((s.id, frozenset(set(k.split()) & types)))
+    ref.__dict__["_stems"] = out
+    return out
 
 
 def core_fuzzy(ref: MarketReference):
@@ -573,13 +663,27 @@ def core_fuzzy(ref: MarketReference):
     return idx
 
 
+def last_names(ref: MarketReference) -> dict[str, set[int]]:
+    """去掉类型词后至少 2 个词的路名：最后一个词 -> 道路（不排除与别的路名重名的，用时再按类型词筛）。"""
+    out = ref.__dict__.get("_last_names")
+    if out is None:
+        out = {}
+        types = type_words(ref.market)
+        for k, ids in ref.street_core.items():
+            toks = [t for t in k.split() if t not in types]
+            if len(toks) >= 2 and toks[-1].isalpha() and len(toks[-1]) >= 5:
+                out.setdefault(toks[-1], set()).update(ids)
+        ref.__dict__["_last_names"] = out
+    return out
+
+
 def street_suffixes(ref: MarketReference) -> dict[str, set[int]]:
     """人名道路的简称：去掉类型词后至少 2 个词的名称取最后 1 个词（≥ 5 个字母），至少 3 个词的再取最后 2 个词。"""
     out = ref.__dict__.get("_suffix")
     if out is not None:
         return out
     out = {}
-    lang_types = TYPE_WORDS.get(__import__("avmvp.intl.text", fromlist=["MARKET_LANG"]).MARKET_LANG.get(ref.market, "EN"), set())
+    lang_types = type_words(ref.market)
     for k, ids in ref.street_core.items():
         toks = [t for t in k.split() if t not in lang_types]
         if len(toks) < 2 or not toks[-1].isalpha():
@@ -609,7 +713,7 @@ def tokenize_seps(text: str) -> list[bool]:
 
 def _has_type_word(text: str, market: str) -> bool:
     from .text import TYPE_WORDS, MARKET_LANG
-    return bool(set(text.split()) & TYPE_WORDS.get(MARKET_LANG.get(market, "EN"), set()))
+    return bool(set(text.split()) & type_words(market))
 
 
 # 最初的 11 个市场：只由类型词 + 数字组成的名称（JALAN 3）不当道路名；其他市场的编号道路是正常路名
@@ -620,7 +724,7 @@ _DIGIT_IS_TYPE = {"AU", "DE", "FR", "NL", "AE", "SA", "MY", "ID", "TH", "VN", "P
 def _all_type_words(text: str, market: str) -> bool:
     from .text import TYPE_WORDS, MARKET_LANG
     words = text.split()
-    tw = TYPE_WORDS.get(MARKET_LANG.get(market, "EN"), set()) | TYPE_WORDS["AREA"]
+    tw = type_words(market) | TYPE_WORDS["AREA"]
     return all(w in tw or (w.isdigit() and market in _DIGIT_IS_TYPE) for w in words)
 
 

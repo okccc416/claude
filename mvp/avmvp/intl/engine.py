@@ -27,8 +27,8 @@ from .markets import MARKETS
 from .parse import Parsed, RuleParser, Span
 from .poiaddr import lookup as poi_lookup
 from .pluscode import encode, recover
-from .reference import MarketReference, haversine, number_key
-from .text import fmt_postcode, fold, postcode_prefix, script_of
+from .reference import OSM_ID_BASE, MarketReference, haversine, number_key
+from .text import fmt_postcode, fold, key, postcode_prefix, script_of
 
 ACCEPT, CONFIRM, FIX, ADD_SUB = "ACCEPT", "CONFIRM", "FIX", "CONFIRM_ADD_SUBPREMISES"
 # 参照物描述：说明写的楼不是地址本身（behind / opposite / near …，阿拉伯文 خلف / مقابل / بجانب / قرب）
@@ -111,6 +111,8 @@ class Engine:
         self.policy = set((load_policy() if policy is None else policy).get(market, []))
         self.conf_model = confidence  # 可选：IntlConfidence（校准过的置信度，见 confidence.py）
         self.ref = ref or MarketReference.load(market)
+        if not getattr(self.ref, "postcode_prefix", None) and self.ref.postcodes:
+            self.ref.postcode_prefix = _prefix_table(self.ref.postcodes, market)  # 全量邮编表的市场也补上上一级
         self.rules = RuleParser(self.ref)
         self.crf = None
         self.parser = parser
@@ -179,9 +181,11 @@ class Engine:
         ref = self.ref
         pc = ref.postcodes.get(p.postcode) if p.postcode and self.m.postcode else None
         near_m, far_m = 1500, 5000
+        pc_is_prefix = False
         if pc is None and p.postcode and self.m.postcode:  # 一户一码的邮编（爱尔兰、英国）：按上一级片区印证
             pc = getattr(ref, "postcode_prefix", {}).get(postcode_prefix(p.postcode, self.market))
             near_m, far_m = 3000, 8000  # 片区级邮编覆盖几公里
+            pc_is_prefix = pc is not None
         pc_unknown = bool(p.postcode and self.m.postcode and getattr(ref, "pc_complete", ref.has_addresses)
                           and pc is None)
         area_ids = [a for s in p.areas for a in s.ids][:30]
@@ -222,9 +226,11 @@ class Engine:
                         h.support.add("building")
                         self._building_notes(h, b, p)
                         break
-                if ref.has_addresses or getattr(ref, "poi_addr_count", 0):
+                if ref.has_addresses or getattr(ref, "osm_count", 0) or getattr(ref, "poi_addr_count", 0):
                     self._premise(h, p)
                 hyps.append(h)
+        if p.streets and pc and not pc_is_prefix and not any("postcode" in h.support for h in hyps):
+            hyps += self._local_name_matches(p, pc, area_ids)
         for b, poi in buildings:  # 只凭楼宇 / POI
             h = Hypothesis(1.5 + (0.8 if b.score >= 97 else 0), building=poi)
             h.notes.append("BUILDING_ONLY")
@@ -249,6 +255,8 @@ class Engine:
             elif streets:
                 h.notes.append("PLUS_CODE_STREET_MISMATCH")
             hyps.append(h)
+        if not hyps and self.market == "JP" and pc and p.number and re.fullmatch(r"\d{1,2}-\d+(?:-\d+)?", p.number):
+            hyps += self._jp_postcode_town(p, pc)
         if not hyps and ref.has_addresses and p.postcode and p.number:  # A 类：只有邮编 + 门牌
             for pt in ref.db.execute("SELECT id, number, street, unit, postcode, locality, lat, lng FROM addr "
                                      "WHERE postcode=? AND number_key=? LIMIT 20",
@@ -258,6 +266,60 @@ class Engine:
                 h.notes.append("STREET_INFERRED")
                 hyps.append(h)
         return sorted(hyps, key=lambda h: -h.score)
+
+    def _jp_postcode_town(self, p: Parsed, pc) -> list[Hypothesis]:
+        """日本：只写了"丁目-番地-号"和邮编（2-10-17, 港区, 107-0061）。日本的邮编对应到町，取邮编中心 800 米内
+        同一丁目号的町丁目（北青山 2 丁目），门牌按番地查，结论最多 CONFIRM（STREET_INFERRED）。"""
+        from dataclasses import replace
+        chome, rest = p.number.split("-", 1)
+        idx = self.ref.__dict__.get("_jp_chome")
+        if idx is None:
+            idx = self.ref.__dict__["_jp_chome"] = {}
+            for st in self.ref.streets:
+                m = re.fullmatch(r".+ (\d+) CHOME", key(st.name, self.market))
+                if m:
+                    idx.setdefault(m.group(1), []).append(st.id)
+        near = sorted((dist_to_street(self.ref, sid, pc[0], pc[1]), sid) for sid in idx.get(chome, ()))
+        out = []
+        for d, sid in near[:3]:
+            if d > 800:
+                break
+            h = Hypothesis(1.5, sid, Span(self.ref.streets[sid].name, -1, -1, [sid], 90.0, "partial"))
+            h.notes.append("STREET_INFERRED")
+            h.support.add("postcode")
+            self._premise(h, replace(p, number=rest))
+            out.append(h)
+        return out
+
+    def _local_name_matches(self, p: Parsed, pc, area_ids: list[int]) -> list[Hypothesis]:
+        """所写道路名找到了，但没有一条在所写邮编附近；邮编附近有名字"包含"它的路（英国 130 High Street, SW11 3JR
+        = Battersea High Street）：作为候选，名称算部分匹配，要求用户确认。"""
+        ref = self.ref
+        cache = ref.__dict__.setdefault("_np", {})
+        cent = cache.get("centroids")
+        if cent is None:
+            cent = cache["centroids"] = np.radians(np.asarray([(s.lat, s.lng) for s in ref.streets], dtype=float))
+        d = _haversine_many(cent, pc[0], pc[1])
+        near = np.nonzero(d <= 1500)[0]
+        out = []
+        for span in p.streets[:2]:
+            want = " " + span.text
+            for sid in near.tolist():
+                s = ref.streets[sid]
+                if sid in span.ids or not any((" " + key(nm, self.market)).endswith(want) for nm in s.names[:4]):
+                    continue
+                if dist_to_street(ref, sid, pc[0], pc[1]) > 1000:
+                    continue
+                h = Hypothesis(2.2 + 1.5, sid, Span(span.text, span.start, span.end, [sid], 90.0, "partial"))
+                h.notes.append("STREET_PARTIAL_MATCH")
+                h.support.add("postcode")
+                self._area_evidence(h, s, area_ids)
+                if ref.has_addresses or getattr(ref, "osm_count", 0) or getattr(ref, "poi_addr_count", 0):
+                    self._premise(h, p)
+                out.append(h)
+            if len(out) >= 3:
+                break
+        return out[:3]
 
     def _building_notes(self, h: Hypothesis, b: Span, p: Parsed) -> None:
         """楼名靠纠错才对上（FMC -> NMC Medical Center）、只是参照物（Behind Mall of Emirates）、
@@ -331,11 +393,12 @@ class Engine:
             return
         pts = []
         variants = self._number_variants(p.number)
-        for num in variants if self.ref.has_addresses else []:
+        osm = bool(getattr(self.ref, "osm_count", 0))
+        for num in variants if self.ref.has_addresses or osm else []:
             pts = self.ref.addresses([h.street], num)
             if pts:
-                # 门牌原样一致的地址点优先于"只是其中一部分号码"一致的（Kopli 16 优先于 Kopli 103/16）
-                pts.sort(key=lambda x: number_key(x["number"]) != number_key(num))
+                # 门牌原样一致的地址点优先于"只是其中一部分号码"一致的（Kopli 16 优先于 Kopli 103/16）；官方表优先于 OSM
+                pts.sort(key=lambda x: (number_key(x["number"]) != number_key(num), x["id"] >= OSM_ID_BASE))
                 break
         if not pts:
             poi = poi_lookup(self.ref, h.street, variants)
@@ -344,7 +407,7 @@ class Engine:
                 # 只有一家商户印证时还要邮编也印证（同名道路分布在几个区时，靠邮编分清是哪一条）
                 pc = self._postcode_point(p)
                 d_pc = haversine(poi["lat"], poi["lng"], pc[0], pc[1]) if pc else None
-                if d_pc is not None and d_pc > 2500:
+                if d_pc is not None and d_pc > self._pc_far():
                     poi = None
                 elif not self.ref.has_addresses and poi["n"] < 2 and not (d_pc is not None and d_pc <= 1500):
                     poi = None
@@ -354,20 +417,26 @@ class Engine:
                 h.notes.append("PREMISE_FROM_POI")
                 h.support.add("point")
                 return
-            if not self.ref.has_addresses:
+            if not self.ref.has_addresses and not osm:
                 return
             near = self._nearby_number(h.street, p.number)
+            pc = self._postcode_point(p)
+            if near is not None and pc and haversine(near["lat"], near["lng"], pc[0], pc[1]) > self._pc_far():
+                near = None  # 门牌按区重新编号（墨西哥城的大道）：推算出的位置与所写邮编相距太远，不用
             if near is not None:  # 门牌不在官方表里，但同一条路上紧挨着的门牌在：位置可信，请用户确认门牌
                 h.point = near
                 h.score += 2.5
                 h.notes.append("PREMISE_INTERPOLATED")
                 h.support.add("point")
                 return
+            if not self.ref.has_addresses:  # 只有 OSM 门牌的市场：OSM 不全，查不到不算反证
+                return
         if pts and p.unit:  # 同一门牌下优先取单元号一致的地址点
             want = re.sub(r"^(?:UNIT|APARTMENT|SUITE|FLAT|SHOP)\s*", "", p.unit.upper())
             pts = [x for x in pts if (x["unit"] or "").upper().replace("UNIT ", "") == want] or pts
         if not pts:
-            h.score -= 1.0
+            if self._street_has_points(h.street):  # 这条路在地址表里一个门牌都没有：没有覆盖，不算反证
+                h.score -= 1.0
             h.notes.append("PREMISE_NOT_FOUND")
             return
         if p.postcode and any(x["postcode"] for x in pts):  # 有的国家地址表不带邮编，就不比
@@ -378,8 +447,26 @@ class Engine:
             else:
                 h.notes.append("POSTCODE_REPLACED")
         h.point = pts[0]
-        h.score += 4.0
+        # 道路离所写邮编很远、地址点也没有邮编能印证：多半是另一处同名道路上的同号门牌（都柏林有几十条 Main Street），加分减半；
+        # 有官方全量地址表的市场，官方表没有、只有 OSM 有的门牌也只加一半（低于相邻门牌推算和商户门牌点：
+        # 奥克兰的 OSM 门牌常落在另一个区的同名道路上）
+        weak = ("POSTCODE_STREET_MISMATCH" in h.notes and pts[0]["postcode"] != p.postcode) or (
+            self.ref.has_addresses and pts[0]["id"] >= OSM_ID_BASE)
+        h.score += 2.0 if weak else 4.0
         h.support.add("point")
+        if pts[0]["id"] >= OSM_ID_BASE:
+            h.notes.append("PREMISE_FROM_OSM")
+
+    def _street_has_points(self, street: int) -> bool:
+        cache = self.ref.__dict__.setdefault("_has_pts", {})
+        if street not in cache:
+            cache[street] = self.ref.db.execute("SELECT 1 FROM addr WHERE street=? LIMIT 1", (street,)).fetchone() \
+                is not None
+        return cache[street]
+
+    def _pc_far(self) -> float:
+        """与所写邮编"相距太远"的门槛：官方邮编表的中心准，2.5 公里；从商户统计的邮编中心有噪声、范围也大，5 公里。"""
+        return 2500.0 if getattr(self.ref, "pc_complete", False) else 5000.0
 
     def _postcode_point(self, p: Parsed):
         if not p.postcode or not self.m.postcode:
@@ -395,6 +482,13 @@ class Engine:
         n = number.replace(" ", "").upper()
         if self.market == "JP":
             return None
+        if self.market == "CO" and re.fullmatch(r"\d+[A-Z]?", n):  # 只写了交叉街编号（Cl. 13 # 36）：取这个街区中间的门牌
+            rows = self.ref.db.execute(
+                "SELECT id, number, street, unit, postcode, locality, lat, lng FROM addr WHERE street=? AND "
+                "number_key LIKE ? LIMIT 200", (street, n + "-%")).fetchall()
+            rows = sorted((r for r in rows if r[1].split("-")[-1].isdigit()), key=lambda r: int(r[1].split("-")[-1]))
+            return dict(zip(("id", "number", "street", "unit", "postcode", "locality", "lat", "lng"),
+                            rows[len(rows) // 2])) if rows else None
         m = re.fullmatch(r"(\d+[A-Z]?)-(\d+)", n)
         if self.market == "CO" and m:
             rows = self.ref.db.execute(
@@ -431,13 +525,14 @@ class Engine:
         cols = ("id", "number", "street", "unit", "postcode", "locality", "lat", "lng")
         rows = self.ref.db.execute(
             f"SELECT {', '.join(cols)}, CAST(number_key AS INTEGER) FROM addr WHERE street=? AND "
-            "CAST(number_key AS INTEGER) BETWEEN ? AND ? LIMIT 2000", (street, max(base - 200, 1), base + 200)).fetchall()
+            "CAST(number_key AS INTEGER) BETWEEN ? AND ? LIMIT 3000", (street, max(base - 600, 1), base + 600)).fetchall()
         same = [r for r in rows if r[-1] % 2 == base % 2] or rows
         lo = max((r for r in same if r[-1] < base), key=lambda r: r[-1], default=None)
         hi = min((r for r in same if r[-1] > base), key=lambda r: r[-1], default=None)
-        if lo is None or hi is None or hi[-1] - lo[-1] > 300:
+        # 长大道门牌稀疏（圣保罗的 9175 号两边最近的是 8800 和 9600）：号码差 1000 以内、两点相距 1.5 公里以内都插值
+        if lo is None or hi is None or hi[-1] - lo[-1] > 1000:
             return None
-        if haversine(lo[6], lo[7], hi[6], hi[7]) > 800:
+        if haversine(lo[6], lo[7], hi[6], hi[7]) > 1500:
             return None
         t = (base - lo[-1]) / (hi[-1] - lo[-1])
         near = lo if t <= 0.5 else hi
@@ -457,6 +552,8 @@ class Engine:
         m = re.fullmatch(r"(\d+[A-Z]?)/(\d+[A-Z]?)", n)
         if m:  # 斯洛伐克 / 捷克 2132/1：只写了其中一个号码时也能查到（参考库三种写法都有）
             out += [m.group(2), m.group(1)]
+        elif "/" in n and re.match(r"\d", n):  # 维也纳 7/3/37 = 门牌 / 楼梯 / 门号：按门牌查
+            out.append(n.split("/")[0])
         return out
 
     # ------------------------------------------------------------------ 结论
@@ -557,6 +654,9 @@ class Engine:
                 # 立陶宛邮编细到路段）：不算纠正
                 if corrected and strictness != "STRICT" and policy_key_premise(best) in self.policy:
                     corrected = False
+                if "PREMISE_FROM_OSM" in best.notes and (strictness == "STRICT" or policy_key_osm(best)
+                                                         not in self.policy):
+                    return CONFIRM  # 官方表里没有、只有 OSM 有的门牌：默认请用户确认，开发集上够可靠的市场才直接通过
                 if not p.unit and best.point and self.ref.units_at(best.point["street"], best.point["number"]) > 1:
                     reasons.append("UNIT_MISSING_MULTI_UNIT_BUILDING")
                     return CONFIRM if corrected else ADD_SUB
@@ -566,17 +666,26 @@ class Engine:
             if gran == "PREMISE_PROXIMITY":  # 相邻门牌推算 / 商户地址门牌点：默认请用户确认（与 Google 一致）
                 key = policy_key_poi(best)
                 return ACCEPT if key and not corrected and strictness != "STRICT" and key in self.policy else CONFIRM
-            reasons.append("MISSING_PREMISE" if not p.number else "PREMISE_NOT_FOUND"
-                           if "PREMISE_NOT_FOUND" not in reasons else "PREMISE_NOT_FOUND")
+            if p.number:  # 道路对上、门牌不在表里：与 Google 一致，给道路级位置，门牌标"未确认"，请用户确认
+                if "PREMISE_NOT_FOUND" not in reasons:
+                    reasons.append("PREMISE_NOT_FOUND")
+                return CONFIRM
+            reasons.append("MISSING_PREMISE")
             return FIX
         # B / C 类
         has_premise = bool(p.number or best.building or p.codes)
         if gran == "PREMISE_PROXIMITY" and best.code:
             conflict = {"PLUS_CODE_STREET_MISMATCH", "PLUS_CODE_AREA_MISMATCH"} & set(best.notes)
             return CONFIRM if conflict or strictness == "STRICT" else ACCEPT
+        if gran == "PREMISE" or "PREMISE_INTERPOLATED" in best.notes:  # OSM 门牌点 / 按 OSM 门牌推算
+            if gran == "PREMISE" and not corrected and strictness != "STRICT" and policy_key_osm(best) in self.policy:
+                return ACCEPT
+            gran = "ROUTE"  # OSM 门牌不够可靠时按道路级的规则决定（位置仍用门牌点）
         if gran == "PREMISE_PROXIMITY" and "PREMISE_FROM_POI" in best.notes:
             key = policy_key_poi(best)
-            return ACCEPT if not corrected and strictness != "STRICT" and key in self.policy else CONFIRM
+            if not corrected and strictness != "STRICT" and key in self.policy:
+                return ACCEPT
+            gran = "ROUTE"  # 商户门牌点本身不够可靠时，按道路级的规则决定（位置仍用门牌点，比道路中心准）
         if gran == "PREMISE_PROXIMITY":
             if best.street is None:
                 return CONFIRM if "BUILDING_ONLY" in best.notes and best.score < 3.0 else (
@@ -737,6 +846,7 @@ REASON_TEXT = {
     "PREMISE_NOT_FOUND": "这条路上没有这个门牌号",
     "PREMISE_INTERPOLATED": "官方地址表里没有这个门牌，但同一条路上紧挨着的门牌在，位置按相邻门牌给出，需要用户确认门牌",
     "PREMISE_FROM_POI": "门牌位置来自在这个地址登记过的商户（不是官方地址表）",
+    "PREMISE_FROM_OSM": "门牌位置来自 OpenStreetMap 门牌数据（官方地址表里没有，或这个市场没有官方地址表）",
     "MISSING_PREMISE": "缺少门牌号或楼宇名",
     "AMBIGUOUS_MULTIPLE_CANDIDATES": "有多个相距较远、可信度接近的候选地址，需要用户确认",
     "UNIT_MISSING_MULTI_UNIT_BUILDING": "该门牌下有多个单元，但没有写单元号",
@@ -792,11 +902,30 @@ def policy_key_premise(h: Hypothesis) -> str | None:
     return "PREMISE|POSTCODE_REPLACED" if notes == {"POSTCODE_REPLACED"} else None
 
 
+def _prefix_table(postcodes: dict, market: str) -> dict:
+    acc: dict[str, list[float]] = {}
+    for pc, (lat, lng, n) in postcodes.items():
+        k = postcode_prefix(pc, market)
+        if k:
+            a = acc.setdefault(k, [0.0, 0.0, 0])
+            a[0] += lat * n
+            a[1] += lng * n
+            a[2] += n
+    return {k: (a[0] / a[2], a[1] / a[2], int(a[2])) for k, a in acc.items() if a[2] >= 5}
+
+
 def policy_key_poi(h: Hypothesis) -> str | None:
     """商户地址门牌点：几家商户印证 + 邮编是否也印证。"""
     if "PREMISE_FROM_POI" not in h.notes or not h.point:
         return None
     return f"POI|{'n2' if h.point.get('n', 1) >= 2 else 'n1'}|{'pc' if 'postcode' in h.support else '-'}"
+
+
+def policy_key_osm(h: Hypothesis) -> str | None:
+    """OSM 门牌点：邮编是否也印证。"""
+    if "PREMISE_FROM_OSM" not in h.notes or not h.point:
+        return None
+    return f"OSM|{'pc' if 'postcode' in h.support else '-'}"
 
 
 def policy_key_route(h: Hypothesis) -> str:

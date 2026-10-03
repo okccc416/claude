@@ -5,8 +5,10 @@
 （developers.google.com/maps/documentation/address-validation/build-validation-logic）估一个上限：
   - 输入里没有门牌号也没有楼名：Google 会把 street_number 列进 missingComponentTypes，判 FIX
     -> 这部分 Google 同样"定位不对"（按我们的判对口径，FIX 不算定位对）
-  - 标注噪声：输入的"道路 + 门牌"与官方地址点原样一致，但商户坐标离这个地址点超过 250 米
-    -> Google 同样会定位到这个地址，按商户坐标同样判错。没有官方地址表的市场无法逐条判断，按 A 类市场噪声比例的中位数估计
+  - 标注噪声：输入的"道路 + 门牌"与地址点原样一致，但商户坐标离这个地址点超过 250 米
+    -> Google 同样会定位到这个地址，按商户坐标同样判错。地址点指官方地址表；有官方表的市场里只有 OSM 有的门牌要求邮编也一致，
+    没有官方表的市场 OSM 门牌点就是最好的门牌数据。没有官方地址表的市场按 A 类市场噪声比例的中位数估计，
+    OSM 门牌点上实测的比例更高时取实测值
   - 其余样本：Google 的数据近乎完整，按全部做对估计（这是对 Google 偏乐观的上限，所以差距是保守估计）
 
 差距 = 上限 − 我们的"定位对"比例。差距 ≤ 3 个百分点视为与 Google 持平（在弱标注和抽样误差范围内）。
@@ -29,6 +31,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from avmvp.intl.engine import ACCEPT, ADD_SUB, Engine  # noqa: E402
+from avmvp.intl.reference import OSM_ID_BASE  # noqa: E402
 from avmvp.intl.markets import MARKETS  # noqa: E402
 from evaluate_markets import error_m, judge_real, real_cases  # noqa: E402
 
@@ -50,8 +53,10 @@ def classify(code: str, split: str, n: int) -> dict:
         if ok:
             c["ok"] += 1
             c["accept_ok"] += r.action in (ACCEPT, ADD_SUB)
-        elif r.granularity == "PREMISE" and r.best and r.best.point and r.best.street_span is not None \
-                and r.best.street_span.how in ("exact", "core") and err and err > 250:
+        elif r.granularity == "PREMISE" and r.best and r.best.point and (
+                r.best.point["id"] < OSM_ID_BASE or not eng.ref.has_addresses
+                or (p.postcode and r.best.point["postcode"] == p.postcode)) \
+                and r.best.street_span is not None and r.best.street_span.how in ("exact", "core") and err and err > 250:
             c["noise"] += 1
         elif not p.number and not (r.best and r.best.building) and not p.codes:
             c["no_premise"] += 1
@@ -82,7 +87,8 @@ def main() -> None:
     rows = []
     for c, r in res.items():
         N = r["n"]
-        noise = r["noise"] / N if MARKETS[c].cls == "A" else a_noise
+        # 没有官方地址表的市场：按 A 类中位数估计；OSM 门牌点上实测到的噪声更高时取实测值（实测只覆盖有 OSM 门牌的样本，是下限）
+        noise = r["noise"] / N if MARKETS[c].cls == "A" else max(a_noise, r["noise"] / N)
         ceiling = 1 - r["no_premise"] / N - noise
         ours = r["ok"] / N
         rows.append((c, N, ours, r["accept_ok"] / N, r["no_premise"] / N, noise, ceiling, ceiling - ours))
