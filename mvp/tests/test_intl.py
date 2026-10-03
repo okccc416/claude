@@ -501,3 +501,40 @@ def test_four_digit_postcode_vs_house_number():
     assert rp.parse("Mariahilfer Straße 1200, Wien").postcode is None
     assert rp.parse("Mariahilfer Straße 120, 1070 Wien").postcode == "1070"
     assert rp.parse("1070 Wien, Mariahilfer Straße 120").postcode == "1070"
+
+
+def test_parity_normalizations():
+    """对标 Google 时补的写法统一（都来自开发集错例）。"""
+    from avmvp.intl.parse import possessive_stem
+    # 爱尔兰：Baggot Street Lower = Lower Baggot Street，Frederick St S = South Frederick Street；Upper Street 不动
+    assert key("Baggot Street Lower", "IE") == key("Lower Baggot St", "IE") == "LOWER BAGGOT STREET"
+    assert key("27 Frederick St S", "IE") == "27 SOUTH FREDERICK STREET" and key("Upper Street", "IE") == "UPPER STREET"
+    # 斯拉夫语物主形容词与"名 + 姓属格"两种路名（含游移 e：Basaričekova / Basaričeka / Basarička）
+    assert possessive_stem("GAJEVA") == possessive_stem("GAJA")
+    assert possessive_stem("BASARICEKOVA") == possessive_stem("BASARICEKA") == possessive_stem("BASARICKA")
+    assert possessive_stem("STUROVA") == possessive_stem("STURA")
+    # 葡萄牙地址表缩写；西 / 葡语数字词
+    assert key("AV DQ DE LOULE", "PT") == key("Avenida Duque de Loulé", "PT")
+    assert key("R D INÊS DE CASTRO", "PT") == key("Rua Dona Inês de Castro", "PT")
+    assert key("Av. Diez de Julio", "CL") == key("Avenida 10 de Julio", "CL")
+    assert key("Rua Quinze de Novembro", "BR") == key("Rua 15 de Novembro", "BR")
+    # 保加利亚 ж.к.（住宅小区）；印度 Marg = Road
+    assert key("ж.к. Младост 1", "BG") == key("жк Младост 1", "BG") == "ZHK MLADOST 1"
+    assert core_key("Sane Guruji Marg", "IN") == core_key("Sane Guruji Road", "IN")
+    # 日文：2-chōme-17 Asakusa、九段北4（只写丁目）、上目黒, 3丁目、"Tokyo, 1 Chome-24-15 Shibuya"
+    assert key("2-chōme-17 Asakusa", "JP") == "ASAKUSA 2 CHOME 17"
+    assert key("千代田区九段北4", "JP") == "千代田区 九段北 4 CHOME"
+    assert key("上目黒, 3丁目32-5", "JP") == "上目黒 3 CHOME 32-5"
+    assert key("Tokyo, 1 Chome-24-15 Shibuya", "JP") == "TOKYO SHIBUYA 1 CHOME 24-15"
+
+
+def test_osm_house_numbers_and_road_refs():
+    from avmvp.intl.reference import _osm_number, _road_ref_names, street_names
+    assert _osm_number("NZ", "14/59", "") == ("59", "14")  # 澳洲 / 新西兰：单元 / 门牌
+    assert _osm_number("EE", "103/16", "") == ("103/16", "")
+    assert _osm_number("DE", "12;14", "") == ("12", "")
+    assert _road_ref_names("PR", "PR-25;PR-1") == ["CARRETERA 25", "CARRETERA 1"]
+    assert _road_ref_names("IE", "N11") == ["N11"] and _road_ref_names("IE", "12") == []
+    assert street_names({"primary": "RK Patkar Marg (Waterfield Road)"}) == [
+        "RK Patkar Marg (Waterfield Road)", "Waterfield Road", "RK Patkar Marg"]
+    assert street_names({"primary": "Calle 5 (Peatonal)"}) == ["Calle 5 (Peatonal)", "Calle 5"]

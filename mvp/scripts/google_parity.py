@@ -62,6 +62,9 @@ def classify(code: str, split: str, n: int) -> dict:
             c["no_premise"] += 1
         else:
             c["miss"] += 1
+            # 差在哪：道路都没找到 / 道路找到了但门牌位置没给对 / 给了位置但不对
+            c["miss_nothing" if r.best is None else "miss_number" if "PREMISE_NOT_FOUND" in r.reasons
+              else "miss_wrong"] += 1
         c["n"] += 1
     print(f"{code} done", flush=True)
     return dict(c)
@@ -91,19 +94,21 @@ def main() -> None:
         noise = r["noise"] / N if MARKETS[c].cls == "A" else max(a_noise, r["noise"] / N)
         ceiling = 1 - r["no_premise"] / N - noise
         ours = r["ok"] / N
-        rows.append((c, N, ours, r["accept_ok"] / N, r["no_premise"] / N, noise, ceiling, ceiling - ours))
-    rows.sort(key=lambda x: x[-1])
-    par = sum(x[-1] <= PARITY_GAP for x in rows)
+        rows.append((c, N, ours, r["accept_ok"] / N, r["no_premise"] / N, noise, ceiling, ceiling - ours,
+                     r.get("miss_nothing", 0) / N, r.get("miss_number", 0) / N, r.get("miss_wrong", 0) / N))
+    rows.sort(key=lambda x: x[7])
+    par = sum(x[7] <= PARITY_GAP for x in rows)
     L = ["# 与 Google Address Validation 的差距（自动生成）\n",
          f"- 数据：{'测试集' if args.split == 'test' else '开发集'}真实商户地址，每个市场 {n} 条；Google 覆盖的 {len(rows)} 个国家 / 地区（美国除外）",
          "- Google 上限 = 1 − 没有门牌也没有楼名的比例（Google 判 FIX）− 标注噪声比例（官方地址点原样一致但商户坐标偏离 > 250 米；"
          f"没有官方地址表的市场按 A 类中位数 {a_noise:.1%} 估计）。其余样本按 Google 全部做对估计，所以差距是保守估计",
          f"- 差距 ≤ {PARITY_GAP:.0%} 视为持平：**{par} / {len(rows)} 个市场持平**\n",
-         "| 市场 | 类别 | 条数 | 我们：定位对 | 我们：直接通过且对 | 无门牌（Google 判 FIX） | 标注噪声 | Google 上限（估计） | 差距 | 持平 |",
-         "|---|---|---|---|---|---|---|---|---|---|"]
-    for c, N, ours, acc, nop, noise, ceil, gap in rows:
+         "| 市场 | 类别 | 条数 | 我们：定位对 | 我们：直接通过且对 | 无门牌（Google 判 FIX） | 标注噪声 | Google 上限（估计） | 差距 | 持平 "
+         "| 没做对的：道路没找到 | 门牌不在库里 | 位置给错 |",
+         "|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
+    for c, N, ours, acc, nop, noise, ceil, gap, m1, m2, m3 in rows:
         L.append(f"| {MARKETS[c].name}（{c}） | {MARKETS[c].cls} | {N} | {ours:.1%} | {acc:.1%} | {nop:.1%} | {noise:.1%} | "
-                 f"{ceil:.1%} | {gap:+.1%} | {'是' if gap <= PARITY_GAP else ''} |")
+                 f"{ceil:.1%} | {gap:+.1%} | {'是' if gap <= PARITY_GAP else ''} | {m1:.1%} | {m2:.1%} | {m3:.1%} |")
     tag = "" if args.split == "test" else "_dev"
     (ROOT / "reports" / f"google_parity{tag}.md").write_text("\n".join(L) + "\n", encoding="utf-8")
     (ROOT / "reports" / f"google_parity{tag}.json").write_text(json.dumps(

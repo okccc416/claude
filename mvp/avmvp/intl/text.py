@@ -294,7 +294,7 @@ def expand(tokens: list[str], market: str) -> list[str]:
     table = ABBREV.get(lang, {})
     base = ABBREV["EN"] if lang in ("EN", "AR") or market in EN_BASE else {}
     out = []
-    merged = _merge_initials(tokens)
+    merged = _merge_initials(tokens, _type_initials(lang))
     for i, t in enumerate(merged):
         if t == "ST" and lang == "EN" and i + 1 < len(merged) and merged[i + 1].isalpha() \
                 and merged[i + 1] not in TYPE_WORDS["EN"] and (i == 0 or not merged[i - 1].isalpha()):
@@ -367,12 +367,13 @@ _DE_JOIN = {"STRASSE", "GASSE", "PLATZ", "WEG", "ALLEE", "RING", "DAMM", "UFER",
             "ZEILE", "BRUCKE", "PROMENADE", "STIEGE"}
 
 
-def _merge_initials(tokens: list[str]) -> list[str]:
-    """连续的单个拉丁字母合并：M.H. Thamrin / M H Thamrin -> MH THAMRIN（人名缩写写法不一）。"""
+def _merge_initials(tokens: list[str], keep: frozenset = frozenset()) -> list[str]:
+    """连续的单个拉丁字母合并：M.H. Thamrin / M H Thamrin -> MH THAMRIN（人名缩写写法不一）。
+    keep：单字母的类型词缩写（葡萄牙地址表 R D DUARTE 的 R = Rua），不参与合并。"""
     out: list[str] = []
     run: list[str] = []
     for t in tokens + [""]:
-        if len(t) == 1 and "A" <= t <= "Z":
+        if len(t) == 1 and "A" <= t <= "Z" and t not in keep:
             run.append(t)
             continue
         out.extend(["".join(run)] if len(run) >= 2 else run)
@@ -380,6 +381,11 @@ def _merge_initials(tokens: list[str]) -> list[str]:
         if t:
             out.append(t)
     return out
+
+
+@lru_cache(maxsize=None)
+def _type_initials(lang: str) -> frozenset:
+    return frozenset(a for a, full in ABBREV.get(lang, {}).items() if len(a) == 1 and full in TYPE_WORDS.get(lang, ()))
 
 
 def merge_initials(text: str) -> str:
