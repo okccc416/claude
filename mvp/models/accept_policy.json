@@ -6,11 +6,20 @@
   "max_over_1km": 0.02
  },
  "allow": {
+  "BR": [
+   "PREMISE|POSTCODE_REPLACED"
+  ],
+  "AR": [
+   "ROUTE|pc+area|uN|exact"
+  ],
   "GB": [
    "ROUTE|pc|uN|exact"
   ],
   "LT": [
    "PREMISE|POSTCODE_REPLACED"
+  ],
+  "HU": [
+   "ROUTE|pc|uN|exact"
   ],
   "BG": [
    "ROUTE|pc|u1|core"

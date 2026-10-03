@@ -1,0 +1,300 @@
+{
+ "a_noise_median": 0.03333333333333333,
+ "markets": {
+  "AU": {
+   "ok": 505,
+   "accept_ok": 454,
+   "n": 600,
+   "noise": 40,
+   "no_premise": 44,
+   "miss": 11
+  },
+  "NZ": {
+   "ok": 526,
+   "accept_ok": 427,
+   "n": 600,
+   "noise": 21,
+   "no_premise": 34,
+   "miss": 19
+  },
+  "JP": {
+   "ok": 515,
+   "accept_ok": 514,
+   "n": 600,
+   "miss": 31,
+   "no_premise": 8,
+   "noise": 46
+  },
+  "IN": {
+   "miss": 231,
+   "n": 600,
+   "ok": 198,
+   "accept_ok": 60,
+   "no_premise": 171
+  },
+  "CA": {
+   "ok": 546,
+   "accept_ok": 375,
+   "n": 600,
+   "no_premise": 11,
+   "noise": 15,
+   "miss": 28
+  },
+  "MX": {
+   "ok": 416,
+   "accept_ok": 274,
+   "n": 600,
+   "no_premise": 69,
+   "miss": 75,
+   "noise": 40
+  },
+  "PR": {
+   "no_premise": 89,
+   "n": 600,
+   "ok": 313,
+   "accept_ok": 84,
+   "miss": 198
+  },
+  "BR": {
+   "ok": 523,
+   "accept_ok": 424,
+   "n": 600,
+   "no_premise": 29,
+   "miss": 30,
+   "noise": 18
+  },
+  "AR": {
+   "ok": 520,
+   "accept_ok": 383,
+   "n": 600,
+   "miss": 51,
+   "no_premise": 29
+  },
+  "CL": {
+   "ok": 485,
+   "accept_ok": 370,
+   "n": 600,
+   "miss": 53,
+   "no_premise": 39,
+   "noise": 23
+  },
+  "CO": {
+   "ok": 388,
+   "accept_ok": 142,
+   "n": 600,
+   "miss": 149,
+   "noise": 21,
+   "no_premise": 42
+  },
+  "GB": {
+   "ok": 549,
+   "accept_ok": 436,
+   "n": 600,
+   "miss": 36,
+   "no_premise": 15
+  },
+  "IE": {
+   "ok": 443,
+   "accept_ok": 241,
+   "n": 600,
+   "miss": 62,
+   "no_premise": 95
+  },
+  "DE": {
+   "ok": 582,
+   "accept_ok": 566,
+   "n": 600,
+   "miss": 6,
+   "noise": 7,
+   "no_premise": 5
+  },
+  "FR": {
+   "ok": 553,
+   "accept_ok": 525,
+   "n": 600,
+   "miss": 8,
+   "no_premise": 23,
+   "noise": 16
+  },
+  "NL": {
+   "ok": 545,
+   "accept_ok": 514,
+   "n": 600,
+   "no_premise": 35,
+   "noise": 8,
+   "miss": 12
+  },
+  "BE": {
+   "ok": 528,
+   "accept_ok": 470,
+   "n": 600,
+   "no_premise": 40,
+   "noise": 19,
+   "miss": 13
+  },
+  "LU": {
+   "ok": 489,
+   "accept_ok": 446,
+   "n": 600,
+   "miss": 23,
+   "noise": 37,
+   "no_premise": 51
+  },
+  "CH": {
+   "ok": 558,
+   "accept_ok": 546,
+   "n": 600,
+   "miss": 7,
+   "no_premise": 20,
+   "noise": 15
+  },
+  "AT": {
+   "ok": 534,
+   "accept_ok": 508,
+   "n": 600,
+   "noise": 30,
+   "miss": 16,
+   "no_premise": 20
+  },
+  "IT": {
+   "ok": 522,
+   "accept_ok": 497,
+   "n": 600,
+   "no_premise": 21,
+   "miss": 40,
+   "noise": 17
+  },
+  "ES": {
+   "ok": 528,
+   "accept_ok": 506,
+   "n": 600,
+   "no_premise": 38,
+   "noise": 13,
+   "miss": 21
+  },
+  "PT": {
+   "ok": 383,
+   "accept_ok": 86,
+   "n": 600,
+   "no_premise": 91,
+   "miss": 109,
+   "noise": 17
+  },
+  "DK": {
+   "ok": 560,
+   "accept_ok": 527,
+   "n": 600,
+   "no_premise": 16,
+   "noise": 13,
+   "miss": 11
+  },
+  "SE": {
+   "ok": 555,
+   "accept_ok": 450,
+   "n": 600,
+   "miss": 37,
+   "no_premise": 8
+  },
+  "NO": {
+   "ok": 558,
+   "accept_ok": 457,
+   "n": 600,
+   "no_premise": 16,
+   "noise": 15,
+   "miss": 11
+  },
+  "FI": {
+   "ok": 546,
+   "accept_ok": 445,
+   "n": 600,
+   "noise": 20,
+   "no_premise": 22,
+   "miss": 12
+  },
+  "EE": {
+   "ok": 548,
+   "accept_ok": 526,
+   "n": 600,
+   "noise": 29,
+   "no_premise": 17,
+   "miss": 6
+  },
+  "LV": {
+   "ok": 493,
+   "accept_ok": 472,
+   "n": 600,
+   "noise": 54,
+   "no_premise": 30,
+   "miss": 23
+  },
+  "LT": {
+   "ok": 548,
+   "accept_ok": 520,
+   "n": 600,
+   "no_premise": 25,
+   "miss": 11,
+   "noise": 16
+  },
+  "PL": {
+   "ok": 532,
+   "accept_ok": 462,
+   "n": 600,
+   "noise": 35,
+   "miss": 12,
+   "no_premise": 21
+  },
+  "CZ": {
+   "ok": 535,
+   "accept_ok": 502,
+   "n": 600,
+   "no_premise": 38,
+   "miss": 8,
+   "noise": 19
+  },
+  "SK": {
+   "ok": 527,
+   "accept_ok": 451,
+   "n": 600,
+   "no_premise": 26,
+   "noise": 22,
+   "miss": 25
+  },
+  "HU": {
+   "ok": 559,
+   "accept_ok": 507,
+   "n": 600,
+   "miss": 31,
+   "no_premise": 10
+  },
+  "SI": {
+   "ok": 513,
+   "accept_ok": 505,
+   "n": 600,
+   "noise": 38,
+   "miss": 24,
+   "no_premise": 25
+  },
+  "HR": {
+   "ok": 499,
+   "accept_ok": 263,
+   "n": 600,
+   "no_premise": 42,
+   "miss": 34,
+   "noise": 25
+  },
+  "BG": {
+   "miss": 99,
+   "n": 600,
+   "ok": 484,
+   "accept_ok": 349,
+   "no_premise": 17
+  },
+  "MY": {
+   "no_premise": 69,
+   "n": 600,
+   "ok": 402,
+   "accept_ok": 180,
+   "miss": 129
+  }
+ }
+}
