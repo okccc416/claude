@@ -2,7 +2,7 @@
 
 > 目标：一套服务覆盖 **Google Address Validation 覆盖的全部国家 / 地区（美国除外）**，外加中东和东南亚，共 45 个市场；接口对齐 Google AV；每个市场用同一套方法评测"规则 / AI / 规则 + AI"。
 > 代码：[`avmvp/intl/`](../mvp/avmvp/intl)（多市场引擎）、[`avmvp/router.py`](../mvp/avmvp/router.py)（按国家分发）、[`avmvp/server.py`](../mvp/avmvp/server.py)（HTTP 服务 + 演示页面）
-> 报告：[多市场评测（测试集）](../mvp/reports/markets_eval.md)、[置信度校准](../mvp/reports/intl_confidence_report.md)、[直接通过放宽规则](../mvp/reports/accept_policy.md)、[AI 解析器训练](../mvp/reports/crf_training.md)
+> 报告：[与 Google 对标（测试集）](../mvp/reports/google_parity.md)、[多市场评测（测试集）](../mvp/reports/markets_eval.md)、[置信度校准](../mvp/reports/intl_confidence_report.md)、[直接通过放宽规则](../mvp/reports/accept_policy.md)、[AI 解析器训练](../mvp/reports/crf_training.md)
 
 ---
 
@@ -117,13 +117,13 @@ python -m avmvp.server            # http://127.0.0.1:8080/  演示页面（可�
 
 | | A 类（29 个市场 + 新加坡） | B 类（中东）/ C 类（没有开放地址表） |
 |---|---|---|
-| 验真依据 | 官方地址表：这条路上有没有这个门牌 | 地图数据：道路是否存在、是否在所写片区内、邮编 / 楼宇 / POI 是否在道路附近 |
-| 最高粒度 | `PREMISE`（门牌），多单元楼缺单元号时 `CONFIRM_ADD_SUBPREMISES` | `PREMISE_PROXIMITY`（楼宇 / POI 或 Plus Code 定位）、`ROUTE`（道路） |
-| ACCEPT | 门牌在官方表里，且没有纠错 / 替换 | 楼宇在所写道路旁；Plus Code / 坐标与所写道路、片区一致；道路级：写了门牌、邮编与道路相互印证、道路名在城市里唯一（或该市场开发集上校准过的同样可靠的组合，第 7 节） |
-| CONFIRM | 道路名纠错、邮编被替换、只凭楼宇定位、**门牌不在表里但紧挨着的门牌在**（`PREMISE_INTERPOLATED`，粒度 `PREMISE_PROXIMITY`） | 道路级缺少印证或同名道路不止一条、只匹配上部分道路名、拼写纠错、缺门牌 / 楼名 |
-| FIX | 门牌不存在（附近也没有）/ 没写门牌 | 只能确认到片区，或什么都找不到 |
+| 验真依据 | 官方地址表：这条路上有没有这个门牌；官方表没有时再看 OSM 门牌、商户地址门牌点 | 地图数据（道路、片区、邮编、楼宇 / POI）+ **OSM 门牌**、商户地址门牌点 |
+| 最高粒度 | `PREMISE`（门牌），多单元楼缺单元号时 `CONFIRM_ADD_SUBPREMISES` | `PREMISE`（OSM 门牌）、`PREMISE_PROXIMITY`（推算 / 商户门牌点 / 楼宇 / Plus Code）、`ROUTE`（道路） |
+| ACCEPT | 门牌在官方表里，且没有纠错 / 替换；只有 OSM 有的门牌按开发集校准的组合放行 | 门牌点 / 道路级：邮编与道路相互印证、道路名在城市里唯一、名称完全一致（或该市场开发集上校准过的同样可靠的组合，第 7 节）；楼宇在所写道路旁；Plus Code / 坐标与所写道路、片区一致 |
+| CONFIRM | 道路名纠错、邮编被替换、只凭楼宇定位、门牌按相邻门牌推算（`PREMISE_INTERPOLATED`）、门牌来自商户登记（`PREMISE_FROM_POI`）；**道路对上、门牌不在表里**（`ROUTE` + `PREMISE_NOT_FOUND`，与 Google 一致） | 缺少印证或同名道路不止一条、只匹配上部分道路名、拼写纠错、缺门牌 / 楼名 |
+| FIX | 没写门牌，或只能确认到片区 / 什么都找不到 | 只能确认到片区，或什么都找不到 |
 
-相邻门牌推算：同一条路上 ±2、±4、±6（同侧优先），再试 ±1、±3、±5；哥伦比亚按"交叉街编号"找同一街区（`# 31-10` → 31-08 / 31-24）；日本街区号不按位置排列，不推算。相差太远的门牌（`Invalidenstraße 999`）仍判 FIX。
+门牌位置的来源依次是：官方地址点 → OSM 门牌点（`PREMISE_FROM_OSM`）→ 商户地址门牌点（参考库里商户自填地址解析出的"道路 + 门牌"，`PREMISE_FROM_POI`）→ 推算（`PREMISE_INTERPOLATED`）：同一条路上 ±2、±4、±6（同侧优先），再试 ±1、±3、±5，再按上下两个同侧门牌的号码比例插值；哥伦比亚按"交叉街编号"找同一街区（`# 31-10` → 31-08 / 31-24），只写了交叉街编号时取街区中间的门牌；日本街区号不按位置排列，不推算。推算位置离所写邮编太远的不用。
 
 ### 3.3 处理流程
 
@@ -150,12 +150,18 @@ python -m avmvp.server            # http://127.0.0.1:8080/  演示页面（可�
 
 ## 4. 参考数据
 
-全部来自 [Overture Maps](https://overturemaps.org/)（release 2026-09-23.1）：
+道路、片区、POI、官方地址表来自 [Overture Maps](https://overturemaps.org/)（release 2026-09-23.1）；门牌另补两层开放数据：
 
 | 类别 | 道路 | 片区 | 楼宇 / POI | 门牌 |
 |---|---|---|---|---|
-| A | Overture 路网（OSM），沿线形约 80 米取一点 | 行政区 / 社区边界 | Overture POI | **官方地址表**（见下表） |
-| B / C | 同上 | 同上 | 同上 | 无（需自有数据 / 迪拜 Makani、沙特国家地址接口） |
+| A | Overture 路网（OSM），沿线形约 80 米取一点 | 行政区 / 社区边界 | Overture POI | **官方地址表**（见下表）+ OSM 门牌 + 商户地址门牌点 |
+| B / C | 同上 | 同上 | 同上 | **OSM 门牌** + 商户地址门牌点（中东、印度、东南亚覆盖很少，仍需自有数据 / 迪拜 Makani、沙特国家地址接口） |
+
+**OSM 门牌**（[`scripts/fetch_osm_addresses.py`](../mvp/scripts/fetch_osm_addresses.py)）：BBBike 城市摘录（每周更新），没有城市摘录的用 openstreetmap.fr 的省 / 国家摘录；取带 `addr:housenumber` + `addr:street` 的节点和建筑轮廓，落在试点范围里的并入地址点表（编号从 10 亿起区分来源）。官方表已有的"道路 + 门牌"不重复收；道路名对不上路网、但同一名称下有 3 个以上门牌的（小区、住宅区）按片区建道路；与留出测试商户同名且相距 40 米内的 OSM 商户节点不收。各市场并入的 OSM 门牌点（官方表已有的除外）：英国 31 万、荷兰 29 万、阿根廷 15 万、爱尔兰 14 万、匈牙利 11 万、智利 10 万、瑞典 7.6 万、加拿大 7.3 万、马来西亚 7.1 万、波多黎各 6.7 万、巴西 3.2 万、保加利亚 2.8 万、泰国 2.1 万、越南 2.0 万、阿联酋 1.8 万、菲律宾 1.6 万，其余官方表完整的市场 0.01–2 万；印度（孟买）只有 1,325 个、沙特 200 个。许可 ODbL（与路网相同）。
+
+**商户地址门牌点**（[`avmvp/intl/poiaddr.py`](../mvp/avmvp/intl/poiaddr.py)）：参考库里（不含留出的测试商户及其孪生记录）商户自填的地址解析成"道路 + 门牌 → 坐标"，只用完全一致的道路、商户在路旁 150 米内，同一门牌多家商户取中位位置。
+
+**道路编号**：波多黎各、爱尔兰、英国的商户常只写编号（`1822 PR-25`、`Carr 199`、`N11`），按 OSM 道路的 `ref` 建成道路（`PR-25` = `Carretera 25`）。
 
 A 类各市场的官方地址点（试点城市范围内）：
 
@@ -315,11 +321,18 @@ B / C 类没有门牌数据，**"道路级直接通过"是最容易出静默错�
 
 | 市场 | 放宽的组合 | 开发集样本 | 正确 | 偏差 >1 公里 |
 |---|---|---|---|---|
-| 英国（GB） | 道路级：邮编印证 + 名称完全一致，但同名道路不止一条 | 75 | 98.7% | 1.3% |
-| 立陶宛（LT） | 门牌由官方地址点确认，只有邮编被替换（邮编细到路段，商户常写邻段的） | 103 | 98.1% | 1.9% |
-| 保加利亚（BG） | 道路级：邮编印证 + 道路名唯一 + 去类型词后一致 | 229 | 96.9% | 1.3% |
+| 英国（GB） | OSM 门牌点：邮编印证 + 名称完全一致（同名道路不止一条也行） | 117 | 99.1% | 0.9% |
+| 英国（GB） | 道路级：邮编印证 + 名称完全一致，同名道路不止一条 | 204 | 98.5% | 1.0% |
+| 瑞典（SE） | OSM 门牌点：邮编印证 + 道路名唯一 + 名称完全一致 | 360 | 96.4% | 1.4% |
+| 瑞典（SE） | 道路级：邮编印证 + 名称完全一致，同名道路不止一条 | 50 | 98.0% | 2.0% |
+| 匈牙利（HU） | OSM 门牌点：邮编印证 + 道路名唯一 + 名称完全一致 | 245 | 96.3% | 1.6% |
+| 保加利亚（BG） | OSM 门牌点：邮编印证 + 道路名唯一 + 去类型词后一致（多数地址不写 ul.） | 174 | 97.1% | 0.6% |
+| 加拿大（CA） | 官方表没有、只有 OSM 有的门牌：邮编印证 + 道路名唯一 + 名称完全一致 | 102 | 97.1% | 2.0% |
+| 阿根廷（AR） | 道路级：邮编 + 片区印证 + 名称完全一致，同名道路不止一条 | 207 | 95.2% | 1.9% |
+| 立陶宛（LT） | 门牌由官方地址点确认，只有邮编被替换（邮编细到路段，商户常写邻段的） | 102 | 100.0% | 0.0% |
+| 巴西（BR） | 门牌由官方地址点确认，只有邮编被替换 | 110 | 95.5% | 0.9% |
 
-接近但没达标的组合（克罗地亚"只有邮编被替换"95.3%、偏差 >1 公里 2.1%，匈牙利道路级"同名不止一条"96.6%、2.8%）仍按默认规则要求确认。最初 11 个市场没有放宽的组合，行为不变。完整统计见 [reports/accept_policy.md](../mvp/reports/accept_policy.md)。
+没有官方表的市场，OSM / 商户门牌点没被放宽时按道路级规则决定，这些样本也计入对应的道路级组合。接近但没达标的组合（爱尔兰 OSM 门牌点 83%、马来西亚 85%、英国"OSM 门牌点 + 邮编印证 + 道路名唯一"96.1% 但偏差 >1 公里 2.4%）仍按默认规则。完整统计见 [reports/accept_policy.md](../mvp/reports/accept_policy.md)。
 
 ### 7.3 置信度：给客户一个可以自己调的门槛
 
@@ -357,6 +370,29 @@ B / C 类没有门牌数据，**"道路级直接通过"是最容易出静默错�
 ---
 
 ## 8. 迭代中修掉的问题（都来自开发集的错误样例）
+
+**第三轮（对标 Google：Google 覆盖的市场要和 Google 一样好）**：
+
+| 市场 | 问题 | 处理 |
+|---|---|---|
+| 全部 | 官方表里没有的门牌、没有官方表的市场完全没有门牌数据 | **OSM 门牌层**：BBBike / openstreetmap.fr 城市摘录里的 `addr:housenumber` 并入地址点表（官方表优先、同号不重复收）；道路名对不上、但同一名称下有 3 个以上门牌的（小区、住宅区）按片区建道路；与留出测试商户同名且相距 40 米内的 OSM 商户节点不收 |
+| 全部 | 商户坐标、OSM 门牌、官方表各有缺口 | **商户地址门牌点**：参考库里的商户自填地址解析成"道路 + 门牌 → 坐标"（只用完全一致的道路、商户在路旁 150 米内），多家商户取中位位置；**门牌区间插值**：上下两个同侧门牌都在表里时按号码比例取位置 |
+| A 类 | 门牌不在官方表里一律判 FIX（Google 这时给道路级位置、门牌标"未确认"、判 CONFIRM） | 与 Google 一致：道路对上、门牌不在表里 → `ROUTE` + CONFIRM（`PREMISE_NOT_FOUND`）；没写门牌仍判 FIX。官方表对这条路一个门牌都没有时不扣分（没有覆盖不算反证） |
+| 新西兰、澳洲 | OSM 的 `14/59` 是"单元 14 / 门牌 59"，被当成门牌 14；官方表市场里 OSM 门牌常落在另一个区的同名道路上 | 澳新斜杠按单元 / 门牌拆；有官方全量表的市场，只有 OSM 有的门牌加分减半（低于相邻门牌推算） |
+| 都柏林、墨西哥城、米兰 | 几十条同名道路（Main Street、Calle Brisa、Via Dante），点到了别区同名路的同号门牌 | 道路离所写邮编很远、地址点也没有邮编印证时，地址点加分减半；边界跨进试点范围、标注点在范围外的区（Tlalpan、Iztapalapa）按边界补为片区 |
+| 克罗地亚、斯洛文尼亚、斯洛伐克、捷克 | `Heinzelova 47` / `Iblerov trg` / `Ulica Ljudevita Gaja`，路网写 `Ulica Vjekoslava Heinzela` / `Trg Drage Iblera` / `Gajeva ulica` | 物主形容词与"名 + 姓属格"取相同词干（含游移 e：Basaričekova = Basaričeka）：克罗地亚开发集定位对 +2.5 个百分点 |
+| 斯洛伐克等 | 只写城市名（`Bratislava`）被纠错成同名机构 `Bratislava I.`，当成楼宇证据 | 城市名 / 国家名不参与楼名纠错 |
+| 爱尔兰 | `Baggot Street Lower` / `Lower Baggot St`、`Frederick St S` / `South Frederick Street` 两种写法都常见 | 限定词统一放在路名前 |
+| 葡萄牙 | 官方地址表全是缩写：`AV DQ LOULE`、`R D INÊS DE CASTRO`、`PCT`、`AZ`、`VL`、`ESCNH` | 补齐葡语地址表缩写；单字母类型词 `R` 不参与人名缩写合并（葡萄牙开发集定位对 63.8% → 75.7%，与 OSM 门牌、道路级 CONFIRM 合计） |
+| 意大利、阿根廷、葡萄牙 | `Via Dante` = `Via Dante Alighieri`、`Via Giovan Battista Pergolesi` = `Via Giovanni Battista Pergolesi`、`Av. Manuel Belgrano` = `Avenida Belgrano`；`Av. Manuel Maia` = `Avenida Manuel da Maia` | 人名道路的全称 / 简称、写了类型词时的冠词差异都进候选，须邮编或片区印证才可能胜出 |
+| 西语、葡语市场 | `Avenida Diez de Julio` / `Avenida 10 de Julio`、`Rua Quinze de Novembro`；`Av. Brig. Faria Lima` 的 `Brig.` 被奥地利规则展开成 `BRIGASSE` | 数字词统一成数字；`…g.` → Gasse 只用于 4 个字母以上的词干 |
+| 智利 | `Trinidad 1300, La Florida`：`La` 被当成类型词，区名 La Florida 被当成道路 | 判断"是否写了类型词"时不算冠词 |
+| 哥伦比亚 | `Carrera 24-30`（漏了 `#`）读成门牌 24-30、找不到道路；`Cl. 13 # 36` 只写了交叉街编号 | `类型词 N-M` 读作 `类型词 N # M`；只有交叉街编号时取这个街区中间的门牌 |
+| 日本 | `2-chōme-17 Asakusa`、`九段北4`（只写丁目）、`上目黒, 3丁目32-5`、`Tokyo, 1 Chome-24-15 Shibuya`、`Honmachi` / `Honcho`；只写 `2-10-17` + 邮编 | 统一成"町名 N CHOME"；町的两种读法都生成别名；只有丁目-番地和邮编时按邮编推町（最多 CONFIRM） |
+| 拉脱维亚 | 商户邮编常省略 `LV-`，`1063` 被当成门牌 | 单独成段的 4 位数按邮编认 |
+| 印度 | `Sane Guruji Road` / `Sane Guruji Marg`；路网名 `RK Patkar Marg (Waterfield Road)` | `Marg` / `Path` / `Gali` 算类型词；路名括号里的常用名单独作名称 |
+| 保加利亚 | `ж.к. Младост 1` 的 `ж.к.` 被拆成两个词 | 合回 `ZHK`；`бл.` 是楼号标记 |
+| 波多黎各、爱尔兰、英国 | 商户只写道路编号：`1822 PR-25`、`Carr 199`、`N11` | OSM 道路编号建成道路（`PR-25` = `Carretera 25`） |
 
 **第二轮（新增 33 个国家）**：
 
@@ -419,11 +455,13 @@ B / C 类没有门牌数据，**"道路级直接通过"是最容易出静默错�
 ```bash
 cd mvp && pip install -r requirements.txt
 python scripts/fetch_markets.py               # Overture 数据（44 个市场，约 3 GB）
-python scripts/build_market_reference.py      # 参考库（3 路并行约 10 分钟）
+python scripts/fetch_osm_addresses.py         # OSM 门牌 + 道路编号（BBBike / openstreetmap.fr 摘录，约 2.5 GB 下载，处理完删除）
+python scripts/build_market_reference.py      # 参考库（3 路并行约 25 分钟）
 python scripts/train_market_parsers.py        # 机器学习解析器（每个市场约 30 秒）
 python scripts/fit_accept_policy.py           # 按市场校准直接通过的放宽规则（开发集）
 python scripts/fit_intl_confidence.py         # 置信度（开发集拟合、测试集检验）
 python scripts/evaluate_markets.py --split test --n 1000 --jobs 3  # 测试集 -> reports/markets_eval.md
+python scripts/google_parity.py --split test --jobs 4              # 与 Google 对标（测试集）-> reports/google_parity.md
 python -m avmvp.server                         # 演示页面 http://127.0.0.1:8080/
 pytest -q                                      # 单元测试（多市场用微型夹具，无需下载）
 ```
