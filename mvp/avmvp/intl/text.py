@@ -272,7 +272,7 @@ def tokenize(text: str) -> list[str]:
     t = re.sub(r"(?:(?<=\d)|(?<=\d[A-Z]))(?:\s*[–—]\s*|\s+-\s*|\s*-\s+)(?=\d+(?![\dA-Z]))|(?<=\d)\s*[–—]\s*(?=\d)",
                "-", t)
     t = re.sub(r"\b(\d{1,5})\s?/\s?([A-Z])\b(?![/\-])", r"\1\2", t)  # 136/A -> 136A（斯洛伐克、捷克）
-    t = re.sub(r"(?<=[A-Z]{3})G\.(?=[\s,]|$)", "GASSE", t)  # 奥地利 Kreuzg. -> KREUZGASSE
+    t = re.sub(r"(?<=[A-Z]{4})G\.(?=[\s,]|$)", "GASSE", t)  # 奥地利 Kreuzg. -> KREUZGASSE（Brig. = Brigadeiro 不算）
     t = re.sub(r"(?<=[A-Z]{3})PL\.(?=[\s,]|$)", "PLATZ", t)  # Yppenpl. -> YPPENPLATZ
     t = re.sub(r"(?<=\d)(?=[A-Z]{3,})(?!(?:ST|ND|RD|TH|HS|BG|BV)\b)", " ", t)  # 500OXFORD -> 500 OXFORD
     t = re.sub(r"\b(SHOP|UNIT|LEVEL|SUITE|LOT|BLOCK|BLK|OFFICE)(?=\d)", r"\1 ", t)  # SHOP4068 -> SHOP 4068

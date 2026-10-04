@@ -3,7 +3,8 @@
 两类规则（其余情况仍按 engine._action 的默认规则）：
   A 类  PREMISE|POSTCODE_REPLACED        门牌由官方地址点确认、只有邮编被替换（萨格勒布通写 10000、立陶宛邮编细到路段）
   全部  POI|<几家商户印证>|<邮编是否印证>       门牌位置来自商户地址门牌点（官方表没有这个门牌，或没有官方表）
-  全部  OSM|<邮编是否印证>                      门牌位置来自 OSM 门牌点（官方表没有这个门牌，或没有官方表）
+  全部  OSM|<邮编是否印证>|<是否唯一>|<名称怎么对上>  门牌位置来自 OSM 门牌点（官方表没有这个门牌，或没有官方表）
+        没有官方表的市场，OSM / 商户门牌点没被放宽时按道路级规则决定，这些样本也计入对应的道路级组合
   B/C   ROUTE|<印证字段>|<是否唯一>|<名称怎么对上>
         道路级结论：默认要"邮编印证 + 道路名唯一 + 名称完全一致（或片区也印证）"，有的市场别的组合同样可靠
         （保加利亚多数地址不写 ul.，"邮编印证 + 唯一 + 去类型词一致"在开发集上 97% 正确）
@@ -42,6 +43,15 @@ def wilson_lower(k: int, n: int, z: float = 1.96) -> float:
     return (p + z * z / (2 * n) - z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n))) / (1 + z * z / n)
 
 
+def add(stats: dict, key: str, eng, res, case) -> None:
+    ok = judge_real(eng, res, case).startswith("正确")
+    err = error_m(eng, res, case)
+    s = stats[key]
+    s[0] += 1
+    s[1] += ok
+    s[2] += (not ok) and err is not None and err > 1000
+
+
 def collect(code: str) -> dict:
     eng = Engine(code, "hybrid" if (eng_dir := ROOT / "data" / "markets" / code / "crf.model").exists() else "rules",
                  policy={})
@@ -52,6 +62,13 @@ def collect(code: str) -> dict:
         if b is None or any(r in res.reasons for r in BLOCKING):
             continue
         key = None
+        route_rules = res.parsed.number and "ROUTE_NOT_CORROBORATED" in res.reasons and not (
+            {"STREET_SPELL_CORRECTED", "STREET_PARTIAL_MATCH", "AREA_STREET_MISMATCH", "POSTCODE_STREET_MISMATCH"}
+            & set(res.reasons))
+        if not eng.ref.has_addresses and route_rules and res.granularity != "ROUTE" and (
+                {"PREMISE_FROM_OSM", "PREMISE_INTERPOLATED", "PREMISE_FROM_POI"} & set(res.reasons)):
+            # 没有官方表的市场：OSM / 商户门牌点不够可靠时引擎按道路级规则决定，道路级组合也要按这些样本统计
+            add(stats, policy_key_route(b), eng, res, c)
         if res.granularity == "PREMISE_PROXIMITY" and "PREMISE_FROM_POI" in res.reasons and not (
                 {"STREET_SPELL_CORRECTED", "STREET_PARTIAL_MATCH", "AREA_STREET_MISMATCH", "POSTCODE_STREET_MISMATCH",
                  "POSTCODE_REPLACED", "POSTCODE_NOT_FOUND", "STREET_INFERRED"} & set(res.reasons)):
@@ -62,19 +79,10 @@ def collect(code: str) -> dict:
                 key = policy_key_osm(b)
         elif eng.ref.has_addresses and res.granularity == "PREMISE":
             key = policy_key_premise(b)
-        elif not eng.ref.has_addresses and res.granularity == "ROUTE" and res.parsed.number and \
-                "ROUTE_NOT_CORROBORATED" in res.reasons and not ({"STREET_SPELL_CORRECTED", "STREET_PARTIAL_MATCH",
-                                                                  "AREA_STREET_MISMATCH", "POSTCODE_STREET_MISMATCH"}
-                                                                 & set(res.reasons)):
+        elif not eng.ref.has_addresses and res.granularity == "ROUTE" and route_rules:
             key = policy_key_route(b)
-        if key is None:
-            continue
-        ok = judge_real(eng, res, c).startswith("正确")
-        err = error_m(eng, res, c)
-        s = stats[key]
-        s[0] += 1
-        s[1] += ok
-        s[2] += (not ok) and err is not None and err > 1000
+        if key is not None:
+            add(stats, key, eng, res, c)
     print(f"{code} done", flush=True)
     return dict(stats)
 

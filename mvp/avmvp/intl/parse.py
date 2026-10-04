@@ -435,6 +435,20 @@ class RuleParser:
                                  if self._types_compatible(words, x)] if len(ck) >= 4 and not ck.isdigit() else []
                         if extra and len(extra) <= (10 if typed else 40):
                             spans.append(Span(ck, i, i + size, sorted(extra), 97.0, "core"))
+                    if kind == "street" and self.suffix and size <= 6:
+                        # 人名道路的全称 / 简称也进候选（Via Dante = Via Dante Alighieri、Via Giovan Battista Pergolesi =
+                        # Via Giovanni Battista Pergolesi）：完全一致的同名路在别的区时，由邮编 / 片区裁决
+                        ck = core_key(words, self.ref.market)
+                        toks_c = ck.split()
+                        if 1 <= len(toks_c) <= 4 and all(t.isalpha() for t in toks_c) and len(toks_c[-1]) >= 5:
+                            pool = set(last_names(self.ref).get(toks_c[-1], ()))
+                            if len(toks_c) == 1:
+                                pool |= first_names(self.ref).get(toks_c[0], set())
+                            have = {x for sp in spans if sp.start == i and sp.end == i + size for x in sp.ids}
+                            alt = [x for x in pool - have if self._types_compatible(words, x)
+                                   and self._covers(toks_c, x)]
+                            if alt and len(alt) <= 10:
+                                spans.append(Span(ck, i, i + size, sorted(alt), 95.0, "alias"))
         if kind == "street":
             spans = [s for s in spans if not _all_type_words(s.text, self.ref.market)]
             # 既是道路名又是片区名（Jakarta Timur、Sydney）且没写类型词：当片区处理
@@ -467,6 +481,16 @@ class RuleParser:
                     toks[i + 1:end] = [f"{toks[i + 1]}-{rest}" if rest else toks[i + 1]]
                     seps[i + 1:end] = [seps[i + 1]]
             i += 1
+
+    def _covers(self, toks: list[str], sid: int) -> bool:
+        """输入路名的每个词都出现在候选路名里（或互为前缀：GIOVAN / GIOVANNI）：Pedro Nunes 不能对上 Jacinto Nunes。"""
+        types = type_words(self.ref.market)
+        for nm in self.ref.streets[sid].names[:4]:
+            theirs = [t for t in key(nm, self.ref.market).split() if t not in types]
+            if all(any(c == t or (min(len(c), len(t)) >= 4 and (c.startswith(t) or t.startswith(c))) for c in theirs)
+                   for t in toks):
+                return True
+        return False
 
     def _stem_match(self, words: str) -> list[int]:
         types = type_words(self.ref.market)
@@ -661,6 +685,20 @@ def core_fuzzy(ref: MarketReference):
     if idx is None:
         idx = ref.__dict__["_core_fuzzy"] = FuzzyIndex({k: sorted(v) for k, v in ref.street_core.items() if len(k) >= 5})
     return idx
+
+
+def first_names(ref: MarketReference) -> dict[str, set[int]]:
+    """去掉类型词后正好 2 个词的路名：第一个词 -> 道路（Via Dante Alighieri 常简写作 Via Dante）。"""
+    out = ref.__dict__.get("_first_names")
+    if out is None:
+        out = {}
+        types = type_words(ref.market)
+        for k, ids in ref.street_core.items():
+            toks = [t for t in k.split() if t not in types]
+            if len(toks) == 2 and toks[0].isalpha() and len(toks[0]) >= 5 and toks[1].isalpha():
+                out.setdefault(toks[0], set()).update(ids)
+        ref.__dict__["_first_names"] = out
+    return out
 
 
 def last_names(ref: MarketReference) -> dict[str, set[int]]:

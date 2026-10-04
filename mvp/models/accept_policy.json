@@ -6,6 +6,9 @@
   "max_over_1km": 0.02
  },
  "allow": {
+  "CA": [
+   "OSM|pc|u1|exact"
+  ],
   "BR": [
    "PREMISE|POSTCODE_REPLACED"
   ],
@@ -13,16 +16,21 @@
    "ROUTE|pc+area|uN|exact"
   ],
   "GB": [
+   "ROUTE|pc|uN|exact",
+   "OSM|pc|uN|exact"
+  ],
+  "SE": [
+   "OSM|pc|u1|exact",
    "ROUTE|pc|uN|exact"
   ],
   "LT": [
    "PREMISE|POSTCODE_REPLACED"
   ],
   "HU": [
-   "ROUTE|pc|uN|exact"
+   "OSM|pc|u1|exact"
   ],
   "BG": [
-   "ROUTE|pc|u1|core"
+   "OSM|pc|u1|core"
   ]
  }
 }

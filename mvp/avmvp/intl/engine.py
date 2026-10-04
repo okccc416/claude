@@ -34,7 +34,8 @@ ACCEPT, CONFIRM, FIX, ADD_SUB = "ACCEPT", "CONFIRM", "FIX", "CONFIRM_ADD_SUBPREM
 # 参照物描述：说明写的楼不是地址本身（behind / opposite / near …，阿拉伯文 خلف / مقابل / بجانب / قرب）
 LANDMARK = re.compile(r"\b(?:BEHIND|OPPOSITE|OPP|NEAR|NEXT TO|BESIDE|ACROSS|IN FRONT OF|ADJACENT TO|"
                       r"DEPAN|BELAKANG|SEBELAH|DEKAT|BERHADAPAN|TRUOC|SAU|GAN|KE BEN)\b|خلف|مقابل|بجانب|قرب|امام", re.I)
-BASE = {"exact": 3.0, "core": 2.6, "thai": 2.4, "suffix": 2.3, "partial": 2.2, "crf": 2.2, "translit": 2.2}
+BASE = {"exact": 3.0, "core": 2.6, "thai": 2.4, "suffix": 2.3, "partial": 2.2, "crf": 2.2, "translit": 2.2,
+        "alias": 2.0}
 
 
 @dataclass
@@ -228,6 +229,8 @@ class Engine:
                         break
                 if ref.has_addresses or getattr(ref, "osm_count", 0) or getattr(ref, "poi_addr_count", 0):
                     self._premise(h, p)
+                if span.how == "alias" and not {"postcode", "area"} & h.support:
+                    h.score -= 2.0  # 全称 / 简称得来的同姓道路：只有邮编或片区也指向它时才可能胜出
                 hyps.append(h)
         if p.streets and pc and not pc_is_prefix and not any("postcode" in h.support for h in hyps):
             hyps += self._local_name_matches(p, pc, area_ids)
@@ -441,10 +444,12 @@ class Engine:
             return
         if p.postcode and any(x["postcode"] for x in pts):  # 有的国家地址表不带邮编，就不比
             same = [x for x in pts if x["postcode"] == p.postcode]
+            pre = postcode_prefix(p.postcode, self.market)
             if same:
                 pts = same
                 h.score += 1.0
-            else:
+            elif not (pre and pts[0]["id"] >= OSM_ID_BASE and postcode_prefix(pts[0]["postcode"], self.market) == pre):
+                # （英国 / 爱尔兰一户一码：OSM 门牌上的邮编和所写的只差在最后几位、同一个邮区内，不算替换）
                 h.notes.append("POSTCODE_REPLACED")
         h.point = pts[0]
         # 道路离所写邮编很远、地址点也没有邮编能印证：多半是另一处同名道路上的同号门牌（都柏林有几十条 Main Street），加分减半；
@@ -922,10 +927,12 @@ def policy_key_poi(h: Hypothesis) -> str | None:
 
 
 def policy_key_osm(h: Hypothesis) -> str | None:
-    """OSM 门牌点：邮编是否也印证。"""
+    """OSM 门牌点：邮编是否也印证 + 道路名是否唯一 + 名称怎么对上的。"""
     if "PREMISE_FROM_OSM" not in h.notes or not h.point:
         return None
-    return f"OSM|{'pc' if 'postcode' in h.support else '-'}"
+    sp = h.street_span
+    return f"OSM|{'pc' if 'postcode' in h.support else '-'}|{'u1' if sp is not None and len(sp.ids) == 1 else 'uN'}|" \
+           f"{sp.how if sp else '-'}"
 
 
 def policy_key_route(h: Hypothesis) -> str:
