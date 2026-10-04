@@ -237,6 +237,9 @@ class Engine:
                 hyps.append(h)
         if p.streets and pc and not pc_is_prefix and not any("postcode" in h.support for h in hyps):
             hyps += self._local_name_matches(p, pc, area_ids)
+        # 所写道路上没有这个门牌（也没有相邻门牌、商户门牌点可用）：试全称多几个词的道路
+        if p.number and p.streets and ref.has_addresses and not any(h.point is not None for h in hyps):
+            hyps += self._completed_names(p, pc, near_m, area_ids)
         for b, poi in buildings:  # 只凭楼宇 / POI
             h = Hypothesis(1.5 + (0.8 if b.score >= 97 else 0), building=poi)
             h.notes.append("BUILDING_ONLY")
@@ -272,6 +275,58 @@ class Engine:
                 h.notes.append("STREET_INFERRED")
                 hyps.append(h)
         return sorted(hyps, key=lambda h: -h.score)
+
+    def _completed_names(self, p: Parsed, pc, near_m: float, area_ids: list[int]) -> list[Hypothesis]:
+        """所写道路上没有这个门牌时，找全称比所写多一两个词、且有这个门牌的道路：
+        Gran Avenida 6610 / José Miguel Carrera 8193 -> Gran Avenida José Miguel Carrera；
+        Vicuña Mackenna 6100 -> Vicuña Mackenna Poniente（双向分开的大道两侧各是一条路）。
+        要有片区 / 邮编印证，或离所写道路不到 1 公里，结论最多 CONFIRM（STREET_NAME_COMPLETED）。"""
+        ref = self.ref
+        idx = ref.__dict__.get("_completed")
+        if idx is None:
+            idx = ref.__dict__["_completed"] = {}
+            for table in (ref.street_keys, ref.street_core):
+                for k, ids in table.items():
+                    w = k.split()
+                    for n in range(max(len(w) - 3, 1), len(w)):  # 前缀 / 后缀，少 1-3 个词
+                        for part in (" ".join(w[:n]), " ".join(w[-n:])):
+                            if len(part.replace(" ", "")) >= 8:
+                                idx.setdefault(part, set()).update(ids)
+        variants = self._number_variants(p.number)
+        out: list[Hypothesis] = []
+        seen: set[int] = set()
+        for span in p.streets[:3]:
+            if span.how not in ("exact", "core", "suffix", "alias"):
+                continue
+            typed = " ".join(key(" ".join(p.tokens[span.start:span.end]), self.market).split()) \
+                if 0 <= span.start < span.end else span.text
+            own = set(span.ids)
+            cand = (idx.get(span.text, set()) | idx.get(typed, set())) - own - seen
+            if not cand or len(cand) > 40:
+                continue
+            for num in variants:
+                pts = ref.addresses(sorted(cand), num)
+                if pts:
+                    break
+            for pt in pts:
+                sid = pt["street"]
+                if sid in seen or number_key(pt["number"]) not in {number_key(v) for v in variants}:
+                    continue
+                seen.add(sid)
+                s = ref.streets[sid]
+                h = Hypothesis(BASE["partial"], sid, Span(s.name, span.start, span.end, [sid], 90.0, "partial"))
+                h.notes.append("STREET_NAME_COMPLETED")
+                self._area_evidence(h, s, area_ids)
+                if pc and dist_to_street(ref, sid, pc[0], pc[1]) <= near_m:
+                    h.score += self.pc_weight
+                    h.support.add("postcode")
+                near = any(dist_to_street(ref, o, pt["lat"], pt["lng"]) <= 1000 for o in list(own)[:20])
+                if not ({"area", "postcode"} & h.support or near):
+                    continue
+                self._premise(h, p)
+                if h.point is not None and "POSTCODE_REPLACED" not in h.notes:  # 邮编也对不上的不用
+                    out.append(h)
+        return out
 
     def _jp_postcode_town(self, p: Parsed, pc) -> list[Hypothesis]:
         """日本：只写了"丁目-番地-号"和邮编（2-10-17, 港区, 107-0061）。日本的邮编对应到町，取邮编中心 800 米内
@@ -408,6 +463,13 @@ class Engine:
                 break
         if not pts:
             poi = poi_lookup(self.ref, h.street, variants)
+            if poi is not None and poi["n"] < 2 and self.ref.has_addresses:
+                # 只有一家商户登记过的门牌点不如官方表里紧挨着的门牌（±2 / ±4 / ±6，或两端很近的区间插值）准：
+                # 圣保罗长大道上 Bandeirantes 1877 的商户点偏了 640 米，官方表的 1883 号只差 18 米
+                near = self._near_point(h, p, wide=False)
+                if near is not None:
+                    self._use_near(h, p, near)
+                    return
             if poi is not None:
                 # 商户坐标有噪声，单家商户可能登记错：与所写邮编相距 2.5 公里以上的不用；没有官方地址表的市场，
                 # 只有一家商户印证时还要邮编也印证（同名道路分布在几个区时，靠邮编分清是哪一条）
@@ -425,17 +487,9 @@ class Engine:
                 return
             if not self.ref.has_addresses and not osm:
                 return
-            near = self._nearby_number(h.street, p.number)
-            pc = self._postcode_point(p)
-            if near is not None and pc and not near.get("block") \
-                    and haversine(near["lat"], near["lng"], pc[0], pc[1]) > self._pc_far():
-                near = None  # 门牌按区重新编号（墨西哥城的大道）：推算出的位置与所写邮编相距太远，不用
-                # （哥伦比亚同一街区的门牌不受此限：棋盘式门牌本身就定位到街区，商户写的邮编常不准，由打分权衡）
+            near = self._near_point(h, p)
             if near is not None:  # 门牌不在官方表里，但同一条路上紧挨着的门牌在：位置可信，请用户确认门牌
-                h.point = near
-                h.score += 2.5
-                h.notes.append("PREMISE_INTERPOLATED")
-                h.support.add("point")
+                self._use_near(h, p, near)
                 return
             if not self.ref.has_addresses:  # 只有 OSM 门牌的市场：OSM 不全，查不到不算反证
                 return
@@ -466,6 +520,22 @@ class Engine:
         h.support.add("point")
         if pts[0]["id"] >= OSM_ID_BASE:
             h.notes.append("PREMISE_FROM_OSM")
+
+    @staticmethod
+    def _use_near(h: Hypothesis, p: Parsed, near: dict) -> None:
+        h.point = near
+        h.score += 2.5 + (1.0 if p.postcode and near.get("postcode") == p.postcode else 0.0)  # 相邻门牌的邮编也一致
+        h.notes.append("PREMISE_INTERPOLATED")
+        h.support.add("point")
+
+    def _near_point(self, h: Hypothesis, p: Parsed, wide: bool = True) -> dict | None:
+        near = self._nearby_number(h.street, p.number, wide)
+        pc = self._postcode_point(p)
+        if near is not None and pc and not near.get("block") \
+                and haversine(near["lat"], near["lng"], pc[0], pc[1]) > self._pc_far():
+            return None  # 门牌按区重新编号（墨西哥城的大道）：推算出的位置与所写邮编相距太远，不用
+            # （哥伦比亚同一街区的门牌不受此限：棋盘式门牌本身就定位到街区，商户写的邮编常不准，由打分权衡）
+        return near
 
     def _postcode_far_share(self) -> float:
         """参考库商户（不含留出的测试商户）里，坐标离所写邮编中心超过 5 公里的比例（不用标注，按市场缓存）。"""
@@ -499,10 +569,11 @@ class Engine:
         return self.ref.postcodes.get(p.postcode) or getattr(self.ref, "postcode_prefix", {}).get(
             postcode_prefix(p.postcode, self.market))
 
-    def _nearby_number(self, street: int, number: str) -> dict | None:
+    def _nearby_number(self, street: int, number: str, wide: bool = True) -> dict | None:
         """门牌不在官方表里时，找同一条路上紧挨着的门牌（同侧优先）：
         - 一般门牌：±2、±4、±6，再试 ±1、±3、±5（12A 先试 12）
         - 哥伦比亚 # 31-10：同一个街区（31-*，一个街区约 100 米）里距离数最接近的门牌
+        - 都没有时按区间插值（wide=False 时只插两端很近的区间）
         日本的街区号不按位置顺序编排，不推算。"""
         n = number.replace(" ", "").upper()
         if self.market == "JP":
@@ -542,11 +613,11 @@ class Engine:
             pts = self.ref.addresses([street], t)
             if pts:
                 return pts[0]
-        return self._interpolate(street, base)
+        return self._interpolate(street, base, tight=not wide)
 
-    def _interpolate(self, street: int, base: int) -> dict | None:
+    def _interpolate(self, street: int, base: int, tight: bool = False) -> dict | None:
         """门牌区间插值（与地图公司地理编码的做法相同）：同一条路、同侧的上一个和下一个门牌都在表里，
-        而且两者相距不远，就按号码比例在两点之间取位置。"""
+        而且两者相距不远，就按号码比例在两点之间取位置。tight：两端号码差 ≤ 200、相距 ≤ 400 米（比单家商户的门牌点准）。"""
         cols = ("id", "number", "street", "unit", "postcode", "locality", "lat", "lng")
         rows = self.ref.db.execute(
             f"SELECT {', '.join(cols)}, CAST(number_key AS INTEGER) FROM addr WHERE street=? AND "
@@ -555,9 +626,9 @@ class Engine:
         lo = max((r for r in same if r[-1] < base), key=lambda r: r[-1], default=None)
         hi = min((r for r in same if r[-1] > base), key=lambda r: r[-1], default=None)
         # 长大道门牌稀疏（圣保罗的 9175 号两边最近的是 8800 和 9600）：号码差 1000 以内、两点相距 1.5 公里以内都插值
-        if lo is None or hi is None or hi[-1] - lo[-1] > 1000:
+        if lo is None or hi is None or hi[-1] - lo[-1] > (200 if tight else 1000):
             return None
-        if haversine(lo[6], lo[7], hi[6], hi[7]) > 1500:
+        if haversine(lo[6], lo[7], hi[6], hi[7]) > (400 if tight else 1500):
             return None
         t = (base - lo[-1]) / (hi[-1] - lo[-1])
         near = lo if t <= 0.5 else hi
@@ -579,6 +650,8 @@ class Engine:
             out += [m.group(2), m.group(1)]
         elif "/" in n and re.match(r"\d", n):  # 维也纳 7/3/37 = 门牌 / 楼梯 / 门号：按门牌查
             out.append(n.split("/")[0])
+        if self.market == "CL" and re.fullmatch(r"[1-9]\d{0,3}[A-Z]?", n):
+            out.append("0" + n)  # 圣地亚哥中轴线另一侧的门牌前面带 0（Las Torres 091），商户常省略
         return out
 
     # ------------------------------------------------------------------ 结论
@@ -668,8 +741,8 @@ class Engine:
         weak_building = gran == "PREMISE_PROXIMITY" and bool(
             {"BUILDING_SPELL_CORRECTED", "LANDMARK_RELATIVE", "BUILDING_NAME_AMBIGUOUS"} & set(best.notes))
         corrected = weak_building or any(n in best.notes for n in (
-            "STREET_SPELL_CORRECTED", "STREET_PARTIAL_MATCH", "POSTCODE_REPLACED", "POSTCODE_NOT_FOUND",
-            "POSTCODE_STREET_MISMATCH", "AREA_STREET_MISMATCH", "STREET_INFERRED"))
+            "STREET_SPELL_CORRECTED", "STREET_PARTIAL_MATCH", "STREET_NAME_COMPLETED", "POSTCODE_REPLACED",
+            "POSTCODE_NOT_FOUND", "POSTCODE_STREET_MISMATCH", "AREA_STREET_MISMATCH", "STREET_INFERRED"))
         if ambiguous:
             reasons.append("AMBIGUOUS_MULTIPLE_CANDIDATES")
             return CONFIRM
@@ -858,6 +931,7 @@ REASON_TEXT = {
     "PLUS_CODE_AREA_MISMATCH": "Plus Code 的位置不在所写片区附近",
     "ROUTE_NOT_CORROBORATED": "只验证到道路：缺少邮编与道路相互印证，或同名道路不止一条，需要用户确认",
     "STREET_PARTIAL_MATCH": "道路名只匹配上一部分（后面还有没认出的词），可能是另一条路",
+    "STREET_NAME_COMPLETED": "所写道路上没有这个门牌，全称多一两个词的同名道路上有（Gran Avenida -> Gran Avenida José Miguel Carrera），需要用户确认",
     "BUILDING_SPELL_CORRECTED": "楼名是纠错后才对上的，需要用户确认",
     "LANDMARK_RELATIVE": "输入用参照物描述位置（在某楼后面 / 对面 / 附近），楼宇只是参照物",
     "BUILDING_NAME_AMBIGUOUS": "同名楼宇有多处，需要用户确认是哪一处",
@@ -917,7 +991,7 @@ def load_policy() -> dict:
     return _POLICY
 
 
-_CORRECTION_NOTES = ("STREET_SPELL_CORRECTED", "STREET_PARTIAL_MATCH", "POSTCODE_REPLACED", "POSTCODE_NOT_FOUND",
+_CORRECTION_NOTES = ("STREET_SPELL_CORRECTED", "STREET_PARTIAL_MATCH", "STREET_NAME_COMPLETED", "POSTCODE_REPLACED", "POSTCODE_NOT_FOUND",
                      "POSTCODE_STREET_MISMATCH", "AREA_STREET_MISMATCH", "STREET_INFERRED")
 
 

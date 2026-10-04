@@ -190,14 +190,21 @@ class MarketReference:
             ref = pickle.load(f)
         ref.dir = path.parent
         ref._db = None
+        for k in DERIVED:  # 旧版本存进去的派生索引：按当前代码重新生成
+            ref.__dict__.pop(k, None)
         return ref
 
     def __getstate__(self):
         s = self.__dict__.copy()
         s["_db"] = None
-        for k in ("_np", "_core_fuzzy", "_suffix"):
+        for k in DERIVED:
             s.pop(k, None)
         return s
+
+
+# 用到时才生成、按市场缓存在参考库对象上的派生索引（不存盘）
+DERIVED = ("_np", "_core_fuzzy", "_suffix", "_completed", "_first_names", "_last_names", "_stems", "_jp_chome",
+           "_pc_far_share", "_has_pts")
 
 
 def number_key(n: str) -> str:

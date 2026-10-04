@@ -50,7 +50,7 @@ ABBREV: dict[str, dict[str, str]] = {
            "HTS": "HEIGHTS", "PKWY": "PARKWAY", "RDGE": "RIDGE", "BVD": "BOULEVARD", "APT": "APARTMENT",
            "BLDG": "BUILDING", "TWR": "TOWER", "FLR": "FLOOR", "LVL": "LEVEL", "UPR": "UPPER", "LWR": "LOWER",
            "STO": "SANTO", "STA": "SANTA", "GEN": "GENERAL", "BRGY": "BARANGAY", "BGY": "BARANGAY",
-           "EXT": "EXTENSION", "PRES": "PRESIDENT"},
+           "EXT": "EXTENSION", "PRES": "PRESIDENT", "GRN": "GREEN", "GDNS": "GARDENS", "MWS": "MEWS", "WLK": "WALK"},
     "DE": {"STR": "STRASSE", "STRAßE": "STRASSE", "PL": "PLATZ", "STRASE": "STRASSE"},
     "FR": {"R": "RUE", "AV": "AVENUE", "AVE": "AVENUE", "BD": "BOULEVARD", "BLVD": "BOULEVARD", "PL": "PLACE",
            "ST": "SAINT", "STE": "SAINTE", "QU": "QUAI", "IMP": "IMPASSE", "CHE": "CHEMIN", "SQ": "SQUARE",
@@ -272,6 +272,9 @@ _GLUED = {
 }
 
 
+THOUSANDS_DOT = {"CL", "AR", "BR", "MX", "ES", "PT"}  # 门牌号可能用点作千位分隔的市场
+
+
 def tokenize(text: str, market: str | None = None) -> list[str]:
     """分词：拉丁 / 数字按空格和标点切开（保留 339/5、12-14 这类门牌），泰文用词典分词。"""
     out: list[str] = []
@@ -283,6 +286,8 @@ def tokenize(text: str, market: str | None = None) -> list[str]:
     t = re.sub(r"(?:(?<=\d)|(?<=\d[A-Z]))(?:\s*[–—]\s*|\s+-\s*|\s*-\s+)(?=\d+(?![\dA-Z]))|(?<=\d)\s*[–—]\s*(?=\d)",
                "-", t)
     t = re.sub(r"\b(\d{1,5})\s?/\s?([A-Z])\b(?![/\-])", r"\1\2", t)  # 136/A -> 136A（斯洛伐克、捷克）
+    if "." in t and market in THOUSANDS_DOT:  # 千位点：Tobalaba N° 14.007、Av. Paulista, 1.636 -> 14007、1636
+        t = re.sub(r"(?<![\d.])(\d{1,2})\.(\d{3})(?![\d.])", r"\1\2", t)
     if "." in t:  # 词尾粘着的类型词缩写（Brig. = Brigadeiro 不算：要求 4 个字母以上的词干）
         for rx, full in _GLUED.get(MARKET_LANG.get(market, "") if market else "DE", ()):
             t = rx.sub(full, t)

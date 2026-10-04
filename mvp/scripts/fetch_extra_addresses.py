@@ -7,9 +7,12 @@
   BG  索非亚市政府开放数据 address_sofia（12.5 万个，CC-BY-4.0）：道路门牌，以及住宅小区的楼号
       （ж.к. Младост 1, бл. 12 -> 道路"ж.к. Младост 1"、门牌 12；入口记为单元）
 
+  GB  Ordnance Survey Code-Point Open 邮编中心点（OGL，每个邮编约 15 户）：存成 postcode_points.parquet，
+      只用于 google_parity.py 估计标注噪声（商户坐标离所写邮编中心很远）；放进参考库开发集只多对 1 条（91.0% -> 91.2%），
+      默认不放（--postcodes-into-reference 时另存为 extra_postcodes.parquet，构建参考库时读入）
+
 试过但开发集上没有提升、默认不用的（--markets 显式指定才下载）：
   SE  斯德哥尔摩市地址点（2016，经 OpenAddresses 缓存）+ 纳卡市地址点：瑞典开发集定位对 93.0% -> 91.7%
-  GB  Ordnance Survey Code-Point Open 邮编中心点（存成 extra_postcodes.parquet）：英国开发集 91.0% -> 91.2%
 
   python scripts/fetch_extra_addresses.py [--markets CO]
 """
@@ -128,7 +131,7 @@ def stockholm(cache: Path) -> list[dict]:
 
 
 SOURCES = {"CO": bogota, "BG": sofia, "SE": stockholm}
-DEFAULT = ("CO", "BG")  # 开发集上有提升的
+DEFAULT = ("CO", "BG", "GB")  # 开发集上有提升的（GB 只取邮编中心点，用于估计标注噪声）
 CODEPOINT = "https://api.os.uk/downloads/v1/products/CodePointOpen/downloads?area=GB&format=CSV&redirect"
 
 
@@ -158,6 +161,7 @@ def main() -> None:
 
     ap = argparse.ArgumentParser()
     ap.add_argument("--markets", default=",".join(DEFAULT))
+    ap.add_argument("--postcodes-into-reference", action="store_true")
     args = ap.parse_args()
     if Path("/root/.ccr/ca-bundle.crt").exists():
         os.environ.setdefault("SSL_CERT_FILE", "/root/.ccr/ca-bundle.crt")
@@ -169,7 +173,8 @@ def main() -> None:
         if code in POSTCODE_SOURCES:  # 邮编中心点：取试点范围外扩约 10 公里
             pcs = [r for r in POSTCODE_SOURCES[code](cache)
                    if any(b[0] - 0.15 <= r["lng"] <= b[2] + 0.15 and b[1] - 0.1 <= r["lat"] <= b[3] + 0.1 for b in boxes)]
-            pq.write_table(pa.Table.from_pylist(pcs), ROOT / "data" / "markets" / code / "extra_postcodes.parquet")
+            name = "extra_postcodes.parquet" if args.postcodes_into_reference else "postcode_points.parquet"
+            pq.write_table(pa.Table.from_pylist(pcs), ROOT / "data" / "markets" / code / name)
             print(f"{code} 邮编中心点 {len(pcs):,} 个（{time.time() - t:.0f}s）", flush=True)
         if code not in SOURCES:
             continue

@@ -538,3 +538,40 @@ def test_osm_house_numbers_and_road_refs():
     assert street_names({"primary": "RK Patkar Marg (Waterfield Road)"}) == [
         "RK Patkar Marg (Waterfield Road)", "Waterfield Road", "RK Patkar Marg"]
     assert street_names({"primary": "Calle 5 (Peatonal)"}) == ["Calle 5 (Peatonal)", "Calle 5"]
+
+
+@pytest.fixture(scope="module")
+def cl(tmp_path_factory):
+    root = tmp_path_factory.mktemp("markets")
+    cisterna, quilicura = (-70.67, -33.54, -70.65, -33.52), (-70.73, -33.37, -70.71, -33.35)
+    florida = (-70.62, -33.52, -70.60, -33.50)
+    segs = [("Gran Avenida José Miguel Carrera", -33.538 + 0.002 * i, -70.662) for i in range(8)]
+    segs += [("Avenida Vicuña Mackenna", -33.470 + 0.002 * i, -70.625) for i in range(4)]
+    segs += [("Avenida Vicuña Mackenna Poniente", -33.516 + 0.002 * i, -70.6105) for i in range(4)]  # 双向分开的两侧
+    segs += [("Avenida Las Torres", -33.364 + 0.002 * i, -70.719) for i in range(3)]
+    segs += [("Avenida Las Torres", -33.465 + 0.002 * i, -70.731) for i in range(3)]
+    addrs = [("8193", "GRAN AVENIDA JOSE MIGUEL CARRERA", "", "", -33.5295, -70.6625),
+             ("8201", "GRAN AVENIDA JOSE MIGUEL CARRERA", "", "", -33.5300, -70.6625),
+             ("1200", "AVENIDA VICUNA MACKENNA", "", "", -33.4690, -70.6250),
+             ("6100", "AVENIDA VICUNA MACKENNA PONIENTE", "", "", -33.5114, -70.6103),
+             ("091", "AVENIDA LAS TORRES", "", "", -33.3642, -70.7192),
+             ("85", "AVENIDA LAS TORRES", "", "", -33.4650, -70.7308)]
+    _write(root / "CL", [("La Cisterna", "locality", cisterna), ("Quilicura", "locality", quilicura),
+                         ("La Florida", "locality", florida)], segs,
+           [("Café", "cafe", -33.53, -70.66)], addrs)
+    return Engine("CL", "rules", build("CL", "A", log=lambda *_: None, root=root))
+
+
+def test_completed_names_and_chilean_numbers(cl):
+    """智利：所写道路上没有这个门牌、全称多一个词的同名路上有（Vicuña Mackenna 6100 = Vicuña Mackenna Poniente 6100），
+    按片区印证后给门牌位置并请用户确认；千位点（8.193）；圣地亚哥门牌前的 0 可以省略（Las Torres 91 = 091）。"""
+    res = cl.validate("Av. Vicuña Mackenna 6100, La Florida")
+    assert res.granularity == "PREMISE" and res.action == CONFIRM and "STREET_NAME_COMPLETED" in res.reasons
+    assert abs(res.lat + 33.5114) < 1e-3
+    assert "STREET_NAME_COMPLETED" not in cl.validate("Av. Vicuña Mackenna 6100, Quilicura").reasons  # 没有印证不用
+    res = cl.validate("Gran Avenida José Miguel Carrera N° 8.193, La Cisterna")
+    assert res.granularity == "PREMISE" and res.best.point["number"] == "8193"
+    res = cl.validate("Av. Las Torres 91, Quilicura")
+    assert res.granularity == "PREMISE" and res.best.point["number"] == "091"
+    assert key("Tobalaba N° 14.007", "CL") == "TOBALABA N 14007" and key("Av. Paulista, 1.636", "BR").endswith(" 1636")
+    assert "1636" not in key("12.1.636", "BR") and key("Kreuzg. 1.636", "AT").endswith("1 636")  # 只在这几个市场、只合并 x.xxx

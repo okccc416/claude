@@ -399,7 +399,7 @@ class RuleParser:
                         ids = self.suffix[ck]
                     elif len(toks_c) >= 3 and " ".join(toks_c[-2:]) in self.ref.street_core:
                         ids = self.ref.street_core[" ".join(toks_c[-2:])]
-                    elif 0 < len(toks_c) <= 2 and all(t.isalpha() for t in toks_c) and len(toks_c[-1]) >= 5 \
+                    elif 0 < len(toks_c) <= 2 and all(t.isalpha() for t in toks_c) and len(toks_c[-1]) >= 4 \
                             and len(words.split()) > len(toks_c) + (
                             1 if _has_type_word(words, self.ref.market) else 0):
                         # 去掉了首字母才对不上（Avenida FD Roosevelt = Avenida Franklin Delano Roosevelt）：按姓找，类型词要相容
@@ -513,7 +513,10 @@ class RuleParser:
         if not mine:
             return True
         for nm in self.ref.streets[sid].names:
-            theirs = set(key(nm, self.ref.market).split()) & types
+            k = key(nm, self.ref.market)
+            if re.fullmatch(r"[A-Z]{1,3}-?\d+[A-Z]?", k.replace(" ", "")):
+                continue  # 道路编号（B517、N11）本身没有类型词，不能当"类型相容"的依据
+            theirs = set(k.split()) & types
             if not theirs or mine <= theirs or theirs <= mine:
                 return True
         return False
@@ -713,7 +716,7 @@ def last_names(ref: MarketReference) -> dict[str, set[int]]:
         types = type_words(ref.market)
         for k, ids in ref.street_core.items():
             toks = [t for t in k.split() if t not in types]
-            if len(toks) >= 2 and toks[-1].isalpha() and len(toks[-1]) >= 5:
+            if len(toks) >= 2 and toks[-1].isalpha() and len(toks[-1]) >= 4:  # 4 个字母的姓只在写了首字母时用（A. Čaka）
                 out.setdefault(toks[-1], set()).update(ids)
         ref.__dict__["_last_names"] = out
     return out
