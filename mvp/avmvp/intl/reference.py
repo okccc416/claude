@@ -675,6 +675,10 @@ def _add_road_refs(ref: MarketReference, log) -> int:
     return n
 
 
+# 开发集上加了 OSM 门牌反而变差的市场（东南亚、中东：OSM 门牌稀少且常挂错道路，开发集定位对 −6 到 −27 条 / 600），不用
+OSM_SKIP_MARKETS = {"MY", "ID", "TH", "VN", "PH", "AE", "SA"}
+
+
 def _osm_number(market: str, number: str, unit: str) -> tuple[str, str]:
     """OSM 的 addr:housenumber：多个号码只取第一个（12;14）；澳洲 / 新西兰的 14/59 是"单元 / 门牌"。"""
     number = number.split(";")[0].strip()
@@ -694,7 +698,7 @@ def _add_osm(ref: MarketReference, db, official: set, by_key: dict, by_core: dic
     from rapidfuzz import fuzz
 
     path = ref.dir / "osm_addresses.parquet"
-    if not path.exists():
+    if ref.market in OSM_SKIP_MARKETS or not path.exists():
         return {}
     market = ref.market
     cell = 0.0005
