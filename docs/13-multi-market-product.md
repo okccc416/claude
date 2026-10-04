@@ -459,6 +459,8 @@ B / C 类没有门牌数据，**"道路级直接通过"是最容易出静默错�
 | 印度 | `Sane Guruji Road` / `Sane Guruji Marg`；路网名 `RK Patkar Marg (Waterfield Road)` | `Marg` / `Path` / `Gali` 算类型词；路名括号里的常用名单独作名称 |
 | 保加利亚 | `ж.к. Младост 1` 的 `ж.к.` 被拆成两个词 | 合回 `ZHK`；`бл.` 是楼号标记 |
 | 波多黎各、爱尔兰、英国 | 商户只写道路编号：`1822 PR-25`、`Carr 199`、`N11` | OSM 道路编号建成道路（`PR-25` = `Carretera 25`） |
+| 哥伦比亚、保加利亚 | 官方表缺大量门牌；索非亚按"小区 + 楼号"编址，开放数据里没有楼号 | 补市政府开放数据：波哥大地籍局门牌牌号 173 万个、索非亚地址 7.7 万个（含楼号，`ж.к. Младост 1` 也能只写 `Младост 1`）；测试集差距哥伦比亚 18.6 → 15.8、保加利亚 12.2 → 6.8 个百分点 |
+| 哥伦比亚、智利、萨格勒布等 | 商户写的邮编常不准（参考库商户 5–12% 离所写邮编中心超过 5 公里），邮编印证把同名路的另一段顶到前面；同一街区的门牌推算被邮编距离否决 | 邮编证据按市场可靠程度加权（不用标注，按参考库商户统计）；哥伦比亚同一街区的门牌推算不受邮编距离否决 |
 
 **第二轮（新增 33 个国家）**：
 
@@ -523,6 +525,7 @@ B / C 类没有门牌数据，**"道路级直接通过"是最容易出静默错�
 cd mvp && pip install -r requirements.txt
 python scripts/fetch_markets.py               # Overture 数据（44 个市场，约 3 GB）
 python scripts/fetch_osm_addresses.py         # OSM 门牌 + 道路编号（BBBike / openstreetmap.fr 摘录，约 2.5 GB 下载，处理完删除）
+python scripts/fetch_extra_addresses.py       # 政府开放地址：波哥大门牌牌号、索非亚地址
 python scripts/build_market_reference.py      # 参考库（3 路并行约 25 分钟）
 python scripts/train_market_parsers.py        # 机器学习解析器（每个市场约 30 秒）
 python scripts/fit_accept_policy.py           # 按市场校准直接通过的放宽规则（开发集）
