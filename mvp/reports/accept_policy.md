@@ -56,7 +56,7 @@
 | 智利（CL） | POI|n2|pc | 12 | 91.7% | 0.0% |  |
 | 哥伦比亚（CO） | POI|n2|pc | 11 | 63.6% | 18.2% |  |
 | 哥伦比亚（CO） | POI|n1|pc | 10 | 50.0% | 50.0% |  |
-| 英国（GB） | ROUTE|pc|uN|exact | 205 | 98.5% | 1.0% | 是 |
+| 英国（GB） | ROUTE|pc|uN|exact | 204 | 98.5% | 1.0% | 是 |
 | 英国（GB） | OSM|pc|uN|exact | 117 | 99.1% | 0.9% | 是 |
 | 英国（GB） | OSM|pc|u1|exact | 111 | 94.6% | 2.7% |  |
 | 英国（GB） | POI|n2|pc | 48 | 95.8% | 2.1% |  |
@@ -70,8 +70,8 @@
 | 爱尔兰（IE） | POI|n1|pc | 17 | 94.1% | 0.0% |  |
 | 爱尔兰（IE） | POI|n2|pc | 17 | 88.2% | 0.0% |  |
 | 爱尔兰（IE） | ROUTE|pc+area|uN|exact | 13 | 84.6% | 7.7% |  |
-| 卢森堡（LU） | PREMISE|POSTCODE_REPLACED | 21 | 61.9% | 28.6% |  |
-| 西班牙（ES） | PREMISE|POSTCODE_REPLACED | 10 | 80.0% | 10.0% |  |
+| 卢森堡（LU） | PREMISE|POSTCODE_REPLACED | 22 | 63.6% | 27.3% |  |
+| 西班牙（ES） | PREMISE|POSTCODE_REPLACED | 11 | 72.7% | 9.1% |  |
 | 葡萄牙（PT） | OSM|pc|u1|exact | 45 | 91.1% | 4.4% |  |
 | 葡萄牙（PT） | PREMISE|POSTCODE_REPLACED | 39 | 87.2% | 5.1% |  |
 | 葡萄牙（PT） | POI|n2|pc | 35 | 85.7% | 11.4% |  |
@@ -92,7 +92,7 @@
 | 斯洛伐克（SK） | PREMISE|POSTCODE_REPLACED | 25 | 96.0% | 4.0% |  |
 | 斯洛伐克（SK） | OSM|pc|u1|exact | 12 | 100.0% | 0.0% |  |
 | 匈牙利（HU） | OSM|pc|u1|exact | 245 | 96.3% | 1.6% | 是 |
-| 匈牙利（HU） | ROUTE|pc|uN|exact | 149 | 95.3% | 2.7% |  |
+| 匈牙利（HU） | ROUTE|pc|uN|exact | 148 | 95.3% | 2.7% |  |
 | 匈牙利（HU） | OSM|pc|uN|exact | 119 | 95.0% | 3.4% |  |
 | 匈牙利（HU） | POI|n2|pc | 20 | 85.0% | 5.0% |  |
 | 匈牙利（HU） | POI|n1|pc | 16 | 93.8% | 6.2% |  |

@@ -3,15 +3,15 @@
  "markets": {
   "AU": {
    "n": 600,
-   "ok": 508,
+   "ok": 509,
    "accept_ok": 453,
    "noise": 41,
    "noise_postcode": 0,
    "no_premise": 44,
-   "miss": 7,
+   "miss": 6,
    "miss_nothing": 0,
    "miss_number": 3,
-   "miss_wrong": 4
+   "miss_wrong": 3
   },
   "NZ": {
    "n": 600,
@@ -136,7 +136,7 @@
   "GB": {
    "n": 600,
    "ok": 548,
-   "accept_ok": 429,
+   "accept_ok": 428,
    "noise": 23,
    "noise_postcode": 6,
    "no_premise": 15,
@@ -411,15 +411,15 @@
   },
   "SI": {
    "n": 600,
-   "ok": 518,
-   "accept_ok": 502,
+   "ok": 519,
+   "accept_ok": 503,
    "noise": 45,
    "noise_postcode": 0,
    "no_premise": 25,
-   "miss": 12,
+   "miss": 11,
    "miss_nothing": 1,
    "miss_number": 3,
-   "miss_wrong": 8
+   "miss_wrong": 7
   },
   "HR": {
    "n": 600,
