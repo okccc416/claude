@@ -2868,23 +2868,23 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.026,
-          "正确·要求确认": 0.323,
+          "正确·要求确认": 0.322,
           "判 FIX·片区对": 0.099,
           "判 FIX": 0.145,
-          "错误建议": 0.402,
+          "错误建议": 0.403,
           "静默错误": 0.005
         },
         "silent_over_1km": 0.004,
-        "wrong_over_1km": 0.358,
+        "wrong_over_1km": 0.36,
         "granularity": {
           "ROUTE": 0.7,
           "LOCALITY": 0.164,
           "OTHER": 0.08,
           "PREMISE_PROXIMITY": 0.056
         },
-        "median_error_m": 2218.3530845471887,
+        "median_error_m": 2221.000970723923,
         "within_500m": 0.208,
-        "ms": 7.812238804999652,
+        "ms": 10.030627201000016,
         "examples": {
           "判 FIX": [
             [
@@ -2986,7 +2986,7 @@
         },
         "median_error_m": 148.47745753011066,
         "within_500m": 0.722,
-        "ms": 2.662091510999744,
+        "ms": 3.2495929409999462,
         "examples": {
           "判 FIX": [
             [
@@ -3047,24 +3047,24 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.022,
-          "正确·要求确认": 0.273,
-          "判 FIX·片区对": 0.162,
-          "判 FIX": 0.218,
+          "正确·直接通过": 0.023,
+          "正确·要求确认": 0.272,
+          "判 FIX·片区对": 0.163,
+          "判 FIX": 0.217,
           "错误建议": 0.317,
           "静默错误": 0.008
         },
         "silent_over_1km": 0.005,
         "wrong_over_1km": 0.291,
         "granularity": {
-          "ROUTE": 0.578,
-          "LOCALITY": 0.241,
-          "OTHER": 0.139,
-          "PREMISE_PROXIMITY": 0.042
+          "ROUTE": 0.577,
+          "LOCALITY": 0.242,
+          "OTHER": 0.138,
+          "PREMISE_PROXIMITY": 0.043
         },
-        "median_error_m": 1918.1844293918134,
-        "within_500m": 0.195,
-        "ms": 5.931943254000544,
+        "median_error_m": 1912.6393875054107,
+        "within_500m": 0.197,
+        "ms": 7.255427435000001,
         "examples": {
           "错误建议": [
             [
@@ -3165,7 +3165,7 @@
         },
         "median_error_m": 111.32831364675779,
         "within_500m": 0.826,
-        "ms": 1.2554387250002037,
+        "ms": 1.7116965749999054,
         "examples": {
           "错误建议": [
             [
@@ -3235,23 +3235,23 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.027,
-          "正确·要求确认": 0.36,
+          "正确·要求确认": 0.358,
           "判 FIX·片区对": 0.072,
           "判 FIX": 0.121,
-          "错误建议": 0.414,
+          "错误建议": 0.416,
           "静默错误": 0.006
         },
         "silent_over_1km": 0.004,
-        "wrong_over_1km": 0.364,
+        "wrong_over_1km": 0.367,
         "granularity": {
           "ROUTE": 0.742,
           "LOCALITY": 0.12,
           "OTHER": 0.073,
           "PREMISE_PROXIMITY": 0.065
         },
-        "median_error_m": 1943.4181079277455,
+        "median_error_m": 1970.595158222793,
         "within_500m": 0.223,
-        "ms": 13.756834476000222,
+        "ms": 16.541669811000023,
         "examples": {
           "判 FIX": [
             [
@@ -3336,23 +3336,23 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.111,
+          "正确·直接通过": 0.11,
           "正确·要求确认": 0.723,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.003,
-          "错误建议": 0.162,
+          "错误建议": 0.163,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.156,
+        "wrong_over_1km": 0.157,
         "granularity": {
           "ROUTE": 0.975,
           "PREMISE_PROXIMITY": 0.022,
           "LOCALITY": 0.003
         },
         "median_error_m": 132.06677206266184,
-        "within_500m": 0.806,
-        "ms": 3.81107713900019,
+        "within_500m": 0.805,
+        "ms": 4.897062768000296,
         "examples": {
           "错误建议": [
             [
@@ -4491,21 +4491,21 @@
           "正确·直接通过": 0.17,
           "正确·要求确认": 0.423,
           "判 FIX·片区对": 0.099,
-          "判 FIX": 0.105,
-          "错误建议": 0.175,
+          "判 FIX": 0.104,
+          "错误建议": 0.176,
           "静默错误": 0.028
         },
         "silent_over_1km": 0.01,
-        "wrong_over_1km": 0.112,
+        "wrong_over_1km": 0.113,
         "granularity": {
           "ROUTE": 0.779,
-          "LOCALITY": 0.193,
-          "PREMISE_PROXIMITY": 0.017,
+          "LOCALITY": 0.192,
+          "PREMISE_PROXIMITY": 0.018,
           "OTHER": 0.011
         },
         "median_error_m": 1166.8303250823242,
         "within_500m": 0.293,
-        "ms": 11.12121660899993,
+        "ms": 13.8757888990001,
         "examples": {
           "判 FIX": [
             [
@@ -4591,10 +4591,10 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.17,
-          "正确·要求确认": 0.775,
+          "正确·要求确认": 0.776,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.02,
-          "错误建议": 0.034,
+          "错误建议": 0.033,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
@@ -4606,8 +4606,8 @@
           "OTHER": 0.008
         },
         "median_error_m": 41.249661724635544,
-        "within_500m": 0.942,
-        "ms": 2.831414997000138,
+        "within_500m": 0.943,
+        "ms": 4.001728166000021,
         "examples": {
           "错误建议": [
             [
@@ -4679,21 +4679,21 @@
           "正确·直接通过": 0.118,
           "正确·要求确认": 0.267,
           "判 FIX·片区对": 0.295,
-          "判 FIX": 0.222,
-          "错误建议": 0.076,
+          "判 FIX": 0.221,
+          "错误建议": 0.077,
           "静默错误": 0.022
         },
         "silent_over_1km": 0.008,
-        "wrong_over_1km": 0.05,
+        "wrong_over_1km": 0.051,
         "granularity": {
-          "LOCALITY": 0.484,
+          "LOCALITY": 0.483,
           "ROUTE": 0.465,
           "OTHER": 0.033,
-          "PREMISE_PROXIMITY": 0.018
+          "PREMISE_PROXIMITY": 0.019
         },
         "median_error_m": 1745.597744527861,
         "within_500m": 0.185,
-        "ms": 6.196404585999517,
+        "ms": 8.398091183000133,
         "examples": {
           "判 FIX": [
             [
@@ -4794,7 +4794,7 @@
         },
         "median_error_m": 49.17360286670517,
         "within_500m": 0.964,
-        "ms": 1.6708856079994803,
+        "ms": 2.306169319999981,
         "examples": {
           "错误建议": [
             [
@@ -4852,23 +4852,23 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.17,
-          "正确·要求确认": 0.438,
+          "正确·要求确认": 0.437,
           "判 FIX·片区对": 0.089,
-          "判 FIX": 0.095,
-          "错误建议": 0.18,
+          "判 FIX": 0.094,
+          "错误建议": 0.182,
           "静默错误": 0.028
         },
         "silent_over_1km": 0.01,
-        "wrong_over_1km": 0.117,
+        "wrong_over_1km": 0.119,
         "granularity": {
           "ROUTE": 0.789,
-          "LOCALITY": 0.173,
-          "PREMISE_PROXIMITY": 0.027,
+          "LOCALITY": 0.172,
+          "PREMISE_PROXIMITY": 0.028,
           "OTHER": 0.011
         },
         "median_error_m": 1145.074498859871,
         "within_500m": 0.299,
-        "ms": 16.965492784999697,
+        "ms": 21.65147344799993,
         "examples": {
           "判 FIX": [
             [
@@ -4969,7 +4969,7 @@
         },
         "median_error_m": 49.49243910576711,
         "within_500m": 0.962,
-        "ms": 4.327500221000264,
+        "ms": 6.158067344000074,
         "examples": {
           "错误建议": [
             [
@@ -5029,22 +5029,22 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.097,
-          "正确·要求确认": 0.6,
+          "正确·要求确认": 0.596,
           "判 FIX·片区对": 0.016,
-          "判 FIX": 0.044,
-          "错误建议": 0.23,
+          "判 FIX": 0.043,
+          "错误建议": 0.235,
           "静默错误": 0.013
         },
         "silent_over_1km": 0.01,
-        "wrong_over_1km": 0.163,
+        "wrong_over_1km": 0.168,
         "granularity": {
-          "ROUTE": 0.931,
-          "LOCALITY": 0.06,
+          "ROUTE": 0.932,
+          "LOCALITY": 0.059,
           "PREMISE_PROXIMITY": 0.009
         },
-        "median_error_m": 520.0924566470351,
-        "within_500m": 0.489,
-        "ms": 15.525572159000149,
+        "median_error_m": 528.1242966105015,
+        "within_500m": 0.487,
+        "ms": 20.190139891000175,
         "examples": {
           "错误建议": [
             [
@@ -5146,7 +5146,7 @@
         },
         "median_error_m": 31.246865501042674,
         "within_500m": 0.911,
-        "ms": 2.68394114000057,
+        "ms": 3.6904544820001774,
         "examples": {
           "错误建议": [
             [
@@ -5228,23 +5228,23 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.127,
-          "正确·要求确认": 0.38,
+          "正确·要求确认": 0.379,
           "判 FIX·片区对": 0.195,
           "判 FIX": 0.147,
-          "错误建议": 0.132,
+          "错误建议": 0.133,
           "静默错误": 0.019
         },
         "silent_over_1km": 0.008,
-        "wrong_over_1km": 0.087,
+        "wrong_over_1km": 0.088,
         "granularity": {
           "ROUTE": 0.646,
           "LOCALITY": 0.298,
           "OTHER": 0.044,
           "PREMISE_PROXIMITY": 0.012
         },
-        "median_error_m": 637.4939336743288,
-        "within_500m": 0.415,
-        "ms": 9.418572750000749,
+        "median_error_m": 639.9360208730878,
+        "within_500m": 0.414,
+        "ms": 12.734982549000051,
         "examples": {
           "判 FIX": [
             [
@@ -5346,7 +5346,7 @@
         },
         "median_error_m": 36.55904096390957,
         "within_500m": 0.948,
-        "ms": 1.9263968639997984,
+        "ms": 2.514372642000126,
         "examples": {
           "错误建议": [
             [
@@ -5402,22 +5402,22 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.153,
-          "正确·要求确认": 0.549,
+          "正确·要求确认": 0.543,
           "判 FIX·片区对": 0.012,
           "判 FIX": 0.038,
-          "错误建议": 0.223,
+          "错误建议": 0.229,
           "静默错误": 0.025
         },
         "silent_over_1km": 0.015,
-        "wrong_over_1km": 0.156,
+        "wrong_over_1km": 0.161,
         "granularity": {
           "ROUTE": 0.933,
           "LOCALITY": 0.05,
           "PREMISE_PROXIMITY": 0.017
         },
-        "median_error_m": 515.7952399273684,
-        "within_500m": 0.492,
-        "ms": 25.131831276999947,
+        "median_error_m": 517.7008728725546,
+        "within_500m": 0.49,
+        "ms": 33.266447783999865,
         "examples": {
           "错误建议": [
             [
@@ -5503,22 +5503,22 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.379,
-          "正确·要求确认": 0.562,
+          "正确·要求确认": 0.561,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.001,
-          "错误建议": 0.057,
+          "错误建议": 0.058,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.049,
+        "wrong_over_1km": 0.05,
         "granularity": {
           "ROUTE": 0.853,
           "PREMISE_PROXIMITY": 0.146,
           "LOCALITY": 0.001
         },
         "median_error_m": 38.926951508293,
-        "within_500m": 0.938,
-        "ms": 4.596449888999814,
+        "within_500m": 0.937,
+        "ms": 5.593529392999699,
         "examples": {
           "错误建议": [
             [
@@ -9020,8 +9020,8 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.658,
-          "正确·要求确认": 0.185,
+          "正确·直接通过": 0.657,
+          "正确·要求确认": 0.186,
           "判 FIX·片区对": 0.013,
           "判 FIX": 0.043,
           "错误建议": 0.073,
@@ -9030,15 +9030,15 @@
         "silent_over_1km": 0.019,
         "wrong_over_1km": 0.063,
         "granularity": {
-          "PREMISE": 0.751,
+          "PREMISE": 0.752,
           "PREMISE_PROXIMITY": 0.115,
-          "ROUTE": 0.114,
+          "ROUTE": 0.113,
           "LOCALITY": 0.014,
           "OTHER": 0.006
         },
         "median_error_m": 20.033910358665352,
         "within_500m": 0.857,
-        "ms": 5.814066585999967,
+        "ms": 7.642225214000064,
         "examples": {
           "错误建议": [
             [
@@ -9141,7 +9141,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.946,
-        "ms": 3.085602635999976,
+        "ms": 3.9816224819999206,
         "examples": {
           "错误建议": [
             [
@@ -9240,7 +9240,7 @@
         },
         "median_error_m": 21.4103286029213,
         "within_500m": 0.82,
-        "ms": 2.729405838000048,
+        "ms": 3.731554160000087,
         "examples": {
           "错误建议": [
             [
@@ -9343,7 +9343,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.982,
-        "ms": 1.5784769490001054,
+        "ms": 1.6289866700001312,
         "examples": {
           "判 FIX": [
             [
@@ -9405,24 +9405,24 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.668,
-          "正确·要求确认": 0.191,
+          "正确·要求确认": 0.19,
           "判 FIX·片区对": 0.009,
           "判 FIX": 0.045,
-          "错误建议": 0.059,
+          "错误建议": 0.06,
           "静默错误": 0.028
         },
         "silent_over_1km": 0.019,
-        "wrong_over_1km": 0.05,
+        "wrong_over_1km": 0.051,
         "granularity": {
-          "PREMISE": 0.769,
+          "PREMISE": 0.77,
           "PREMISE_PROXIMITY": 0.112,
-          "ROUTE": 0.103,
+          "ROUTE": 0.102,
           "LOCALITY": 0.01,
           "OTHER": 0.006
         },
         "median_error_m": 19.61074870288405,
-        "within_500m": 0.869,
-        "ms": 16.421590364000053,
+        "within_500m": 0.868,
+        "ms": 10.941275481000048,
         "examples": {
           "错误建议": [
             [
@@ -9525,7 +9525,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.98,
-        "ms": 7.864147034999974,
+        "ms": 6.002589108999928,
         "examples": {
           "判 FIX": [
             [
@@ -9608,25 +9608,25 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.225,
-          "正确·要求确认": 0.483,
+          "正确·直接通过": 0.472,
+          "正确·要求确认": 0.254,
           "判 FIX·片区对": 0.018,
           "判 FIX": 0.047,
-          "错误建议": 0.206,
-          "静默错误": 0.021
+          "错误建议": 0.173,
+          "静默错误": 0.036
         },
-        "silent_over_1km": 0.017,
-        "wrong_over_1km": 0.158,
+        "silent_over_1km": 0.031,
+        "wrong_over_1km": 0.134,
         "granularity": {
-          "PREMISE_PROXIMITY": 0.439,
-          "PREMISE": 0.286,
-          "ROUTE": 0.239,
+          "PREMISE": 0.529,
+          "PREMISE_PROXIMITY": 0.219,
+          "ROUTE": 0.216,
           "LOCALITY": 0.03,
           "OTHER": 0.006
         },
-        "median_error_m": 59.140924035746536,
-        "within_500m": 0.701,
-        "ms": 11.719471580999995,
+        "median_error_m": 46.74792447338302,
+        "within_500m": 0.722,
+        "ms": 9.252367787999901,
         "examples": {
           "错误建议": [
             [
@@ -9642,16 +9642,16 @@
               "Carrera 13A Este # 61, 110441"
             ],
             [
-              "Cra. 7b #181a - 40, Bogotá, D.C., 110121",
+              "Diagonal 72-16, Bogotá, D.C., 110221",
               "CONFIRM",
               "ROUTE",
-              "Carrera 7B # 181A-40, 110121"
+              "Diagonal 72 # 16, 110221"
             ],
             [
-              "Cl. 148 #109b-30, Bogotá, D.C., 111011",
+              "Carrera 96g N17B 16, Bogotá, D.C.",
               "CONFIRM",
-              "ROUTE",
-              "CL 148 # 109B-30, 111011"
+              "PREMISE_PROXIMITY",
+              "Carrera 96G # 16"
             ]
           ],
           "判 FIX": [
@@ -9682,6 +9682,12 @@
           ],
           "静默错误": [
             [
+              "Calle 146A 94D-19, Bogotá, D.C., 111161",
+              "ACCEPT",
+              "PREMISE",
+              "Calle 146A # 94D-19, Bogotá"
+            ],
+            [
               "Cl. 74 #22 20, Bogotá, D.C., 111211",
               "ACCEPT",
               "PREMISE",
@@ -9694,16 +9700,10 @@
               "Avenida Calle 13 # 18-91, San Victorino"
             ],
             [
-              "Cr 13 # 16 - 48 Sur, Bogota, 111411",
+              "Carrera 102 No. 70 - 15 Oficina 66, Bogotá, D.C.",
               "ACCEPT",
               "PREMISE",
-              "Carrera 13 # 16-48, Bogotá Distrito Capital"
-            ],
-            [
-              "Carrera 71A 51-48, Bogotá, D.C., 111071",
-              "ACCEPT",
-              "PREMISE",
-              "Carrera 71A # 51-48, Bogotá Distrito Capital"
+              "Oficina 66, Carrera 102 # 70-15, Bogotá"
             ]
           ]
         }
@@ -9711,25 +9711,25 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.887,
-          "正确·要求确认": 0.008,
+          "正确·直接通过": 0.825,
+          "正确·要求确认": 0.006,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.019,
-          "错误建议": 0.086,
-          "静默错误": 0.0
+          "判 FIX": 0.027,
+          "错误建议": 0.139,
+          "静默错误": 0.003
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.052,
+        "wrong_over_1km": 0.085,
         "granularity": {
-          "PREMISE": 0.895,
-          "ROUTE": 0.091,
-          "PREMISE_PROXIMITY": 0.01,
-          "LOCALITY": 0.002,
-          "OTHER": 0.002
+          "PREMISE": 0.838,
+          "ROUTE": 0.138,
+          "PREMISE_PROXIMITY": 0.022,
+          "LOCALITY": 0.001,
+          "OTHER": 0.001
         },
         "median_error_m": 0.0,
-        "within_500m": 0.945,
-        "ms": 2.218271701000049,
+        "within_500m": 0.91,
+        "ms": 2.9502826980001373,
         "examples": {
           "错误建议": [
             [
@@ -9742,45 +9742,65 @@
               "Cl 64 No. 10 E 93, Bogotá D.C.",
               "CONFIRM",
               "PREMISE_PROXIMITY",
-              "Calle 64 # 93, Bogotá Distrito Capital"
+              "Calle 64 # 93, Bogotá"
             ],
             [
-              "Kr 8F # 71 S 34",
+              "cl. 51a sur, # 1b 38 e",
               "CONFIRM",
               "ROUTE",
-              "Calle 71 Sur # 34"
+              "Calle 51A Sur"
             ],
             [
-              "Kr 13I Cskr, No. 33 S 52, Bogotá Distrito Capital",
+              "Kr 14Abis 69A 60 S, Bogotá",
               "CONFIRM",
               "ROUTE",
-              "KR 13I CSKR # 33"
+              "Calle 60 Sur"
             ]
           ],
           "判 FIX": [
             [
-              "carrear 88h # 42d-65, bogotá distrito capital, 110881",
+              "Tv. 73L, # 73C 34 S, Bogotá D.C.",
               "FIX",
-              "LOCALITY",
-              ""
+              "ROUTE",
+              "Transversal 73L"
+            ],
+            [
+              "CARRERA 8F, BOGOTÁ 110541",
+              "FIX",
+              "ROUTE",
+              "Carrera 8F, 110541"
+            ],
+            [
+              "Kr 81Fbis, No. 57A 10 S, Bogotá, Bogotá D.C.",
+              "FIX",
+              "ROUTE",
+              "KR 81FBIS"
             ],
             [
               "Dg 5Zzf, Bogotá Distrito Capital, Bogotá",
               "FIX",
               "ROUTE",
               "DG 5ZZF"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Carrera 87B, No. 8-02, Bogotá Distrito Capital, Bogotá",
+              "ACCEPT",
+              "PREMISE",
+              "Carrera 87B # 8-02, Bogotá"
             ],
             [
-              "Dg 41 E Soacha",
-              "FIX",
-              "ROUTE",
-              "DG 41 E, Soacha"
+              "Kr 103Cbdi # 133-06, Bogotá Distrito Capital, Bogotá",
+              "ACCEPT",
+              "PREMISE",
+              "Carrera 103 # 133-06, Bogotá"
             ],
             [
-              "kr 17c bisc 111961",
-              "FIX",
-              "ROUTE",
-              "KR 17C BISC, 111961"
+              "C/ 124, # 56-38, Bogotá Distrito Capital, 100001",
+              "ACCEPT",
+              "PREMISE",
+              "Calle 124 # 56-38, Bogotá"
             ]
           ]
         }
@@ -9790,25 +9810,25 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.179,
-          "正确·要求确认": 0.424,
-          "判 FIX·片区对": 0.112,
-          "判 FIX": 0.061,
-          "错误建议": 0.206,
-          "静默错误": 0.018
+          "正确·直接通过": 0.383,
+          "正确·要求确认": 0.22,
+          "判 FIX·片区对": 0.111,
+          "判 FIX": 0.065,
+          "错误建议": 0.19,
+          "静默错误": 0.031
         },
-        "silent_over_1km": 0.015,
-        "wrong_over_1km": 0.161,
+        "silent_over_1km": 0.028,
+        "wrong_over_1km": 0.149,
         "granularity": {
-          "PREMISE_PROXIMITY": 0.335,
-          "ROUTE": 0.273,
-          "PREMISE": 0.235,
-          "LOCALITY": 0.135,
+          "PREMISE": 0.439,
+          "ROUTE": 0.245,
+          "PREMISE_PROXIMITY": 0.156,
+          "LOCALITY": 0.138,
           "OTHER": 0.022
         },
-        "median_error_m": 143.29682147545435,
-        "within_500m": 0.59,
-        "ms": 4.703238461999945,
+        "median_error_m": 114.67764426016777,
+        "within_500m": 0.6,
+        "ms": 6.201465877999908,
         "examples": {
           "判 FIX": [
             [
@@ -9844,25 +9864,31 @@
               "Calle 71 Sur # 61, 110441"
             ],
             [
-              "Cra. 7b #181a - 40, Bogotá, D.C., 110121",
-              "CONFIRM",
-              "ROUTE",
-              "Carrera 7B # 181A-40, 110121"
-            ],
-            [
               "Cl. 90 #115a13, Bogotá, D.C., 111011",
               "CONFIRM",
               "ROUTE",
               "Calle 90 # 115A13, 111011"
             ],
             [
-              "Cl. 148 #109b-30, Bogotá, D.C., 111011",
+              "Carrera 96g N17B 16, Bogotá, D.C.",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Carrera 96G # 16"
+            ],
+            [
+              "Cra. 68b #24 - 39 local 2 11 B, Bogotá, D.C., 110931",
               "CONFIRM",
               "ROUTE",
-              "CL 148 # 109B-30, 111011"
+              "Carrera 68B # 24-39 LOCAL 2 11 B, 110931"
             ]
           ],
           "静默错误": [
+            [
+              "Calle 146A 94D-19, Bogotá, D.C., 111161",
+              "ACCEPT",
+              "PREMISE",
+              "Calle 146A # 94D-19, Bogotá"
+            ],
             [
               "Cr 13 # 16 - 48 Sur, Bogota, 111411",
               "ACCEPT",
@@ -9870,22 +9896,16 @@
               "Carrera 13 # 16-48, Bogotá Distrito Capital"
             ],
             [
+              "Avenida Calle 134 7B-83, Bogotá, D.C., 110121",
+              "ACCEPT",
+              "PREMISE",
+              "Avenida Calle 134 # 7B-83, Bogotá"
+            ],
+            [
               "Carrera 71A 51-48, Bogotá, D.C., 111071",
               "ACCEPT",
               "PREMISE",
               "Carrera 71A # 51-48, Bogotá Distrito Capital"
-            ],
-            [
-              "Avenida Calle 53 20-24, Bogotá, D.C., 111311",
-              "ACCEPT",
-              "PREMISE",
-              "Avenida Calle 53 # 20-24, Bogotá Distrito Capital"
-            ],
-            [
-              "Carrera 16 30-63, Bogotá, D.C., 111311",
-              "ACCEPT",
-              "PREMISE",
-              "Carrera 16 # 30-63, Bogotá Distrito Capital"
             ]
           ]
         }
@@ -9893,23 +9913,23 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.887,
-          "正确·要求确认": 0.017,
+          "正确·直接通过": 0.883,
+          "正确·要求确认": 0.014,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.015,
-          "错误建议": 0.081,
-          "静默错误": 0.0
+          "错误建议": 0.086,
+          "静默错误": 0.002
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.046,
+        "wrong_over_1km": 0.045,
         "granularity": {
-          "PREMISE": 0.906,
-          "ROUTE": 0.09,
-          "PREMISE_PROXIMITY": 0.004
+          "PREMISE": 0.905,
+          "ROUTE": 0.085,
+          "PREMISE_PROXIMITY": 0.01
         },
         "median_error_m": 0.0,
         "within_500m": 0.954,
-        "ms": 1.1580635799999754,
+        "ms": 1.6726760320000267,
         "examples": {
           "错误建议": [
             [
@@ -9922,22 +9942,28 @@
               "Cl 64 No. 10 E 93, Bogotá D.C.",
               "CONFIRM",
               "PREMISE_PROXIMITY",
-              "Calle 64 # 93, Bogotá Distrito Capital"
-            ],
-            [
-              "Kr 8F # 71 S 34",
-              "CONFIRM",
-              "ROUTE",
-              "Carrera 8F # 34"
+              "Calle 64 # 93, Bogotá"
             ],
             [
               "Kr 13I Cskr, No. 33 S 52, Bogotá Distrito Capital",
               "CONFIRM",
               "ROUTE",
               "KR 13I CSKR # 52"
+            ],
+            [
+              "ac 68 sue 70 d 71",
+              "CONFIRM",
+              "ROUTE",
+              "AC 68 SUE # 71"
             ]
           ],
           "判 FIX": [
+            [
+              "CARRERA 8F, BOGOTÁ 110541",
+              "FIX",
+              "ROUTE",
+              "Carrera 8F, 110541"
+            ],
             [
               "Dg 5Zzf, Bogotá Distrito Capital, Bogotá",
               "FIX",
@@ -9945,22 +9971,30 @@
               "DG 5ZZF"
             ],
             [
-              "Dg 41 E Soacha",
+              "Cl 22Mmbis Bogotá Distrito Capital, Bogotá D.C.",
               "FIX",
               "ROUTE",
-              "DG 41 E, Soacha"
+              "CL 22MMBIS"
             ],
             [
-              "kr 17c bisc 111961",
+              "Cl 40 Bis, Bogotá Distrito Capital, Bogotá, 110531",
               "FIX",
               "ROUTE",
-              "KR 17C BISC, 111961"
+              "CL 40 BIS, 110531"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Carrera 87B, No. 8-02, Bogotá Distrito Capital, Bogotá",
+              "ACCEPT",
+              "PREMISE",
+              "Carrera 87B # 8-02, Bogotá"
             ],
             [
-              "Dg 68A Bisb",
-              "FIX",
-              "ROUTE",
-              "DG 68A BISB"
+              "C/ 124, # 56-38, Bogotá Distrito Capital, 100001",
+              "ACCEPT",
+              "PREMISE",
+              "Calle 124 # 56-38, Bogotá"
             ]
           ]
         }
@@ -9970,25 +10004,25 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.227,
-          "正确·要求确认": 0.492,
+          "正确·直接通过": 0.475,
+          "正确·要求确认": 0.258,
           "判 FIX·片区对": 0.009,
           "判 FIX": 0.047,
-          "错误建议": 0.203,
-          "静默错误": 0.022
+          "错误建议": 0.173,
+          "静默错误": 0.038
         },
-        "silent_over_1km": 0.018,
-        "wrong_over_1km": 0.157,
+        "silent_over_1km": 0.033,
+        "wrong_over_1km": 0.135,
         "granularity": {
-          "PREMISE_PROXIMITY": 0.45,
-          "PREMISE": 0.295,
-          "ROUTE": 0.228,
+          "PREMISE": 0.541,
+          "PREMISE_PROXIMITY": 0.227,
+          "ROUTE": 0.205,
           "LOCALITY": 0.021,
           "OTHER": 0.006
         },
-        "median_error_m": 53.48324069850585,
-        "within_500m": 0.713,
-        "ms": 19.876815067000056,
+        "median_error_m": 42.631867653132495,
+        "within_500m": 0.731,
+        "ms": 15.544872134000116,
         "examples": {
           "错误建议": [
             [
@@ -10004,16 +10038,16 @@
               "Carrera 13A Este # 61, 110441"
             ],
             [
-              "Cra. 7b #181a - 40, Bogotá, D.C., 110121",
+              "Diagonal 72-16, Bogotá, D.C., 110221",
               "CONFIRM",
               "ROUTE",
-              "Carrera 7B # 181A-40, 110121"
+              "Diagonal 72 # 16, 110221"
             ],
             [
-              "Cl. 148 #109b-30, Bogotá, D.C., 111011",
+              "Carrera 96g N17B 16, Bogotá, D.C.",
               "CONFIRM",
-              "ROUTE",
-              "CL 148 # 109B-30, 111011"
+              "PREMISE_PROXIMITY",
+              "Carrera 96G # 16"
             ]
           ],
           "判 FIX": [
@@ -10044,6 +10078,12 @@
           ],
           "静默错误": [
             [
+              "Calle 146A 94D-19, Bogotá, D.C., 111161",
+              "ACCEPT",
+              "PREMISE",
+              "Calle 146A # 94D-19, Bogotá"
+            ],
+            [
               "Cl. 74 #22 20, Bogotá, D.C., 111211",
               "ACCEPT",
               "PREMISE",
@@ -10056,16 +10096,10 @@
               "Avenida Calle 13 # 18-91, San Victorino"
             ],
             [
-              "Cr 13 # 16 - 48 Sur, Bogota, 111411",
+              "Carrera 102 No. 70 - 15 Oficina 66, Bogotá, D.C.",
               "ACCEPT",
               "PREMISE",
-              "Carrera 13 # 16-48, Bogotá Distrito Capital"
-            ],
-            [
-              "Carrera 71A 51-48, Bogotá, D.C., 111071",
-              "ACCEPT",
-              "PREMISE",
-              "Carrera 71A # 51-48, Bogotá Distrito Capital"
+              "Oficina 66, Carrera 102 # 70-15, Bogotá"
             ]
           ]
         }
@@ -10073,23 +10107,23 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.888,
-          "正确·要求确认": 0.017,
+          "正确·直接通过": 0.884,
+          "正确·要求确认": 0.012,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.015,
-          "错误建议": 0.08,
-          "静默错误": 0.0
+          "错误建议": 0.086,
+          "静默错误": 0.003
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.05,
+        "wrong_over_1km": 0.053,
         "granularity": {
-          "PREMISE": 0.906,
-          "ROUTE": 0.087,
-          "PREMISE_PROXIMITY": 0.007
+          "PREMISE": 0.905,
+          "ROUTE": 0.079,
+          "PREMISE_PROXIMITY": 0.016
         },
         "median_error_m": 0.0,
-        "within_500m": 0.95,
-        "ms": 7.283510264000029,
+        "within_500m": 0.947,
+        "ms": 4.657678364999811,
         "examples": {
           "错误建议": [
             [
@@ -10102,22 +10136,28 @@
               "Cl 64 No. 10 E 93, Bogotá D.C.",
               "CONFIRM",
               "PREMISE_PROXIMITY",
-              "Calle 64 # 93, Bogotá Distrito Capital"
-            ],
-            [
-              "Kr 8F # 71 S 34",
-              "CONFIRM",
-              "ROUTE",
-              "Carrera 8F # 34"
+              "Calle 64 # 93, Bogotá"
             ],
             [
               "Kr 13I Cskr, No. 33 S 52, Bogotá Distrito Capital",
               "CONFIRM",
               "ROUTE",
               "KR 13I CSKR # 33"
+            ],
+            [
+              "ac 68 sue 70 d 71",
+              "CONFIRM",
+              "ROUTE",
+              "AC 68 SUE # 70"
             ]
           ],
           "判 FIX": [
+            [
+              "CARRERA 8F, BOGOTÁ 110541",
+              "FIX",
+              "ROUTE",
+              "Carrera 8F, 110541"
+            ],
             [
               "Dg 5Zzf, Bogotá Distrito Capital, Bogotá",
               "FIX",
@@ -10125,22 +10165,36 @@
               "DG 5ZZF"
             ],
             [
-              "Dg 41 E Soacha",
+              "Cl 22Mmbis Bogotá Distrito Capital, Bogotá D.C.",
               "FIX",
               "ROUTE",
-              "DG 41 E, Soacha"
+              "CL 22MMBIS"
             ],
             [
-              "kr 17c bisc 111961",
+              "Cl 40 Bis, Bogotá Distrito Capital, Bogotá, 110531",
               "FIX",
               "ROUTE",
-              "KR 17C BISC, 111961"
+              "CL 40 BIS, 110531"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Carrera 87B, No. 8-02, Bogotá Distrito Capital, Bogotá",
+              "ACCEPT",
+              "PREMISE",
+              "Carrera 87B # 8-02, Bogotá"
             ],
             [
-              "Dg 68A Bisb",
-              "FIX",
-              "ROUTE",
-              "DG 68A BISB"
+              "Kr 103Cbdi # 133-06, Bogotá Distrito Capital, Bogotá",
+              "ACCEPT",
+              "PREMISE",
+              "Carrera 103 # 133-06, Bogotá"
+            ],
+            [
+              "C/ 124, # 56-38, Bogotá Distrito Capital, 100001",
+              "ACCEPT",
+              "PREMISE",
+              "Calle 124 # 56-38, Bogotá"
             ]
           ]
         }
@@ -10152,52 +10206,26 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.658,
-          "正确·要求确认": 0.216,
-          "判 FIX·片区对": 0.022,
-          "判 FIX": 0.015,
-          "错误建议": 0.06,
-          "静默错误": 0.029
+          "正确·直接通过": 0.664,
+          "正确·要求确认": 0.213,
+          "判 FIX·片区对": 0.028,
+          "判 FIX": 0.009,
+          "错误建议": 0.056,
+          "静默错误": 0.03
         },
-        "silent_over_1km": 0.013,
-        "wrong_over_1km": 0.046,
+        "silent_over_1km": 0.014,
+        "wrong_over_1km": 0.042,
         "granularity": {
-          "PREMISE": 0.393,
-          "PREMISE_PROXIMITY": 0.344,
-          "ROUTE": 0.226,
-          "LOCALITY": 0.025,
-          "OTHER": 0.012
+          "PREMISE": 0.391,
+          "PREMISE_PROXIMITY": 0.341,
+          "ROUTE": 0.231,
+          "LOCALITY": 0.031,
+          "OTHER": 0.006
         },
-        "median_error_m": 25.373982816543187,
-        "within_500m": 0.895,
-        "ms": 4.2733787679999296,
+        "median_error_m": 24.27846218048108,
+        "within_500m": 0.905,
+        "ms": 4.909015317000012,
         "examples": {
-          "判 FIX": [
-            [
-              "23 Mynterne Cl, London, SW19 6BW",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "BMA House, London, Wc1h 9jr",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "Training in Venues on, Royal Victoria Dock, London, E16 1AA",
-              "FIX",
-              "LOCALITY",
-              ""
-            ],
-            [
-              "Route de Japoma, London",
-              "FIX",
-              "OTHER",
-              ""
-            ]
-          ],
           "错误建议": [
             [
               "Southend Lane, London, SE26 4PU",
@@ -10249,301 +10277,8 @@
               "PREMISE",
               "7 Upper Tooting Road, London"
             ]
-          ]
-        }
-      },
-      "synthetic": {
-        "n": 1000,
-        "outcomes": {
-          "正确·直接通过": 0.305,
-          "正确·要求确认": 0.644,
-          "判 FIX·片区对": 0.0,
-          "判 FIX": 0.018,
-          "错误建议": 0.032,
-          "静默错误": 0.001
-        },
-        "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.023,
-        "granularity": {
-          "ROUTE": 0.734,
-          "PREMISE_PROXIMITY": 0.156,
-          "PREMISE": 0.092,
-          "LOCALITY": 0.018
-        },
-        "median_error_m": 55.822848539314094,
-        "within_500m": 0.946,
-        "ms": 2.9052822810000407,
-        "examples": {
-          "错误建议": [
-            [
-              "24 Burton Rd. Lambeth, London",
-              "CONFIRM",
-              "PREMISE",
-              "24 Burton Road, London, NW6 7LW"
-            ],
-            [
-              "24 St. George's Court London Borough of Wandsworth Wandsworth, London",
-              "CONFIRM",
-              "ROUTE",
-              "24 George's Square, London Borough of Wandsworth"
-            ],
-            [
-              "21 caulfield rd",
-              "CONFIRM",
-              "ROUTE",
-              "21 Caulfield Road"
-            ],
-            [
-              "39 Ashburnham Road, კენსინგტონი და ჩელსი, Kensington and Chelsea, London",
-              "CONFIRM",
-              "PREMISE",
-              "39 Ashburnham Road, Kensington and Chelsea, NW10 5SB"
-            ]
           ],
           "判 FIX": [
-            [
-              "23 B351, London Borough of Richmond upon Thames, SW14 7HW",
-              "FIX",
-              "LOCALITY",
-              ""
-            ],
-            [
-              "flat 19, 51a cromfnrd road ワンズワース・ロンドン自治区, london, sw18 4te",
-              "FIX",
-              "LOCALITY",
-              ""
-            ],
-            [
-              "Unit 37 Arts Lanee サザーク・ロンドン自治区, Southwark, London, SE1 2BS",
-              "FIX",
-              "LOCALITY",
-              ""
-            ],
-            [
-              "Flat 15, Tsltman Pl イズリントン・ロンドン自治区 Islington London",
-              "FIX",
-              "LOCALITY",
-              ""
-            ]
-          ],
-          "静默错误": [
-            [
-              "35 Poultoon Close, Aspland Estate & Marcon Court Hackney E8 1JB",
-              "ACCEPT",
-              "PREMISE",
-              "35 Marcon Place, Hackney"
-            ]
-          ]
-        }
-      }
-    },
-    "crf": {
-      "real": {
-        "n": 1000,
-        "outcomes": {
-          "正确·直接通过": 0.679,
-          "正确·要求确认": 0.161,
-          "判 FIX·片区对": 0.055,
-          "判 FIX": 0.039,
-          "错误建议": 0.046,
-          "静默错误": 0.02
-        },
-        "silent_over_1km": 0.011,
-        "wrong_over_1km": 0.035,
-        "granularity": {
-          "PREMISE": 0.374,
-          "PREMISE_PROXIMITY": 0.328,
-          "ROUTE": 0.204,
-          "LOCALITY": 0.057,
-          "OTHER": 0.037
-        },
-        "median_error_m": 24.758919791273122,
-        "within_500m": 0.897,
-        "ms": 1.8218027720000691,
-        "examples": {
-          "判 FIX": [
-            [
-              "23 Mynterne Cl, London, SW19 6BW",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "BMA House, London, Wc1h 9jr",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "24 The Combe Munster Square, London, NW1 3LG",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "Harrington Hill junction Mount Pleasant Lane, E5 9ES, London, GB, E5 9ES",
-              "FIX",
-              "OTHER",
-              ""
-            ]
-          ],
-          "错误建议": [
-            [
-              "Southend Lane, London, SE26 4PU",
-              "CONFIRM",
-              "ROUTE",
-              "South End, SE26 4PU"
-            ],
-            [
-              "35 Marylebone Road, London, NW1 5",
-              "CONFIRM",
-              "PREMISE_PROXIMITY",
-              "35 Marylebone Road"
-            ],
-            [
-              "125 High St, London, NW10 4TR",
-              "CONFIRM",
-              "PREMISE",
-              "125 High Street, London, W3 6LY"
-            ],
-            [
-              "281 Southwark Park Rd, London",
-              "CONFIRM",
-              "PREMISE_PROXIMITY",
-              "281 Southwark Park Road"
-            ]
-          ],
-          "静默错误": [
-            [
-              "INTERNATIONAL HOUSE, 24 HOLBORN VIADUCT, london, EC1A 2BN",
-              "ACCEPT",
-              "PREMISE",
-              "24 Holborn Viaduct, London"
-            ],
-            [
-              "24/25, The Shard, 32 London Bridge Street, London, SE1 9SG",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "32 London Bridge Street"
-            ],
-            [
-              "7 Upper Tooting Road, SW17 7TS, London, SW17 7TS",
-              "ACCEPT",
-              "PREMISE",
-              "7 Upper Tooting Road, London"
-            ],
-            [
-              "470 Holloway Road, London, N7 6HT",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "470 Holloway Road, London, N7 6HT"
-            ]
-          ]
-        }
-      },
-      "synthetic": {
-        "n": 1000,
-        "outcomes": {
-          "正确·直接通过": 0.35,
-          "正确·要求确认": 0.613,
-          "判 FIX·片区对": 0.0,
-          "判 FIX": 0.002,
-          "错误建议": 0.035,
-          "静默错误": 0.0
-        },
-        "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.032,
-        "granularity": {
-          "ROUTE": 0.727,
-          "PREMISE_PROXIMITY": 0.178,
-          "PREMISE": 0.093,
-          "LOCALITY": 0.001,
-          "OTHER": 0.001
-        },
-        "median_error_m": 48.842148894392665,
-        "within_500m": 0.952,
-        "ms": 1.7912263470000198,
-        "examples": {
-          "错误建议": [
-            [
-              "13 South Crescent, ニューアム・ロンドン自治区, Newham",
-              "CONFIRM",
-              "PREMISE_PROXIMITY",
-              "13 South Crescent, London"
-            ],
-            [
-              "77 Clare Roadd, London Borough of Waltham Forest, Waltham Forest, London",
-              "CONFIRM",
-              "ROUTE",
-              "77 Clare Road"
-            ],
-            [
-              "24 Burton Rd. Lambeth, London",
-              "CONFIRM",
-              "PREMISE",
-              "24 Burton Road, London, NW6 7LW"
-            ],
-            [
-              "21 caulfield rd",
-              "CONFIRM",
-              "ROUTE",
-              "21 Caulfield Road"
-            ]
-          ],
-          "判 FIX": [
-            [
-              "Exmouth House, Catherine Griffiths Court London Borough of Islington",
-              "FIX",
-              "LOCALITY",
-              ""
-            ],
-            [
-              "Suite 2, 54 Halllgate, Hallgate, London",
-              "FIX",
-              "OTHER",
-              ""
-            ]
-          ]
-        }
-      }
-    },
-    "hybrid": {
-      "real": {
-        "n": 1000,
-        "outcomes": {
-          "正确·直接通过": 0.692,
-          "正确·要求确认": 0.191,
-          "判 FIX·片区对": 0.02,
-          "判 FIX": 0.012,
-          "错误建议": 0.061,
-          "静默错误": 0.024
-        },
-        "silent_over_1km": 0.013,
-        "wrong_over_1km": 0.046,
-        "granularity": {
-          "PREMISE": 0.402,
-          "PREMISE_PROXIMITY": 0.348,
-          "ROUTE": 0.218,
-          "LOCALITY": 0.023,
-          "OTHER": 0.009
-        },
-        "median_error_m": 25.096730137023382,
-        "within_500m": 0.903,
-        "ms": 4.11024592800004,
-        "examples": {
-          "判 FIX": [
-            [
-              "23 Mynterne Cl, London, SW19 6BW",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "BMA House, London, Wc1h 9jr",
-              "FIX",
-              "OTHER",
-              ""
-            ],
             [
               "Training in Venues on, Royal Victoria Dock, London, E16 1AA",
               "FIX",
@@ -10555,8 +10290,274 @@
               "FIX",
               "OTHER",
               ""
+            ],
+            [
+              "united kingdom, London, 1008",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "London, London",
+              "FIX",
+              "OTHER",
+              ""
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.039,
+          "正确·要求确认": 0.885,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.026,
+          "错误建议": 0.05,
+          "静默错误": 0.0
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.045,
+        "granularity": {
+          "ROUTE": 0.723,
+          "PREMISE_PROXIMITY": 0.155,
+          "PREMISE": 0.096,
+          "LOCALITY": 0.024,
+          "OTHER": 0.002
+        },
+        "median_error_m": 55.6005987296851,
+        "within_500m": 0.916,
+        "ms": 3.6712866380003106,
+        "examples": {
+          "错误建议": [
+            [
+              "Unit 19 81 Cadogna Terrace London Borough of Tower Hamlets, Tower Hamlets, London",
+              "CONFIRM",
+              "ROUTE",
+              "Unit 19, 81 Hamlet Way, London Borough of Tower Hamlets"
+            ],
+            [
+              "64 Frognal Way London Borough of Camden, Camden",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "64 Frognal, London Borough of Camden, NW3 6XD"
+            ],
+            [
+              "2 Clinton Rd., London Borough of Tower Hamlets",
+              "CONFIRM",
+              "PREMISE",
+              "2 Clinton Road"
+            ],
+            [
+              "Willesden Business Centre, St Andrews Rd., ブレント・ロンドン自治区, London",
+              "CONFIRM",
+              "ROUTE",
+              "Andrews Road"
             ]
           ],
+          "判 FIX": [
+            [
+              "30 A112, London Borough of Newham, London",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "5, Lyndalle バーネット・ロンドン特別区, London",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "236, Savannah Clsoe London Borough of Southwark",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Facit Technologies Falkirk Streett, Hackney",
+              "FIX",
+              "LOCALITY",
+              ""
+            ]
+          ]
+        }
+      }
+    },
+    "crf": {
+      "real": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.003,
+          "正确·要求确认": 0.766,
+          "判 FIX·片区对": 0.002,
+          "判 FIX": 0.126,
+          "错误建议": 0.103,
+          "静默错误": 0.0
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.083,
+        "granularity": {
+          "PREMISE": 0.387,
+          "PREMISE_PROXIMITY": 0.3,
+          "ROUTE": 0.185,
+          "OTHER": 0.126,
+          "LOCALITY": 0.002
+        },
+        "median_error_m": 24.76747055037803,
+        "within_500m": 0.773,
+        "ms": 2.520146267999735,
+        "examples": {
+          "判 FIX": [
+            [
+              "23 Mynterne Cl, London, SW19 6BW",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "Southend Lane, London, SE26 4PU",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "BMA House, London, Wc1h 9jr",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "Angle House Orthodontic Highgate, Stanhope House, 1st Floor, 4-8 Highgate High Street, N6 ",
+              "FIX",
+              "OTHER",
+              ""
+            ]
+          ],
+          "错误建议": [
+            [
+              "INTERNATIONAL HOUSE, 24 HOLBORN VIADUCT, london, EC1A 2BN",
+              "CONFIRM",
+              "PREMISE",
+              "24 Holborn Viaduct, London"
+            ],
+            [
+              "35 Marylebone Road, London, NW1 5",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "35 Marylebone Road"
+            ],
+            [
+              "63 Dartmouth Rd, London, SE23 3HN",
+              "CONFIRM",
+              "PREMISE",
+              "63 Dartmouth Road, London, NW2 4EP"
+            ],
+            [
+              "24/25, The Shard, 32 London Bridge Street, London, SE1 9SG",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "32 London Bridge Street"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.065,
+          "正确·要求确认": 0.879,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.003,
+          "错误建议": 0.053,
+          "静默错误": 0.0
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.053,
+        "granularity": {
+          "ROUTE": 0.722,
+          "PREMISE_PROXIMITY": 0.18,
+          "PREMISE": 0.095,
+          "LOCALITY": 0.002,
+          "OTHER": 0.001
+        },
+        "median_error_m": 42.557718378503445,
+        "within_500m": 0.928,
+        "ms": 2.308717608999814,
+        "examples": {
+          "错误建议": [
+            [
+              "13 South Crescent, ニューアム・ロンドン自治区, Newham",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "13 South Crescent, London"
+            ],
+            [
+              "132A Nutfield Road, サザーク・ロンドン自治区, Southwark London",
+              "CONFIRM",
+              "ROUTE",
+              "132A Nutfield Road"
+            ],
+            [
+              "2 Clinton Rd., London Borough of Tower Hamlets",
+              "CONFIRM",
+              "PREMISE",
+              "2 Clinton Road"
+            ],
+            [
+              "dawlish rd., london borough of waltham forest, waltham forest, london",
+              "CONFIRM",
+              "ROUTE",
+              "Dawlish Road"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Clrae Road, ブレント・ロンドン自治区 Brent, London",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "Autodata Andrews Road, London Borough of Hackney, London",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "EuropeTrip Callingham Close, Burdett Estate",
+              "FIX",
+              "LOCALITY",
+              ""
+            ]
+          ]
+        }
+      }
+    },
+    "hybrid": {
+      "real": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.653,
+          "正确·要求确认": 0.215,
+          "判 FIX·片区对": 0.025,
+          "判 FIX": 0.008,
+          "错误建议": 0.076,
+          "静默错误": 0.023
+        },
+        "silent_over_1km": 0.013,
+        "wrong_over_1km": 0.06,
+        "granularity": {
+          "PREMISE": 0.419,
+          "PREMISE_PROXIMITY": 0.338,
+          "ROUTE": 0.21,
+          "LOCALITY": 0.027,
+          "OTHER": 0.006
+        },
+        "median_error_m": 24.27846218048108,
+        "within_500m": 0.894,
+        "ms": 5.7555899460003275,
+        "examples": {
           "错误建议": [
             [
               "Southend Lane, London, SE26 4PU",
@@ -10608,29 +10609,56 @@
               "PREMISE",
               "66 Coldharbour Lane, Brixton"
             ]
+          ],
+          "判 FIX": [
+            [
+              "Route de Japoma, London",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "united kingdom, London, 1008",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "London, London",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "14 John Cabot House, London, E16 2",
+              "FIX",
+              "OTHER",
+              ""
+            ]
           ]
         }
       },
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.336,
-          "正确·要求确认": 0.629,
+          "正确·直接通过": 0.063,
+          "正确·要求确认": 0.886,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.0,
-          "错误建议": 0.034,
-          "静默错误": 0.001
+          "判 FIX": 0.001,
+          "错误建议": 0.05,
+          "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.027,
+        "wrong_over_1km": 0.046,
         "granularity": {
-          "ROUTE": 0.72,
-          "PREMISE_PROXIMITY": 0.184,
-          "PREMISE": 0.096
+          "ROUTE": 0.717,
+          "PREMISE_PROXIMITY": 0.182,
+          "PREMISE": 0.1,
+          "LOCALITY": 0.001
         },
-        "median_error_m": 56.1995029029727,
-        "within_500m": 0.957,
-        "ms": 7.900054532000013,
+        "median_error_m": 55.54507388714242,
+        "within_500m": 0.933,
+        "ms": 5.6329312050002045,
         "examples": {
           "错误建议": [
             [
@@ -10640,16 +10668,16 @@
               "13 South Crescent, London"
             ],
             [
-              "24 Burton Rd. Lambeth, London",
+              "64 Frognal Way London Borough of Camden, Camden",
               "CONFIRM",
-              "PREMISE",
-              "24 Burton Road, London, NW6 7LW"
+              "PREMISE_PROXIMITY",
+              "64 Frognal, London Borough of Camden, NW3 6XD"
             ],
             [
-              "24 St. George's Court London Borough of Wandsworth Wandsworth, London",
+              "2 Clinton Rd., London Borough of Tower Hamlets",
               "CONFIRM",
-              "ROUTE",
-              "24 George's Square, London Borough of Wandsworth"
+              "PREMISE",
+              "2 Clinton Road"
             ],
             [
               "21 caulfield rd",
@@ -10658,12 +10686,12 @@
               "21 Caulfield Road"
             ]
           ],
-          "静默错误": [
+          "判 FIX": [
             [
-              "35 Poultoon Close, Aspland Estate & Marcon Court Hackney E8 1JB",
-              "ACCEPT",
-              "PREMISE",
-              "35 Marcon Place, Hackney"
+              "Clrae Road, ブレント・ロンドン自治区 Brent, London",
+              "FIX",
+              "LOCALITY",
+              ""
             ]
           ]
         }
@@ -15962,25 +15990,25 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.809,
-          "正确·要求确认": 0.095,
-          "判 FIX·片区对": 0.044,
-          "判 FIX": 0.015,
-          "错误建议": 0.01,
-          "静默错误": 0.027
+          "正确·直接通过": 0.669,
+          "正确·要求确认": 0.217,
+          "判 FIX·片区对": 0.019,
+          "判 FIX": 0.051,
+          "错误建议": 0.023,
+          "静默错误": 0.021
         },
-        "silent_over_1km": 0.012,
-        "wrong_over_1km": 0.008,
+        "silent_over_1km": 0.011,
+        "wrong_over_1km": 0.007,
         "granularity": {
-          "PREMISE": 0.669,
-          "PREMISE_PROXIMITY": 0.19,
-          "ROUTE": 0.082,
-          "LOCALITY": 0.045,
+          "PREMISE": 0.834,
+          "PREMISE_PROXIMITY": 0.076,
+          "ROUTE": 0.056,
+          "LOCALITY": 0.02,
           "OTHER": 0.014
         },
-        "median_error_m": 16.433889085051092,
-        "within_500m": 0.934,
-        "ms": 1.0543263320000733,
+        "median_error_m": 11.744178756638203,
+        "within_500m": 0.941,
+        "ms": 1.4245071889999963,
         "examples": {
           "静默错误": [
             [
@@ -15993,33 +16021,59 @@
               "Götgatan 103, Stockholm, 116 62",
               "ACCEPT",
               "PREMISE",
-              "Götgatan 103, Stockholm"
+              "Götgatan 103, 116 62 Stockholm"
             ],
             [
               "Nybrogatan 34, Stockholm, 114 39",
               "ACCEPT",
               "PREMISE",
-              "Nybrogatan 34, Stockholm"
+              "Nybrogatan 34, 114 39 Stockholm"
             ],
             [
               "Scalateatern, Wallingatan 32, Stockholm, 111 24",
               "ACCEPT",
               "PREMISE",
-              "Wallingatan 32, Stockholm"
+              "Wallingatan 32, 111 24 Stockholm"
             ]
           ],
-          "错误建议": [
+          "判 FIX": [
+            [
+              "Grönviksvägen, Bromma, 16771 - 16776",
+              "FIX",
+              "ROUTE",
+              "Grönviksvägen, 167 76"
+            ],
+            [
+              "Östra brobänken, Stockholm, 111 48",
+              "FIX",
+              "ROUTE",
+              "Östra brobänken, 111 48"
+            ],
             [
               "Målkurvan, Stockholm, 118 53",
-              "CONFIRM",
+              "FIX",
               "ROUTE",
               "Målkurvan, 118 53"
             ],
             [
-              "Lovisedalsvägen 7, Vallentuna, 186 53",
+              "St Göransgatan, Arbetargatan & Mariebergsgatan, Stockholm",
+              "FIX",
+              "ROUTE",
+              "Sankt Göransgatan"
+            ]
+          ],
+          "错误建议": [
+            [
+              "Engelbrektsgatan 9-11, Stockholm, 114 32",
+              "CONFIRM",
+              "PREMISE",
+              "Engelbrektsgatan 9-11, Stockholm"
+            ],
+            [
+              "Råsundavägen 4, Hagalund, 169 67",
               "CONFIRM",
               "PREMISE_PROXIMITY",
-              "Lovisedalsvägen 7, 138 36 Älta"
+              "Råsundavägen 4, Hagalund"
             ],
             [
               "Dialoggatan 2, Kungens Kurva, 141 75",
@@ -16028,36 +16082,10 @@
               "Dialoggatan 2, 141 75 Kungens kurva"
             ],
             [
-              "Frislandsvägen 1, Bromma, 16855",
+              "Geometrivägen 3, Kungens Kurva, 141 75",
               "CONFIRM",
               "PREMISE_PROXIMITY",
-              "Fristadsvägen 1, 163 43 Spånga"
-            ]
-          ],
-          "判 FIX": [
-            [
-              "Oxenstiernsg. 20, Stockholm, 105 10",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "Stenkumla Ansarve 851, Visby, 621 95",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "nolinge, Stockholm, 14791",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "Stockholm, Sweden, Stockholm",
-              "FIX",
-              "OTHER",
-              ""
+              "Geometrivägen 3, Kungens kurva"
             ]
           ]
         }
@@ -16065,84 +16093,100 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.346,
-          "正确·要求确认": 0.623,
+          "正确·直接通过": 0.61,
+          "正确·要求确认": 0.327,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.011,
-          "错误建议": 0.019,
-          "静默错误": 0.001
+          "判 FIX": 0.046,
+          "错误建议": 0.013,
+          "静默错误": 0.004
         },
-        "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.017,
+        "silent_over_1km": 0.003,
+        "wrong_over_1km": 0.008,
         "granularity": {
-          "ROUTE": 0.744,
-          "PREMISE_PROXIMITY": 0.154,
-          "PREMISE": 0.091,
-          "LOCALITY": 0.009,
-          "OTHER": 0.002
+          "PREMISE": 0.944,
+          "ROUTE": 0.05,
+          "PREMISE_PROXIMITY": 0.006
         },
-        "median_error_m": 72.33583768750849,
-        "within_500m": 0.934,
-        "ms": 1.4306326250000438,
+        "median_error_m": 0.0,
+        "within_500m": 0.987,
+        "ms": 1.4963445359999241,
         "examples": {
-          "错误建议": [
-            [
-              "Kexvägen, Saffransvägen 5, Stockholm",
-              "CONFIRM",
-              "PREMISE",
-              "Kexvägen 5, 128 69 Sköndal"
-            ],
-            [
-              "Orrspelsvägen 75, Danderydin kunta, Stockholm",
-              "CONFIRM",
-              "PREMISE",
-              "Orrspelsvägen 75, 167 66 Bromma"
-            ],
-            [
-              "Stureplan, Östermalm, 114 30, Stockholm",
-              "CONFIRM",
-              "ROUTE",
-              "Stureplatån, 114 30"
-            ],
-            [
-              "lgh 29, Alpvägen 47, Stokkhólmur, Stockholm",
-              "CONFIRM",
-              "PREMISE_PROXIMITY",
-              "Lgh 29, Alpvägen 47, 138 34 Stockholms kommun"
-            ]
-          ],
           "判 FIX": [
             [
-              "Faulty Tower 168, Stockholm",
+              "Tavelsjvägen, 120 59, Stockholm",
               "FIX",
-              "OTHER",
-              ""
+              "ROUTE",
+              "Tavelsjövägen, 120 59"
             ],
             [
-              "Astronomicentrum Brniellvägen, Stockholm",
+              "Kummelvägen, 167 64, Stockholm",
               "FIX",
-              "OTHER",
-              ""
+              "ROUTE",
+              "Kummelvägen, 167 64"
             ],
             [
-              "Planavägen Nacka kommun Stockholm",
+              "stora mejtens gränd, 116 35, stockholm",
               "FIX",
-              "LOCALITY",
-              ""
+              "ROUTE",
+              "Stora Mejtens Gränd, 116 35"
             ],
             [
-              "lgh 27, Mrdarbacken 55 Solnan kunta, Stockholm",
+              "Mörbydalen, Stockholm",
               "FIX",
-              "LOCALITY",
-              ""
+              "ROUTE",
+              "Mörbydalen"
+            ]
+          ],
+          "错误建议": [
+            [
+              "Brita-Kolas allé 1,3,5,7, 170 67, Stockholm",
+              "CONFIRM",
+              "ROUTE",
+              "Brita-Kolas allé 1, 170 67"
+            ],
+            [
+              "Prästgårdsgatan 38,40, 172 68, Stockholm",
+              "CONFIRM",
+              "ROUTE",
+              "Prästgårdsgatan 38, 172 68"
+            ],
+            [
+              "Sjkuhusbacken 6 Stockholm 118 61, Stockholm",
+              "CONFIRM",
+              "PREMISE",
+              "Hjalmar Cederströms Gata 6, 118 61 Stockholm"
+            ],
+            [
+              "Slottsvägen 5",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Slottsvägen 5, 182 68 Djursholm"
             ]
           ],
           "静默错误": [
             [
-              "Mynttorget, Södra Helgeandstraappan 96, Gamla stan, 114 34, Stockholm",
+              "Banvägen 9 Lidingö",
               "ACCEPT",
-              "ROUTE",
-              "Mynttorget 96, 114 34 Gamla stan"
+              "PREMISE",
+              "Banvägen 9, Nacka"
+            ],
+            [
+              "Johannelundsgränd 10, 163 45, Stockholm",
+              "ACCEPT",
+              "PREMISE",
+              "Johannelundsgränd 10, 163 45 Spånga"
+            ],
+            [
+              "Villavägen 8",
+              "ACCEPT",
+              "PREMISE",
+              "Villavägen 8, Nacka"
+            ],
+            [
+              "UTSIKTSVÄGEN 4",
+              "ACCEPT",
+              "PREMISE",
+              "Utsiktsvägen 4, Nacka"
             ]
           ]
         }
@@ -16152,52 +16196,26 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.747,
-          "正确·要求确认": 0.129,
-          "判 FIX·片区对": 0.04,
-          "判 FIX": 0.04,
-          "错误建议": 0.021,
-          "静默错误": 0.023
+          "正确·直接通过": 0.659,
+          "正确·要求确认": 0.221,
+          "判 FIX·片区对": 0.02,
+          "判 FIX": 0.057,
+          "错误建议": 0.024,
+          "静默错误": 0.019
         },
-        "silent_over_1km": 0.011,
-        "wrong_over_1km": 0.016,
+        "silent_over_1km": 0.009,
+        "wrong_over_1km": 0.011,
         "granularity": {
-          "PREMISE": 0.657,
-          "PREMISE_PROXIMITY": 0.185,
-          "ROUTE": 0.078,
-          "LOCALITY": 0.041,
-          "OTHER": 0.039
+          "PREMISE": 0.831,
+          "PREMISE_PROXIMITY": 0.069,
+          "ROUTE": 0.059,
+          "LOCALITY": 0.021,
+          "OTHER": 0.02
         },
-        "median_error_m": 15.923896731763072,
-        "within_500m": 0.906,
-        "ms": 0.8494286180000472,
+        "median_error_m": 11.529253850572335,
+        "within_500m": 0.934,
+        "ms": 1.122085491000007,
         "examples": {
-          "判 FIX": [
-            [
-              "Stureby, Stockholm, 12243",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "Östra brobänken, Stockholm, 111 48",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "St Göransgatan, Arbetargatan & Mariebergsgatan, Stockholm",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "Oxenstiernsg. 20, Stockholm, 105 10",
-              "FIX",
-              "OTHER",
-              ""
-            ]
-          ],
           "静默错误": [
             [
               "ST Eriksgatan 45,, Stockholm, 112 34",
@@ -16209,45 +16227,71 @@
               "Götgatan 103, Stockholm, 116 62",
               "ACCEPT",
               "PREMISE",
-              "Götgatan 103, Stockholm"
+              "Götgatan 103, 116 62 Stockholm"
             ],
             [
               "Nybrogatan 34, Stockholm, 114 39",
               "ACCEPT",
               "PREMISE",
-              "Nybrogatan 34, Stockholm"
+              "Nybrogatan 34, 114 39 Stockholm"
             ],
             [
-              "Scalateatern, Wallingatan 32, Stockholm, 111 24",
+              "Solnavägen 4, Stockholm, 113 65",
               "ACCEPT",
               "PREMISE",
-              "Wallingatan 32, Stockholm"
+              "Solnavägen 4, 113 65 Stockholm"
             ]
           ],
-          "错误建议": [
+          "判 FIX": [
+            [
+              "Grönviksvägen, Bromma, 16771 - 16776",
+              "FIX",
+              "ROUTE",
+              "Grönviksvägen"
+            ],
+            [
+              "Östra brobänken, Stockholm, 111 48",
+              "FIX",
+              "ROUTE",
+              "Östra brobänken, 111 48"
+            ],
             [
               "Målkurvan, Stockholm, 118 53",
-              "CONFIRM",
+              "FIX",
               "ROUTE",
               "Målkurvan, 118 53"
             ],
             [
-              "S:t Göransgatan 157 T, Stockholm, 112 17",
-              "CONFIRM",
-              "ROUTE",
-              "Gränsgatan, 112 17"
-            ],
+              "St Göransgatan, Arbetargatan & Mariebergsgatan, Stockholm",
+              "FIX",
+              "OTHER",
+              ""
+            ]
+          ],
+          "错误建议": [
             [
-              "Stålmansvägen 8, Snättringe, 141 41",
+              "Scalateatern, Wallingatan 32, Stockholm, 111 24",
               "CONFIRM",
               "PREMISE",
-              "Staffansvägen 8, Snättringe"
+              "Wallingatan 32, 111 24 Stockholm"
             ],
             [
-              "Lovisedalsvägen 7, Vallentuna, 186 53",
+              "Engelbrektsgatan 9-11, Stockholm, 114 32",
+              "CONFIRM",
+              "PREMISE",
+              "Engelbrektsgatan 9-11, Stockholm"
+            ],
+            [
+              "Tantolunden, Lignagatan 13, Stockholm, 117 34",
+              "CONFIRM",
+              "PREMISE",
+              "Borgargatan 13, 117 34 Stockholm"
+            ],
+            [
+              "Råsundavägen 4, Hagalund, 169 67",
               "CONFIRM",
               "PREMISE_PROXIMITY",
-              "Lovisedalsvägen 7, 138 36 Älta"
+              "Råsundavägen 4, Hagalund"
             ]
           ]
         }
@@ -16255,57 +16299,100 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.358,
-          "正确·要求确认": 0.621,
+          "正确·直接通过": 0.61,
+          "正确·要求确认": 0.33,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.001,
-          "错误建议": 0.02,
-          "静默错误": 0.0
+          "判 FIX": 0.045,
+          "错误建议": 0.011,
+          "静默错误": 0.004
         },
-        "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.018,
+        "silent_over_1km": 0.003,
+        "wrong_over_1km": 0.008,
         "granularity": {
-          "ROUTE": 0.739,
-          "PREMISE_PROXIMITY": 0.168,
-          "PREMISE": 0.092,
-          "LOCALITY": 0.001
+          "PREMISE": 0.946,
+          "ROUTE": 0.049,
+          "PREMISE_PROXIMITY": 0.005
         },
-        "median_error_m": 69.30846762028835,
-        "within_500m": 0.947,
-        "ms": 0.9936681479999834,
+        "median_error_m": 0.0,
+        "within_500m": 0.988,
+        "ms": 1.0166853519999677,
         "examples": {
-          "错误建议": [
-            [
-              "klyftvägen 23 ulvsunda, stockholms kommun",
-              "CONFIRM",
-              "ROUTE",
-              "Klyftvägen 23"
-            ],
-            [
-              "Orrspelsvägen 75, Danderydin kunta, Stockholm",
-              "CONFIRM",
-              "PREMISE",
-              "Orrspelsvägen 75, 167 66 Bromma"
-            ],
-            [
-              "lgh 29, Alpvägen 47, Stokkhólmur, Stockholm",
-              "CONFIRM",
-              "PREMISE_PROXIMITY",
-              "Lgh 29, Alpvägen 47, 138 34 Stockholms kommun"
-            ],
-            [
-              "Trastvägen 40, Stockholm",
-              "CONFIRM",
-              "ROUTE",
-              "Trastvägen 40"
-            ]
-          ],
           "判 FIX": [
             [
-              "Fortum Bränsle Depå Värtan Tredje Tvärvägen, 115 40, Stockholm",
+              "Tavelsjvägen, 120 59, Stockholm",
               "FIX",
-              "LOCALITY",
-              ""
+              "ROUTE",
+              "Tavelsjövägen, 120 59"
+            ],
+            [
+              "Kummelvägen, 167 64, Stockholm",
+              "FIX",
+              "ROUTE",
+              "Kummelvägen, 167 64"
+            ],
+            [
+              "stora mejtens gränd, 116 35, stockholm",
+              "FIX",
+              "ROUTE",
+              "Stora Mejtens Gränd, 116 35"
+            ],
+            [
+              "Mörbydalen, Stockholm",
+              "FIX",
+              "ROUTE",
+              "Mörbydalen"
+            ]
+          ],
+          "错误建议": [
+            [
+              "Brita-Kolas allé 1,3,5,7, 170 67, Stockholm",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Brita-Kolas allé 7"
+            ],
+            [
+              "Prästgårdsgatan 38,40, 172 68, Stockholm",
+              "CONFIRM",
+              "ROUTE",
+              "Prästgårdsgatan 40, 172 68"
+            ],
+            [
+              "Slottsvägen 5",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Slottsvägen 5, 182 68 Djursholm"
+            ],
+            [
+              "Oskarsvägen 33",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Oskarsvägen 33"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Banvägen 9 Lidingö",
+              "ACCEPT",
+              "PREMISE",
+              "Banvägen 9, Nacka"
+            ],
+            [
+              "Johannelundsgränd 10, 163 45, Stockholm",
+              "ACCEPT",
+              "PREMISE",
+              "Johannelundsgränd 10, 163 45 Spånga"
+            ],
+            [
+              "Villavägen 8",
+              "ACCEPT",
+              "PREMISE",
+              "Villavägen 8, Nacka"
+            ],
+            [
+              "UTSIKTSVÄGEN 4",
+              "ACCEPT",
+              "PREMISE",
+              "Utsiktsvägen 4, Nacka"
             ]
           ]
         }
@@ -16315,25 +16402,25 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.808,
-          "正确·要求确认": 0.099,
-          "判 FIX·片区对": 0.037,
-          "判 FIX": 0.014,
-          "错误建议": 0.015,
-          "静默错误": 0.027
+          "正确·直接通过": 0.674,
+          "正确·要求确认": 0.213,
+          "判 FIX·片区对": 0.014,
+          "判 FIX": 0.051,
+          "错误建议": 0.026,
+          "静默错误": 0.022
         },
-        "silent_over_1km": 0.012,
-        "wrong_over_1km": 0.013,
+        "silent_over_1km": 0.011,
+        "wrong_over_1km": 0.011,
         "granularity": {
-          "PREMISE": 0.671,
-          "PREMISE_PROXIMITY": 0.194,
-          "ROUTE": 0.084,
-          "LOCALITY": 0.038,
-          "OTHER": 0.013
+          "PREMISE": 0.84,
+          "PREMISE_PROXIMITY": 0.074,
+          "ROUTE": 0.059,
+          "LOCALITY": 0.015,
+          "OTHER": 0.012
         },
-        "median_error_m": 16.42168952446094,
-        "within_500m": 0.932,
-        "ms": 1.9237461919999532,
+        "median_error_m": 11.707756923681385,
+        "within_500m": 0.939,
+        "ms": 2.5624374639999132,
         "examples": {
           "静默错误": [
             [
@@ -16346,71 +16433,71 @@
               "Götgatan 103, Stockholm, 116 62",
               "ACCEPT",
               "PREMISE",
-              "Götgatan 103, Stockholm"
+              "Götgatan 103, 116 62 Stockholm"
             ],
             [
               "Nybrogatan 34, Stockholm, 114 39",
               "ACCEPT",
               "PREMISE",
-              "Nybrogatan 34, Stockholm"
+              "Nybrogatan 34, 114 39 Stockholm"
             ],
             [
               "Scalateatern, Wallingatan 32, Stockholm, 111 24",
               "ACCEPT",
               "PREMISE",
-              "Wallingatan 32, Stockholm"
+              "Wallingatan 32, 111 24 Stockholm"
             ]
           ],
-          "错误建议": [
+          "判 FIX": [
+            [
+              "Grönviksvägen, Bromma, 16771 - 16776",
+              "FIX",
+              "ROUTE",
+              "Grönviksvägen, 167 76"
+            ],
+            [
+              "Östra brobänken, Stockholm, 111 48",
+              "FIX",
+              "ROUTE",
+              "Östra brobänken, 111 48"
+            ],
             [
               "Målkurvan, Stockholm, 118 53",
-              "CONFIRM",
+              "FIX",
               "ROUTE",
               "Målkurvan, 118 53"
             ],
             [
-              "Stålmansvägen 8, Snättringe, 141 41",
+              "St Göransgatan, Arbetargatan & Mariebergsgatan, Stockholm",
+              "FIX",
+              "ROUTE",
+              "Sankt Göransgatan"
+            ]
+          ],
+          "错误建议": [
+            [
+              "Engelbrektsgatan 9-11, Stockholm, 114 32",
               "CONFIRM",
               "PREMISE",
-              "Staffansvägen 8, Snättringe"
+              "Engelbrektsgatan 9-11, Stockholm"
             ],
             [
-              "Lovisedalsvägen 7, Vallentuna, 186 53",
+              "Råsundavägen 4, Hagalund, 169 67",
               "CONFIRM",
               "PREMISE_PROXIMITY",
-              "Lovisedalsvägen 7, 138 36 Älta"
+              "Råsundavägen 4, Hagalund"
             ],
             [
               "Dialoggatan 2, Kungens Kurva, 141 75",
               "CONFIRM",
               "PREMISE",
               "Dialoggatan 2, 141 75 Kungens kurva"
-            ]
-          ],
-          "判 FIX": [
-            [
-              "Oxenstiernsg. 20, Stockholm, 105 10",
-              "FIX",
-              "OTHER",
-              ""
             ],
             [
-              "Stenkumla Ansarve 851, Visby, 621 95",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "nolinge, Stockholm, 14791",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "Stockholm, Sweden, Stockholm",
-              "FIX",
-              "OTHER",
-              ""
+              "Geometrivägen 3, Kungens Kurva, 141 75",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Geometrivägen 3, Kungens kurva"
             ]
           ]
         }
@@ -16418,56 +16505,100 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.355,
-          "正确·要求确认": 0.625,
+          "正确·直接通过": 0.61,
+          "正确·要求确认": 0.331,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.0,
-          "错误建议": 0.019,
-          "静默错误": 0.001
+          "判 FIX": 0.045,
+          "错误建议": 0.01,
+          "静默错误": 0.004
         },
-        "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.016,
+        "silent_over_1km": 0.003,
+        "wrong_over_1km": 0.008,
         "granularity": {
-          "ROUTE": 0.74,
-          "PREMISE_PROXIMITY": 0.167,
-          "PREMISE": 0.093
+          "PREMISE": 0.947,
+          "ROUTE": 0.048,
+          "PREMISE_PROXIMITY": 0.005
         },
-        "median_error_m": 71.84558859668599,
-        "within_500m": 0.944,
-        "ms": 2.330419008999911,
+        "median_error_m": 0.0,
+        "within_500m": 0.988,
+        "ms": 2.616055130000177,
         "examples": {
+          "判 FIX": [
+            [
+              "Tavelsjvägen, 120 59, Stockholm",
+              "FIX",
+              "ROUTE",
+              "Tavelsjövägen, 120 59"
+            ],
+            [
+              "Kummelvägen, 167 64, Stockholm",
+              "FIX",
+              "ROUTE",
+              "Kummelvägen, 167 64"
+            ],
+            [
+              "stora mejtens gränd, 116 35, stockholm",
+              "FIX",
+              "ROUTE",
+              "Stora Mejtens Gränd, 116 35"
+            ],
+            [
+              "Mörbydalen, Stockholm",
+              "FIX",
+              "ROUTE",
+              "Mörbydalen"
+            ]
+          ],
           "错误建议": [
             [
-              "Kexvägen, Saffransvägen 5, Stockholm",
-              "CONFIRM",
-              "PREMISE",
-              "Kexvägen 5, 128 69 Sköndal"
-            ],
-            [
-              "Orrspelsvägen 75, Danderydin kunta, Stockholm",
-              "CONFIRM",
-              "PREMISE",
-              "Orrspelsvägen 75, 167 66 Bromma"
-            ],
-            [
-              "lgh 29, Alpvägen 47, Stokkhólmur, Stockholm",
+              "Brita-Kolas allé 1,3,5,7, 170 67, Stockholm",
               "CONFIRM",
               "PREMISE_PROXIMITY",
-              "Lgh 29, Alpvägen 47, 138 34 Stockholms kommun"
+              "Brita-Kolas allé 7"
             ],
             [
-              "Trastvägen 40, Stockholm",
+              "Prästgårdsgatan 38,40, 172 68, Stockholm",
               "CONFIRM",
               "ROUTE",
-              "Trastvägen 40"
+              "Prästgårdsgatan 38, 172 68"
+            ],
+            [
+              "Slottsvägen 5",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Slottsvägen 5, 182 68 Djursholm"
+            ],
+            [
+              "Oskarsvägen 33",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Oskarsvägen 33"
             ]
           ],
           "静默错误": [
             [
-              "Mynttorget, Södra Helgeandstraappan 96, Gamla stan, 114 34, Stockholm",
+              "Banvägen 9 Lidingö",
               "ACCEPT",
-              "ROUTE",
-              "Mynttorget 96, 114 34 Gamla stan"
+              "PREMISE",
+              "Banvägen 9, Nacka"
+            ],
+            [
+              "Johannelundsgränd 10, 163 45, Stockholm",
+              "ACCEPT",
+              "PREMISE",
+              "Johannelundsgränd 10, 163 45 Spånga"
+            ],
+            [
+              "Villavägen 8",
+              "ACCEPT",
+              "PREMISE",
+              "Villavägen 8, Nacka"
+            ],
+            [
+              "UTSIKTSVÄGEN 4",
+              "ACCEPT",
+              "PREMISE",
+              "Utsiktsvägen 4, Nacka"
             ]
           ]
         }
@@ -22133,7 +22264,7 @@
         },
         "median_error_m": 12.004950045013263,
         "within_500m": 0.942,
-        "ms": 5.166109113999937,
+        "ms": 7.204117733999965,
         "examples": {
           "错误建议": [
             [
@@ -22235,7 +22366,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.989,
-        "ms": 2.4406884500000388,
+        "ms": 3.0561874159998297,
         "examples": {
           "静默错误": [
             [
@@ -22322,7 +22453,7 @@
         },
         "median_error_m": 11.748481061528873,
         "within_500m": 0.885,
-        "ms": 0.9157027940000262,
+        "ms": 1.2332264540000324,
         "examples": {
           "错误建议": [
             [
@@ -22424,7 +22555,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.995,
-        "ms": 2.4149611810000806,
+        "ms": 2.9821265680000124,
         "examples": {
           "静默错误": [
             [
@@ -22528,7 +22659,7 @@
         },
         "median_error_m": 12.004950045013263,
         "within_500m": 0.946,
-        "ms": 6.307832112000028,
+        "ms": 7.906794381999816,
         "examples": {
           "错误建议": [
             [
@@ -22629,7 +22760,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.998,
-        "ms": 4.880972287999953,
+        "ms": 6.860701473999825,
         "examples": {
           "静默错误": [
             [
@@ -22688,38 +22819,32 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.427,
-          "正确·要求确认": 0.353,
-          "判 FIX·片区对": 0.088,
-          "判 FIX": 0.015,
-          "错误建议": 0.066,
-          "静默错误": 0.051
+          "正确·直接通过": 0.568,
+          "正确·要求确认": 0.193,
+          "判 FIX·片区对": 0.039,
+          "判 FIX": 0.08,
+          "错误建议": 0.064,
+          "静默错误": 0.056
         },
-        "silent_over_1km": 0.018,
-        "wrong_over_1km": 0.042,
+        "silent_over_1km": 0.027,
+        "wrong_over_1km": 0.033,
         "granularity": {
-          "PREMISE": 0.527,
-          "PREMISE_PROXIMITY": 0.235,
-          "ROUTE": 0.135,
-          "LOCALITY": 0.097,
-          "OTHER": 0.006
+          "PREMISE": 0.713,
+          "PREMISE_PROXIMITY": 0.136,
+          "ROUTE": 0.101,
+          "LOCALITY": 0.045,
+          "OTHER": 0.005
         },
-        "median_error_m": 39.38569466905823,
-        "within_500m": 0.826,
-        "ms": 1.7417138610001075,
+        "median_error_m": 24.810733782313534,
+        "within_500m": 0.843,
+        "ms": 2.5556947180000407,
         "examples": {
           "错误建议": [
             [
               "ж.к. Люлин 4, бл. 417, София",
               "CONFIRM",
-              "ROUTE",
-              "Люлин 4"
-            ],
-            [
-              "улица Костенски водопад, София, 1408",
-              "CONFIRM",
-              "ROUTE",
-              "Костенски водопад, 1408"
+              "PREMISE",
+              "ж.к. Люлин (Люлин) 4, София"
             ],
             [
               "Булевард Царица Йоана 102, София, 1336",
@@ -22731,7 +22856,39 @@
               "Bul. Skobelev 9, София",
               "CONFIRM",
               "PREMISE",
-              "Gen. Skobelev Blvd. 9, 1463 София"
+              "Gen. Skobelev Blvd. 9, София"
+            ],
+            [
+              "ul. Haydushko izvorche 28, София, 1612",
+              "CONFIRM",
+              "PREMISE",
+              "Haydushko Izvorche 28"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "улица Костенски водопад, София, 1408",
+              "FIX",
+              "ROUTE",
+              "Костенски водопад, 1408"
+            ],
+            [
+              "улица Папрат, Sofia, София",
+              "FIX",
+              "ROUTE",
+              "Paprat"
+            ],
+            [
+              "ul. Nikola Genadiev, София, 1784",
+              "FIX",
+              "ROUTE",
+              "Nikola Genadiev, 1784"
+            ],
+            [
+              "bul. Prof. Marko Semov №27, София, 1756",
+              "FIX",
+              "ROUTE",
+              "Prof. Marko Semov, 1756"
             ]
           ],
           "静默错误": [
@@ -22739,51 +22896,25 @@
               "Булевард Симеоновско шосе 9, София, 1700",
               "ACCEPT",
               "PREMISE",
-              "бул. Симеоновско шосе 9, 1700 София"
+              "бул. Симеоновско шосе 9, София"
             ],
             [
               "Улица Аксаков 1, 1000 София, България, София, 1000",
               "ACCEPT",
               "PREMISE",
-              "Аксаков 1"
+              "Аксаков 1, София"
             ],
             [
-              "ul. Haydushko izvorche 28, София, 1612",
+              "Улица Стефан Малинов 2, София, 1408",
               "ACCEPT",
               "PREMISE",
-              "Haydushko Izvorche 28"
+              "Стефан Малинов 2, София"
             ],
             [
-              "bul. Nikola Mushanov 31, София, 1330",
+              "Булевард Витоша 25, София, 1000",
               "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "Nikola Mushanov Blvd. 31"
-            ]
-          ],
-          "判 FIX": [
-            [
-              "Sofia, София, +3592",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "Бъкстон, София, 1000",
-              "FIX",
-              "LOCALITY",
-              ""
-            ],
-            [
-              "бул. Хр. Колумб 43, София",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "Борисова градина, София, 1000",
-              "FIX",
-              "LOCALITY",
-              ""
+              "PREMISE",
+              "бул. Витоша 25, София"
             ]
           ]
         }
@@ -22791,101 +22922,96 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.263,
-          "正确·要求确认": 0.617,
+          "正确·直接通过": 0.682,
+          "正确·要求确认": 0.171,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.019,
-          "错误建议": 0.096,
-          "静默错误": 0.005
+          "判 FIX": 0.068,
+          "错误建议": 0.076,
+          "静默错误": 0.003
         },
         "silent_over_1km": 0.001,
-        "wrong_over_1km": 0.074,
+        "wrong_over_1km": 0.025,
         "granularity": {
-          "ROUTE": 0.736,
-          "PREMISE_PROXIMITY": 0.162,
-          "PREMISE": 0.083,
-          "LOCALITY": 0.019
+          "PREMISE": 0.814,
+          "PREMISE_PROXIMITY": 0.107,
+          "ROUTE": 0.064,
+          "OTHER": 0.012,
+          "LOCALITY": 0.003
         },
-        "median_error_m": 110.73147725346271,
-        "within_500m": 0.872,
-        "ms": 1.7880390139999918,
+        "median_error_m": 0.0,
+        "within_500m": 0.96,
+        "ms": 1.1110653880000427,
         "examples": {
-          "错误建议": [
-            [
-              "Земеделска 14, кв. Филиповци, Столична, София",
-              "CONFIRM",
-              "PREMISE_PROXIMITY",
-              "Земеделска 14, Столична"
-            ],
-            [
-              "Наум Шопов 19A, кв. Симеоново, София, 1434, София",
-              "CONFIRM",
-              "PREMISE_PROXIMITY",
-              "Simeonovo 19A, София"
-            ],
-            [
-              "ап. 14, 3003-та 4 zh.k. Lyulin, София",
-              "CONFIRM",
-              "ROUTE",
-              "Ap 14, Lyulin 4, 3003"
-            ],
-            [
-              "Боянски водопад - Боянско езеро, Sofia",
-              "CONFIRM",
-              "ROUTE",
-              "Боянски водопад - Боянско езеро"
-            ]
-          ],
           "判 FIX": [
             [
-              "проф. алексаандър милев 102 simeonovo 1434 sofia",
+              "ул. Стамат Иономов 10 София, Sofia",
               "FIX",
-              "LOCALITY",
+              "OTHER",
               ""
             ],
             [
-              "Стадиnн 3B, Gorublyane",
+              "ул. Хисаряя 3 София, София",
               "FIX",
-              "LOCALITY",
+              "OTHER",
               ""
             ],
             [
-              "3019-та 196B Moderno predgradie, София",
+              "Подножие, София, Sofia",
               "FIX",
-              "LOCALITY",
-              ""
+              "ROUTE",
+              "Podnozhie"
             ],
             [
-              "БЕЛИТЕ БРЕЗИ VITOSHA",
+              "ул. Марин Дринов, София, 1504, София",
               "FIX",
-              "LOCALITY",
-              ""
+              "ROUTE",
+              "Марин Дринов, 1504"
+            ]
+          ],
+          "错误建议": [
+            [
+              "ул. Гелле Китов 2А, София",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Геле Китов 2A, София"
+            ],
+            [
+              "Йосиф Буреш 9Б, София, Sofia",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Yosif Buresh 9B, София"
+            ],
+            [
+              "ул. Росна китка 4А София, София",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Росна китка 4A, София"
+            ],
+            [
+              "Крайречна 16, София",
+              "CONFIRM",
+              "PREMISE",
+              "Крайречна 16, София"
             ]
           ],
           "静默错误": [
             [
-              "Александър Жендов 78B, ж.к. Гео Милев, Слатина, 1111, София",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "Geo Milev 78B, Slatina"
-            ],
-            [
-              "ул. Хайделберг 13 Столична 1186, София",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "Хайделберг 13, 1582 Столична"
-            ],
-            [
-              "Местна комисия - район \"Лозенец\"СО /мкбппмн/Сртелча 152, ж.к. Лозенец, 1164, Sofia",
-              "ACCEPT",
-              "ROUTE",
-              "Lozenets 152, 1164 Lozenets"
-            ],
-            [
-              "ет. 1, Родопски извор, 57 ж.к. Борово, Столична, 1680 София",
+              "Gusla 1, София, 1618, София",
               "ACCEPT",
               "PREMISE",
-              "Et 1, Борово 57, 1680 Столична"
+              "Gusla 1, София"
+            ],
+            [
+              "D-r Yordan Yosifov 4",
+              "ACCEPT",
+              "PREMISE",
+              "ул. Д-р Йордан Йосифов 4, София"
+            ],
+            [
+              "Перла 9",
+              "ACCEPT",
+              "PREMISE",
+              "Перла 9, София"
             ]
           ]
         }
@@ -22895,50 +23021,50 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.398,
-          "正确·要求确认": 0.35,
-          "判 FIX·片区对": 0.112,
-          "判 FIX": 0.038,
-          "错误建议": 0.055,
-          "静默错误": 0.047
+          "正确·直接通过": 0.516,
+          "正确·要求确认": 0.216,
+          "判 FIX·片区对": 0.088,
+          "判 FIX": 0.083,
+          "错误建议": 0.056,
+          "静默错误": 0.041
         },
-        "silent_over_1km": 0.014,
-        "wrong_over_1km": 0.033,
+        "silent_over_1km": 0.018,
+        "wrong_over_1km": 0.025,
         "granularity": {
-          "PREMISE": 0.497,
-          "PREMISE_PROXIMITY": 0.219,
-          "ROUTE": 0.134,
-          "LOCALITY": 0.121,
+          "PREMISE": 0.659,
+          "PREMISE_PROXIMITY": 0.123,
+          "ROUTE": 0.097,
+          "LOCALITY": 0.092,
           "OTHER": 0.029
         },
-        "median_error_m": 42.34463009231691,
-        "within_500m": 0.802,
-        "ms": 1.3383116190000237,
+        "median_error_m": 27.260593855475935,
+        "within_500m": 0.812,
+        "ms": 1.8086743230001048,
         "examples": {
-          "错误建议": [
-            [
-              "ж.к. Люлин 4, бл. 417, София",
-              "CONFIRM",
-              "ROUTE",
-              "Люлин 4"
-            ],
+          "判 FIX": [
             [
               "улица Костенски водопад, София, 1408",
-              "CONFIRM",
+              "FIX",
               "ROUTE",
               "Костенски водопад, 1408"
             ],
             [
-              "Bul. Skobelev 9, София",
-              "CONFIRM",
-              "PREMISE",
-              "Gen. Skobelev Blvd. 9, 1463 София"
+              "гр. СОФИЯ ул. Д-Р ГЕОРГИ ВЪЛКОВИЧ No 10",
+              "FIX",
+              "OTHER",
+              ""
             ],
             [
-              "Площад България 1, 1463 София, България, София, 1463",
-              "CONFIRM",
-              "PREMISE",
-              "бул. България 1, 1421 София"
+              "улица Папрат, Sofia, София",
+              "FIX",
+              "ROUTE",
+              "Paprat"
+            ],
+            [
+              "ul. Nikola Genadiev, София, 1784",
+              "FIX",
+              "ROUTE",
+              "Nikola Genadiev, 1784"
             ]
           ],
           "静默错误": [
@@ -22946,51 +23072,51 @@
               "Булевард Симеоновско шосе 9, София, 1700",
               "ACCEPT",
               "PREMISE",
-              "бул. Симеоновско шосе 9, 1700 София"
+              "бул. Симеоновско шосе 9, София"
             ],
             [
               "Улица Аксаков 1, 1000 София, България, София, 1000",
               "ACCEPT",
               "PREMISE",
-              "Аксаков 1"
+              "Аксаков 1, София"
+            ],
+            [
+              "Улица Стефан Малинов 2, София, 1408",
+              "ACCEPT",
+              "PREMISE",
+              "Стефан Малинов 2, София"
+            ],
+            [
+              "Бул. Гоце Делчев 120, бл 37, София, 1404",
+              "ACCEPT",
+              "PREMISE",
+              "бул. Гоце Делчев 37, София"
+            ]
+          ],
+          "错误建议": [
+            [
+              "Bul. Skobelev 9, София",
+              "CONFIRM",
+              "PREMISE",
+              "Gen. Skobelev Blvd. 9, София"
             ],
             [
               "ul. Haydushko izvorche 28, София, 1612",
-              "ACCEPT",
+              "CONFIRM",
               "PREMISE",
               "Haydushko Izvorche 28"
             ],
             [
               "bul. Nikola Mushanov 31, София, 1330",
-              "ACCEPT",
+              "CONFIRM",
               "PREMISE_PROXIMITY",
               "Nikola Mushanov Blvd. 31"
-            ]
-          ],
-          "判 FIX": [
-            [
-              "5-015 4\\n, София, 1592\\n",
-              "FIX",
-              "LOCALITY",
-              ""
             ],
             [
               "кв. Надежда 1 блок.173 вх.Ж",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "Sofia, София, 1000",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "Zona B-5 bl. 7, вх.А, София, 1303",
-              "FIX",
-              "LOCALITY",
-              ""
+              "CONFIRM",
+              "PREMISE",
+              "Надежда 1, София"
             ]
           ]
         }
@@ -22998,76 +23124,96 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.301,
-          "正确·要求确认": 0.666,
+          "正确·直接通过": 0.673,
+          "正确·要求确认": 0.188,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.006,
-          "错误建议": 0.027,
-          "静默错误": 0.0
+          "判 FIX": 0.057,
+          "错误建议": 0.079,
+          "静默错误": 0.003
         },
-        "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.021,
+        "silent_over_1km": 0.002,
+        "wrong_over_1km": 0.024,
         "granularity": {
-          "ROUTE": 0.774,
-          "PREMISE_PROXIMITY": 0.169,
-          "PREMISE": 0.051,
-          "LOCALITY": 0.004,
-          "OTHER": 0.002
+          "PREMISE": 0.82,
+          "PREMISE_PROXIMITY": 0.109,
+          "ROUTE": 0.068,
+          "OTHER": 0.002,
+          "LOCALITY": 0.001
         },
-        "median_error_m": 84.96616718578272,
-        "within_500m": 0.947,
-        "ms": 1.1702492890000258,
+        "median_error_m": 0.0,
+        "within_500m": 0.97,
+        "ms": 0.7342094579998957,
         "examples": {
           "错误建议": [
             [
-              "Земеделска 14, кв. Филиповци, Столична, София",
+              "ул. Гелле Китов 2А, София",
               "CONFIRM",
               "PREMISE_PROXIMITY",
-              "Земеделска 14"
+              "Геле Китов 2A, София"
             ],
             [
-              "Боянски водопад - Боянско езеро, Sofia",
+              "Йосиф Буреш 9Б, София, Sofia",
               "CONFIRM",
-              "ROUTE",
-              "Боянски водопад - Боянско езеро"
+              "PREMISE_PROXIMITY",
+              "Yosif Buresh 9B, София"
             ],
             [
-              "бул. Д-р Г. М. Димитров 81, ж.к. Студентски град община, София",
+              "ул. Росна китка 4А София, София",
               "CONFIRM",
-              "ROUTE",
-              "бул. Вардар 81"
+              "PREMISE_PROXIMITY",
+              "Росна китка 4A, София"
             ],
             [
-              "ап. 32, Алдомировска София, Sofia",
+              "Крайречна 16, София",
               "CONFIRM",
-              "ROUTE",
-              "Ap 32, Aldomirovska"
+              "PREMISE",
+              "Крайречна 16, София"
             ]
           ],
           "判 FIX": [
             [
-              "Вадна 3, кв. Република-2, Волуяк София",
+              "Подножие, София, Sofia",
               "FIX",
-              "OTHER",
-              ""
+              "ROUTE",
+              "Podnozhie"
             ],
             [
-              "Надежда Moderno predgradie, Столична, София",
+              "ул. Марин Дринов, София, 1504, София",
               "FIX",
-              "OTHER",
-              ""
+              "ROUTE",
+              "Марин Дринов, 1504"
             ],
             [
-              "Ванtа 79 кв. Република-2",
+              "ЖУЛ ПАСКИН, СОФИЯ, СОФИЯ",
               "FIX",
-              "LOCALITY",
-              ""
+              "ROUTE",
+              "Жул Паскин"
             ],
             [
-              "Datecs, Датекс НПЗ Искър, София",
+              "Латинка, София",
               "FIX",
-              "LOCALITY",
-              ""
+              "ROUTE",
+              "Латинка"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Gusla 1, София, 1618, София",
+              "ACCEPT",
+              "PREMISE",
+              "Gusla 1, София"
+            ],
+            [
+              "Перла 9",
+              "ACCEPT",
+              "PREMISE",
+              "Перла 9, София"
+            ],
+            [
+              "Освобождение 16, София",
+              "ACCEPT",
+              "PREMISE",
+              "Освобождение 16, София"
             ]
           ]
         }
@@ -23077,50 +23223,76 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.43,
-          "正确·要求确认": 0.359,
-          "判 FIX·片区对": 0.08,
-          "判 FIX": 0.014,
-          "错误建议": 0.067,
-          "静默错误": 0.05
+          "正确·直接通过": 0.575,
+          "正确·要求确认": 0.199,
+          "判 FIX·片区对": 0.03,
+          "判 FIX": 0.078,
+          "错误建议": 0.059,
+          "静默错误": 0.059
         },
-        "silent_over_1km": 0.017,
-        "wrong_over_1km": 0.041,
+        "silent_over_1km": 0.028,
+        "wrong_over_1km": 0.03,
         "granularity": {
-          "PREMISE": 0.536,
-          "PREMISE_PROXIMITY": 0.236,
-          "ROUTE": 0.134,
-          "LOCALITY": 0.088,
-          "OTHER": 0.006
+          "PREMISE": 0.729,
+          "PREMISE_PROXIMITY": 0.132,
+          "ROUTE": 0.101,
+          "LOCALITY": 0.033,
+          "OTHER": 0.005
         },
-        "median_error_m": 38.55456049038398,
-        "within_500m": 0.83,
-        "ms": 3.0557399650000434,
+        "median_error_m": 23.987875034827397,
+        "within_500m": 0.849,
+        "ms": 4.257067555000049,
         "examples": {
           "错误建议": [
             [
               "ж.к. Люлин 4, бл. 417, София",
               "CONFIRM",
-              "ROUTE",
-              "Люлин 4"
-            ],
-            [
-              "улица Костенски водопад, София, 1408",
-              "CONFIRM",
-              "ROUTE",
-              "Костенски водопад, 1408"
+              "PREMISE",
+              "ж.к. Люлин (Люлин) 4, София"
             ],
             [
               "Bul. Skobelev 9, София",
               "CONFIRM",
               "PREMISE",
-              "Gen. Skobelev Blvd. 9, 1463 София"
+              "Gen. Skobelev Blvd. 9, София"
             ],
             [
-              "Площад България 1, 1463 София, България, София, 1463",
+              "ul. Haydushko izvorche 28, София, 1612",
               "CONFIRM",
               "PREMISE",
-              "бул. България 1, 1421 София"
+              "Haydushko Izvorche 28"
+            ],
+            [
+              "bul. Nikola Mushanov 31, София, 1330",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Nikola Mushanov Blvd. 31"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "улица Костенски водопад, София, 1408",
+              "FIX",
+              "ROUTE",
+              "Костенски водопад, 1408"
+            ],
+            [
+              "улица Папрат, Sofia, София",
+              "FIX",
+              "ROUTE",
+              "Paprat"
+            ],
+            [
+              "ul. Nikola Genadiev, София, 1784",
+              "FIX",
+              "ROUTE",
+              "Nikola Genadiev, 1784"
+            ],
+            [
+              "bul. Prof. Marko Semov №27, София, 1756",
+              "FIX",
+              "ROUTE",
+              "Prof. Marko Semov, 1756"
             ]
           ],
           "静默错误": [
@@ -23128,51 +23300,25 @@
               "Булевард Симеоновско шосе 9, София, 1700",
               "ACCEPT",
               "PREMISE",
-              "бул. Симеоновско шосе 9, 1700 София"
+              "бул. Симеоновско шосе 9, София"
             ],
             [
               "Улица Аксаков 1, 1000 София, България, София, 1000",
               "ACCEPT",
               "PREMISE",
-              "Аксаков 1"
+              "Аксаков 1, София"
             ],
             [
-              "ul. Haydushko izvorche 28, София, 1612",
+              "Улица Стефан Малинов 2, София, 1408",
               "ACCEPT",
               "PREMISE",
-              "Haydushko Izvorche 28"
+              "Стефан Малинов 2, София"
             ],
             [
-              "bul. Nikola Mushanov 31, София, 1330",
+              "Бул. Гоце Делчев 120, бл 37, София, 1404",
               "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "Nikola Mushanov Blvd. 31"
-            ]
-          ],
-          "判 FIX": [
-            [
-              "Sofia, София, +3592",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "Бъкстон, София, 1000",
-              "FIX",
-              "LOCALITY",
-              ""
-            ],
-            [
-              "бул. Хр. Колумб 43, София",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "Борисова градина, София, 1000",
-              "FIX",
-              "LOCALITY",
-              ""
+              "PREMISE",
+              "бул. Гоце Делчев 37, София"
             ]
           ]
         }
@@ -23180,83 +23326,95 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.279,
-          "正确·要求确认": 0.633,
+          "正确·直接通过": 0.682,
+          "正确·要求确认": 0.182,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.002,
-          "错误建议": 0.083,
+          "判 FIX": 0.057,
+          "错误建议": 0.076,
           "静默错误": 0.003
         },
         "silent_over_1km": 0.001,
-        "wrong_over_1km": 0.063,
+        "wrong_over_1km": 0.025,
         "granularity": {
-          "ROUTE": 0.723,
-          "PREMISE_PROXIMITY": 0.191,
-          "PREMISE": 0.084,
-          "LOCALITY": 0.002
+          "PREMISE": 0.825,
+          "PREMISE_PROXIMITY": 0.106,
+          "ROUTE": 0.067,
+          "OTHER": 0.002
         },
-        "median_error_m": 112.80541209891318,
-        "within_500m": 0.893,
-        "ms": 2.828046699999959,
+        "median_error_m": 0.0,
+        "within_500m": 0.97,
+        "ms": 1.779388741000048,
         "examples": {
           "错误建议": [
             [
-              "Земеделска 14, кв. Филиповци, Столична, София",
+              "ул. Гелле Китов 2А, София",
               "CONFIRM",
               "PREMISE_PROXIMITY",
-              "Земеделска 14, Столична"
+              "Геле Китов 2A, София"
             ],
             [
-              "Наум Шопов 19A, кв. Симеоново, София, 1434, София",
+              "Йосиф Буреш 9Б, София, Sofia",
               "CONFIRM",
               "PREMISE_PROXIMITY",
-              "Simeonovo 19A, София"
+              "Yosif Buresh 9B, София"
             ],
             [
-              "Боянски водопад - Боянско езеро, Sofia",
+              "ул. Росна китка 4А София, София",
               "CONFIRM",
-              "ROUTE",
-              "Боянски водопад - Боянско езеро"
+              "PREMISE_PROXIMITY",
+              "Росна китка 4A, София"
             ],
             [
-              "ул. Хайделберг 1, Druzhba, Sofia",
+              "Крайречна 16, София",
               "CONFIRM",
               "PREMISE",
-              "Haydelberg 1, 1592 Druzhba"
-            ]
-          ],
-          "静默错误": [
-            [
-              "Александър Жендов 78B, ж.к. Гео Милев, Слатина, 1111, София",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "Geo Milev 78B, Slatina"
-            ],
-            [
-              "ул. Хайделберг 13 Столична 1186, София",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "Хайделберг 13, 1582 Столична"
-            ],
-            [
-              "ет. 1, Родопски извор, 57 ж.к. Борово, Столична, 1680 София",
-              "ACCEPT",
-              "PREMISE",
-              "Et 1, Борово 57, 1680 Столична"
+              "Крайречна 16, София"
             ]
           ],
           "判 FIX": [
             [
-              "Надежда Moderno predgradie, Столична, София",
+              "Подножие, София, Sofia",
               "FIX",
-              "LOCALITY",
-              ""
+              "ROUTE",
+              "Podnozhie"
             ],
             [
-              "Лосмка 90, Център, 1606, Sofia",
+              "ул. Марин Дринов, София, 1504, София",
               "FIX",
-              "LOCALITY",
-              ""
+              "ROUTE",
+              "Марин Дринов, 1504"
+            ],
+            [
+              "Емилиян Станев 71Ж, Sofia",
+              "FIX",
+              "ROUTE",
+              "Emiliyan Stanev"
+            ],
+            [
+              "ЖУЛ ПАСКИН, СОФИЯ, СОФИЯ",
+              "FIX",
+              "ROUTE",
+              "Жул Паскин"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Gusla 1, София, 1618, София",
+              "ACCEPT",
+              "PREMISE",
+              "Gusla 1, София"
+            ],
+            [
+              "D-r Yordan Yosifov 4",
+              "ACCEPT",
+              "PREMISE",
+              "ул. Д-р Йордан Йосифов 4, София"
+            ],
+            [
+              "Перла 9",
+              "ACCEPT",
+              "PREMISE",
+              "Перла 9, София"
             ]
           ]
         }

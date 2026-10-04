@@ -223,6 +223,11 @@ python -m avmvp.server            # http://127.0.0.1:8080/  演示页面（可�
 
 **商户地址门牌点**（[`avmvp/intl/poiaddr.py`](../mvp/avmvp/intl/poiaddr.py)）：参考库里（不含留出的测试商户及其孪生记录）商户自填的地址解析成"道路 + 门牌 → 坐标"，只用完全一致的道路、商户在路旁 150 米内，同一门牌多家商户取中位位置。欧洲、美洲持平或略好（开发集 −3 到 +6 条 / 600），东南亚、中东、波多黎各、印度变差（−1 到 −29 条），这 9 个市场不用。
 
+**补充官方开放数据**（[`scripts/fetch_extra_addresses.py`](../mvp/scripts/fetch_extra_addresses.py)，并入官方地址表）：
+- 哥伦比亚：波哥大地籍局 [Placa Domiciliaria](https://datosabiertos.bogota.gov.co/dataset/placa-domiciliaria)（门牌牌号，试点范围内 173 万个，CC-BY-4.0，每月更新），与 Overture 的部分地址表合并，重复的门牌只留一份；
+- 保加利亚：索非亚市政府 [address_sofia](https://urbandata.sofia.bg/)（7.7 万个，CC-BY-4.0），含住宅小区的楼号（`ж.к. Младост 1, бл. 12`），保加利亚因此改为 A 类；
+- 试过但开发集上没有提升、没有采用：斯德哥尔摩市 2016 年地址点（瑞典定位对 93.0% → 91.7%）、英国 Code-Point Open 邮编中心点（91.0% → 91.2%）、葡萄牙 OpenAddresses（与 Overture 同一来源）。
+
 **道路编号**：波多黎各、爱尔兰、英国的商户常只写编号（`1822 PR-25`、`Carr 199`、`N11`），按 OSM 道路的 `ref` 建成道路（`PR-25` = `Carretera 25`）。
 
 A 类各市场的官方地址点（试点城市范围内）：

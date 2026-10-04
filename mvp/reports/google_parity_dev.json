@@ -41,9 +41,9 @@
    "noise": 1,
    "no_premise": 165,
    "miss": 212,
-   "miss_nothing": 97,
+   "miss_nothing": 96,
    "miss_number": 0,
-   "miss_wrong": 115
+   "miss_wrong": 116
   },
   "CA": {
    "n": 600,
@@ -113,25 +113,25 @@
   },
   "CO": {
    "n": 600,
-   "ok": 429,
-   "accept_ok": 141,
-   "noise": 21,
-   "no_premise": 41,
-   "miss": 109,
-   "miss_nothing": 6,
-   "miss_number": 57,
-   "miss_wrong": 46
+   "ok": 440,
+   "accept_ok": 291,
+   "noise": 32,
+   "no_premise": 42,
+   "miss": 86,
+   "miss_nothing": 5,
+   "miss_number": 47,
+   "miss_wrong": 34
   },
   "GB": {
    "n": 600,
-   "ok": 546,
-   "accept_ok": 425,
-   "noise": 17,
-   "no_premise": 15,
-   "miss": 22,
+   "ok": 533,
+   "accept_ok": 397,
+   "noise": 28,
+   "no_premise": 14,
+   "miss": 25,
    "miss_nothing": 4,
    "miss_number": 0,
-   "miss_wrong": 18
+   "miss_wrong": 21
   },
   "IE": {
    "n": 600,
@@ -267,14 +267,14 @@
   },
   "SE": {
    "n": 600,
-   "ok": 558,
-   "accept_ok": 500,
-   "noise": 15,
-   "no_premise": 8,
-   "miss": 19,
-   "miss_nothing": 14,
-   "miss_number": 0,
-   "miss_wrong": 5
+   "ok": 550,
+   "accept_ok": 411,
+   "noise": 16,
+   "no_premise": 24,
+   "miss": 10,
+   "miss_nothing": 6,
+   "miss_number": 1,
+   "miss_wrong": 3
   },
   "NO": {
    "n": 600,
@@ -399,14 +399,14 @@
   },
   "BG": {
    "n": 600,
-   "ok": 471,
-   "accept_ok": 277,
-   "noise": 24,
-   "no_premise": 14,
-   "miss": 91,
-   "miss_nothing": 43,
-   "miss_number": 0,
-   "miss_wrong": 48
+   "ok": 479,
+   "accept_ok": 350,
+   "noise": 42,
+   "no_premise": 45,
+   "miss": 34,
+   "miss_nothing": 10,
+   "miss_number": 3,
+   "miss_wrong": 21
   },
   "MY": {
    "n": 600,

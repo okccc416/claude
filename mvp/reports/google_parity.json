@@ -1,5 +1,5 @@
 {
- "a_noise_median": 0.033,
+ "a_noise_median": 0.034,
  "markets": {
   "AU": {
    "n": 1000,
@@ -41,9 +41,9 @@
    "noise": 1,
    "no_premise": 236,
    "miss": 380,
-   "miss_nothing": 168,
+   "miss_nothing": 171,
    "miss_number": 0,
-   "miss_wrong": 212
+   "miss_wrong": 209
   },
   "CA": {
    "n": 1000,
@@ -102,9 +102,9 @@
   },
   "CL": {
    "n": 1000,
-   "ok": 859,
+   "ok": 858,
    "accept_ok": 668,
-   "noise": 29,
+   "noise": 30,
    "no_premise": 66,
    "miss": 46,
    "miss_nothing": 2,
@@ -113,25 +113,25 @@
   },
   "CO": {
    "n": 1000,
-   "ok": 719,
-   "accept_ok": 227,
-   "noise": 26,
+   "ok": 733,
+   "accept_ok": 475,
+   "noise": 40,
    "no_premise": 69,
-   "miss": 186,
+   "miss": 158,
    "miss_nothing": 14,
-   "miss_number": 96,
-   "miss_wrong": 76
+   "miss_number": 80,
+   "miss_wrong": 64
   },
   "GB": {
    "n": 1000,
-   "ok": 883,
-   "accept_ok": 692,
-   "noise": 24,
-   "no_premise": 46,
+   "ok": 868,
+   "accept_ok": 653,
+   "noise": 40,
+   "no_premise": 45,
    "miss": 47,
-   "miss_nothing": 8,
+   "miss_nothing": 9,
    "miss_number": 0,
-   "miss_wrong": 39
+   "miss_wrong": 38
   },
   "IE": {
    "n": 1000,
@@ -267,14 +267,14 @@
   },
   "SE": {
    "n": 1000,
-   "ok": 908,
-   "accept_ok": 808,
-   "noise": 22,
-   "no_premise": 16,
-   "miss": 54,
-   "miss_nothing": 38,
-   "miss_number": 0,
-   "miss_wrong": 16
+   "ok": 887,
+   "accept_ok": 674,
+   "noise": 26,
+   "no_premise": 52,
+   "miss": 35,
+   "miss_nothing": 13,
+   "miss_number": 1,
+   "miss_wrong": 21
   },
   "NO": {
    "n": 1000,
@@ -399,14 +399,14 @@
   },
   "BG": {
    "n": 1000,
-   "ok": 789,
-   "accept_ok": 430,
-   "noise": 48,
-   "no_premise": 41,
-   "miss": 122,
-   "miss_nothing": 63,
-   "miss_number": 0,
-   "miss_wrong": 59
+   "ok": 774,
+   "accept_ok": 575,
+   "noise": 64,
+   "no_premise": 94,
+   "miss": 68,
+   "miss_nothing": 18,
+   "miss_number": 7,
+   "miss_wrong": 43
   },
   "MY": {
    "n": 1000,
