@@ -444,6 +444,8 @@ class RuleParser:
                             pool = set(last_names(self.ref).get(toks_c[-1], ()))
                             if len(toks_c) == 1:
                                 pool |= first_names(self.ref).get(toks_c[0], set())
+                            else:  # 反过来：Av. Manuel Belgrano = Avenida Belgrano（路网只写姓）
+                                pool |= set(self.ref.street_core.get(toks_c[-1], ()))
                             have = {x for sp in spans if sp.start == i and sp.end == i + size for x in sp.ids}
                             alt = [x for x in pool - have if self._types_compatible(words, x)
                                    and self._covers(toks_c, x)]
@@ -487,8 +489,10 @@ class RuleParser:
         types = type_words(self.ref.market)
         for nm in self.ref.streets[sid].names[:4]:
             theirs = [t for t in key(nm, self.ref.market).split() if t not in types]
-            if all(any(c == t or (min(len(c), len(t)) >= 4 and (c.startswith(t) or t.startswith(c))) for c in theirs)
-                   for t in toks):
+            def match(a: str, b: str) -> bool:
+                return a == b or (min(len(a), len(b)) >= 4 and (a.startswith(b) or b.startswith(a)))
+            if theirs and (all(any(match(c, t) for c in theirs) for t in toks)
+                           or all(any(match(c, t) for t in toks) for c in theirs)):
                 return True
         return False
 
