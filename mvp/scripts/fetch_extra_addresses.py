@@ -6,10 +6,10 @@
       datosabiertos.bogota.gov.co/dataset/placa-domiciliaria：PDONVIAL = 道路（CL 153A / KR 7A），PDOTEXTO = 门牌（7 91 = # 7-91）
   BG  索非亚市政府开放数据 address_sofia（12.5 万个，CC-BY-4.0）：道路门牌，以及住宅小区的楼号
       （ж.к. Младост 1, бл. 12 -> 道路"ж.к. Младост 1"、门牌 12；入口记为单元）
-  SE  斯德哥尔摩市地址点（2016，经 OpenAddresses 缓存）+ 纳卡市地址点（市政府 WFS）
 
-邮编中心点（存成 extra_postcodes.parquet：postcode, lat, lng，构建时作为全量邮编表）：
-  GB  Ordnance Survey Code-Point Open（每个邮编单元的中心点，OGL 开放许可）
+试过但开发集上没有提升、默认不用的（--markets 显式指定才下载）：
+  SE  斯德哥尔摩市地址点（2016，经 OpenAddresses 缓存）+ 纳卡市地址点：瑞典开发集定位对 93.0% -> 91.7%
+  GB  Ordnance Survey Code-Point Open 邮编中心点（存成 extra_postcodes.parquet）：英国开发集 91.0% -> 91.2%
 
   python scripts/fetch_extra_addresses.py [--markets CO]
 """
@@ -128,6 +128,7 @@ def stockholm(cache: Path) -> list[dict]:
 
 
 SOURCES = {"CO": bogota, "BG": sofia, "SE": stockholm}
+DEFAULT = ("CO", "BG")  # 开发集上有提升的
 CODEPOINT = "https://api.os.uk/downloads/v1/products/CodePointOpen/downloads?area=GB&format=CSV&redirect"
 
 
@@ -156,7 +157,7 @@ def main() -> None:
     import pyarrow.parquet as pq
 
     ap = argparse.ArgumentParser()
-    ap.add_argument("--markets", default=",".join(dict.fromkeys([*SOURCES, *POSTCODE_SOURCES])))
+    ap.add_argument("--markets", default=",".join(DEFAULT))
     args = ap.parse_args()
     if Path("/root/.ccr/ca-bundle.crt").exists():
         os.environ.setdefault("SSL_CERT_FILE", "/root/.ccr/ca-bundle.crt")

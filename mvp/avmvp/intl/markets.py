@@ -157,7 +157,7 @@ _GOOGLE = [
            region_words=("REGION HOVEDSTADEN", "HOVEDSTADEN"), city_words=("KOBENHAVN", "COPENHAGEN", "DANMARK", "DENMARK", "KOBENHAVN K", "KOBENHAVN V", "KOBENHAVN O",
                        "KOBENHAVN N", "KOBENHAVN S", "KOBENHAVN NV", "KOBENHAVN SV"),
            cities=("København", "København K"), unit_fmt=("{f}. th", "{f}. tv", "st.")),
-    Market("SE", "瑞典", "A", (("斯德哥尔摩", (17.90, 59.25, 18.20, 59.40)),), r"\b\d{3}\s?\d{2}\b", False, ("sv",),
+    Market("SE", "瑞典", "C", (("斯德哥尔摩", (17.90, 59.25, 18.20, 59.40)),), r"\b\d{3}\s?\d{2}\b", False, ("sv",),
            "Drottninggatan 85, 111 61 Stockholm", **EU, region_words=("STOCKHOLMS LAN",), city_words=("STOCKHOLM", "SVERIGE", "SWEDEN"),
            cities=("Stockholm",), unit_fmt=("lgh {u}",)),
     Market("NO", "挪威", "A", (("奥斯陆", (10.62, 59.85, 10.90, 59.98)),), r"\b\d{4}\b", False, ("no",),
