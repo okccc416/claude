@@ -53,7 +53,7 @@ pytest -q                             # 111 个单元测试（新加坡用真实
 ```bash
 python scripts/fetch_markets.py           # 下载 44 个市场试点城市的 Overture 数据（道路线形、片区边界、POI、A 类官方地址点），约 3GB
 python scripts/fetch_osm_addresses.py     # OSM 门牌 + 道路编号（BBBike / openstreetmap.fr 城市摘录）
-python scripts/fetch_extra_addresses.py   # 政府开放地址：波哥大门牌牌号、索非亚地址
+python scripts/fetch_extra_addresses.py   # 政府开放地址：波哥大门牌牌号、索非亚地址；英国邮编中心点（只用于估计标注噪声）
 python scripts/build_market_reference.py  # 构建参考库（3 路并行约 25 分钟，澳洲最大）
 python scripts/train_market_parsers.py    # 训练各市场的机器学习解析器（CRF，每个市场约 30 秒）
 python scripts/fit_accept_policy.py       # 按市场在开发集上校准直接通过的放宽规则 -> models/accept_policy.json

@@ -45,9 +45,9 @@
    "noise_postcode": 0,
    "no_premise": 236,
    "miss": 380,
-   "miss_nothing": 171,
+   "miss_nothing": 170,
    "miss_number": 0,
-   "miss_wrong": 209
+   "miss_wrong": 210
   },
   "CA": {
    "n": 1000,
@@ -135,9 +135,9 @@
   },
   "GB": {
    "n": 1000,
-   "ok": 882,
-   "accept_ok": 693,
-   "noise": 30,
+   "ok": 881,
+   "accept_ok": 692,
+   "noise": 31,
    "noise_postcode": 5,
    "no_premise": 46,
    "miss": 42,
@@ -244,7 +244,7 @@
   "IT": {
    "n": 1000,
    "ok": 931,
-   "accept_ok": 859,
+   "accept_ok": 860,
    "noise": 21,
    "noise_postcode": 0,
    "no_premise": 20,
@@ -411,15 +411,15 @@
   },
   "SI": {
    "n": 920,
-   "ok": 769,
-   "accept_ok": 740,
+   "ok": 771,
+   "accept_ok": 742,
    "noise": 97,
    "noise_postcode": 0,
    "no_premise": 33,
-   "miss": 21,
+   "miss": 19,
    "miss_nothing": 9,
    "miss_number": 4,
-   "miss_wrong": 8
+   "miss_wrong": 6
   },
   "HR": {
    "n": 1000,
