@@ -85,7 +85,8 @@ def main() -> None:
             outs = pool.starmap(classify, [(c, args.split, n) for c in codes])
     else:
         outs = [classify(c, args.split, n) for c in codes]
-    res = dict(zip(codes, outs))
+    keys = ("n", "ok", "accept_ok", "noise", "no_premise", "miss", "miss_nothing", "miss_number", "miss_wrong")
+    res = {c: {k: o.get(k, 0) for k in keys} for c, o in zip(codes, outs)}
     a_noise = statistics.median(r["noise"] / r["n"] for c, r in res.items() if MARKETS[c].cls == "A")
     rows = []
     for c, r in res.items():
@@ -100,8 +101,8 @@ def main() -> None:
     par = sum(x[7] <= PARITY_GAP for x in rows)
     L = ["# 与 Google Address Validation 的差距（自动生成）\n",
          f"- 数据：{'测试集' if args.split == 'test' else '开发集'}真实商户地址，每个市场 {n} 条；Google 覆盖的 {len(rows)} 个国家 / 地区（美国除外）",
-         "- Google 上限 = 1 − 没有门牌也没有楼名的比例（Google 判 FIX）− 标注噪声比例（官方地址点原样一致但商户坐标偏离 > 250 米；"
-         f"没有官方地址表的市场按 A 类中位数 {a_noise:.1%} 估计）。其余样本按 Google 全部做对估计，所以差距是保守估计",
+         "- Google 上限 = 1 − 没有门牌也没有楼名的比例（Google 判 FIX）− 标注噪声比例（地址点原样一致但商户坐标偏离 > 250 米；"
+         f"没有官方地址表的市场按 A 类中位数 {a_noise:.1%} 估计，OSM 门牌点上实测更高时取实测值）。其余样本按 Google 全部做对估计，所以差距是保守估计",
          f"- 差距 ≤ {PARITY_GAP:.0%} 视为持平：**{par} / {len(rows)} 个市场持平**\n",
          "| 市场 | 类别 | 条数 | 我们：定位对 | 我们：直接通过且对 | 无门牌（Google 判 FIX） | 标注噪声 | Google 上限（估计） | 差距 | 持平 "
          "| 没做对的：道路没找到 | 门牌不在库里 | 位置给错 |",
