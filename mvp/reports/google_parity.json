@@ -1,5 +1,5 @@
 {
- "a_noise_median": 0.034,
+ "a_noise_median": 0.036000000000000004,
  "markets": {
   "AU": {
    "n": 1000,
@@ -41,9 +41,9 @@
    "noise": 1,
    "no_premise": 236,
    "miss": 380,
-   "miss_nothing": 171,
+   "miss_nothing": 168,
    "miss_number": 0,
-   "miss_wrong": 209
+   "miss_wrong": 212
   },
   "CA": {
    "n": 1000,
@@ -124,14 +124,14 @@
   },
   "GB": {
    "n": 1000,
-   "ok": 868,
-   "accept_ok": 653,
-   "noise": 40,
-   "no_premise": 45,
+   "ok": 883,
+   "accept_ok": 692,
+   "noise": 24,
+   "no_premise": 46,
    "miss": 47,
-   "miss_nothing": 9,
+   "miss_nothing": 8,
    "miss_number": 0,
-   "miss_wrong": 38
+   "miss_wrong": 39
   },
   "IE": {
    "n": 1000,
@@ -267,14 +267,14 @@
   },
   "SE": {
    "n": 1000,
-   "ok": 887,
-   "accept_ok": 674,
-   "noise": 26,
-   "no_premise": 52,
-   "miss": 35,
-   "miss_nothing": 13,
-   "miss_number": 1,
-   "miss_wrong": 21
+   "ok": 908,
+   "accept_ok": 808,
+   "noise": 22,
+   "no_premise": 16,
+   "miss": 54,
+   "miss_nothing": 38,
+   "miss_number": 0,
+   "miss_wrong": 16
   },
   "NO": {
    "n": 1000,

@@ -63,9 +63,9 @@
 | 哥伦比亚（CO） | A | rules | 1000 | 47.2% | 25.4% | 1.8% | 4.7% | 17.3% | 3.6% | 3.1% | 72.2% | 9 |
 | 哥伦比亚（CO） | A | crf | 1000 | 38.3% | 22.0% | 11.1% | 6.5% | 19.0% | 3.1% | 2.8% | 60.0% | 6 |
 | 哥伦比亚（CO） | A | hybrid | 1000 | 47.5% | 25.8% | 0.9% | 4.7% | 17.3% | 3.8% | 3.3% | 73.1% | 16 |
-| 英国（GB） | C | rules | 1000 | 66.4% | 21.3% | 2.8% | 0.9% | 5.6% | 3.0% | 1.4% | 90.5% | 5 |
-| 英国（GB） | C | crf | 1000 | 0.3% | 76.6% | 0.2% | 12.6% | 10.3% | 0.0% | 0.0% | 77.3% | 3 |
-| 英国（GB） | C | hybrid | 1000 | 65.3% | 21.5% | 2.5% | 0.8% | 7.6% | 2.3% | 1.3% | 89.4% | 6 |
+| 英国（GB） | C | rules | 1000 | 65.8% | 21.6% | 2.2% | 1.5% | 6.0% | 2.9% | 1.3% | 89.5% | 5 |
+| 英国（GB） | C | crf | 1000 | 67.9% | 16.1% | 5.5% | 3.9% | 4.6% | 2.0% | 1.1% | 89.7% | 2 |
+| 英国（GB） | C | hybrid | 1000 | 69.2% | 19.1% | 2.0% | 1.2% | 6.1% | 2.4% | 1.3% | 90.3% | 6 |
 | 爱尔兰（IE） | C | rules | 1000 | 23.6% | 49.9% | 5.2% | 4.8% | 14.4% | 2.1% | 1.0% | 73.2% | 6 |
 | 爱尔兰（IE） | C | crf | 1000 | 22.2% | 45.1% | 3.8% | 15.4% | 11.7% | 1.8% | 1.0% | 67.3% | 4 |
 | 爱尔兰（IE） | C | hybrid | 1000 | 24.0% | 49.7% | 4.8% | 4.3% | 15.1% | 2.1% | 1.0% | 73.4% | 5 |
@@ -93,9 +93,9 @@
 | 丹麦（DK） | A | rules | 1000 | 89.8% | 4.2% | 0.0% | 1.8% | 1.3% | 2.9% | 1.0% | 95.4% | 1 |
 | 丹麦（DK） | A | crf | 1000 | 86.2% | 4.2% | 0.1% | 4.5% | 1.6% | 3.4% | 1.1% | 94.0% | 1 |
 | 丹麦（DK） | A | hybrid | 1000 | 90.0% | 4.0% | 0.0% | 1.7% | 1.4% | 2.9% | 1.0% | 95.4% | 2 |
-| 瑞典（SE） | C | rules | 1000 | 66.9% | 21.7% | 1.9% | 5.1% | 2.3% | 2.1% | 1.1% | 94.1% | 1 |
-| 瑞典（SE） | C | crf | 1000 | 65.9% | 22.1% | 2.0% | 5.7% | 2.4% | 1.9% | 0.9% | 93.4% | 1 |
-| 瑞典（SE） | C | hybrid | 1000 | 67.4% | 21.3% | 1.4% | 5.1% | 2.6% | 2.2% | 1.1% | 93.9% | 3 |
+| 瑞典（SE） | C | rules | 1000 | 80.9% | 9.5% | 4.4% | 1.5% | 1.0% | 2.7% | 1.2% | 93.4% | 2 |
+| 瑞典（SE） | C | crf | 1000 | 74.7% | 13.0% | 4.0% | 4.0% | 2.0% | 2.3% | 1.1% | 90.7% | 1 |
+| 瑞典（SE） | C | hybrid | 1000 | 80.8% | 10.0% | 3.7% | 1.4% | 1.4% | 2.7% | 1.2% | 93.3% | 3 |
 | 挪威（NO） | A | rules | 1000 | 69.1% | 22.4% | 1.8% | 2.5% | 1.6% | 2.6% | 0.8% | 96.0% | 1 |
 | 挪威（NO） | A | crf | 1000 | 66.0% | 23.1% | 2.1% | 3.3% | 3.5% | 2.0% | 0.6% | 94.6% | 1 |
 | 挪威（NO） | A | hybrid | 1000 | 69.2% | 22.2% | 1.5% | 2.7% | 1.7% | 2.7% | 0.8% | 96.0% | 2 |
@@ -200,9 +200,9 @@
 | 哥伦比亚（CO） | A | rules | 1000 | 82.5% | 0.6% | 0.0% | 2.7% | 13.9% | 0.3% | 0.0% | 91.0% | 3 |
 | 哥伦比亚（CO） | A | crf | 1000 | 88.3% | 1.4% | 0.0% | 1.5% | 8.6% | 0.2% | 0.0% | 95.4% | 2 |
 | 哥伦比亚（CO） | A | hybrid | 1000 | 88.4% | 1.2% | 0.0% | 1.5% | 8.6% | 0.3% | 0.0% | 94.7% | 5 |
-| 英国（GB） | C | rules | 1000 | 3.9% | 88.5% | 0.0% | 2.6% | 5.0% | 0.0% | 0.0% | 91.6% | 4 |
-| 英国（GB） | C | crf | 1000 | 6.5% | 87.9% | 0.0% | 0.3% | 5.3% | 0.0% | 0.0% | 92.8% | 2 |
-| 英国（GB） | C | hybrid | 1000 | 6.3% | 88.6% | 0.0% | 0.1% | 5.0% | 0.0% | 0.0% | 93.3% | 6 |
+| 英国（GB） | C | rules | 1000 | 30.5% | 64.5% | 0.0% | 1.8% | 3.1% | 0.1% | 0.0% | 94.7% | 4 |
+| 英国（GB） | C | crf | 1000 | 35.0% | 61.4% | 0.0% | 0.2% | 3.4% | 0.0% | 0.0% | 95.3% | 3 |
+| 英国（GB） | C | hybrid | 1000 | 33.6% | 63.1% | 0.0% | 0.0% | 3.2% | 0.1% | 0.0% | 95.9% | 6 |
 | 爱尔兰（IE） | C | rules | 1000 | 25.4% | 62.4% | 0.0% | 2.0% | 9.3% | 0.9% | 0.0% | 91.3% | 5 |
 | 爱尔兰（IE） | C | crf | 1000 | 28.7% | 68.4% | 0.0% | 0.5% | 2.4% | 0.0% | 0.0% | 95.0% | 3 |
 | 爱尔兰（IE） | C | hybrid | 1000 | 27.1% | 62.4% | 0.0% | 0.2% | 9.4% | 0.9% | 0.0% | 92.2% | 4 |
@@ -230,9 +230,9 @@
 | 丹麦（DK） | A | rules | 1000 | 88.7% | 4.7% | 0.0% | 2.2% | 3.6% | 0.8% | 0.0% | 98.4% | 2 |
 | 丹麦（DK） | A | crf | 1000 | 88.1% | 7.9% | 0.0% | 3.8% | 0.2% | 0.0% | 0.0% | 99.8% | 2 |
 | 丹麦（DK） | A | hybrid | 1000 | 88.7% | 7.1% | 0.0% | 2.1% | 1.3% | 0.8% | 0.0% | 99.8% | 4 |
-| 瑞典（SE） | C | rules | 1000 | 61.0% | 32.7% | 0.0% | 4.6% | 1.3% | 0.4% | 0.3% | 98.7% | 1 |
-| 瑞典（SE） | C | crf | 1000 | 61.0% | 33.0% | 0.0% | 4.5% | 1.1% | 0.4% | 0.3% | 98.8% | 1 |
-| 瑞典（SE） | C | hybrid | 1000 | 61.0% | 33.1% | 0.0% | 4.5% | 1.0% | 0.4% | 0.3% | 98.8% | 3 |
+| 瑞典（SE） | C | rules | 1000 | 34.6% | 62.3% | 0.0% | 1.1% | 1.9% | 0.1% | 0.0% | 93.4% | 2 |
+| 瑞典（SE） | C | crf | 1000 | 35.8% | 62.0% | 0.0% | 0.1% | 2.1% | 0.0% | 0.0% | 94.6% | 1 |
+| 瑞典（SE） | C | hybrid | 1000 | 35.5% | 62.4% | 0.0% | 0.0% | 2.0% | 0.1% | 0.0% | 94.3% | 3 |
 | 挪威（NO） | A | rules | 1000 | 88.7% | 5.5% | 0.0% | 4.1% | 1.7% | 0.0% | 0.0% | 98.9% | 1 |
 | 挪威（NO） | A | crf | 1000 | 88.6% | 7.1% | 0.0% | 4.1% | 0.2% | 0.0% | 0.0% | 99.7% | 1 |
 | 挪威（NO） | A | hybrid | 1000 | 88.7% | 7.1% | 0.0% | 4.0% | 0.2% | 0.0% | 0.0% | 99.7% | 2 |
@@ -767,6 +767,15 @@
 | San Victorino, Avenida Calle 13 18-91, Bogotá, D.C., 111411 | ACCEPT | PREMISE | Avenida Calle 13 # 18-91, San Victorino |
 | Carrera 102 No. 70 - 15 Oficina 66, Bogotá, D.C. | ACCEPT | PREMISE | Oficina 66, Carrera 102 # 70-15, Bogotá |
 
+**英国 · 判 FIX**
+
+| 输入 | 结论 | 粒度 | 标准化结果 |
+|---|---|---|---|
+| 23 Mynterne Cl, London, SW19 6BW | FIX | OTHER |  |
+| BMA House, London, Wc1h 9jr | FIX | OTHER |  |
+| Training in Venues on, Royal Victoria Dock, London, E16 1AA | FIX | LOCALITY |  |
+| Route de Japoma, London | FIX | OTHER |  |
+
 **英国 · 错误建议**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
@@ -784,15 +793,6 @@
 | 24/25, The Shard, 32 London Bridge Street, London, SE1 9SG | ACCEPT | PREMISE_PROXIMITY | 32 London Bridge Street |
 | 145 St John Street, London, EC1V 4PY | ACCEPT | ROUTE | 145 John Street, EC1V 4PY |
 | 7 Upper Tooting Road, SW17 7TS, London, SW17 7TS | ACCEPT | PREMISE | 7 Upper Tooting Road, London |
-
-**英国 · 判 FIX**
-
-| 输入 | 结论 | 粒度 | 标准化结果 |
-|---|---|---|---|
-| Training in Venues on, Royal Victoria Dock, London, E16 1AA | FIX | LOCALITY |  |
-| Route de Japoma, London | FIX | OTHER |  |
-| united kingdom, London, 1008 | FIX | OTHER |  |
-| London, London | FIX | OTHER |  |
 
 **爱尔兰 · 错误建议**
 
@@ -1042,27 +1042,27 @@
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
 | ST Eriksgatan 45,, Stockholm, 112 34 | ACCEPT | PREMISE | Sankt Eriksgatan 45, 112 34 Stockholm |
-| Götgatan 103, Stockholm, 116 62 | ACCEPT | PREMISE | Götgatan 103, 116 62 Stockholm |
-| Nybrogatan 34, Stockholm, 114 39 | ACCEPT | PREMISE | Nybrogatan 34, 114 39 Stockholm |
-| Scalateatern, Wallingatan 32, Stockholm, 111 24 | ACCEPT | PREMISE | Wallingatan 32, 111 24 Stockholm |
-
-**瑞典 · 判 FIX**
-
-| 输入 | 结论 | 粒度 | 标准化结果 |
-|---|---|---|---|
-| Grönviksvägen, Bromma, 16771 - 16776 | FIX | ROUTE | Grönviksvägen, 167 76 |
-| Östra brobänken, Stockholm, 111 48 | FIX | ROUTE | Östra brobänken, 111 48 |
-| Målkurvan, Stockholm, 118 53 | FIX | ROUTE | Målkurvan, 118 53 |
-| St Göransgatan, Arbetargatan & Mariebergsgatan, Stockholm | FIX | ROUTE | Sankt Göransgatan |
+| Götgatan 103, Stockholm, 116 62 | ACCEPT | PREMISE | Götgatan 103, Stockholm |
+| Nybrogatan 34, Stockholm, 114 39 | ACCEPT | PREMISE | Nybrogatan 34, Stockholm |
+| Scalateatern, Wallingatan 32, Stockholm, 111 24 | ACCEPT | PREMISE | Wallingatan 32, Stockholm |
 
 **瑞典 · 错误建议**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| Engelbrektsgatan 9-11, Stockholm, 114 32 | CONFIRM | PREMISE | Engelbrektsgatan 9-11, Stockholm |
-| Råsundavägen 4, Hagalund, 169 67 | CONFIRM | PREMISE_PROXIMITY | Råsundavägen 4, Hagalund |
+| Målkurvan, Stockholm, 118 53 | CONFIRM | ROUTE | Målkurvan, 118 53 |
+| Lovisedalsvägen 7, Vallentuna, 186 53 | CONFIRM | PREMISE_PROXIMITY | Lovisedalsvägen 7, 138 36 Älta |
 | Dialoggatan 2, Kungens Kurva, 141 75 | CONFIRM | PREMISE | Dialoggatan 2, 141 75 Kungens kurva |
-| Geometrivägen 3, Kungens Kurva, 141 75 | CONFIRM | PREMISE_PROXIMITY | Geometrivägen 3, Kungens kurva |
+| Frislandsvägen 1, Bromma, 16855 | CONFIRM | PREMISE_PROXIMITY | Fristadsvägen 1, 163 43 Spånga |
+
+**瑞典 · 判 FIX**
+
+| 输入 | 结论 | 粒度 | 标准化结果 |
+|---|---|---|---|
+| Oxenstiernsg. 20, Stockholm, 105 10 | FIX | OTHER |  |
+| Stenkumla Ansarve 851, Visby, 621 95 | FIX | OTHER |  |
+| nolinge, Stockholm, 14791 | FIX | OTHER |  |
+| Stockholm, Sweden, Stockholm | FIX | OTHER |  |
 
 **挪威 · 错误建议**
 

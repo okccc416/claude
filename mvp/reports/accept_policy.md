@@ -57,15 +57,14 @@
 | 智利（CL） | POI|n2|pc | 13 | 92.3% | 0.0% |  |
 | 哥伦比亚（CO） | POI|n1|pc | 18 | 61.1% | 38.9% |  |
 | 哥伦比亚（CO） | POI|n2|pc | 10 | 70.0% | 10.0% |  |
-| 英国（GB） | ROUTE|pc|uN|exact | 179 | 98.3% | 1.1% | 是 |
-| 英国（GB） | OSM|pc|uN|exact | 107 | 99.1% | 0.9% | 是 |
-| 英国（GB） | OSM|pc|u1|exact | 105 | 94.3% | 2.9% |  |
-| 英国（GB） | POI|n2|pc | 43 | 95.3% | 2.3% |  |
-| 英国（GB） | ROUTE|-|uN|exact | 28 | 71.4% | 28.6% |  |
+| 英国（GB） | ROUTE|pc|uN|exact | 204 | 98.5% | 1.0% | 是 |
+| 英国（GB） | OSM|pc|uN|exact | 117 | 99.1% | 0.9% | 是 |
+| 英国（GB） | OSM|pc|u1|exact | 110 | 94.5% | 2.7% |  |
+| 英国（GB） | POI|n2|pc | 48 | 95.8% | 2.1% |  |
 | 英国（GB） | POI|n1|pc | 23 | 91.3% | 8.7% |  |
 | 英国（GB） | ROUTE|pc+area|uN|exact | 20 | 100.0% | 0.0% |  |
-| 英国（GB） | OSM|-|uN|exact | 18 | 72.2% | 27.8% |  |
-| 英国（GB） | ROUTE|-|u1|exact | 14 | 78.6% | 14.3% |  |
+| 英国（GB） | ROUTE|-|u1|exact | 16 | 75.0% | 18.8% |  |
+| 英国（GB） | ROUTE|-|uN|exact | 14 | 92.9% | 7.1% |  |
 | 爱尔兰（IE） | ROUTE|pc|uN|exact | 120 | 86.7% | 5.0% |  |
 | 爱尔兰（IE） | OSM|pc|uN|exact | 74 | 81.1% | 8.1% |  |
 | 爱尔兰（IE） | OSM|pc|u1|exact | 70 | 90.0% | 4.3% |  |
@@ -79,8 +78,11 @@
 | 葡萄牙（PT） | POI|n2|pc | 35 | 85.7% | 11.4% |  |
 | 葡萄牙（PT） | POI|n1|pc | 24 | 91.7% | 8.3% |  |
 | 葡萄牙（PT） | OSM|pc|uN|exact | 20 | 100.0% | 0.0% |  |
-| 瑞典（SE） | OSM|pc|u1|exact | 38 | 97.4% | 0.0% |  |
-| 瑞典（SE） | PREMISE|POSTCODE_REPLACED | 25 | 96.0% | 4.0% |  |
+| 瑞典（SE） | OSM|pc|u1|exact | 360 | 96.4% | 1.4% | 是 |
+| 瑞典（SE） | OSM|pc|uN|exact | 50 | 96.0% | 4.0% |  |
+| 瑞典（SE） | ROUTE|pc|uN|exact | 50 | 98.0% | 2.0% | 是 |
+| 瑞典（SE） | ROUTE|pc+area|uN|exact | 18 | 94.4% | 5.6% |  |
+| 瑞典（SE） | POI|n2|pc | 13 | 100.0% | 0.0% |  |
 | 挪威（NO） | POI|n2|pc | 15 | 93.3% | 0.0% |  |
 | 挪威（NO） | POI|n1|pc | 11 | 100.0% | 0.0% |  |
 | 芬兰（FI） | OSM|pc|u1|exact | 41 | 97.6% | 0.0% |  |

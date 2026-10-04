@@ -19,6 +19,10 @@
    "ROUTE|pc|uN|exact",
    "OSM|pc|uN|exact"
   ],
+  "SE": [
+   "OSM|pc|u1|exact",
+   "ROUTE|pc|uN|exact"
+  ],
   "LT": [
    "PREMISE|POSTCODE_REPLACED"
   ],
