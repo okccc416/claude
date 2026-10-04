@@ -114,6 +114,9 @@ class Engine:
         self.ref = ref or MarketReference.load(market)
         if not getattr(self.ref, "postcode_prefix", None) and self.ref.postcodes:
             self.ref.postcode_prefix = _prefix_table(self.ref.postcodes, market)  # 全量邮编表的市场也补上上一级
+        # 邮编作为证据的分量按这个市场邮编的可靠程度定：参考库里商户离其邮编中心超过 5 公里的比例
+        # 高于 5%（哥伦比亚、智利、萨格勒布通写 10000、越南、泰国、沙特）时，邮编印证 / 矛盾的加减分减半
+        self.pc_weight = 0.75 if self._postcode_far_share() > 0.05 else 1.5
         self.rules = RuleParser(self.ref)
         self.crf = None
         self.parser = parser
@@ -215,10 +218,10 @@ class Engine:
                 if pc:
                     d = dist_to_street(ref, sid, pc[0], pc[1])
                     if d <= near_m:
-                        h.score += 1.5
+                        h.score += self.pc_weight
                         h.support.add("postcode")
                     elif d > far_m:
-                        h.score -= 1.5
+                        h.score -= self.pc_weight
                         h.notes.append("POSTCODE_STREET_MISMATCH")
                 for b, poi in buildings:
                     if dist_to_street(ref, sid, poi["lat"], poi["lng"]) <= 400:
@@ -424,8 +427,10 @@ class Engine:
                 return
             near = self._nearby_number(h.street, p.number)
             pc = self._postcode_point(p)
-            if near is not None and pc and haversine(near["lat"], near["lng"], pc[0], pc[1]) > self._pc_far():
+            if near is not None and pc and not near.get("block") \
+                    and haversine(near["lat"], near["lng"], pc[0], pc[1]) > self._pc_far():
                 near = None  # 门牌按区重新编号（墨西哥城的大道）：推算出的位置与所写邮编相距太远，不用
+                # （哥伦比亚同一街区的门牌不受此限：棋盘式门牌本身就定位到街区，商户写的邮编常不准，由打分权衡）
             if near is not None:  # 门牌不在官方表里，但同一条路上紧挨着的门牌在：位置可信，请用户确认门牌
                 h.point = near
                 h.score += 2.5
@@ -461,6 +466,21 @@ class Engine:
         h.support.add("point")
         if pts[0]["id"] >= OSM_ID_BASE:
             h.notes.append("PREMISE_FROM_OSM")
+
+    def _postcode_far_share(self) -> float:
+        """参考库商户（不含留出的测试商户）里，坐标离所写邮编中心超过 5 公里的比例（不用标注，按市场缓存）。"""
+        ref = self.ref
+        if "_pc_far_share" in ref.__dict__:
+            return ref.__dict__["_pc_far_share"]
+        n = far = 0
+        if self.m.postcode and ref.postcodes:
+            for lat, lng, pc in ref.db.execute("SELECT lat, lng, postcode FROM poi WHERE postcode != '' LIMIT 20000"):
+                c = ref.postcodes.get(pc)
+                if c:
+                    n += 1
+                    far += haversine(lat, lng, c[0], c[1]) > 5000
+        ref.__dict__["_pc_far_share"] = far / n if n >= 200 else 0.0
+        return ref.__dict__["_pc_far_share"]
 
     def _street_has_points(self, street: int) -> bool:
         cache = self.ref.__dict__.setdefault("_has_pts", {})
@@ -505,8 +525,8 @@ class Engine:
                 if tail.isdigit() and abs(int(tail) - int(m.group(2))) <= 99 and (
                         best is None or abs(int(tail) - int(m.group(2))) < abs(int(best[1].split("-")[-1]) - int(m.group(2)))):
                     best = r
-            return dict(zip(("id", "number", "street", "unit", "postcode", "locality", "lat", "lng"), best)) \
-                if best else None
+            return dict(zip(("id", "number", "street", "unit", "postcode", "locality", "lat", "lng"), best),
+                        block=True) if best else None
         m = re.fullmatch(r"(\d+[A-Z]?)/(\d+)([A-Z]?)", n)
         if m and self.market in ("CZ", "SK"):  # 登记号 / 街道号：按街道号找相邻门牌
             n = m.group(2) + m.group(3)

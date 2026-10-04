@@ -327,13 +327,18 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
         for nm in s.names:
             street_by_core_near[core_key(nm, market)].append(s.id)
     official: set[tuple[int, str]] = set()  # 官方表已有的"道路 + 门牌"（OSM 不重复收）
-    if cls == "A" and (d / "addresses.parquet").exists():
+    if cls == "A" and ((d / "addresses.parquet").exists() or (d / "extra_addresses.parquet").exists()):
         ref.has_addresses = True
         pc_acc: dict[str, list[float]] = defaultdict(lambda: [0.0, 0.0, 0])
         cols = ["number", "street", "unit", "postcode", "address_levels", "bbox"]
-        if "postal_city" in pq.read_schema(d / "addresses.parquet").names:
+        if (d / "addresses.parquet").exists() and "postal_city" in pq.read_schema(d / "addresses.parquet").names:
             cols.append("postal_city")
-        rows = pq.read_table(d / "addresses.parquet", columns=cols).to_pylist()
+        rows = pq.read_table(d / "addresses.parquet", columns=cols).to_pylist() \
+            if (d / "addresses.parquet").exists() else []
+        n_overture = len(rows)
+        if (d / "extra_addresses.parquet").exists():  # Overture 之外的官方开放地址（scripts/fetch_extra_addresses.py）
+            extra = pq.read_table(d / "extra_addresses.parquet").to_pylist()
+            rows += [dict(r, address_levels=None, extra=True) for r in extra]
         batch = []
         kcache: dict[str, tuple[str, str]] = {}
         aid = 0
@@ -376,6 +381,8 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
             locality = r.get("postal_city") or (levels[-1] if levels else "")
             pc = norm_postcode(r["postcode"], market)
             num, keys, unit = address_numbers(market, r["number"], r["unit"])
+            if r.get("extra") and all((sid, nk) in official for nk in keys):
+                continue  # 补充数据里与 Overture 地址表重复的门牌
             for nk in keys:
                 batch.append((aid, num, nk, sid, r["street"], unit, pc, locality, lat, lng))
                 official.add((sid, nk))
@@ -391,10 +398,16 @@ def build(market: str, cls: str, log=print, root: Path | None = None) -> MarketR
         db.executemany("INSERT INTO addr VALUES (?,?,?,?,?,?,?,?,?,?)", batch)
         ref.postcodes = {pc: (a[0] / a[2], a[1] / a[2], int(a[2])) for pc, a in pc_acc.items()}
         # 有的国家地址表不带邮编（意大利、爱沙尼亚、新西兰、智利、哥伦比亚、日本）：邮编改从 POI 统计
-        ref.pc_complete = len(ref.postcodes) >= 10
-        log(f"  官方地址点 {len(rows):,} 条，邮编 {len(ref.postcodes):,} 个")
+        # 只有补充数据（斯德哥尔摩市、索非亚市）的不算全量：邮编表仍从 POI 补
+        ref.pc_complete = len(ref.postcodes) >= 10 and n_overture > 0
+        log(f"  官方地址点 {len(rows):,} 条（其中补充数据 {len(rows) - n_overture:,} 条），邮编 {len(ref.postcodes):,} 个")
         del rows, batch, kcache  # 澳洲地址表 360 万条：先释放再读 OSM 门牌
     osm_pc = _add_osm(ref, db, official, street_by_key_near, street_by_core_near, log)
+    if (d / "extra_postcodes.parquet").exists():  # 全量邮编中心点（英国 Code-Point Open，见 scripts/fetch_extra_addresses.py）
+        ref.postcodes = {norm_postcode(r["postcode"], market): (r["lat"], r["lng"], 1)
+                         for r in pq.read_table(d / "extra_postcodes.parquet").to_pylist()}
+        ref.pc_complete = True
+        log(f"  邮编中心点 {len(ref.postcodes):,} 个（全量）")
     db.execute("CREATE INDEX addr_street ON addr(street, number_key)")
     db.execute("CREATE INDEX addr_pc ON addr(postcode, number_key)")
 
