@@ -524,7 +524,8 @@ class Engine:
     @staticmethod
     def _use_near(h: Hypothesis, p: Parsed, near: dict) -> None:
         h.point = near
-        h.score += 2.5 + (1.0 if p.postcode and near.get("postcode") == p.postcode else 0.0)  # 相邻门牌的邮编也一致
+        # 相邻门牌的邮编也一致：加分是原样门牌的一半，不会与同名道路上邮编一致的原样门牌打平
+        h.score += 2.5 + (0.5 if p.postcode and near.get("postcode") == p.postcode else 0.0)
         h.notes.append("PREMISE_INTERPOLATED")
         h.support.add("point")
 
