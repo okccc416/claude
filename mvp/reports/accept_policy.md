@@ -51,7 +51,7 @@
 | 加拿大（CA） | PREMISE|POSTCODE_REPLACED | 49 | 91.8% | 8.2% |  |
 | 加拿大（CA） | OSM|pc|uN|exact | 17 | 100.0% | 0.0% |  |
 | 墨西哥（MX） | PREMISE|POSTCODE_REPLACED | 53 | 75.5% | 18.9% |  |
-| 墨西哥（MX） | POI|n1|pc | 15 | 80.0% | 20.0% |  |
+| 墨西哥（MX） | POI|n1|pc | 14 | 78.6% | 21.4% |  |
 | 波多黎各（PR） | ROUTE|pc|uN|exact | 74 | 87.8% | 5.4% |  |
 | 波多黎各（PR） | ROUTE|pc|uN|suffix | 23 | 69.6% | 13.0% |  |
 | 波多黎各（PR） | ROUTE|-|u1|exact | 22 | 90.9% | 9.1% |  |
@@ -61,7 +61,7 @@
 | 波多黎各（PR） | POI|n1|pc | 19 | 63.2% | 5.3% |  |
 | 波多黎各（PR） | OSM|pc|uN|suffix | 12 | 91.7% | 8.3% |  |
 | 波多黎各（PR） | ROUTE|pc+area|uN|exact | 12 | 58.3% | 33.3% |  |
-| 巴西（BR） | PREMISE|POSTCODE_REPLACED | 108 | 95.4% | 0.9% | 是 |
+| 巴西（BR） | PREMISE|POSTCODE_REPLACED | 110 | 95.5% | 0.9% | 是 |
 | 巴西（BR） | OSM|pc|u1|exact | 21 | 95.2% | 0.0% |  |
 | 阿根廷（AR） | ROUTE|pc+area|uN|exact | 207 | 95.2% | 1.9% | 是 |
 | 阿根廷（AR） | OSM|pc|uN|exact | 36 | 94.4% | 0.0% |  |
@@ -69,10 +69,10 @@
 | 阿根廷（AR） | POI|n1|pc | 33 | 97.0% | 0.0% |  |
 | 阿根廷（AR） | POI|n2|pc | 32 | 96.9% | 0.0% |  |
 | 阿根廷（AR） | ROUTE|-+area|uN|exact | 18 | 88.9% | 11.1% |  |
-| 阿根廷（AR） | ROUTE|-+area|u1|exact | 17 | 82.4% | 11.8% |  |
 | 阿根廷（AR） | ROUTE|pc+area|uN|suffix | 16 | 87.5% | 0.0% |  |
+| 阿根廷（AR） | ROUTE|-+area|u1|exact | 16 | 87.5% | 12.5% |  |
 | 阿根廷（AR） | ROUTE|pc+area|uN|core | 10 | 90.0% | 10.0% |  |
-| 智利（CL） | OSM|pc|u1|exact | 18 | 94.4% | 5.6% |  |
+| 智利（CL） | OSM|pc|u1|exact | 17 | 94.1% | 5.9% |  |
 | 智利（CL） | POI|n2|pc | 13 | 92.3% | 0.0% |  |
 | 哥伦比亚（CO） | POI|n1|pc | 33 | 72.7% | 24.2% |  |
 | 哥伦比亚（CO） | POI|n2|pc | 29 | 89.7% | 3.4% |  |
@@ -94,10 +94,10 @@
 | 卢森堡（LU） | PREMISE|POSTCODE_REPLACED | 22 | 63.6% | 27.3% |  |
 | 西班牙（ES） | PREMISE|POSTCODE_REPLACED | 11 | 72.7% | 9.1% |  |
 | 葡萄牙（PT） | OSM|pc|u1|exact | 45 | 91.1% | 4.4% |  |
-| 葡萄牙（PT） | PREMISE|POSTCODE_REPLACED | 38 | 86.8% | 5.3% |  |
+| 葡萄牙（PT） | PREMISE|POSTCODE_REPLACED | 40 | 87.5% | 5.0% |  |
 | 葡萄牙（PT） | POI|n2|pc | 35 | 85.7% | 11.4% |  |
 | 葡萄牙（PT） | POI|n1|pc | 24 | 91.7% | 8.3% |  |
-| 葡萄牙（PT） | OSM|pc|uN|exact | 21 | 100.0% | 0.0% |  |
+| 葡萄牙（PT） | OSM|pc|uN|exact | 20 | 100.0% | 0.0% |  |
 | 瑞典（SE） | OSM|pc|u1|exact | 360 | 96.4% | 1.4% | 是 |
 | 瑞典（SE） | OSM|pc|uN|exact | 50 | 96.0% | 4.0% |  |
 | 瑞典（SE） | ROUTE|pc|uN|exact | 50 | 98.0% | 2.0% | 是 |
