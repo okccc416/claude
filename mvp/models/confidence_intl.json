@@ -14,8 +14,8 @@
    11963
   ],
   "ACCEPT|PREMISE": [
-   12786,
-   13354
+   12702,
+   13252
   ],
   "AU|ACCEPT|PREMISE|area+point+postcode|exact|u1|-": [
    99,
@@ -70,7 +70,7 @@
    164
   ],
   "FIX|LOCALITY": [
-   699,
+   700,
    1001
   ],
   "AU|CONFIRM|ROUTE|area+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
@@ -86,8 +86,8 @@
    411
   ],
   "CONFIRM|ROUTE": [
-   1882,
-   3310
+   2109,
+   3624
   ],
   "AU|CONFIRM|PREMISE|area+point+postcode|exact|uN|POSTCODE_REPLACED": [
    1,
@@ -102,8 +102,8 @@
    1357
   ],
   "CONFIRM|PREMISE": [
-   1667,
-   2070
+   1546,
+   1869
   ],
   "AU|ACCEPT|PREMISE|area+point|exact|u1|-": [
    15,
@@ -182,8 +182,8 @@
    1239
   ],
   "CONFIRM|PREMISE_PROXIMITY": [
-   1861,
-   2471
+   1771,
+   2305
   ],
   "AU|CONFIRM|PREMISE|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+UNIT_MISSING_MULTI_UNIT_BUILDING": [
    1,
@@ -1210,64 +1210,64 @@
    3
   ],
   "AE|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   1,
+   0,
    4
   ],
   "B|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   2,
+   1,
    15
   ],
   "B|CONFIRM|ROUTE": [
-   315,
-   666
+   329,
+   694
   ],
   "AE|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   22,
-   54
+   17,
+   63
   ],
   "B|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   26,
-   92
+   21,
+   100
   ],
-  "AE|CONFIRM|ROUTE|none|exact|u1|MISSING_PREMISE": [
-   19,
-   28
+  "AE|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH": [
+   0,
+   1
   ],
-  "B|CONFIRM|ROUTE|none|exact|u1|MISSING_PREMISE": [
-   24,
-   40
+  "B|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH": [
+   0,
+   2
   ],
   "AE|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
-   13,
-   18
+   14,
+   20
   ],
   "B|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
-   14,
-   19
+   15,
+   21
   ],
   "AE|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
    14,
-   29
+   27
   ],
   "B|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
    17,
-   42
+   39
   ],
   "B|CONFIRM|PREMISE_PROXIMITY": [
-   58,
-   141
+   55,
+   127
   ],
   "AE|FIX|LOCALITY|-": [
    64,
-   108
+   109
   ],
   "B|FIX|LOCALITY|-": [
    116,
-   181
+   182
   ],
   "B|FIX|LOCALITY": [
    116,
-   181
+   182
   ],
   "AE|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_NAME_AMBIGUOUS": [
    3,
@@ -1279,47 +1279,43 @@
   ],
   "AE|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    4,
-   6
+   7
   ],
   "B|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    4,
-   6
+   7
   ],
-  "AE|CONFIRM|ROUTE|area|core|uN|MISSING_PREMISE": [
-   1,
-   2
-  ],
-  "B|CONFIRM|ROUTE|area|core|uN|MISSING_PREMISE": [
-   4,
-   6
-  ],
-  "AE|CONFIRM|PREMISE|point|partial|uN|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "B|CONFIRM|PREMISE|point|partial|uN|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "B|CONFIRM|PREMISE": [
+  "AE|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
    3,
-   15
+   5
+  ],
+  "B|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
+   3,
+   5
+  ],
+  "AE|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH": [
+   0,
+   1
   ],
   "AE|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
-   12,
-   24
+   18,
+   30
   ],
   "B|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
-   13,
-   26
+   19,
+   32
   ],
   "AE|CONFIRM|ROUTE|none|core|u1|MISSING_PREMISE": [
-   9,
-   16
+   12,
+   19
   ],
   "B|CONFIRM|ROUTE|none|core|u1|MISSING_PREMISE": [
-   10,
-   23
+   13,
+   26
   ],
   "AE|CONFIRM|ROUTE|area|core|u1|ROUTE_NOT_CORROBORATED": [
    1,
@@ -1329,6 +1325,14 @@
    1,
    4
   ],
+  "AE|CONFIRM|ROUTE|none|exact|u1|MISSING_PREMISE": [
+   24,
+   31
+  ],
+  "B|CONFIRM|ROUTE|none|exact|u1|MISSING_PREMISE": [
+   29,
+   44
+  ],
   "AE|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+LANDMARK_RELATIVE": [
    2,
    4
@@ -1337,37 +1341,29 @@
    2,
    4
   ],
-  "AE|CONFIRM|PREMISE|point|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   1,
-   4
+  "AE|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
+   5,
+   17
   ],
-  "B|CONFIRM|PREMISE|point|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   1,
-   4
+  "B|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
+   7,
+   22
   ],
-  "AE|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   3,
-   9
+  "AE|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   4,
+   10
   ],
-  "B|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   3,
-   9
+  "B|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
+   4,
+   14
   ],
-  "AE|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_INTERPOLATED": [
-   0,
-   5
+  "AE|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
+   2,
+   2
   ],
-  "B|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_INTERPOLATED": [
-   0,
-   5
-  ],
-  "AE|CONFIRM|PREMISE|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   5
-  ],
-  "B|CONFIRM|PREMISE|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   5
+  "B|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
+   2,
+   3
   ],
   "AE|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|AREA_STREET_MISMATCH+BUILDING_NAME_AMBIGUOUS": [
    0,
@@ -1378,36 +1374,28 @@
    1
   ],
   "AE|CONFIRM|PREMISE_PROXIMITY|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   1,
-   1
-  ],
-  "B|CONFIRM|PREMISE_PROXIMITY|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   1,
-   1
-  ],
-  "AE|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   1,
+   2,
    2
   ],
-  "B|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+  "B|CONFIRM|PREMISE_PROXIMITY|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
+   2,
+   2
+  ],
+  "AE|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED": [
    1,
    5
   ],
+  "B|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   2,
+   9
+  ],
   "AE|CONFIRM|ROUTE|area|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    3,
-   7
+   6
   ],
   "B|CONFIRM|ROUTE|area|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    3,
-   8
-  ],
-  "AE|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
-   5,
-   14
-  ],
-  "B|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
-   7,
-   19
+   7
   ],
   "AE|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH": [
    1,
@@ -1422,16 +1410,8 @@
    2
   ],
   "B|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   2,
-   11
-  ],
-  "AE|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
-   2,
-   2
-  ],
-  "B|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
-   2,
-   3
+   3,
+   12
   ],
   "AE|CONFIRM|ROUTE|none|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    3,
@@ -1441,21 +1421,21 @@
    6,
    12
   ],
-  "AE|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   5,
-   12
+  "AE|CONFIRM|ROUTE|area|core|uN|MISSING_PREMISE": [
+   0,
+   1
   ],
-  "B|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   13,
-   31
+  "B|CONFIRM|ROUTE|area|core|uN|MISSING_PREMISE": [
+   3,
+   5
   ],
   "AE|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
-   4,
-   5
+   5,
+   6
   ],
   "B|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
-   4,
-   5
+   5,
+   6
   ],
   "AE|CONFIRM|PREMISE_PROXIMITY|area+point|partial|uN|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
    1,
@@ -1464,6 +1444,22 @@
   "B|CONFIRM|PREMISE_PROXIMITY|area+point|partial|uN|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
    1,
    1
+  ],
+  "AE|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   9
+  ],
+  "B|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   10,
+   28
+  ],
+  "AE|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   3
   ],
   "AE|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
    1,
@@ -1486,16 +1482,8 @@
    29
   ],
   "ACCEPT|PREMISE_PROXIMITY": [
-   1037,
-   1196
-  ],
-  "AE|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
-   4,
-   10
-  ],
-  "B|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
-   4,
-   14
+   1056,
+   1201
   ],
   "AE|ACCEPT|PREMISE_PROXIMITY|none|code|-|LOCATED_BY_PLUS_CODE": [
    0,
@@ -1505,29 +1493,37 @@
    4,
    8
   ],
+  "AE|CONFIRM|ROUTE|none|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   4
+  ],
+  "B|CONFIRM|ROUTE|none|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   5
+  ],
   "AE|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    2,
-   5
+   6
   ],
   "B|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    2,
-   5
+   6
   ],
   "AE|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    1,
-   2
+   3
   ],
   "B|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    1,
-   3
+   4
   ],
   "AE|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
    1,
-   4
+   5
   ],
   "B|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
    6,
-   15
+   16
   ],
   "AE|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
    0,
@@ -1538,20 +1534,20 @@
    7
   ],
   "AE|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH": [
-   0,
-   1
+   2,
+   3
   ],
   "B|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH": [
-   0,
-   1
-  ],
-  "AE|ACCEPT|PREMISE_PROXIMITY|area+building|exact|uN|-": [
    2,
-   4
+   3
   ],
-  "B|ACCEPT|PREMISE_PROXIMITY|area+building|exact|uN|-": [
-   2,
-   4
+  "AE|ACCEPT|PREMISE_PROXIMITY|area+building|exact|u1|-": [
+   1,
+   2
+  ],
+  "B|ACCEPT|PREMISE_PROXIMITY|area+building|exact|u1|-": [
+   1,
+   2
   ],
   "AE|ACCEPT|PREMISE_PROXIMITY|building|exact|u1|-": [
    3,
@@ -1561,13 +1557,21 @@
    3,
    4
   ],
+  "AE|ACCEPT|PREMISE_PROXIMITY|area+building|exact|uN|-": [
+   1,
+   2
+  ],
+  "B|ACCEPT|PREMISE_PROXIMITY|area+building|exact|uN|-": [
+   1,
+   2
+  ],
   "AE|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+MISSING_PREMISE": [
    1,
-   4
+   3
   ],
   "B|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+MISSING_PREMISE": [
    4,
-   9
+   8
   ],
   "AE|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+ROUTE_NOT_CORROBORATED": [
    0,
@@ -1577,53 +1581,37 @@
    3,
    6
   ],
-  "AE|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED": [
-   1,
-   4
+  "AE|CONFIRM|ROUTE|area|exact|uN|MISSING_PREMISE": [
+   4,
+   5
   ],
-  "B|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED": [
-   1,
-   7
+  "B|CONFIRM|ROUTE|area|exact|uN|MISSING_PREMISE": [
+   5,
+   6
   ],
-  "AE|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|BUILDING_SPELL_CORRECTED": [
+  "AE|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|BUILDING_SPELL_CORRECTED+BUILDING_NAME_AMBIGUOUS": [
    0,
    1
   ],
-  "B|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|BUILDING_SPELL_CORRECTED": [
+  "B|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|BUILDING_SPELL_CORRECTED+BUILDING_NAME_AMBIGUOUS": [
    0,
    1
   ],
-  "AE|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
+  "AE|CONFIRM|PREMISE_PROXIMITY|building|exact|u1|BUILDING_SPELL_CORRECTED": [
+   0,
+   2
+  ],
+  "B|CONFIRM|PREMISE_PROXIMITY|building|exact|u1|BUILDING_SPELL_CORRECTED": [
+   0,
+   2
+  ],
+  "AE|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
    1,
    2
   ],
-  "B|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
+  "B|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
    1,
    2
-  ],
-  "AE|CONFIRM|ROUTE|none|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   3
-  ],
-  "B|CONFIRM|ROUTE|none|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   4
-  ],
-  "AE|CONFIRM|PREMISE_PROXIMITY|area+point|fuzzy|uN|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
-   0,
-   1
-  ],
-  "B|CONFIRM|PREMISE_PROXIMITY|area+point|fuzzy|uN|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
-   0,
-   1
-  ],
-  "AE|CONFIRM|PREMISE_PROXIMITY|area+point|partial|u1|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
-   0,
-   1
-  ],
-  "B|CONFIRM|PREMISE_PROXIMITY|area+point|partial|u1|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
-   0,
-   1
   ],
   "AE|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|BUILDING_NAME_AMBIGUOUS": [
    1,
@@ -1632,14 +1620,6 @@
   "B|CONFIRM|PREMISE_PROXIMITY|building|exact|uN|BUILDING_NAME_AMBIGUOUS": [
    1,
    1
-  ],
-  "AE|CONFIRM|ROUTE|area|exact|uN|MISSING_PREMISE": [
-   4,
-   5
-  ],
-  "B|CONFIRM|ROUTE|area|exact|uN|MISSING_PREMISE": [
-   5,
-   6
   ],
   "AE|CONFIRM|ROUTE|none|core|u1|ROUTE_NOT_CORROBORATED": [
    6,
@@ -1665,27 +1645,27 @@
    0,
    1
   ],
-  "AE|CONFIRM|PREMISE|area+point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+  "AE|CONFIRM|PREMISE_PROXIMITY|area+point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    0,
    1
   ],
-  "B|CONFIRM|PREMISE|area+point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+  "B|CONFIRM|PREMISE_PROXIMITY|area+point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    0,
    1
   ],
   "AE|CONFIRM|PREMISE_PROXIMITY|none|code|-|LOCATED_BY_PLUS_CODE": [
-   3,
-   4
+   4,
+   5
   ],
   "B|CONFIRM|PREMISE_PROXIMITY|none|code|-|LOCATED_BY_PLUS_CODE": [
-   4,
-   7
+   5,
+   8
   ],
-  "AE|CONFIRM|PREMISE_PROXIMITY|point|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_POI": [
+  "AE|CONFIRM|PREMISE_PROXIMITY|point|partial|uN|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
    0,
    1
   ],
-  "B|CONFIRM|PREMISE_PROXIMITY|point|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_POI": [
+  "B|CONFIRM|PREMISE_PROXIMITY|point|partial|uN|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
    0,
    1
   ],
@@ -1699,11 +1679,11 @@
   ],
   "AE|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+AREA_STREET_MISMATCH+MISSING_PREMISE": [
    0,
-   2
+   3
   ],
   "B|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+AREA_STREET_MISMATCH+MISSING_PREMISE": [
    0,
-   4
+   5
   ],
   "AE|CONFIRM|PREMISE_PROXIMITY|area+building|partial|u1|STREET_PARTIAL_MATCH+BUILDING_NAME_AMBIGUOUS+LANDMARK_RELATIVE": [
    0,
@@ -1713,21 +1693,13 @@
    0,
    1
   ],
-  "AE|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
-   2,
-   4
-  ],
-  "B|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
-   2,
-   4
-  ],
   "AE|CONFIRM|PREMISE_PROXIMITY|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   1,
-   1
+   2,
+   2
   ],
   "B|CONFIRM|PREMISE_PROXIMITY|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   1,
-   1
+   2,
+   2
   ],
   "AE|CONFIRM|PREMISE_PROXIMITY|area+building|partial|u1|STREET_PARTIAL_MATCH+LANDMARK_RELATIVE": [
    0,
@@ -1761,22 +1733,6 @@
    1,
    2
   ],
-  "AE|CONFIRM|PREMISE_PROXIMITY|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   1,
-   1
-  ],
-  "B|CONFIRM|PREMISE_PROXIMITY|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   1,
-   1
-  ],
-  "AE|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   1,
-   1
-  ],
-  "B|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   1,
-   1
-  ],
   "AE|CONFIRM|ROUTE|area|core|uN|ROUTE_NOT_CORROBORATED": [
    0,
    1
@@ -1793,14 +1749,6 @@
    0,
    1
   ],
-  "AE|CONFIRM|PREMISE|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "B|CONFIRM|PREMISE|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
   "AE|CONFIRM|PREMISE_PROXIMITY|building|core|uN|LANDMARK_RELATIVE": [
    0,
    1
@@ -1814,22 +1762,6 @@
    1
   ],
   "B|CONFIRM|PREMISE_PROXIMITY|point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   0,
-   1
-  ],
-  "AE|CONFIRM|PREMISE_PROXIMITY|none|code|-|LOCATED_BY_PLUS_CODE+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   1,
-   1
-  ],
-  "B|CONFIRM|PREMISE_PROXIMITY|none|code|-|LOCATED_BY_PLUS_CODE+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   1,
-   1
-  ],
-  "AE|CONFIRM|PREMISE_PROXIMITY|point|partial|uN|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
-   0,
-   1
-  ],
-  "B|CONFIRM|PREMISE_PROXIMITY|point|partial|uN|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
    0,
    1
   ],
@@ -1873,61 +1805,21 @@
    0,
    2
   ],
-  "AE|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
-   0,
-   1
-  ],
-  "B|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
-   0,
-   2
-  ],
-  "AE|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   1
-  ],
-  "B|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   1
-  ],
-  "AE|CONFIRM|PREMISE|point|fuzzy|uN|STREET_SPELL_CORRECTED+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "B|CONFIRM|PREMISE|point|fuzzy|uN|STREET_SPELL_CORRECTED+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
   "AE|CONFIRM|ROUTE|none|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    1
   ],
   "B|CONFIRM|ROUTE|none|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
+   2
+  ],
+  "AE|CONFIRM|ROUTE|area|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
    1
   ],
-  "AE|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
-   0,
-   1
-  ],
-  "B|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
-   0,
-   1
-  ],
-  "AE|CONFIRM|PREMISE_PROXIMITY|building|exact|u1|BUILDING_SPELL_CORRECTED": [
-   0,
-   1
-  ],
-  "B|CONFIRM|PREMISE_PROXIMITY|building|exact|u1|BUILDING_SPELL_CORRECTED": [
-   0,
-   1
-  ],
-  "AE|CONFIRM|PREMISE|point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "B|CONFIRM|PREMISE|point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   0,
-   1
+  "B|CONFIRM|ROUTE|area|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   2
   ],
   "SA|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
    3,
@@ -1950,7 +1842,7 @@
    4
   ],
   "SA|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   8,
+   7,
    19
   ],
   "SA|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
@@ -2019,7 +1911,7 @@
   ],
   "SA|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    4,
-   38
+   37
   ],
   "SA|CONFIRM|ROUTE|none|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    3,
@@ -2050,16 +1942,16 @@
    2
   ],
   "SA|CONFIRM|ROUTE|postcode|core|uN|MISSING_PREMISE": [
-   10,
-   10
+   9,
+   9
   ],
   "B|CONFIRM|ROUTE|postcode|core|uN|MISSING_PREMISE": [
-   10,
-   10
+   9,
+   9
   ],
   "SA|CONFIRM|ROUTE|none|exact|u1|MISSING_PREMISE": [
    5,
-   12
+   13
   ],
   "SA|CONFIRM|ROUTE|none|translit|uN|STREET_TRANSLITERATED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    3,
@@ -2131,7 +2023,7 @@
   ],
   "SA|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
    3,
-   13
+   12
   ],
   "SA|CONFIRM|ROUTE|area+postcode|partial|uN|STREET_PARTIAL_MATCH": [
    1,
@@ -2166,8 +2058,8 @@
    6
   ],
   "SA|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED": [
-   0,
-   3
+   1,
+   4
   ],
   "SA|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
    2,
@@ -2195,7 +2087,7 @@
   ],
   "SA|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
-   3
+   2
   ],
   "SA|ACCEPT|ROUTE|postcode|exact|u1|-": [
    4,
@@ -2210,8 +2102,8 @@
    6
   ],
   "ACCEPT|ROUTE": [
-   453,
-   505
+   591,
+   655
   ],
   "SA|CONFIRM|ROUTE|postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    4,
@@ -2248,14 +2140,6 @@
   "SA|CONFIRM|ROUTE|none|translit|u1|STREET_TRANSLITERATED+ROUTE_NOT_CORROBORATED": [
    3,
    5
-  ],
-  "SA|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   1
-  ],
-  "B|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   1
   ],
   "SA|CONFIRM|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
    3,
@@ -2382,8 +2266,8 @@
    2
   ],
   "SA|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   2,
-   9
+   3,
+   10
   ],
   "SA|CONFIRM|ROUTE|postcode|translit|uN|STREET_TRANSLITERATED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    2,
@@ -2458,12 +2342,12 @@
    1
   ],
   "SA|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   1
+   1,
+   2
   ],
   "B|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   1
+   1,
+   2
   ],
   "SA|CONFIRM|ROUTE|area+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    1,
@@ -2493,7 +2377,19 @@
    0,
    2
   ],
+  "SA|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   2,
+   3
+  ],
+  "B|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   2,
+   3
+  ],
   "SA|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "B|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
    0,
    1
   ],
@@ -2593,27 +2489,15 @@
    0,
    2
   ],
-  "SA|CONFIRM|PREMISE|point|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "B|CONFIRM|PREMISE|point|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
   "SA|CONFIRM|ROUTE|area+postcode|core|uN|MISSING_PREMISE": [
-   1,
-   2
+   2,
+   3
   ],
   "B|CONFIRM|ROUTE|area+postcode|core|uN|MISSING_PREMISE": [
-   1,
-   2
+   2,
+   3
   ],
   "SA|CONFIRM|ROUTE|area|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   1
-  ],
-  "B|CONFIRM|ROUTE|area|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    1
   ],
@@ -2659,19 +2543,11 @@
   ],
   "SA|CONFIRM|ROUTE|none|translit|uN|STREET_TRANSLITERATED+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
-   2
+   1
   ],
   "B|CONFIRM|ROUTE|none|translit|uN|STREET_TRANSLITERATED+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
-   2
-  ],
-  "SA|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
-   1,
-   2
-  ],
-  "B|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
-   1,
-   2
+   1
   ],
   "SA|CONFIRM|PREMISE_PROXIMITY|point+postcode|partial|uN|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
    0,
@@ -2722,6 +2598,10 @@
    3
   ],
   "SA|CONFIRM|ROUTE|none|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "SA|CONFIRM|ROUTE|none|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    1
   ],
@@ -2817,10 +2697,6 @@
    0,
    1
   ],
-  "B|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH": [
-   0,
-   1
-  ],
   "SA|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH": [
    1,
    1
@@ -2858,96 +2734,96 @@
    1
   ],
   "MY|FIX|LOCALITY|-": [
-   22,
-   42
+   21,
+   41
   ],
   "C|FIX|LOCALITY|-": [
-   455,
-   656
+   456,
+   655
   ],
   "C|FIX|LOCALITY": [
-   455,
-   656
+   456,
+   655
   ],
   "MY|ACCEPT|ROUTE|postcode|exact|u1|-": [
-   18,
-   19
+   38,
+   40
   ],
   "C|ACCEPT|ROUTE|postcode|exact|u1|-": [
-   205,
-   220
+   259,
+   282
   ],
   "C|ACCEPT|ROUTE": [
-   448,
-   499
+   586,
+   649
   ],
   "MY|CONFIRM|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
-   23,
-   25
+   24,
+   26
   ],
   "C|CONFIRM|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
-   99,
-   107
+   95,
+   104
   ],
   "C|CONFIRM|ROUTE": [
-   1386,
-   2233
+   1599,
+   2519
   ],
-  "MY|CONFIRM|PREMISE|point+postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   0,
-   1
+  "MY|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|u1|PREMISE_FROM_POI": [
+   38,
+   53
   ],
-  "C|CONFIRM|PREMISE|point+postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   0,
-   1
+  "C|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|u1|PREMISE_FROM_POI": [
+   171,
+   218
   ],
-  "C|CONFIRM|PREMISE": [
-   540,
-   698
+  "C|ACCEPT|PREMISE_PROXIMITY": [
+   1036,
+   1172
   ],
   "MY|CONFIRM|ROUTE|none|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   11,
+   10,
    11
   ],
   "C|CONFIRM|ROUTE|none|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   13,
-   17
+   14,
+   19
   ],
   "MY|CONFIRM|ROUTE|area|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
-   4
+   5
   ],
   "C|CONFIRM|ROUTE|area|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    1,
    10
   ],
   "MY|ACCEPT|ROUTE|area+postcode|exact|u1|-": [
-   38,
-   41
+   60,
+   63
   ],
   "C|ACCEPT|ROUTE|area+postcode|exact|u1|-": [
-   182,
-   208
+   246,
+   276
   ],
   "MY|ACCEPT|ROUTE|area+postcode|core|u1|-": [
    1,
    3
   ],
   "C|ACCEPT|ROUTE|area+postcode|core|u1|-": [
-   39,
-   47
+   59,
+   67
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   4,
-   5
+   7,
+   8
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   52,
-   71
+   57,
+   73
   ],
   "C|CONFIRM|PREMISE_PROXIMITY": [
-   733,
-   1091
+   646,
+   939
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    0,
@@ -2955,43 +2831,23 @@
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    4,
-   9
+   10
   ],
-  "MY|ACCEPT|PREMISE|area+point+postcode|exact|u1|PREMISE_FROM_OSM": [
-   17,
-   20
-  ],
-  "C|ACCEPT|PREMISE|area+point+postcode|exact|u1|PREMISE_FROM_OSM": [
-   132,
-   152
-  ],
-  "C|ACCEPT|PREMISE": [
-   1313,
-   1391
-  ],
-  "MY|CONFIRM|PREMISE_PROXIMITY|area+point|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+point|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
-   2,
+  "MY|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   3,
    3
   ],
-  "MY|CONFIRM|ROUTE|postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   3,
-   5
+  "C|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   6,
+   11
   ],
-  "C|CONFIRM|ROUTE|postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   45,
-   65
+  "MY|CONFIRM|ROUTE|postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   7,
+   10
   ],
-  "MY|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   2,
-   6
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   74,
-   82
+  "C|CONFIRM|ROUTE|postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   68,
+   81
   ],
   "MY|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED": [
    2,
@@ -3003,79 +2859,59 @@
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    0,
-   2
+   4
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   8,
-   13
+   12,
+   22
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
    1,
    1
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
-   2,
-   4
+   5,
+   7
   ],
   "MY|ACCEPT|PREMISE_PROXIMITY|building+point+postcode|exact|u1|PREMISE_FROM_POI": [
-   1,
-   1
+   2,
+   2
   ],
   "C|ACCEPT|PREMISE_PROXIMITY|building+point+postcode|exact|u1|PREMISE_FROM_POI": [
-   4,
-   4
-  ],
-  "C|ACCEPT|PREMISE_PROXIMITY": [
-   1017,
-   1167
-  ],
-  "MY|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
-   25,
-   27
-  ],
-  "C|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
-   50,
-   61
-  ],
-  "MY|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
-   10,
-   11
-  ],
-  "C|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
-   47,
-   65
-  ],
-  "MY|ACCEPT|PREMISE|point+postcode|exact|u1|PREMISE_FROM_OSM": [
-   20,
-   21
-  ],
-  "C|ACCEPT|PREMISE|point+postcode|exact|u1|PREMISE_FROM_OSM": [
-   810,
-   857
-  ],
-  "MY|ACCEPT|PREMISE_PROXIMITY|point+postcode|exact|u1|PREMISE_FROM_POI": [
-   20,
-   28
-  ],
-  "C|ACCEPT|PREMISE_PROXIMITY|point+postcode|exact|u1|PREMISE_FROM_POI": [
-   174,
-   216
-  ],
-  "MY|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   2,
+   5,
    5
   ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   34,
-   42
+  "MY|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
+   33,
+   35
   ],
-  "MY|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|u1|PREMISE_FROM_POI": [
-   29,
-   42
+  "C|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
+   68,
+   79
   ],
-  "C|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|u1|PREMISE_FROM_POI": [
-   137,
-   178
+  "MY|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
+   12,
+   13
+  ],
+  "C|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
+   48,
+   66
+  ],
+  "MY|ACCEPT|PREMISE_PROXIMITY|point+postcode|exact|u1|PREMISE_FROM_POI": [
+   35,
+   44
+  ],
+  "C|ACCEPT|PREMISE_PROXIMITY|point+postcode|exact|u1|PREMISE_FROM_POI": [
+   205,
+   255
+  ],
+  "MY|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   9,
+   13
+  ],
+  "C|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   95,
+   116
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|building+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+BUILDING_SPELL_CORRECTED": [
    1,
@@ -3086,28 +2922,28 @@
    1
   ],
   "MY|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
-   10,
-   11
+   14,
+   16
   ],
   "C|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
-   67,
-   86
+   90,
+   110
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
    6,
    7
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
-   36,
-   70
+   37,
+   73
   ],
-  "MY|CONFIRM|PREMISE_PROXIMITY|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   1,
-   1
+  "MY|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
+   3,
+   3
   ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   19,
-   25
+  "C|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
+   16,
+   28
   ],
   "MY|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
    0,
@@ -3123,15 +2959,15 @@
   ],
   "C|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
    3,
-   10
+   11
   ],
-  "MY|ACCEPT|PREMISE|area+building+point+postcode|exact|u1|PREMISE_FROM_OSM": [
-   2,
-   3
-  ],
-  "C|ACCEPT|PREMISE|area+building+point+postcode|exact|u1|PREMISE_FROM_OSM": [
-   3,
+  "MY|ACCEPT|PREMISE_PROXIMITY|area+building+point+postcode|exact|u1|PREMISE_FROM_POI": [
+   4,
    4
+  ],
+  "C|ACCEPT|PREMISE_PROXIMITY|area+building+point+postcode|exact|u1|PREMISE_FROM_POI": [
+   8,
+   8
   ],
   "MY|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -3139,7 +2975,7 @@
   ],
   "C|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    5,
-   42
+   43
   ],
   "MY|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    0,
@@ -3149,21 +2985,13 @@
    0,
    5
   ],
-  "MY|CONFIRM|PREMISE_PROXIMITY|area+point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   0,
-   4
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   3,
-   7
-  ],
   "MY|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    3,
    4
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   18,
-   26
+   22,
+   32
   ],
   "MY|CONFIRM|ROUTE|area|exact|uN|MISSING_PREMISE": [
    3,
@@ -3186,56 +3014,32 @@
    6
   ],
   "C|CONFIRM|ROUTE|none|exact|u1|MISSING_PREMISE": [
-   47,
-   58
-  ],
-  "MY|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|u1|PREMISE_INTERPOLATED": [
-   5,
-   8
-  ],
-  "C|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|u1|PREMISE_INTERPOLATED": [
-   182,
-   200
-  ],
-  "MY|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
-   1,
-   1
-  ],
-  "C|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
-   2,
-   6
+   46,
+   57
   ],
   "MY|CONFIRM|ROUTE|postcode|exact|u1|MISSING_PREMISE": [
    6,
    6
   ],
   "C|CONFIRM|ROUTE|postcode|exact|u1|MISSING_PREMISE": [
-   167,
-   178
-  ],
-  "MY|CONFIRM|PREMISE|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   4,
-   5
-  ],
-  "C|CONFIRM|PREMISE|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   35,
-   39
+   168,
+   179
   ],
   "MY|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
-   1
+   5
   ],
   "C|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
-   7
+   11
   ],
   "MY|CONFIRM|ROUTE|postcode|core|u1|ROUTE_NOT_CORROBORATED": [
    2,
-   4
+   5
   ],
   "C|CONFIRM|ROUTE|postcode|core|u1|ROUTE_NOT_CORROBORATED": [
-   34,
-   45
+   47,
+   63
   ],
   "MY|CONFIRM|ROUTE|postcode|core|uN|MISSING_PREMISE": [
    2,
@@ -3246,44 +3050,28 @@
    6
   ],
   "MY|CONFIRM|ROUTE|postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   1,
-   1
+   2,
+   2
   ],
   "C|CONFIRM|ROUTE|postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   7,
-   10
+   8,
+   11
   ],
-  "MY|CONFIRM|PREMISE|point+postcode|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   5,
+  "MY|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   2,
+   2
+  ],
+  "C|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED": [
+   2,
    5
-  ],
-  "C|CONFIRM|PREMISE|point+postcode|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   30,
-   38
-  ],
-  "MY|CONFIRM|PREMISE|area+point|fuzzy|uN|STREET_SPELL_CORRECTED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|area+point|fuzzy|uN|STREET_SPELL_CORRECTED+PREMISE_FROM_OSM": [
-   1,
-   1
   ],
   "MY|CONFIRM|ROUTE|none|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    2
   ],
   "C|CONFIRM|ROUTE|none|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   4
-  ],
-  "MY|CONFIRM|ROUTE|postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
-   4,
-   5
-  ],
-  "C|CONFIRM|ROUTE|postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
-   56,
-   66
+   1,
+   7
   ],
   "MY|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -3291,39 +3079,39 @@
   ],
   "C|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    3,
-   16
+   17
   ],
   "MY|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH": [
    1,
-   2
+   5
   ],
   "C|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH": [
-   7,
-   28
+   10,
+   34
   ],
   "MY|CONFIRM|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
    5,
    5
   ],
   "C|CONFIRM|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
-   62,
-   67
+   63,
+   68
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   3,
-   5
+   4,
+   6
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   52,
-   67
+   54,
+   71
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    8,
    9
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   13,
-   19
+   15,
+   21
   ],
   "MY|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
    0,
@@ -3341,69 +3129,45 @@
    0,
    6
   ],
-  "MY|CONFIRM|PREMISE_PROXIMITY|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   4,
-   4
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   25,
-   29
-  ],
   "MY|CONFIRM|PREMISE_PROXIMITY|point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    0,
-   2
+   4
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    2,
-   5
+   7
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   0,
-   2
+   1,
+   4
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   33,
-   50
+   40,
+   58
   ],
   "MY|CONFIRM|ROUTE|area+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   1,
-   1
+   2,
+   2
   ],
   "C|CONFIRM|ROUTE|area+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   13,
-   26
+   15,
+   29
   ],
   "MY|CONFIRM|ROUTE|postcode|core|uN|ROUTE_NOT_CORROBORATED": [
-   0,
-   3
+   1,
+   5
   ],
   "C|CONFIRM|ROUTE|postcode|core|uN|ROUTE_NOT_CORROBORATED": [
-   12,
-   16
+   16,
+   21
   ],
-  "MY|CONFIRM|PREMISE|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+  "MY|CONFIRM|ROUTE|none|core|u1|ROUTE_NOT_CORROBORATED": [
    1,
-   1
+   2
   ],
-  "C|CONFIRM|PREMISE|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   11,
-   14
-  ],
-  "MY|ACCEPT|PREMISE_PROXIMITY|point+postcode|exact|u1|PREMISE_INTERPOLATED": [
-   7,
-   9
-  ],
-  "C|ACCEPT|PREMISE_PROXIMITY|point+postcode|exact|u1|PREMISE_INTERPOLATED": [
-   191,
-   210
-  ],
-  "MY|CONFIRM|PREMISE|point|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   0,
-   6
-  ],
-  "C|CONFIRM|PREMISE|point|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   0,
-   6
+  "C|CONFIRM|ROUTE|none|core|u1|ROUTE_NOT_CORROBORATED": [
+   23,
+   34
   ],
   "MY|ACCEPT|PREMISE_PROXIMITY|building+postcode|core|u1|-": [
    1,
@@ -3418,24 +3182,16 @@
    1
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|area+building+point+postcode|exact|u1|BUILDING_SPELL_CORRECTED+PREMISE_FROM_POI": [
-   1,
-   1
-  ],
-  "MY|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   1,
+   2,
    2
   ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   11,
-   20
+  "MY|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   8
   ],
-  "MY|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
-   5,
-   7
-  ],
-  "C|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
-   69,
-   88
+  "C|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   26,
+   60
   ],
   "MY|CONFIRM|ROUTE|area|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -3443,71 +3199,55 @@
   ],
   "C|CONFIRM|ROUTE|area|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    3,
-   19
+   22
   ],
-  "MY|CONFIRM|PREMISE|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   3,
-   3
+  "MY|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_POI": [
+   0,
+   2
   ],
-  "C|CONFIRM|PREMISE|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   35,
-   42
-  ],
-  "MY|CONFIRM|PREMISE|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_OSM": [
-   6,
-   6
-  ],
-  "MY|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   2,
-   8
-  ],
-  "C|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   25,
-   57
+  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_POI": [
+   7,
+   10
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|area+building+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   1,
-   1
+   2,
+   2
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|area+building+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   1,
-   1
+   4,
+   5
   ],
   "MY|CONFIRM|ROUTE|area|core|u1|ROUTE_NOT_CORROBORATED": [
    1,
    1
   ],
   "C|CONFIRM|ROUTE|area|core|u1|ROUTE_NOT_CORROBORATED": [
-   8,
-   12
+   14,
+   18
+  ],
+  "MY|CONFIRM|ROUTE|postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   4
+  ],
+  "C|CONFIRM|ROUTE|postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   42,
+   64
   ],
   "MY|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH": [
    0,
    2
   ],
   "C|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH": [
-   7,
-   14
-  ],
-  "MY|CONFIRM|PREMISE|point|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   0,
-   2
-  ],
-  "C|CONFIRM|PREMISE|point|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   0,
-   3
+   10,
+   18
   ],
   "MY|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
    0,
    1
   ],
   "C|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
-   19,
-   23
+   20,
+   24
   ],
   "MY|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -3517,21 +3257,13 @@
    2,
    5
   ],
-  "MY|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   2,
-   3
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   23,
-   32
-  ],
-  "MY|CONFIRM|PREMISE|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_OSM": [
-   0,
+  "MY|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   1,
    1
   ],
-  "C|CONFIRM|PREMISE|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_OSM": [
-   28,
-   33
+  "C|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   24,
+   28
   ],
   "MY|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
    2,
@@ -3541,13 +3273,13 @@
    12,
    23
   ],
-  "MY|CONFIRM|PREMISE|point+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_REPLACED+PREMISE_FROM_OSM": [
+  "MY|CONFIRM|PREMISE_PROXIMITY|point+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+PREMISE_FROM_POI": [
    1,
    1
   ],
-  "C|CONFIRM|PREMISE|point+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   1,
-   2
+  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+PREMISE_FROM_POI": [
+   3,
+   4
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|building+postcode|exact|uN|BUILDING_NAME_AMBIGUOUS": [
    0,
@@ -3559,11 +3291,11 @@
   ],
   "MY|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
    1,
-   3
+   4
   ],
   "C|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
    2,
-   6
+   7
   ],
   "MY|ACCEPT|PREMISE_PROXIMITY|building+postcode|exact|u1|-": [
    2,
@@ -3573,21 +3305,21 @@
    5,
    5
   ],
-  "MY|CONFIRM|PREMISE|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   2,
-   2
+  "MY|CONFIRM|ROUTE|area+postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   0,
+   1
   ],
-  "C|CONFIRM|PREMISE|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   11,
-   12
+  "C|CONFIRM|ROUTE|area+postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   21,
+   27
   ],
-  "MY|ACCEPT|PREMISE|building+point+postcode|exact|u1|BUILDING_SPELL_CORRECTED+PREMISE_FROM_OSM": [
+  "MY|CONFIRM|PREMISE_PROXIMITY|building+point+postcode|exact|u1|BUILDING_SPELL_CORRECTED+PREMISE_FROM_POI": [
    1,
    1
   ],
-  "C|ACCEPT|PREMISE|building+point+postcode|exact|u1|BUILDING_SPELL_CORRECTED+PREMISE_FROM_OSM": [
-   2,
-   2
+  "C|CONFIRM|PREMISE_PROXIMITY|building+point+postcode|exact|u1|BUILDING_SPELL_CORRECTED+PREMISE_FROM_POI": [
+   3,
+   3
   ],
   "MY|CONFIRM|ROUTE|area|core|uN|MISSING_PREMISE": [
    0,
@@ -3603,31 +3335,15 @@
   ],
   "C|CONFIRM|ROUTE|area+postcode|exact|uN|MISSING_PREMISE": [
    70,
-   91
+   90
   ],
-  "MY|CONFIRM|PREMISE|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+  "MY|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
    1
   ],
-  "C|CONFIRM|PREMISE|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   18,
-   22
-  ],
-  "MY|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   0,
-   3
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   5,
-   11
-  ],
-  "MY|CONFIRM|PREMISE|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   3,
-   3
-  ],
-  "C|CONFIRM|PREMISE|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   9,
-   13
+  "C|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
+   4,
+   10
   ],
   "MY|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -3645,61 +3361,29 @@
    2,
    2
   ],
-  "MY|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|partial|uN|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
+  "MY|CONFIRM|ROUTE|area+postcode|partial|uN|STREET_PARTIAL_MATCH": [
    1,
    1
   ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|partial|uN|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
-   1,
+  "C|CONFIRM|ROUTE|area+postcode|partial|uN|STREET_PARTIAL_MATCH": [
+   2,
    2
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   0,
-   1
+   1,
+   3
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    10,
-   15
-  ],
-  "MY|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_POI": [
-   0,
-   2
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_POI": [
-   0,
-   2
-  ],
-  "MY|CONFIRM|PREMISE|point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   0,
-   2
-  ],
-  "C|CONFIRM|PREMISE|point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   4,
-   6
+   17
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
    2
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   3,
-   8
-  ],
-  "MY|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_POI": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_POI": [
-   5,
-   7
-  ],
-  "MY|CONFIRM|PREMISE|point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   2,
-   2
-  ],
-  "C|CONFIRM|PREMISE|point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   182,
-   204
+   4,
+   9
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|area+point|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_POI": [
    1,
@@ -3709,37 +3393,29 @@
    1,
    1
   ],
-  "MY|CONFIRM|PREMISE|area+point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+  "MY|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   3
+  ],
+  "MY|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH": [
+   1,
    2
   ],
-  "C|CONFIRM|PREMISE|area+point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   5,
-   7
-  ],
-  "MY|CONFIRM|PREMISE|point+postcode|core|uN|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE|point+postcode|core|uN|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   1,
-   4
-  ],
-  "MY|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
-   6,
-   8
+  "C|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH": [
+   22,
+   28
   ],
   "MY|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH": [
    1,
    1
   ],
   "C|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH": [
-   8,
-   8
+   11,
+   11
   ],
   "MY|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH": [
    1,
@@ -3757,13 +3433,13 @@
    0,
    2
   ],
-  "MY|CONFIRM|PREMISE|point|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
+  "MY|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_POI": [
    0,
-   3
+   1
   ],
-  "C|CONFIRM|PREMISE|point|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
+  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_POI": [
    0,
-   3
+   1
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|exact|u1|BUILDING_SPELL_CORRECTED": [
    1,
@@ -3773,21 +3449,13 @@
    4,
    4
   ],
-  "MY|CONFIRM|PREMISE|area+point+postcode|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|area+point+postcode|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   10,
-   13
-  ],
   "MY|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
    0,
    1
   ],
   "C|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
-   7,
-   13
+   6,
+   12
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|building+point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
@@ -3810,8 +3478,8 @@
    3
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
-   11,
-   31
+   12,
+   33
   ],
   "MY|CONFIRM|ROUTE|area+postcode|core|u1|MISSING_PREMISE": [
    2,
@@ -3827,39 +3495,23 @@
   ],
   "C|CONFIRM|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    3,
-   3
-  ],
-  "MY|ACCEPT|PREMISE_PROXIMITY|area+building+point+postcode|exact|u1|PREMISE_FROM_POI": [
-   1,
-   1
-  ],
-  "C|ACCEPT|PREMISE_PROXIMITY|area+building+point+postcode|exact|u1|PREMISE_FROM_POI": [
-   3,
-   3
+   4
   ],
   "MY|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|core|u1|PREMISE_FROM_POI": [
    0,
    2
   ],
   "C|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|core|u1|PREMISE_FROM_POI": [
-   19,
-   30
-  ],
-  "MY|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH": [
-   1,
-   1
-  ],
-  "C|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH": [
-   19,
-   24
+   21,
+   33
   ],
   "MY|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
    3,
    3
   ],
   "C|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
-   14,
-   18
+   16,
+   21
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
    0,
@@ -3871,11 +3523,11 @@
   ],
   "MY|CONFIRM|ROUTE|area|core|uN|ROUTE_NOT_CORROBORATED": [
    0,
-   1
+   2
   ],
   "C|CONFIRM|ROUTE|area|core|uN|ROUTE_NOT_CORROBORATED": [
-   1,
-   11
+   2,
+   13
   ],
   "MY|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
    0,
@@ -3906,54 +3558,22 @@
    1
   ],
   "C|CONFIRM|ROUTE|postcode|core|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
-   0,
-   1
-  ],
-  "MY|CONFIRM|PREMISE|point|core|uN|POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE|point|core|uN|POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   0,
-   2
-  ],
-  "MY|ACCEPT|PREMISE|building+point+postcode|exact|u1|PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|ACCEPT|PREMISE|building+point+postcode|exact|u1|PREMISE_FROM_OSM": [
    2,
-   2
+   3
   ],
   "MY|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    1,
    1
   ],
   "C|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   3,
-   6
+   2,
+   5
   ],
-  "MY|CONFIRM|PREMISE_PROXIMITY|point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   0,
-   2
-  ],
-  "MY|CONFIRM|PREMISE|point|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE|point|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   0,
-   3
-  ],
-  "MY|CONFIRM|PREMISE|building+point+postcode|partial|uN|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
+  "MY|CONFIRM|PREMISE_PROXIMITY|building+point+postcode|partial|uN|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
    1,
    1
   ],
-  "C|CONFIRM|PREMISE|building+point+postcode|partial|uN|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
+  "C|CONFIRM|PREMISE_PROXIMITY|building+point+postcode|partial|uN|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
    1,
    1
   ],
@@ -3965,14 +3585,6 @@
    1,
    1
   ],
-  "MY|CONFIRM|PREMISE|area+building+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|area+building+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   3,
-   4
-  ],
   "MY|CONFIRM|PREMISE_PROXIMITY|area+point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    0,
    1
@@ -3981,45 +3593,29 @@
    0,
    3
   ],
-  "MY|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+  "MY|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
    0,
    1
   ],
-  "C|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   11
+  "C|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
+   2,
+   6
   ],
   "MY|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
    1,
    1
   ],
   "C|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
-   15,
-   17
-  ],
-  "MY|CONFIRM|PREMISE|point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE|point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   15,
-   23
-  ],
-  "MY|CONFIRM|PREMISE|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   6,
-   6
+   20,
+   21
   ],
   "MY|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
    0,
    1
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
-   5,
-   6
+   7,
+   8
   ],
   "ID|CONFIRM|ROUTE|area+postcode|exact|uN|MISSING_PREMISE": [
    14,
@@ -4034,44 +3630,40 @@
    1
   ],
   "ID|CONFIRM|ROUTE|area+postcode|core|u1|MISSING_PREMISE": [
-   11,
-   12
+   10,
+   11
   ],
   "ID|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    3,
-   6
+   7
   ],
-  "ID|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   15,
-   25
+  "ID|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|u1|PREMISE_FROM_POI": [
+   40,
+   52
   ],
   "ID|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
    26,
-   32
+   31
   ],
   "ID|FIX|LOCALITY|-": [
    9,
-   33
+   34
   ],
   "ID|CONFIRM|ROUTE|area+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    1,
    3
   ],
   "ID|ACCEPT|ROUTE|postcode|exact|u1|-": [
-   8,
-   9
+   10,
+   11
   ],
   "ID|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|core|u1|PREMISE_FROM_POI": [
    6,
    11
   ],
   "ID|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
-   0,
-   4
-  ],
-  "ID|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|u1|PREMISE_FROM_POI": [
-   32,
-   43
+   1,
+   5
   ],
   "ID|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    0,
@@ -4086,12 +3678,12 @@
    6
   ],
   "ID|ACCEPT|ROUTE|area+postcode|exact|u1|-": [
-   53,
-   61
+   62,
+   70
   ],
   "ID|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
-   7,
-   10
+   8,
+   11
   ],
   "ID|CONFIRM|ROUTE|none|core|u1|MISSING_PREMISE": [
    0,
@@ -4100,10 +3692,6 @@
   "ID|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED": [
    0,
    1
-  ],
-  "C|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED": [
-   0,
-   2
   ],
   "ID|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
@@ -4117,17 +3705,17 @@
    2,
    7
   ],
-  "ID|CONFIRM|PREMISE_PROXIMITY|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
-   4,
+  "ID|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   7,
    7
   ],
   "ID|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   6,
+   5,
    10
+  ],
+  "ID|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
+   13,
+   20
   ],
   "ID|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH": [
    0,
@@ -4142,24 +3730,20 @@
    10
   ],
   "ID|ACCEPT|PREMISE_PROXIMITY|point+postcode|exact|u1|PREMISE_FROM_POI": [
-   10,
-   18
+   12,
+   21
   ],
-  "ID|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+  "ID|CONFIRM|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    0,
-   2
-  ],
-  "C|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
-   0,
-   4
+   1
   ],
   "ID|CONFIRM|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH": [
    1,
    6
   ],
   "C|CONFIRM|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH": [
-   1,
-   10
+   2,
+   11
   ],
   "ID|CONFIRM|ROUTE|postcode|core|u1|ROUTE_NOT_CORROBORATED": [
    2,
@@ -4173,49 +3757,25 @@
    0,
    6
   ],
-  "ID|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|u1|PREMISE_INTERPOLATED": [
-   5,
-   8
-  ],
-  "ID|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|core|u1|PREMISE_INTERPOLATED": [
-   1,
-   5
-  ],
-  "C|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|core|u1|PREMISE_INTERPOLATED": [
-   22,
-   30
+  "ID|ACCEPT|ROUTE|area+postcode|core|u1|-": [
+   18,
+   21
   ],
   "ID|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
    1,
-   3
-  ],
-  "C|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
-   9,
-   19
-  ],
-  "ID|ACCEPT|ROUTE|area+postcode|core|u1|-": [
-   14,
-   17
+   4
   ],
   "ID|CONFIRM|ROUTE|area+postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
    1,
    1
   ],
   "C|CONFIRM|ROUTE|area+postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
-   2,
-   2
+   3,
+   3
   ],
   "ID|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
    0,
    1
-  ],
-  "C|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
-   2,
-   5
-  ],
-  "ID|CONFIRM|PREMISE|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   2,
-   2
   ],
   "ID|CONFIRM|ROUTE|postcode|exact|u1|MISSING_PREMISE": [
    6,
@@ -4231,11 +3791,19 @@
   ],
   "ID|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    0,
-   3
+   1
   ],
   "C|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    1,
-   16
+   15
+  ],
+  "ID|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "C|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   3
   ],
   "ID|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_NAME_AMBIGUOUS": [
    1,
@@ -4247,19 +3815,19 @@
   ],
   "ID|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
-   3
+   2
   ],
   "C|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
-   21
+   19
   ],
   "ID|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    5
   ],
-  "ID|CONFIRM|PREMISE|point|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
+  "C|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
-   1
+   10
   ],
   "ID|CONFIRM|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
    23,
@@ -4271,27 +3839,23 @@
   ],
   "C|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
    3,
-   3
+   4
   ],
   "ID|CONFIRM|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
    2,
    2
   ],
   "ID|CONFIRM|ROUTE|area+postcode|core|uN|ROUTE_NOT_CORROBORATED": [
-   3,
-   6
-  ],
-  "C|CONFIRM|ROUTE|area+postcode|core|uN|ROUTE_NOT_CORROBORATED": [
-   13,
-   17
+   5,
+   8
   ],
   "ID|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
    1,
    3
   ],
   "ID|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
-   5,
-   5
+   8,
+   8
   ],
   "ID|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -4310,8 +3874,8 @@
    1
   ],
   "ID|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
-   1,
-   2
+   2,
+   3
   ],
   "ID|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -4326,7 +3890,7 @@
    1
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|uN|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
-   5,
+   6,
    10
   ],
   "ID|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
@@ -4335,7 +3899,7 @@
   ],
   "C|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    1,
-   8
+   9
   ],
   "ID|CONFIRM|ROUTE|area|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -4349,13 +3913,21 @@
    3,
    5
   ],
+  "ID|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH": [
+   0,
+   3
+  ],
+  "C|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH": [
+   2,
+   9
+  ],
   "ID|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
    1,
    4
   ],
   "ID|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
-   2,
-   2
+   3,
+   4
   ],
   "ID|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
    2,
@@ -4391,7 +3963,7 @@
   ],
   "C|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH": [
    0,
-   10
+   11
   ],
   "ID|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+BUILDING_NAME_AMBIGUOUS": [
    0,
@@ -4407,7 +3979,7 @@
   ],
   "C|CONFIRM|ROUTE|area+postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    2,
-   7
+   8
   ],
   "ID|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -4424,10 +3996,6 @@
   "ID|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH": [
    0,
    1
-  ],
-  "ID|ACCEPT|PREMISE|area+point+postcode|exact|u1|PREMISE_FROM_OSM": [
-   5,
-   6
   ],
   "ID|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -4446,24 +4014,24 @@
    4
   ],
   "C|CONFIRM|ROUTE|area+postcode|core|uN|MISSING_PREMISE": [
-   6,
-   7
+   5,
+   6
   ],
   "ID|CONFIRM|ROUTE|area+postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    2,
    2
   ],
   "C|CONFIRM|ROUTE|area+postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   6,
-   6
+   7,
+   7
   ],
   "ID|CONFIRM|ROUTE|area+postcode|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    1,
-   1
+   2
   ],
   "C|CONFIRM|ROUTE|area+postcode|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    1,
-   1
+   2
   ],
   "ID|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH": [
    0,
@@ -4473,14 +4041,6 @@
    2,
    5
   ],
-  "ID|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
-   6,
-   6
-  ],
-  "C|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
-   20,
-   23
-  ],
   "ID|CONFIRM|ROUTE|postcode|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    1
@@ -4489,11 +4049,7 @@
    0,
    2
   ],
-  "ID|CONFIRM|PREMISE_PROXIMITY|area+building+point+postcode|exact|uN|BUILDING_SPELL_CORRECTED+PREMISE_FROM_POI": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+building+point+postcode|exact|uN|BUILDING_SPELL_CORRECTED+PREMISE_FROM_POI": [
+  "ID|CONFIRM|PREMISE_PROXIMITY|area+building+point+postcode|exact|u1|BUILDING_SPELL_CORRECTED+PREMISE_FROM_POI": [
    1,
    1
   ],
@@ -4526,10 +4082,6 @@
    1
   ],
   "ID|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_POI": [
-   1,
-   1
-  ],
-  "ID|CONFIRM|PREMISE|area+point+postcode|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
    2,
    2
   ],
@@ -4538,8 +4090,8 @@
    1
   ],
   "C|ACCEPT|PREMISE_PROXIMITY|area+building+postcode|exact|u1|-": [
-   8,
-   8
+   9,
+   9
   ],
   "ID|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -4561,37 +4113,17 @@
    1,
    3
   ],
-  "ID|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   1,
-   2
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   11,
-   16
-  ],
   "ID|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|u1|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
    2,
    2
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|u1|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
-   18,
-   27
+   14,
+   22
   ],
-  "ID|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH": [
-   0,
-   2
-  ],
-  "C|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH": [
+  "ID|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
    2,
-   8
-  ],
-  "ID|CONFIRM|PREMISE_PROXIMITY|building+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+BUILDING_SPELL_CORRECTED+PREMISE_FROM_POI": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|building+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+BUILDING_SPELL_CORRECTED+PREMISE_FROM_POI": [
-   1,
-   1
+   3
   ],
   "ID|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
    0,
@@ -4611,11 +4143,11 @@
   ],
   "ID|CONFIRM|PREMISE_PROXIMITY|area+point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
-   2
+   3
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|area+point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
-   3
+   4
   ],
   "ID|CONFIRM|ROUTE|postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -4631,19 +4163,15 @@
   ],
   "ID|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
    0,
-   1
+   2
   ],
   "C|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
    0,
-   2
+   3
   ],
   "ID|CONFIRM|ROUTE|area|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    1,
    3
-  ],
-  "ID|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
-   1,
-   2
   ],
   "ID|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -4653,17 +4181,13 @@
    1,
    3
   ],
-  "ID|ACCEPT|PREMISE|point+postcode|exact|u1|PREMISE_FROM_OSM": [
-   1,
-   3
-  ],
   "ID|CONFIRM|ROUTE|postcode|core|u1|MISSING_PREMISE": [
    0,
    1
   ],
   "C|CONFIRM|ROUTE|postcode|core|u1|MISSING_PREMISE": [
-   21,
-   27
+   20,
+   26
   ],
   "ID|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH": [
    0,
@@ -4677,23 +4201,7 @@
    0,
    1
   ],
-  "ID|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_POI": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_POI": [
-   0,
-   2
-  ],
-  "ID|CONFIRM|PREMISE|point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   2,
-   2
-  ],
   "ID|CONFIRM|ROUTE|area+postcode|partial|uN|STREET_PARTIAL_MATCH": [
-   1,
-   1
-  ],
-  "C|CONFIRM|ROUTE|area+postcode|partial|uN|STREET_PARTIAL_MATCH": [
    1,
    1
   ],
@@ -4708,22 +4216,6 @@
   "ID|CONFIRM|PREMISE_PROXIMITY|point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
    0,
    1
-  ],
-  "ID|CONFIRM|PREMISE|area+point|exact|uN|POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE|area+point|exact|uN|POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   0,
-   2
-  ],
-  "ID|CONFIRM|PREMISE|area+point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE|area+point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   2
   ],
   "ID|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_POI": [
    0,
@@ -4743,7 +4235,7 @@
   ],
   "C|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH": [
    0,
-   9
+   10
   ],
   "ID|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
    0,
@@ -4769,13 +4261,9 @@
    1,
    3
   ],
-  "ID|CONFIRM|PREMISE|area+point|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE|area+point|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   2,
-   3
+  "ID|CONFIRM|PREMISE_PROXIMITY|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
+   1,
+   2
   ],
   "ID|CONFIRM|ROUTE|postcode|partial|uN|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
    0,
@@ -4794,26 +4282,14 @@
    1
   ],
   "C|CONFIRM|ROUTE|area|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   4,
-   6
+   5,
+   9
   ],
   "ID|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH": [
    0,
    1
   ],
   "C|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH": [
-   0,
-   1
-  ],
-  "ID|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
-   1,
-   2
-  ],
-  "ID|CONFIRM|PREMISE_PROXIMITY|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    0,
    1
   ],
@@ -4834,96 +4310,88 @@
    2
   ],
   "TH|FIX|LOCALITY|-": [
-   67,
-   110
+   69,
+   112
   ],
-  "TH|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   5,
-   7
+  "TH|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
+   45,
+   50
   ],
   "TH|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    4
   ],
   "TH|ACCEPT|ROUTE|postcode|exact|u1|-": [
-   22,
-   24
+   40,
+   44
   ],
   "TH|CONFIRM|ROUTE|none|core|u1|MISSING_PREMISE": [
    10,
    13
   ],
+  "TH|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   5,
+   7
+  ],
   "TH|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   7,
-   14
+   9,
+   16
   ],
   "TH|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    1
   ],
   "TH|ACCEPT|PREMISE_PROXIMITY|point+postcode|exact|u1|PREMISE_FROM_POI": [
-   23,
-   35
+   30,
+   46
   ],
   "TH|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    3,
    5
   ],
   "TH|CONFIRM|ROUTE|none|core|u1|ROUTE_NOT_CORROBORATED": [
-   13,
-   18
+   16,
+   21
   ],
-  "C|CONFIRM|ROUTE|none|core|u1|ROUTE_NOT_CORROBORATED": [
-   17,
-   26
-  ],
-  "TH|CONFIRM|PREMISE_PROXIMITY|point|partial|uN|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
-   0,
+  "TH|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
    1
   ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point|partial|uN|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
-   0,
-   1
-  ],
-  "TH|ACCEPT|PREMISE_PROXIMITY|point+postcode|exact|u1|PREMISE_INTERPOLATED": [
-   8,
-   13
-  ],
-  "TH|CONFIRM|PREMISE|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+  "C|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    2,
-   2
+   5
   ],
   "TH|CONFIRM|ROUTE|none|exact|u1|MISSING_PREMISE": [
-   11,
-   12
+   10,
+   11
   ],
-  "TH|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
+  "TH|CONFIRM|PREMISE_PROXIMITY|building+postcode|exact|uN|BUILDING_SPELL_CORRECTED": [
    1,
-   2
+   1
   ],
-  "C|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   2,
-   3
+  "C|CONFIRM|PREMISE_PROXIMITY|building+postcode|exact|uN|BUILDING_SPELL_CORRECTED": [
+   1,
+   1
   ],
   "TH|CONFIRM|ROUTE|postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
-   1,
-   2
-  ],
-  "TH|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH": [
    4,
    6
   ],
-  "TH|CONFIRM|ROUTE|postcode|exact|u1|MISSING_PREMISE": [
+  "TH|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH": [
    7,
    8
   ],
-  "TH|ACCEPT|PREMISE|area+point+postcode|exact|u1|PREMISE_FROM_OSM": [
-   3,
-   3
+  "TH|CONFIRM|ROUTE|postcode|exact|u1|MISSING_PREMISE": [
+   8,
+   9
+  ],
+  "TH|ACCEPT|ROUTE|area+postcode|exact|u1|-": [
+   7,
+   9
   ],
   "TH|CONFIRM|ROUTE|area+postcode|core|u1|MISSING_PREMISE": [
    2,
-   4
+   3
   ],
   "TH|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|u1|PREMISE_FROM_POI": [
    4,
@@ -4945,17 +4413,9 @@
    5,
    7
   ],
-  "TH|CONFIRM|PREMISE_PROXIMITY|point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
-   2,
-   2
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
-   4,
-   6
-  ],
-  "TH|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+  "TH|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
    0,
-   2
+   1
   ],
   "TH|CONFIRM|ROUTE|none|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -4971,10 +4431,6 @@
   ],
   "C|CONFIRM|ROUTE|postcode|partial|uN|STREET_PARTIAL_MATCH": [
    2,
-   4
-  ],
-  "TH|ACCEPT|ROUTE|area+postcode|exact|u1|-": [
-   3,
    4
   ],
   "TH|CONFIRM|PREMISE_PROXIMITY|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
@@ -5006,48 +4462,40 @@
    1
   ],
   "TH|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   9,
-   15
+   11,
+   18
   ],
   "TH|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
    1,
    3
   ],
-  "TH|ACCEPT|PREMISE|point+postcode|exact|u1|PREMISE_FROM_OSM": [
-   8,
-   13
-  ],
   "TH|CONFIRM|PREMISE_PROXIMITY|point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
    1
   ],
-  "TH|CONFIRM|ROUTE|area+postcode|exact|uN|MISSING_PREMISE": [
+  "TH|CONFIRM|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
+   0,
+   1
+  ],
+  "TH|CONFIRM|ROUTE|postcode|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    2
   ],
-  "TH|CONFIRM|PREMISE|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "TH|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   1,
-   3
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   37,
-   42
+  "C|CONFIRM|ROUTE|postcode|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
   ],
   "TH|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    1,
    2
   ],
   "TH|CONFIRM|PREMISE_PROXIMITY|point|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
-   1,
-   1
+   2,
+   2
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|point|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
-   1,
-   1
+   2,
+   2
   ],
   "TH|ACCEPT|ROUTE|area+postcode|thai|u1|-": [
    0,
@@ -5060,6 +4508,10 @@
   "TH|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    0,
    1
+  ],
+  "TH|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
+   1,
+   2
   ],
   "TH|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH": [
    1,
@@ -5074,43 +4526,31 @@
    3
   ],
   "TH|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH": [
-   7,
-   7
+   10,
+   10
   ],
   "TH|CONFIRM|ROUTE|postcode|exact|u1|AREA_STREET_MISMATCH": [
    0,
    2
   ],
   "C|CONFIRM|ROUTE|postcode|exact|u1|AREA_STREET_MISMATCH": [
-   20,
-   25
+   25,
+   28
   ],
   "TH|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
    1,
    5
   ],
-  "TH|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
-   30,
-   35
-  ],
   "TH|ACCEPT|PREMISE_PROXIMITY|area+building+postcode|exact|u1|-": [
    1,
    1
   ],
-  "TH|CONFIRM|PREMISE_PROXIMITY|point|core|u1|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point|core|u1|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   4,
-   7
-  ],
-  "TH|CONFIRM|PREMISE_PROXIMITY|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   2,
+  "TH|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH": [
+   1,
    2
   ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   7,
+  "C|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH": [
+   9,
    12
   ],
   "TH|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH": [
@@ -5126,30 +4566,18 @@
    26
   ],
   "TH|CONFIRM|ROUTE|postcode|core|u1|ROUTE_NOT_CORROBORATED": [
-   10,
-   15
+   11,
+   17
   ],
   "TH|CONFIRM|ROUTE|postcode|core|u1|MISSING_PREMISE": [
    10,
    12
   ],
-  "TH|CONFIRM|PREMISE|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   2,
-   6
-  ],
   "TH|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
-   1,
-   1
+   2,
+   2
   ],
   "TH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH": [
-   0,
-   1
-  ],
-  "TH|CONFIRM|PREMISE|point+postcode|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   0,
-   3
-  ],
-  "TH|CONFIRM|PREMISE_PROXIMITY|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
    0,
    1
   ],
@@ -5157,9 +4585,9 @@
    0,
    1
   ],
-  "TH|CONFIRM|ROUTE|postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   2,
-   2
+  "TH|CONFIRM|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
+   1,
+   1
   ],
   "TH|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -5169,14 +4597,6 @@
    1,
    2
   ],
-  "TH|CONFIRM|PREMISE|point|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   0,
-   2
-  ],
-  "C|CONFIRM|PREMISE|point|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   4,
-   6
-  ],
   "TH|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
    1,
    4
@@ -5185,29 +4605,25 @@
    2,
    6
   ],
-  "TH|CONFIRM|PREMISE|point|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
+  "TH|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    1
   ],
-  "C|CONFIRM|PREMISE|point|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
+  "C|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
-   1
+   4
   ],
-  "TH|CONFIRM|PREMISE|point+postcode|thai|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   1
+  "TH|CONFIRM|PREMISE_PROXIMITY|point+postcode|thai|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
+   2,
+   3
   ],
-  "C|CONFIRM|PREMISE|point+postcode|thai|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   1
+  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|thai|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
+   2,
+   3
   ],
   "TH|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    2,
    4
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   2,
-   8
   ],
   "TH|CONFIRM|ROUTE|none|thai|u1|ROUTE_NOT_CORROBORATED": [
    3,
@@ -5217,13 +4633,9 @@
    3,
    5
   ],
-  "TH|CONFIRM|PREMISE|point|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
-   1,
-   2
-  ],
-  "C|CONFIRM|PREMISE|point|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
-   1,
-   4
+  "TH|CONFIRM|ROUTE|area+postcode|exact|uN|MISSING_PREMISE": [
+   0,
+   1
   ],
   "TH|CONFIRM|ROUTE|none|thai|u1|POSTCODE_STREET_MISMATCH": [
    0,
@@ -5241,17 +4653,9 @@
    1,
    2
   ],
-  "TH|CONFIRM|PREMISE|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   2,
+  "TH|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
+   1,
    2
-  ],
-  "TH|CONFIRM|PREMISE|point+postcode|exact|uN|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE|point+postcode|exact|uN|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   19,
-   22
   ],
   "TH|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    1,
@@ -5265,17 +4669,9 @@
    5,
    5
   ],
-  "TH|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   3,
-   8
-  ],
   "TH|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
    3,
    3
-  ],
-  "TH|CONFIRM|PREMISE_PROXIMITY|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
-   0,
-   1
   ],
   "TH|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED+BUILDING_NAME_AMBIGUOUS": [
    0,
@@ -5289,21 +4685,9 @@
    2,
    4
   ],
-  "TH|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH": [
-   0,
-   1
-  ],
-  "C|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH": [
-   2,
-   5
-  ],
   "TH|CONFIRM|PREMISE_PROXIMITY|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
    2
-  ],
-  "TH|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   1,
-   4
   ],
   "TH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    1,
@@ -5311,10 +4695,10 @@
   ],
   "C|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    1,
-   8
+   9
   ],
-  "TH|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|u1|PREMISE_INTERPOLATED": [
-   0,
+  "TH|CONFIRM|ROUTE|postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
    1
   ],
   "TH|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
@@ -5365,41 +4749,17 @@
    1,
    1
   ],
-  "TH|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   1,
-   1
-  ],
   "TH|CONFIRM|ROUTE|postcode|core|uN|ROUTE_NOT_CORROBORATED": [
    1,
    1
   ],
   "TH|CONFIRM|ROUTE|none|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   1
-  ],
-  "TH|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
-   6,
-   9
-  ],
-  "TH|CONFIRM|PREMISE_PROXIMITY|point+postcode|thai|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   1,
-   2
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|thai|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
    2
   ],
   "TH|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
    2,
    2
-  ],
-  "TH|CONFIRM|PREMISE|area+point+postcode|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   0,
-   1
   ],
   "TH|CONFIRM|ROUTE|postcode|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
    1,
@@ -5409,10 +4769,6 @@
    3,
    3
   ],
-  "TH|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
-   1,
-   1
-  ],
   "TH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    2
@@ -5421,12 +4777,8 @@
    0,
    2
   ],
-  "TH|CONFIRM|ROUTE|postcode|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   1
-  ],
-  "C|CONFIRM|ROUTE|postcode|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
+  "TH|CONFIRM|ROUTE|area+postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
    1
   ],
   "TH|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_POI": [
@@ -5442,68 +4794,36 @@
    1
   ],
   "C|CONFIRM|ROUTE|none|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   3,
-   10
+   8,
+   19
   ],
   "TH|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    0,
    1
   ],
-  "C|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
-   0,
-   2
-  ],
   "TH|CONFIRM|PREMISE_PROXIMITY|point+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+PREMISE_FROM_POI": [
    1,
    1
   ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+PREMISE_FROM_POI": [
-   2,
-   3
-  ],
-  "TH|CONFIRM|PREMISE|area+point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
+  "TH|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
    1,
    1
   ],
-  "C|CONFIRM|PREMISE|area+point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
-   4,
-   4
-  ],
-  "TH|CONFIRM|PREMISE|point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+  "TH|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_POI": [
    0,
    1
   ],
-  "TH|CONFIRM|PREMISE_PROXIMITY|point|partial|u1|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point|partial|u1|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
-   1,
-   1
-  ],
-  "TH|CONFIRM|PREMISE|point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
-   2,
-   2
-  ],
-  "C|CONFIRM|PREMISE|point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
-   9,
-   10
-  ],
-  "TH|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
+  "C|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_POI": [
    0,
-   1
-  ],
-  "C|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   1,
-   4
-  ],
-  "TH|CONFIRM|PREMISE|area+point+postcode|partial|uN|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|area+point+postcode|partial|uN|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
-   2,
    2
+  ],
+  "TH|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|partial|uN|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|partial|uN|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
+   1,
+   1
   ],
   "TH|CONFIRM|ROUTE|area|thai|u1|MISSING_PREMISE": [
    1,
@@ -5513,101 +4833,85 @@
    1,
    1
   ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_INTERPOLATED": [
+  "VN|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
-   2
+   1
   ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_INTERPOLATED": [
-   1,
-   2
+  "VN|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH": [
+   19,
+   23
   ],
-  "VN|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
-   4,
-   5
+  "C|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH": [
+   19,
+   23
   ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_INTERPOLATED": [
-   2,
-   5
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_INTERPOLATED": [
-   2,
-   5
-  ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   11,
+  "VN|CONFIRM|ROUTE|none|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   8,
    17
   ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   11,
-   17
+  "VN|CONFIRM|ROUTE|postcode|core|u1|AREA_STREET_MISMATCH": [
+   18,
+   20
+  ],
+  "C|CONFIRM|ROUTE|postcode|core|u1|AREA_STREET_MISMATCH": [
+   18,
+   20
   ],
   "VN|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
-   4,
-   7
+   9,
+   13
   ],
   "VN|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
    1,
    1
   ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   7,
-   11
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   7,
-   12
-  ],
   "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
-   5,
-   5
+   7,
+   7
   ],
   "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|u1|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
-   15,
-   23
+   11,
+   18
   ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   4,
-   6
+  "VN|ACCEPT|ROUTE|area+postcode|core|u1|-": [
+   24,
+   24
   ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   4,
-   6
-  ],
-  "VN|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|core|u1|PREMISE_INTERPOLATED": [
-   9,
-   12
-  ],
-  "VN|CONFIRM|PREMISE|area+point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+  "VN|CONFIRM|ROUTE|area|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|area+point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   2,
-   2
+   3
   ],
   "VN|FIX|LOCALITY|-": [
    7,
    30
   ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   3,
-   4
+  "VN|CONFIRM|ROUTE|area+postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   9,
+   9
+  ],
+  "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
+   9,
+   12
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
+   9,
+   12
   ],
   "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   6,
-   7
+   11,
+   13
   ],
   "VN|ACCEPT|ROUTE|area+postcode|exact|u1|-": [
-   21,
-   23
+   26,
+   29
   ],
   "VN|CONFIRM|ROUTE|postcode|exact|uN|AREA_STREET_MISMATCH": [
-   6,
-   10
+   14,
+   19
   ],
   "C|CONFIRM|ROUTE|postcode|exact|uN|AREA_STREET_MISMATCH": [
-   6,
-   10
+   14,
+   19
   ],
   "VN|CONFIRM|PREMISE_PROXIMITY|area+point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    0,
@@ -5615,103 +4919,59 @@
   ],
   "VN|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    2,
-   3
+   4
   ],
   "VN|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   1,
-   1
+   3,
+   4
   ],
   "VN|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    0,
    2
   ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   1,
-   1
+  "VN|CONFIRM|ROUTE|postcode|exact|u1|AREA_STREET_MISMATCH": [
+   25,
+   26
   ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
+  "VN|CONFIRM|ROUTE|postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
    1,
-   1
+   2
   ],
   "VN|CONFIRM|ROUTE|area|exact|uN|MISSING_PREMISE": [
    0,
    3
   ],
-  "VN|CONFIRM|PREMISE|point|exact|uN|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   4,
-   4
-  ],
-  "C|CONFIRM|PREMISE|point|exact|uN|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   4,
-   4
-  ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point|core|uN|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   2,
-   4
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point|core|uN|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   2,
-   4
+  "VN|CONFIRM|ROUTE|none|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   5
   ],
   "VN|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
    3,
    4
   ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point|core|u1|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   4,
-   6
+  "VN|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH": [
+   8,
+   10
   ],
   "VN|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
    3,
    7
   ],
-  "VN|CONFIRM|ROUTE|none|core|u1|AREA_STREET_MISMATCH": [
-   2,
-   4
-  ],
-  "VN|CONFIRM|ROUTE|postcode|core|u1|AREA_STREET_MISMATCH": [
-   8,
-   10
-  ],
-  "C|CONFIRM|ROUTE|postcode|core|u1|AREA_STREET_MISMATCH": [
-   8,
-   10
-  ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|area+point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   2,
-   5
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   2,
+  "VN|CONFIRM|ROUTE|area|core|u1|ROUTE_NOT_CORROBORATED": [
+   5,
    5
   ],
   "VN|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
    2,
    7
   ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|uN|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   7,
-   8
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|uN|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   7,
-   8
-  ],
-  "VN|CONFIRM|ROUTE|area+postcode|core|uN|ROUTE_NOT_CORROBORATED": [
-   4,
-   4
-  ],
-  "VN|CONFIRM|ROUTE|postcode|core|uN|AREA_STREET_MISMATCH": [
-   0,
+  "VN|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH": [
+   1,
    1
   ],
-  "C|CONFIRM|ROUTE|postcode|core|uN|AREA_STREET_MISMATCH": [
+  "VN|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
    0,
    1
-  ],
-  "VN|ACCEPT|ROUTE|area+postcode|core|u1|-": [
-   12,
-   12
   ],
   "VN|CONFIRM|ROUTE|area|core|uN|MISSING_PREMISE": [
    1,
@@ -5719,63 +4979,71 @@
   ],
   "VN|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
-   2
+   1
   ],
   "C|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
-   2
+   1
   ],
   "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
    0,
-   1
+   3
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
    0,
-   1
+   3
   ],
   "VN|CONFIRM|PREMISE_PROXIMITY|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
    2
   ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   6,
-   7
+  "VN|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
+   13,
+   13
   ],
   "VN|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
    2,
    3
   ],
-  "VN|CONFIRM|ROUTE|none|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   3,
-   8
-  ],
   "VN|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH": [
-   4,
-   4
+   7,
+   7
   ],
-  "VN|CONFIRM|PREMISE|point+postcode|exact|u1|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   6,
-   8
-  ],
-  "C|CONFIRM|PREMISE|point+postcode|exact|u1|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   9,
-   11
+  "VN|ACCEPT|ROUTE|postcode|exact|u1|-": [
+   16,
+   22
   ],
   "VN|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH": [
    0,
-   4
+   5
   ],
   "VN|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    1,
+   3
+  ],
+  "VN|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
+   2,
+   4
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
+   2,
    4
   ],
   "VN|CONFIRM|ROUTE|postcode|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
    1,
    1
   ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   3,
-   3
+  "VN|CONFIRM|ROUTE|postcode|core|uN|AREA_STREET_MISMATCH": [
+   4,
+   6
+  ],
+  "C|CONFIRM|ROUTE|postcode|core|uN|AREA_STREET_MISMATCH": [
+   4,
+   6
+  ],
+  "VN|CONFIRM|ROUTE|postcode|core|u1|ROUTE_NOT_CORROBORATED": [
+   11,
+   16
   ],
   "VN|CONFIRM|ROUTE|postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -5785,29 +5053,17 @@
    4,
    8
   ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
-   10,
-   14
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
-   10,
-   14
-  ],
-  "VN|CONFIRM|ROUTE|none|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   2
-  ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   3,
-   4
+  "VN|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
+   8,
+   9
   ],
   "VN|CONFIRM|ROUTE|none|core|u1|MISSING_PREMISE": [
    0,
    5
   ],
-  "VN|CONFIRM|PREMISE|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   1
+  "VN|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
+   6,
+   7
   ],
   "VN|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
    1,
@@ -5817,61 +5073,33 @@
    0,
    1
   ],
-  "VN|CONFIRM|ROUTE|postcode|exact|u1|AREA_STREET_MISMATCH": [
-   20,
-   23
-  ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|u1|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   10,
-   12
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|u1|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   11,
-   13
-  ],
   "VN|CONFIRM|ROUTE|postcode|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   2,
-   4
+   4,
+   7
   ],
   "C|CONFIRM|ROUTE|postcode|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   2,
-   4
+   4,
+   7
+  ],
+  "VN|ACCEPT|PREMISE_PROXIMITY|point+postcode|exact|u1|PREMISE_FROM_POI": [
+   11,
+   13
   ],
   "VN|CONFIRM|ROUTE|none|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH": [
    2,
    4
   ],
-  "VN|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
-   6,
-   6
-  ],
-  "VN|CONFIRM|PREMISE|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
   "VN|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
-   4,
-   7
+   6,
+   8
   ],
   "C|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
-   4,
-   7
-  ],
-  "VN|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH": [
-   9,
-   11
-  ],
-  "C|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH": [
-   9,
-   11
+   6,
+   8
   ],
   "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   3,
-   3
-  ],
-  "VN|CONFIRM|PREMISE|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   2,
-   3
+   7,
+   10
   ],
   "VN|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -5882,36 +5110,28 @@
    1
   ],
   "VN|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|u1|PREMISE_FROM_POI": [
-   6,
-   8
+   7,
+   9
   ],
-  "VN|CONFIRM|PREMISE|point|exact|u1|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   6,
-   7
+  "VN|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   11
   ],
-  "C|CONFIRM|PREMISE|point|exact|u1|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   6,
-   8
+  "VN|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
   ],
   "VN|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   1,
+   2,
+   3
+  ],
+  "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|uN|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
+   6,
+   9
+  ],
+  "VN|CONFIRM|ROUTE|postcode|core|u1|AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   2,
    2
-  ],
-  "VN|CONFIRM|PREMISE|point+postcode|core|uN|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   4,
-   7
-  ],
-  "C|CONFIRM|PREMISE|point+postcode|core|uN|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   4,
-   7
-  ],
-  "VN|CONFIRM|PREMISE|point+postcode|core|u1|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   2,
-   5
-  ],
-  "C|CONFIRM|PREMISE|point+postcode|core|u1|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   2,
-   5
   ],
   "VN|CONFIRM|ROUTE|postcode|exact|uN|AREA_STREET_MISMATCH+MISSING_PREMISE": [
    1,
@@ -5925,65 +5145,41 @@
    0,
    3
   ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
+  "VN|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    2,
+   2
+  ],
+  "C|CONFIRM|ROUTE|none|exact|u1|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   2,
+   2
+  ],
+  "VN|CONFIRM|ROUTE|postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   8,
+   10
+  ],
+  "VN|CONFIRM|ROUTE|none|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
    3
   ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
+  "VN|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH": [
+   0,
+   1
+  ],
+  "VN|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|core|u1|PREMISE_FROM_POI": [
+   8,
+   12
+  ],
+  "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    4,
    5
   ],
-  "VN|CONFIRM|PREMISE|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   2,
-   2
-  ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   1,
-   1
-  ],
-  "VN|ACCEPT|ROUTE|postcode|exact|u1|-": [
-   2,
-   3
-  ],
-  "VN|CONFIRM|PREMISE|point|core|u1|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE|point|core|u1|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "VN|ACCEPT|PREMISE|area+point+postcode|core|u1|PREMISE_FROM_OSM": [
-   2,
-   3
-  ],
-  "C|ACCEPT|PREMISE|area+point+postcode|core|u1|PREMISE_FROM_OSM": [
-   6,
-   7
-  ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   2,
-   2
-  ],
-  "VN|CONFIRM|PREMISE|point|core|u1|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE|point|core|u1|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "VN|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|u1|PREMISE_INTERPOLATED": [
-   3,
-   3
-  ],
   "VN|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
-   7,
-   9
+   6,
+   8
   ],
   "C|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
-   7,
-   12
+   6,
+   11
   ],
   "VN|CONFIRM|PREMISE_PROXIMITY|point|core|uN|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
    1,
@@ -5993,37 +5189,25 @@
    1,
    3
   ],
-  "VN|CONFIRM|ROUTE|none|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   2,
-   8
-  ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   9,
-   11
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
-   10,
-   12
-  ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
+  "VN|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH": [
    0,
    4
   ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
+  "C|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH": [
    0,
-   4
-  ],
-  "VN|CONFIRM|ROUTE|postcode|core|u1|ROUTE_NOT_CORROBORATED": [
-   2,
-   4
-  ],
-  "VN|CONFIRM|ROUTE|postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
-   2,
    4
   ],
   "VN|CONFIRM|ROUTE|area|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    1
+  ],
+  "VN|CONFIRM|ROUTE|postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   1,
+   3
+  ],
+  "VN|CONFIRM|ROUTE|area+postcode|core|u1|MISSING_PREMISE": [
+   1,
+   2
   ],
   "VN|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
    0,
@@ -6033,25 +5217,17 @@
    0,
    1
   ],
-  "VN|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|core|u1|PREMISE_FROM_POI": [
-   7,
-   11
+  "VN|CONFIRM|ROUTE|none|core|u1|ROUTE_NOT_CORROBORATED": [
+   2,
+   3
   ],
-  "VN|CONFIRM|ROUTE|area|exact|uN|ROUTE_NOT_CORROBORATED": [
-   3,
-   4
-  ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   1,
+  "VN|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
    1
   ],
-  "VN|CONFIRM|PREMISE|point|core|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|point|core|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   1,
-   1
+  "C|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   2
   ],
   "VN|CONFIRM|ROUTE|postcode|core|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -6065,71 +5241,15 @@
    0,
    1
   ],
-  "VN|CONFIRM|PREMISE|point+postcode|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
+  "VN|CONFIRM|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH": [
+   1,
+   1
+  ],
+  "VN|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY+BUILDING_SPELL_CORRECTED": [
    0,
    1
-  ],
-  "C|CONFIRM|PREMISE|point+postcode|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "VN|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED+AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED+AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "VN|ACCEPT|PREMISE_PROXIMITY|point+postcode|exact|u1|PREMISE_INTERPOLATED": [
-   3,
-   3
-  ],
-  "VN|ACCEPT|PREMISE_PROXIMITY|point+postcode|exact|u1|PREMISE_FROM_POI": [
-   4,
-   4
-  ],
-  "VN|CONFIRM|PREMISE|area+point|exact|u1|POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|area+point|exact|u1|POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "VN|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   1
-  ],
-  "VN|CONFIRM|PREMISE|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   2
-  ],
-  "VN|ACCEPT|PREMISE|area+point+postcode|exact|u1|PREMISE_FROM_OSM": [
-   2,
-   3
-  ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|uN|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
-   5,
-   9
-  ],
-  "VN|ACCEPT|PREMISE|point+postcode|exact|u1|PREMISE_FROM_OSM": [
-   2,
-   3
   ],
   "VN|CONFIRM|ROUTE|area+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   1,
-   1
-  ],
-  "VN|CONFIRM|PREMISE|point+postcode|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   0,
-   3
-  ],
-  "C|CONFIRM|PREMISE|point+postcode|partial|u1|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   0,
-   3
-  ],
-  "VN|CONFIRM|PREMISE|area+point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
    1,
    1
   ],
@@ -6149,45 +5269,21 @@
    1,
    1
   ],
-  "VN|CONFIRM|PREMISE|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+  "VN|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    2,
-   3
-  ],
-  "VN|CONFIRM|ROUTE|none|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
    2
   ],
-  "VN|CONFIRM|ROUTE|postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   1,
-   2
-  ],
-  "VN|CONFIRM|PREMISE|point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "VN|CONFIRM|PREMISE|point|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
+  "VN|CONFIRM|PREMISE_PROXIMITY|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    0,
    1
   ],
-  "C|CONFIRM|PREMISE|point|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   0,
-   4
-  ],
-  "VN|CONFIRM|PREMISE|point+postcode|core|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
+  "VN|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    1
   ],
-  "C|CONFIRM|PREMISE|point+postcode|core|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
+  "VN|CONFIRM|ROUTE|postcode|core|uN|ROUTE_NOT_CORROBORATED": [
    2,
-   3
-  ],
-  "VN|CONFIRM|PREMISE|point+postcode|core|uN|POSTCODE_REPLACED+AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|point+postcode|core|uN|POSTCODE_REPLACED+AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   1,
-   1
+   2
   ],
   "VN|CONFIRM|PREMISE_PROXIMITY|point|core|u1|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
    1,
@@ -6197,32 +5293,24 @@
    0,
    1
   ],
-  "VN|CONFIRM|PREMISE|area+point|exact|uN|POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
+  "VN|CONFIRM|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    1
   ],
-  "VN|CONFIRM|ROUTE|area+postcode|core|u1|MISSING_PREMISE": [
+  "C|CONFIRM|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "VN|CONFIRM|PREMISE_PROXIMITY|building+point+postcode|core|u1|AREA_STREET_MISMATCH+BUILDING_SPELL_CORRECTED+PREMISE_FROM_POI": [
    1,
    1
   ],
-  "VN|CONFIRM|PREMISE|building+point+postcode|core|u1|AREA_STREET_MISMATCH+BUILDING_SPELL_CORRECTED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|building+point+postcode|core|u1|AREA_STREET_MISMATCH+BUILDING_SPELL_CORRECTED+PREMISE_FROM_OSM": [
+  "C|CONFIRM|PREMISE_PROXIMITY|building+point+postcode|core|u1|AREA_STREET_MISMATCH+BUILDING_SPELL_CORRECTED+PREMISE_FROM_POI": [
    1,
    1
   ],
   "VN|CONFIRM|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
    1,
-   1
-  ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|AREA_STREET_MISMATCH+PREMISE_FROM_POI": [
-   0,
    1
   ],
   "VN|CONFIRM|PREMISE_PROXIMITY|area+point|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
@@ -6233,65 +5321,25 @@
    1,
    1
   ],
-  "VN|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   1,
-   1
-  ],
-  "VN|CONFIRM|PREMISE|point+postcode|exact|uN|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   3,
-   3
-  ],
-  "C|CONFIRM|PREMISE|point+postcode|exact|uN|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   3,
-   3
-  ],
-  "VN|CONFIRM|PREMISE|area+point|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE|area+point|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
-  "VN|CONFIRM|PREMISE|point|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
-   0,
-   1
-  ],
   "VN|CONFIRM|PREMISE_PROXIMITY|point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
    1
   ],
-  "VN|CONFIRM|PREMISE|point|exact|u1|POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   1,
+  "VN|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
    1
   ],
-  "C|CONFIRM|PREMISE|point|exact|u1|POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "VN|CONFIRM|PREMISE|point|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|point|exact|uN|AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "VN|CONFIRM|PREMISE|point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
+  "C|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
    1
   ],
   "VN|CONFIRM|ROUTE|postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    1,
    1
   ],
-  "VN|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   1,
-   1
-  ],
-  "PH|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   14,
-   15
+  "PH|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
+   39,
+   43
   ],
   "PH|ACCEPT|PREMISE_PROXIMITY|none|code|-|LOCATED_BY_COORDINATES": [
    1,
@@ -6302,12 +5350,12 @@
    1
   ],
   "PH|CONFIRM|ROUTE|area|exact|u1|MISSING_PREMISE": [
-   19,
-   24
+   18,
+   23
   ],
   "PH|ACCEPT|ROUTE|area+postcode|exact|u1|-": [
-   31,
-   40
+   55,
+   66
   ],
   "PH|CONFIRM|ROUTE|area+postcode|exact|uN|MISSING_PREMISE": [
    22,
@@ -6318,32 +5366,28 @@
    6
   ],
   "PH|FIX|LOCALITY|-": [
-   43,
-   66
+   44,
+   64
   ],
   "PH|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
    7,
    8
   ],
   "PH|ACCEPT|PREMISE_PROXIMITY|area+building+postcode|exact|u1|-": [
-   5,
-   5
+   6,
+   6
   ],
   "PH|CONFIRM|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
-   24,
-   26
+   19,
+   21
   ],
   "PH|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   22,
-   24
-  ],
-  "PH|CONFIRM|ROUTE|area+postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
-   22,
-   26
+   25,
+   27
   ],
   "PH|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
    7,
-   15
+   17
   ],
   "PH|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|exact|u1|BUILDING_SPELL_CORRECTED": [
    2,
@@ -6351,11 +5395,7 @@
   ],
   "PH|CONFIRM|ROUTE|area|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
-   6
-  ],
-  "PH|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|u1|PREMISE_INTERPOLATED": [
-   11,
-   18
+   9
   ],
   "PH|CONFIRM|ROUTE|area|exact|u1|POSTCODE_STREET_MISMATCH": [
    0,
@@ -6365,33 +5405,33 @@
    0,
    2
   ],
-  "PH|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   1,
-   2
+  "PH|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|core|u1|PREMISE_FROM_POI": [
+   5,
+   6
   ],
   "PH|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
    0,
    1
   ],
   "PH|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH": [
-   0,
-   3
+   1,
+   4
   ],
   "C|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH": [
-   0,
-   3
+   1,
+   4
   ],
   "PH|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    4
   ],
-  "PH|ACCEPT|PREMISE|area+building+point+postcode|exact|u1|PREMISE_FROM_OSM": [
-   1,
-   1
+  "PH|ACCEPT|PREMISE_PROXIMITY|area+building+point+postcode|exact|u1|PREMISE_FROM_POI": [
+   3,
+   3
   ],
   "PH|CONFIRM|ROUTE|area|fuzzy|u1|STREET_SPELL_CORRECTED": [
-   1,
-   3
+   3,
+   5
   ],
   "PH|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -6399,27 +5439,23 @@
   ],
   "PH|CONFIRM|ROUTE|area+postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
-   1
-  ],
-  "PH|ACCEPT|PREMISE|area+point+postcode|exact|u1|PREMISE_FROM_OSM": [
-   18,
-   20
+   2
   ],
   "PH|CONFIRM|ROUTE|area|exact|uN|MISSING_PREMISE": [
    6,
    7
   ],
-  "PH|CONFIRM|PREMISE|area+point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
-   2,
-   2
-  ],
-  "PH|CONFIRM|ROUTE|area+postcode|core|u1|MISSING_PREMISE": [
+  "PH|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
    3,
    4
   ],
+  "PH|CONFIRM|ROUTE|area+postcode|core|u1|MISSING_PREMISE": [
+   4,
+   5
+  ],
   "PH|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|u1|PREMISE_FROM_POI": [
-   19,
-   25
+   35,
+   44
   ],
   "PH|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    2,
@@ -6441,21 +5477,13 @@
    0,
    1
   ],
-  "PH|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|core|u1|PREMISE_INTERPOLATED": [
-   4,
-   5
+  "PH|ACCEPT|ROUTE|area+postcode|core|u1|-": [
+   14,
+   14
   ],
   "PH|CONFIRM|ROUTE|area|core|u1|MISSING_PREMISE": [
    1,
    2
-  ],
-  "PH|CONFIRM|PREMISE|area+building+point+postcode|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|area+building+point+postcode|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   1,
-   1
   ],
   "PH|CONFIRM|PREMISE_PROXIMITY|area+building+point+postcode|exact|uN|BUILDING_NAME_AMBIGUOUS+PREMISE_FROM_POI": [
    1,
@@ -6473,10 +5501,6 @@
    0,
    1
   ],
-  "PH|CONFIRM|PREMISE_PROXIMITY|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   3,
-   3
-  ],
   "PH|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH": [
    1,
    1
@@ -6485,13 +5509,25 @@
    2,
    2
   ],
+  "PH|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   4
+  ],
+  "C|CONFIRM|ROUTE|none|exact|u1|POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   4
+  ],
+  "PH|CONFIRM|ROUTE|area+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   3,
+   5
+  ],
   "PH|CONFIRM|ROUTE|area|exact|uN|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    0,
    2
   ],
   "PH|CONFIRM|ROUTE|area+postcode|partial|u1|STREET_PARTIAL_MATCH": [
-   8,
-   8
+   10,
+   10
   ],
   "PH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
    0,
@@ -6506,18 +5542,14 @@
    5
   ],
   "PH|CONFIRM|ROUTE|postcode|core|u1|ROUTE_NOT_CORROBORATED": [
-   6,
-   6
-  ],
-  "PH|ACCEPT|ROUTE|area+postcode|core|u1|-": [
-   10,
-   10
+   9,
+   9
   ],
   "PH|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_POI": [
-   2,
-   2
+   3,
+   3
   ],
-  "PH|CONFIRM|PREMISE_PROXIMITY|point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
+  "PH|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH": [
    0,
    1
   ],
@@ -6529,10 +5561,6 @@
    1,
    1
   ],
-  "PH|CONFIRM|PREMISE|area+point+postcode|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   3,
-   5
-  ],
   "PH|CONFIRM|ROUTE|area|core|u1|POSTCODE_STREET_MISMATCH": [
    0,
    4
@@ -6541,17 +5569,13 @@
    3,
    3
   ],
-  "PH|CONFIRM|ROUTE|area+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
+  "PH|CONFIRM|PREMISE_PROXIMITY|area+building+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    2,
    3
   ],
-  "PH|CONFIRM|PREMISE|area+building+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   2
-  ],
   "PH|CONFIRM|ROUTE|area|core|uN|ROUTE_NOT_CORROBORATED": [
-   0,
-   3
+   1,
+   4
   ],
   "PH|ACCEPT|PREMISE_PROXIMITY|area+building|exact|uN|-": [
    1,
@@ -6561,25 +5585,17 @@
    1,
    1
   ],
-  "PH|CONFIRM|PREMISE|area+point|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|area+point|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
   "PH|CONFIRM|ROUTE|area|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    1,
-   2
+   1
   ],
   "PH|CONFIRM|PREMISE_PROXIMITY|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
-   2,
-   3
+   3,
+   4
   ],
   "PH|CONFIRM|ROUTE|area|exact|u1|ROUTE_NOT_CORROBORATED": [
-   5,
-   7
+   7,
+   9
   ],
   "PH|CONFIRM|ROUTE|area|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    0,
@@ -6590,32 +5606,12 @@
    1
   ],
   "PH|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
-   5,
-   7
+   6,
+   8
   ],
-  "PH|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   1,
-   1
-  ],
-  "PH|CONFIRM|PREMISE|area+point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "PH|ACCEPT|PREMISE_PROXIMITY|area+building+point+postcode|exact|u1|PREMISE_FROM_POI": [
-   1,
-   1
-  ],
-  "PH|CONFIRM|PREMISE|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   7,
-   7
-  ],
-  "PH|CONFIRM|PREMISE|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "PH|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|core|u1|PREMISE_FROM_POI": [
+  "PH|CONFIRM|ROUTE|area|core|u1|ROUTE_NOT_CORROBORATED": [
    4,
-   4
+   5
   ],
   "PH|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
@@ -6625,13 +5621,9 @@
    0,
    1
   ],
-  "PH|CONFIRM|PREMISE|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
   "PH|CONFIRM|ROUTE|none|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
-   1
+   3
   ],
   "PH|CONFIRM|PREMISE_PROXIMITY|building+postcode|exact|u1|BUILDING_NAME_AMBIGUOUS": [
    1,
@@ -6653,10 +5645,6 @@
    0,
    1
   ],
-  "PH|CONFIRM|PREMISE|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
   "PH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    1
@@ -6665,29 +5653,25 @@
    0,
    1
   ],
-  "PH|ACCEPT|PREMISE|area+building+point+postcode|core|u1|PREMISE_FROM_OSM": [
+  "PH|ACCEPT|PREMISE_PROXIMITY|area+building+point+postcode|core|u1|PREMISE_FROM_POI": [
    1,
    1
   ],
-  "C|ACCEPT|PREMISE|area+building+point+postcode|core|u1|PREMISE_FROM_OSM": [
+  "C|ACCEPT|PREMISE_PROXIMITY|area+building+point+postcode|core|u1|PREMISE_FROM_POI": [
    1,
    1
   ],
-  "PH|CONFIRM|PREMISE|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_OSM": [
+  "PH|CONFIRM|PREMISE_PROXIMITY|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_POI": [
    1,
    1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_POI": [
+   5,
+   5
   ],
   "PH|CONFIRM|ROUTE|postcode|core|uN|ROUTE_NOT_CORROBORATED": [
-   4,
-   4
-  ],
-  "PH|CONFIRM|ROUTE|area|core|uN|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
-   0,
-   1
-  ],
-  "PH|CONFIRM|ROUTE|area|core|u1|ROUTE_NOT_CORROBORATED": [
-   3,
-   4
+   5,
+   5
   ],
   "PH|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|partial|u1|STREET_PARTIAL_MATCH+BUILDING_SPELL_CORRECTED": [
    1,
@@ -6709,10 +5693,6 @@
    0,
    4
   ],
-  "PH|CONFIRM|PREMISE|point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
   "PH|CONFIRM|PREMISE_PROXIMITY|area+building+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_POI": [
    1,
    1
@@ -6721,9 +5701,13 @@
    1,
    1
   ],
+  "PH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH": [
+   0,
+   1
+  ],
   "PH|CONFIRM|ROUTE|area+postcode|fuzzy|u1|STREET_SPELL_CORRECTED": [
-   5,
-   5
+   6,
+   6
   ],
   "PH|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|exact|uN|BUILDING_SPELL_CORRECTED+BUILDING_NAME_AMBIGUOUS": [
    1,
@@ -6733,45 +5717,41 @@
    1,
    1
   ],
-  "PH|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   2,
-   3
+  "PH|CONFIRM|ROUTE|area+postcode|core|uN|ROUTE_NOT_CORROBORATED": [
+   6,
+   7
   ],
-  "PH|CONFIRM|PREMISE_PROXIMITY|area+point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   2,
-   2
-  ],
-  "PH|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
-   1,
-   2
-  ],
-  "PH|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+  "PH|CONFIRM|ROUTE|area|core|uN|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    0,
-   2
+   1
   ],
-  "PH|CONFIRM|PREMISE_PROXIMITY|area+point|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
-   1,
-   2
+  "PH|CONFIRM|ROUTE|none|core|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
+   0,
+   1
   ],
   "PH|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
    1
   ],
-  "PH|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
+  "PH|CONFIRM|ROUTE|none|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+   0,
+   1
+  ],
+  "PH|CONFIRM|PREMISE_PROXIMITY|area+building+point|exact|uN|BUILDING_SPELL_CORRECTED+PREMISE_FROM_POI": [
    1,
    1
   ],
-  "PH|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
+  "C|CONFIRM|PREMISE_PROXIMITY|area+building+point|exact|uN|BUILDING_SPELL_CORRECTED+PREMISE_FROM_POI": [
+   1,
    1
   ],
-  "C|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
+  "PH|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED": [
    0,
-   1
+   2
   ],
   "PH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
    0,
-   1
+   2
   ],
   "PH|CONFIRM|ROUTE|area+postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    2,
@@ -6782,18 +5762,6 @@
    3
   ],
   "PH|CONFIRM|ROUTE|area|core|uN|POSTCODE_STREET_MISMATCH": [
-   1,
-   1
-  ],
-  "PH|CONFIRM|ROUTE|area+postcode|core|uN|MISSING_PREMISE": [
-   1,
-   1
-  ],
-  "PH|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_INTERPOLATED": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|u1|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_INTERPOLATED": [
    1,
    1
   ],
@@ -6811,14 +5779,6 @@
   ],
   "PH|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    0,
-   1
-  ],
-  "PH|CONFIRM|PREMISE_PROXIMITY|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   0,
-   2
-  ],
-  "PH|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
-   1,
    1
   ],
   "PH|CONFIRM|PREMISE_PROXIMITY|area+building+postcode|exact|u1|BUILDING_NAME_AMBIGUOUS": [
@@ -6841,25 +5801,9 @@
    0,
    1
   ],
-  "PH|CONFIRM|ROUTE|area+postcode|core|uN|ROUTE_NOT_CORROBORATED": [
-   5,
-   5
-  ],
-  "PH|CONFIRM|ROUTE|postcode|core|u1|MISSING_PREMISE": [
+  "PH|CONFIRM|ROUTE|area+postcode|fuzzy|uN|STREET_SPELL_CORRECTED": [
    1,
    1
-  ],
-  "PH|CONFIRM|PREMISE_PROXIMITY|area+point|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_INTERPOLATED": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+point|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_INTERPOLATED": [
-   0,
-   1
-  ],
-  "PH|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_POI": [
-   1,
-   2
   ],
   "PH|CONFIRM|ROUTE|area+postcode|partial|uN|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
    0,
@@ -6874,12 +5818,12 @@
    1
   ],
   "PH|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   1
+   1,
+   2
   ],
   "C|CONFIRM|ROUTE|area|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   1
+   1,
+   2
   ],
   "PH|CONFIRM|PREMISE_PROXIMITY|area+building+point+postcode|core|u1|BUILDING_NAME_AMBIGUOUS+PREMISE_FROM_POI": [
    0,
@@ -6890,26 +5834,6 @@
    1
   ],
   "PH|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AREA_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   1
-  ],
-  "PH|CONFIRM|PREMISE_PROXIMITY|area+point|partial|uN|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|area+point|partial|uN|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
-   1,
-   1
-  ],
-  "PH|CONFIRM|PREMISE|area+building+point+postcode|exact|uN|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|area+building+point+postcode|exact|uN|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "PH|CONFIRM|ROUTE|area|fuzzy|uN|STREET_SPELL_CORRECTED": [
    0,
    1
   ],
@@ -6925,10 +5849,6 @@
    0,
    1
   ],
-  "PH|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
-   0,
-   1
-  ],
   "PH|CONFIRM|PREMISE_PROXIMITY|area+building|exact|u1|POSTCODE_STREET_MISMATCH": [
    1,
    1
@@ -6937,15 +5857,7 @@
    1,
    1
   ],
-  "PH|CONFIRM|PREMISE|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "PH|CONFIRM|PREMISE|area+point+postcode|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_REPLACED+PREMISE_FROM_OSM": [
-   1,
-   1
-  ],
-  "C|CONFIRM|PREMISE|area+point+postcode|partial|u1|STREET_PARTIAL_MATCH+POSTCODE_REPLACED+PREMISE_FROM_OSM": [
+  "PH|CONFIRM|PREMISE_PROXIMITY|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
    1
   ],
@@ -7969,6 +6881,10 @@
    15,
    16
   ],
+  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
+   69,
+   72
+  ],
   "PR|CONFIRM|ROUTE|area+postcode|exact|u1|MISSING_PREMISE": [
    8,
    9
@@ -8009,11 +6925,19 @@
    3,
    4
   ],
+  "C|CONFIRM|PREMISE": [
+   422,
+   512
+  ],
   "PR|CONFIRM|ROUTE|none|core|u1|AMBIGUOUS_MULTIPLE_CANDIDATES": [
    1,
    1
   ],
   "PR|CONFIRM|PREMISE|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+   4,
+   4
+  ],
+  "C|CONFIRM|PREMISE|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
    4,
    4
   ],
@@ -8037,6 +6961,10 @@
    16,
    19
   ],
+  "C|CONFIRM|PREMISE|point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+   177,
+   198
+  ],
   "PR|CONFIRM|ROUTE|postcode|exact|u1|MISSING_PREMISE": [
    13,
    13
@@ -8045,9 +6973,17 @@
    1,
    1
   ],
+  "C|CONFIRM|PREMISE_PROXIMITY|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
+   5,
+   10
+  ],
   "PR|CONFIRM|PREMISE|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
    0,
    1
+  ],
+  "C|CONFIRM|PREMISE|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+   4,
+   7
   ],
   "PR|CONFIRM|ROUTE|postcode|suffix|uN|ROUTE_NOT_CORROBORATED": [
    4,
@@ -8060,6 +6996,10 @@
   "PR|CONFIRM|PREMISE|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
    4,
    4
+  ],
+  "C|CONFIRM|PREMISE|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+   29,
+   32
   ],
   "PR|CONFIRM|ROUTE|none|core|u1|ROUTE_NOT_CORROBORATED": [
    1,
@@ -8097,6 +7037,10 @@
    3,
    3
   ],
+  "C|CONFIRM|PREMISE|point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
+   7,
+   8
+  ],
   "PR|CONFIRM|PREMISE|point+postcode|suffix|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
    9,
    10
@@ -8117,6 +7061,10 @@
    4,
    6
   ],
+  "C|ACCEPT|PREMISE_PROXIMITY|point+postcode|exact|u1|PREMISE_INTERPOLATED": [
+   173,
+   185
+  ],
   "PR|ACCEPT|ROUTE|area+postcode|exact|u1|-": [
    7,
    7
@@ -8129,9 +7077,21 @@
    15,
    16
   ],
+  "C|ACCEPT|PREMISE|point+postcode|exact|u1|PREMISE_FROM_OSM": [
+   779,
+   817
+  ],
+  "C|ACCEPT|PREMISE": [
+   1229,
+   1289
+  ],
   "PR|CONFIRM|PREMISE|area+point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
    1,
    1
+  ],
+  "C|CONFIRM|PREMISE|area+point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+   4,
+   4
   ],
   "PR|CONFIRM|ROUTE|postcode|core|uN|ROUTE_NOT_CORROBORATED": [
    0,
@@ -8221,6 +7181,10 @@
    7,
    8
   ],
+  "C|CONFIRM|PREMISE|point+postcode|exact|uN|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
+   19,
+   21
+  ],
   "PR|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
    1
@@ -8269,6 +7233,10 @@
    0,
    1
   ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|partial|uN|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
+   0,
+   1
+  ],
   "PR|CONFIRM|ROUTE|area+postcode|suffix|uN|ROUTE_NOT_CORROBORATED": [
    5,
    5
@@ -8289,9 +7257,17 @@
    2,
    2
   ],
+  "C|CONFIRM|PREMISE|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+   15,
+   19
+  ],
   "PR|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
    1,
    3
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
+   14,
+   17
   ],
   "PR|CONFIRM|ROUTE|area|core|uN|ROUTE_NOT_CORROBORATED": [
    0,
@@ -8317,6 +7293,10 @@
    0,
    1
   ],
+  "C|CONFIRM|PREMISE|point|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
+   0,
+   1
+  ],
   "PR|CONFIRM|PREMISE_PROXIMITY|point+postcode|suffix|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
    2,
    4
@@ -8332,6 +7312,10 @@
   "PR|CONFIRM|PREMISE_PROXIMITY|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
    1,
    2
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
+   17,
+   20
   ],
   "PR|CONFIRM|ROUTE|none|suffix|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
@@ -8364,6 +7348,10 @@
   "PR|CONFIRM|PREMISE_PROXIMITY|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
    0,
    1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
+   4,
+   5
   ],
   "PR|CONFIRM|PREMISE|area+point+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+PREMISE_FROM_OSM": [
    1,
@@ -8413,10 +7401,6 @@
    0,
    3
   ],
-  "C|CONFIRM|ROUTE|none|partial|uN|STREET_PARTIAL_MATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   1,
-   4
-  ],
   "PR|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH+MISSING_PREMISE": [
    4,
    5
@@ -8437,9 +7421,17 @@
    0,
    1
   ],
+  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
+   2,
+   3
+  ],
   "PR|CONFIRM|PREMISE|point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
    1,
    1
+  ],
+  "C|CONFIRM|PREMISE|point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+   4,
+   4
   ],
   "PR|CONFIRM|ROUTE|postcode|alias|uN|MISSING_PREMISE": [
    1,
@@ -8477,6 +7469,10 @@
    1,
    1
   ],
+  "C|CONFIRM|PREMISE|area+point+postcode|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
+   4,
+   4
+  ],
   "PR|CONFIRM|ROUTE|none|suffix|u1|POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    0,
    1
@@ -8509,9 +7505,17 @@
    1,
    2
   ],
+  "C|CONFIRM|PREMISE|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_OSM": [
+   27,
+   31
+  ],
   "PR|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
    0,
    2
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
+   8,
+   12
   ],
   "PR|CONFIRM|ROUTE|area|core|uN|MISSING_PREMISE": [
    0,
@@ -8557,6 +7561,10 @@
    1,
    1
   ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
+   5,
+   7
+  ],
   "PR|CONFIRM|ROUTE|postcode|fuzzy|uN|STREET_SPELL_CORRECTED+MISSING_PREMISE": [
    0,
    1
@@ -8568,6 +7576,10 @@
   "PR|ACCEPT|PREMISE|area+point+postcode|exact|u1|PREMISE_FROM_OSM": [
    1,
    3
+  ],
+  "C|ACCEPT|PREMISE|area+point+postcode|exact|u1|PREMISE_FROM_OSM": [
+   87,
+   100
   ],
   "PR|CONFIRM|PREMISE|point+postcode|alias|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
    1,
@@ -8585,10 +7597,6 @@
    0,
    2
   ],
-  "C|CONFIRM|ROUTE|none|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   3
-  ],
   "PR|CONFIRM|PREMISE|point+postcode|suffix|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
    0,
    1
@@ -8600,6 +7608,10 @@
   "PR|CONFIRM|PREMISE|point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
    1,
    1
+  ],
+  "C|CONFIRM|PREMISE|point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+   13,
+   20
   ],
   "PR|ACCEPT|ROUTE|area+postcode|alias|u1|-": [
    1,
@@ -8628,6 +7640,10 @@
   "PR|CONFIRM|PREMISE|point+postcode|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
    1,
    1
+  ],
+  "C|CONFIRM|PREMISE|point+postcode|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
+   25,
+   30
   ],
   "PR|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED": [
    0,
@@ -8677,11 +7693,19 @@
    1,
    1
   ],
+  "C|CONFIRM|PREMISE|area+point+postcode|partial|uN|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
+   1,
+   1
+  ],
   "PR|CONFIRM|ROUTE|postcode|partial|u1|STREET_PARTIAL_MATCH": [
    1,
    1
   ],
   "PR|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_POI": [
+   0,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|core|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_POI": [
    0,
    1
   ],
@@ -8720,6 +7744,10 @@
   "PR|CONFIRM|PREMISE|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
    0,
    1
+  ],
+  "C|CONFIRM|PREMISE|area+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+   20,
+   23
   ],
   "PR|CONFIRM|ROUTE|area|core|u1|ROUTE_NOT_CORROBORATED": [
    1,
@@ -9165,9 +8193,17 @@
    134,
    136
   ],
+  "C|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|u1|PREMISE_INTERPOLATED": [
+   158,
+   162
+  ],
   "AR|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|core|u1|PREMISE_INTERPOLATED": [
    7,
    7
+  ],
+  "C|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|core|u1|PREMISE_INTERPOLATED": [
+   8,
+   8
   ],
   "AR|ACCEPT|PREMISE|area+point+postcode|exact|uN|PREMISE_FROM_OSM": [
    33,
@@ -9181,9 +8217,17 @@
    1,
    1
   ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
+   1,
+   1
+  ],
   "AR|CONFIRM|PREMISE_PROXIMITY|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
    12,
    14
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
+   12,
+   15
   ],
   "AR|ACCEPT|PREMISE_PROXIMITY|area+point+postcode|exact|uN|PREMISE_INTERPOLATED": [
    132,
@@ -9216,6 +8260,10 @@
   "AR|CONFIRM|PREMISE|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
    2,
    2
+  ],
+  "C|CONFIRM|PREMISE|area+point|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+   3,
+   3
   ],
   "AR|ACCEPT|ROUTE|area+postcode|suffix|u1|-": [
    3,
@@ -9277,7 +8325,15 @@
    0,
    1
   ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
+   0,
+   1
+  ],
   "AR|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
+   5,
+   6
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_INTERPOLATED": [
    5,
    6
   ],
@@ -9329,7 +8385,15 @@
    3,
    4
   ],
+  "C|CONFIRM|PREMISE_PROXIMITY|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_INTERPOLATED": [
+   5,
+   6
+  ],
   "AR|CONFIRM|PREMISE|area+building+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE|area+building+point+postcode|exact|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
    1,
    1
   ],
@@ -9358,6 +8422,10 @@
    1
   ],
   "AR|CONFIRM|PREMISE|area+point|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
+   2,
+   2
+  ],
+  "C|CONFIRM|PREMISE|area+point|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
    2,
    2
   ],
@@ -9461,6 +8529,10 @@
    1,
    1
   ],
+  "C|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
+   17,
+   20
+  ],
   "AR|CONFIRM|PREMISE|area+point+postcode|suffix|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
    1,
    1
@@ -9525,6 +8597,10 @@
    1,
    1
   ],
+  "C|ACCEPT|PREMISE|area+point+postcode|core|u1|PREMISE_FROM_OSM": [
+   4,
+   4
+  ],
   "AR|CONFIRM|ROUTE|none|exact|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES": [
    0,
    1
@@ -9534,6 +8610,10 @@
    2
   ],
   "AR|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
+   0,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|point|exact|u1|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
    0,
    1
   ],
@@ -10589,6 +9669,10 @@
    1,
    2
   ],
+  "C|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
+   1,
+   3
+  ],
   "GB|CONFIRM|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
    11,
    11
@@ -10653,19 +9737,11 @@
    0,
    1
   ],
-  "C|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+AMBIGUOUS_MULTIPLE_CANDIDATES": [
-   0,
-   1
-  ],
   "GB|CONFIRM|PREMISE|point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
    1,
    1
   ],
   "GB|CONFIRM|PREMISE_PROXIMITY|building+point+postcode|exact|u1|BUILDING_SPELL_CORRECTED+PREMISE_FROM_POI": [
-   2,
-   2
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|building+point+postcode|exact|u1|BUILDING_SPELL_CORRECTED+PREMISE_FROM_POI": [
    2,
    2
   ],
@@ -10721,6 +9797,10 @@
    0,
    1
   ],
+  "C|CONFIRM|PREMISE|point|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
+   0,
+   3
+  ],
   "GB|CONFIRM|PREMISE|point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
    0,
    1
@@ -10745,6 +9825,10 @@
    0,
    1
   ],
+  "C|CONFIRM|PREMISE|point+postcode|core|uN|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
+   1,
+   3
+  ],
   "GB|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_INTERPOLATED": [
    1,
    1
@@ -10762,6 +9846,10 @@
    1
   ],
   "GB|CONFIRM|PREMISE_PROXIMITY|point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
+   0,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
    0,
    1
   ],
@@ -10876,6 +9964,10 @@
   "IE|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
    1,
    1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
+   32,
+   34
   ],
   "IE|CONFIRM|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
    20,
@@ -11009,6 +10101,10 @@
    1,
    1
   ],
+  "C|CONFIRM|PREMISE|area+point+postcode|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
+   1,
+   1
+  ],
   "IE|CONFIRM|ROUTE|area+postcode|exact|uN|MISSING_PREMISE": [
    7,
    8
@@ -11026,6 +10122,10 @@
    1
   ],
   "IE|CONFIRM|PREMISE|point|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
+   0,
+   1
+  ],
+  "C|CONFIRM|PREMISE|point|core|uN|POSTCODE_STREET_MISMATCH+AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_OSM": [
    0,
    1
   ],
@@ -11069,6 +10169,10 @@
    1,
    1
   ],
+  "C|CONFIRM|PREMISE|area+point|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+   1,
+   1
+  ],
   "IE|CONFIRM|PREMISE|point|exact|uN|POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
    0,
    1
@@ -11086,6 +10190,10 @@
    2
   ],
   "IE|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|uN|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
    1,
    1
   ],
@@ -13637,6 +12745,10 @@
    1,
    1
   ],
+  "C|CONFIRM|PREMISE|area+point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_OSM": [
+   4,
+   4
+  ],
   "SE|CONFIRM|ROUTE|none|exact|u1|ROUTE_NOT_CORROBORATED": [
    1,
    1
@@ -13653,15 +12765,27 @@
    1,
    1
   ],
+  "C|ACCEPT|PREMISE|building+point+postcode|exact|u1|BUILDING_SPELL_CORRECTED+PREMISE_FROM_OSM": [
+   1,
+   1
+  ],
   "SE|CONFIRM|PREMISE|point|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
    2,
    2
+  ],
+  "C|CONFIRM|PREMISE|point|exact|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
+   4,
+   4
   ],
   "SE|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+AREA_STREET_MISMATCH": [
    0,
    1
   ],
   "SE|CONFIRM|PREMISE|point+postcode|exact|u1|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
+   3,
+   3
+  ],
+  "C|CONFIRM|PREMISE|point+postcode|exact|u1|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
    3,
    3
   ],
@@ -13694,6 +12818,10 @@
    1
   ],
   "SE|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|u1|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
+   1,
+   1
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|exact|u1|AREA_STREET_MISMATCH+PREMISE_INTERPOLATED": [
    1,
    1
   ],
@@ -15173,11 +14301,19 @@
    0,
    1
   ],
+  "C|CONFIRM|PREMISE|point+postcode|fuzzy|uN|STREET_SPELL_CORRECTED+POSTCODE_REPLACED+PREMISE_FROM_OSM": [
+   0,
+   1
+  ],
   "HU|CONFIRM|PREMISE_PROXIMITY|none|bldg|-|BUILDING_ONLY": [
    1,
    1
   ],
   "HU|CONFIRM|PREMISE|point|exact|u1|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
+   0,
+   1
+  ],
+  "C|CONFIRM|PREMISE|point|exact|u1|AREA_STREET_MISMATCH+PREMISE_FROM_OSM": [
    0,
    1
   ],
@@ -15209,10 +14345,6 @@
    1,
    1
   ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|fuzzy|u1|STREET_SPELL_CORRECTED+PREMISE_FROM_POI": [
-   4,
-   4
-  ],
   "HU|CONFIRM|PREMISE_PROXIMITY|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    1,
    1
@@ -15220,6 +14352,10 @@
   "HU|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
    0,
    2
+  ],
+  "C|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|uN|ROUTE_NOT_CORROBORATED+PREMISE_INTERPOLATED": [
+   5,
+   8
   ],
   "HU|CONFIRM|PREMISE|point|exact|uN|POSTCODE_REPLACED+POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
    1,
@@ -15725,6 +14861,10 @@
    7,
    9
   ],
+  "C|CONFIRM|PREMISE|point|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_OSM": [
+   7,
+   9
+  ],
   "BG|CONFIRM|PREMISE_PROXIMITY|point+postcode|core|u1|ROUTE_NOT_CORROBORATED+PREMISE_FROM_POI": [
    15,
    18
@@ -15758,6 +14898,10 @@
    1
   ],
   "BG|CONFIRM|PREMISE|point+postcode|core|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
+   2,
+   2
+  ],
+  "C|CONFIRM|PREMISE|point+postcode|core|u1|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
    2,
    2
   ],
@@ -15945,6 +15089,10 @@
    0,
    1
   ],
+  "C|CONFIRM|PREMISE|point|core|uN|POSTCODE_STREET_MISMATCH+PREMISE_FROM_OSM": [
+   0,
+   1
+  ],
   "BG|CONFIRM|PREMISE|point+postcode|core|uN|POSTCODE_REPLACED+PREMISE_FROM_OSM": [
    0,
    1
@@ -15969,11 +15117,19 @@
    1,
    1
   ],
+  "C|ACCEPT|PREMISE|building+point+postcode|exact|u1|PREMISE_FROM_OSM": [
+   1,
+   1
+  ],
   "BG|ACCEPT|PREMISE|area+point+postcode|exact|u1|PREMISE_FROM_OSM": [
    1,
    1
   ],
   "BG|CONFIRM|PREMISE|point|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
+   0,
+   1
+  ],
+  "C|CONFIRM|PREMISE|point|partial|u1|STREET_PARTIAL_MATCH+PREMISE_FROM_OSM": [
    0,
    1
   ],
@@ -16314,8 +15470,8 @@
    1
   ],
   "IN|FIX|LOCALITY|-": [
-   158,
-   182
+   157,
+   181
   ],
   "IN|CONFIRM|ROUTE|postcode|exact|uN|MISSING_PREMISE": [
    11,
@@ -16331,7 +15487,7 @@
   ],
   "IN|CONFIRM|ROUTE|none|fuzzy|u1|STREET_SPELL_CORRECTED+POSTCODE_STREET_MISMATCH+MISSING_PREMISE": [
    0,
-   6
+   7
   ],
   "IN|CONFIRM|ROUTE|postcode|exact|uN|ROUTE_NOT_CORROBORATED": [
    6,
@@ -16482,10 +15638,6 @@
    4
   ],
   "IN|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_POI": [
-   0,
-   1
-  ],
-  "C|CONFIRM|PREMISE_PROXIMITY|point|exact|uN|AMBIGUOUS_MULTIPLE_CANDIDATES+PREMISE_FROM_POI": [
    0,
    1
   ],

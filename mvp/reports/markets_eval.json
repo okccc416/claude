@@ -2332,24 +2332,23 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.015,
-          "正确·要求确认": 0.283,
-          "判 FIX·片区对": 0.122,
-          "判 FIX": 0.241,
-          "错误建议": 0.333,
+          "正确·要求确认": 0.291,
+          "判 FIX·片区对": 0.12,
+          "判 FIX": 0.243,
+          "错误建议": 0.325,
           "静默错误": 0.006
         },
         "silent_over_1km": 0.005,
-        "wrong_over_1km": 0.261,
+        "wrong_over_1km": 0.255,
         "granularity": {
-          "ROUTE": 0.409,
-          "PREMISE_PROXIMITY": 0.211,
-          "LOCALITY": 0.183,
-          "OTHER": 0.18,
-          "PREMISE": 0.017
+          "ROUTE": 0.437,
+          "PREMISE_PROXIMITY": 0.2,
+          "LOCALITY": 0.182,
+          "OTHER": 0.181
         },
-        "median_error_m": 1805.260731969841,
-        "within_500m": 0.212,
-        "ms": 3.870357803000047,
+        "median_error_m": 1824.443122654612,
+        "within_500m": 0.21,
+        "ms": 3.7358281909992,
         "examples": {
           "判 FIX": [
             [
@@ -2434,25 +2433,24 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.016,
-          "正确·要求确认": 0.418,
+          "正确·直接通过": 0.017,
+          "正确·要求确认": 0.474,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.293,
-          "错误建议": 0.27,
-          "静默错误": 0.003
+          "判 FIX": 0.3,
+          "错误建议": 0.209,
+          "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.193,
+        "wrong_over_1km": 0.18,
         "granularity": {
-          "ROUTE": 0.617,
-          "LOCALITY": 0.213,
-          "OTHER": 0.08,
-          "PREMISE_PROXIMITY": 0.068,
-          "PREMISE": 0.022
+          "ROUTE": 0.663,
+          "LOCALITY": 0.227,
+          "OTHER": 0.073,
+          "PREMISE_PROXIMITY": 0.037
         },
-        "median_error_m": 317.35399016070437,
-        "within_500m": 0.509,
-        "ms": 3.3725578529999893,
+        "median_error_m": 283.5569508317451,
+        "within_500m": 0.522,
+        "ms": 2.5232868599996436,
         "examples": {
           "错误建议": [
             [
@@ -2462,22 +2460,22 @@
               "41A Nadd Al Hamar Street"
             ],
             [
-              "57 2b st, قصيص, dubai, uae",
-              "CONFIRM",
-              "PREMISE",
-              "57 2b Street"
-            ],
-            [
-              "18c St Dubai, UAE",
-              "CONFIRM",
-              "ROUTE",
-              "18c Street"
-            ],
-            [
               "23A 34a شارع",
               "CONFIRM",
               "ROUTE",
               "23A 34a شارع"
+            ],
+            [
+              "28b شارع",
+              "CONFIRM",
+              "ROUTE",
+              "28b شارع"
+            ],
+            [
+              "Noor Al Izza Translation and Documents Clearing Services, Apt 37, 110 17b شارع",
+              "CONFIRM",
+              "ROUTE",
+              "Apt 37, 110 17b Street"
             ]
           ],
           "判 FIX": [
@@ -2494,36 +2492,16 @@
               ""
             ],
             [
-              "180 St",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "72 شارع 56, Al Warqa 4, Dubai",
+              "107 2 St., سيرينا Dubai, UAE",
               "FIX",
               "LOCALITY",
               ""
-            ]
-          ],
-          "静默错误": [
-            [
-              "Sunset Mall, 124 Jumeira St., Dubai",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "Sunset Mall, 124 Jumeira Street"
             ],
             [
-              "Oasis Coils & Coatings, 16 Al Wasl Road, المنارة, دبي",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "Oasis Coils & Coatings, 16 Al Wasl Road, Al Manara"
-            ],
-            [
-              "Taytay Department Store, 25 Al Wasl Rd., جميرا",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "Taytay Department Store, 25 Al Wasl Road, Jumeira"
+              "Floor 20, 31 St, البرشاء جنوب 3",
+              "FIX",
+              "LOCALITY",
+              ""
             ]
           ]
         }
@@ -2534,24 +2512,23 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.01,
-          "正确·要求确认": 0.167,
+          "正确·要求确认": 0.173,
           "判 FIX·片区对": 0.063,
-          "判 FIX": 0.572,
-          "错误建议": 0.185,
+          "判 FIX": 0.573,
+          "错误建议": 0.178,
           "静默错误": 0.003
         },
         "silent_over_1km": 0.003,
-        "wrong_over_1km": 0.163,
+        "wrong_over_1km": 0.157,
         "granularity": {
-          "OTHER": 0.525,
-          "ROUTE": 0.267,
-          "LOCALITY": 0.11,
-          "PREMISE_PROXIMITY": 0.084,
-          "PREMISE": 0.014
+          "OTHER": 0.522,
+          "ROUTE": 0.293,
+          "LOCALITY": 0.114,
+          "PREMISE_PROXIMITY": 0.071
         },
-        "median_error_m": 2494.5283993738285,
+        "median_error_m": 2568.108657241828,
         "within_500m": 0.104,
-        "ms": 2.3289217219999045,
+        "ms": 2.273619220999535,
         "examples": {
           "判 FIX": [
             [
@@ -2607,10 +2584,10 @@
           ],
           "静默错误": [
             [
-              "8C8W+7G - Industrial AreaIndustrial Area 13 - Sharjah, الشارقة, 79681",
+              "79G2+J2H - Hor Al Anz East - Deira - Dubai, دبي",
               "ACCEPT",
               "PREMISE_PROXIMITY",
-              "Mughaidir, 7HQQ8C8W+7G"
+              "Al Twar 1, 7HQQ79G2+J2"
             ],
             [
               "Festival Boulevard, Dubai Festival City, دبي, 69C3+Q4",
@@ -2630,39 +2607,26 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.04,
-          "正确·要求确认": 0.617,
+          "正确·直接通过": 0.047,
+          "正确·要求确认": 0.714,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.017,
-          "错误建议": 0.322,
-          "静默错误": 0.004
+          "判 FIX": 0.011,
+          "错误建议": 0.228,
+          "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.253,
+        "wrong_over_1km": 0.219,
         "granularity": {
-          "ROUTE": 0.832,
-          "PREMISE_PROXIMITY": 0.1,
-          "PREMISE": 0.051,
-          "LOCALITY": 0.01,
-          "OTHER": 0.007
+          "ROUTE": 0.937,
+          "PREMISE_PROXIMITY": 0.052,
+          "LOCALITY": 0.009,
+          "OTHER": 0.002
         },
-        "median_error_m": 176.3697295387872,
-        "within_500m": 0.692,
-        "ms": 2.6886373419999927,
+        "median_error_m": 159.45253853511315,
+        "within_500m": 0.728,
+        "ms": 1.255994439999995,
         "examples": {
           "错误建议": [
-            [
-              "57 2b st, قصيص, dubai, uae",
-              "CONFIRM",
-              "PREMISE",
-              "57 2b Street"
-            ],
-            [
-              "18c St Dubai, UAE",
-              "CONFIRM",
-              "ROUTE",
-              "18c Street"
-            ],
             [
               "23A 34a شارع",
               "CONFIRM",
@@ -2674,6 +2638,18 @@
               "CONFIRM",
               "ROUTE",
               "28b شارع"
+            ],
+            [
+              "20 Street, مويلح, دبي",
+              "CONFIRM",
+              "ROUTE",
+              "شارع 20, مويلح"
+            ],
+            [
+              "Noor Al Izza Translation and Documents Clearing Services, Apt 37, 110 17b شارع",
+              "CONFIRM",
+              "ROUTE",
+              "Apt 37, 110 17b Street"
             ]
           ],
           "判 FIX": [
@@ -2696,36 +2672,10 @@
               ""
             ],
             [
-              "63 شارr 15 Al Khawaneej, Dubai",
+              "29 3b شاeع, قرية جميرا الدائرية, دبي",
               "FIX",
               "LOCALITY",
               ""
-            ]
-          ],
-          "静默错误": [
-            [
-              "Sunset Mall, 124 Jumeira St., Dubai",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "Sunset Mall, 124 Jumeira Street"
-            ],
-            [
-              "Oasis Coils & Coatings, 16 Al Wasl Road, المنارة, دبي",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "Oasis Coils & Coatings, 16 Al Wasl Road, Al Manara"
-            ],
-            [
-              "OYO 140 Al Hashemi Hotel, 8 20 Street, عيال ناصر Dubai",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "OYO 140 Al Hashemi Hotel, 8 20 Street, Ayal Nasir"
-            ],
-            [
-              "Taytay Department Store, 25 Al Wasl Rd., جميرا",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "Taytay Department Store, 25 Al Wasl Road, Jumeira"
             ]
           ]
         }
@@ -2736,24 +2686,23 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.015,
-          "正确·要求确认": 0.291,
-          "判 FIX·片区对": 0.11,
+          "正确·要求确认": 0.298,
+          "判 FIX·片区对": 0.111,
           "判 FIX": 0.221,
-          "错误建议": 0.357,
+          "错误建议": 0.349,
           "静默错误": 0.006
         },
         "silent_over_1km": 0.005,
-        "wrong_over_1km": 0.285,
+        "wrong_over_1km": 0.279,
         "granularity": {
-          "ROUTE": 0.42,
-          "PREMISE_PROXIMITY": 0.23,
-          "OTHER": 0.166,
-          "LOCALITY": 0.165,
-          "PREMISE": 0.019
+          "ROUTE": 0.449,
+          "PREMISE_PROXIMITY": 0.219,
+          "LOCALITY": 0.166,
+          "OTHER": 0.166
         },
-        "median_error_m": 1914.1115512541387,
-        "within_500m": 0.216,
-        "ms": 6.282527042999959,
+        "median_error_m": 1898.6420455046227,
+        "within_500m": 0.215,
+        "ms": 6.127101594000123,
         "examples": {
           "判 FIX": [
             [
@@ -2838,39 +2787,26 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.041,
-          "正确·要求确认": 0.617,
+          "正确·直接通过": 0.047,
+          "正确·要求确认": 0.707,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.007,
-          "错误建议": 0.331,
-          "静默错误": 0.004
+          "错误建议": 0.239,
+          "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.263,
+        "wrong_over_1km": 0.229,
         "granularity": {
-          "ROUTE": 0.831,
-          "PREMISE_PROXIMITY": 0.108,
-          "PREMISE": 0.054,
-          "LOCALITY": 0.005,
-          "OTHER": 0.002
+          "ROUTE": 0.935,
+          "PREMISE_PROXIMITY": 0.058,
+          "LOCALITY": 0.006,
+          "OTHER": 0.001
         },
-        "median_error_m": 177.05117816015655,
-        "within_500m": 0.69,
-        "ms": 5.832598990000065,
+        "median_error_m": 161.93049461900324,
+        "within_500m": 0.72,
+        "ms": 3.6662691670007916,
         "examples": {
           "错误建议": [
-            [
-              "57 2b st, قصيص, dubai, uae",
-              "CONFIRM",
-              "PREMISE",
-              "57 2b Street"
-            ],
-            [
-              "18c St Dubai, UAE",
-              "CONFIRM",
-              "ROUTE",
-              "18c Street"
-            ],
             [
               "23A 34a شارع",
               "CONFIRM",
@@ -2882,6 +2818,18 @@
               "CONFIRM",
               "ROUTE",
               "28b شارع"
+            ],
+            [
+              "20 Street, مويلح, دبي",
+              "CONFIRM",
+              "ROUTE",
+              "شارع 20, مويلح"
+            ],
+            [
+              "Noor Al Izza Translation and Documents Clearing Services, Apt 37, 110 17b شارع",
+              "CONFIRM",
+              "ROUTE",
+              "Apt 37, 110 17b Street"
             ]
           ],
           "判 FIX": [
@@ -2898,42 +2846,16 @@
               ""
             ],
             [
-              "four r angel technical services llc, 148 st. 7c, അൽ-ബദാ دبي",
-              "FIX",
-              "OTHER",
-              ""
-            ],
-            [
-              "37 ഷെയ്ഖ് സഖർ ബിൻ ഖാലിദ് അൽ ഖാസിമി സ്ട്രീറ്റ്, Al Qasimia Dubai, UAE",
+              "29 3b شاeع, قرية جميرا الدائرية, دبي",
               "FIX",
               "LOCALITY",
               ""
-            ]
-          ],
-          "静默错误": [
-            [
-              "Sunset Mall, 124 Jumeira St., Dubai",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "Sunset Mall, 124 Jumeira Street"
             ],
             [
-              "Oasis Coils & Coatings, 16 Al Wasl Road, المنارة, دبي",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "Oasis Coils & Coatings, 16 Al Wasl Road, Al Manara"
-            ],
-            [
-              "OYO 140 Al Hashemi Hotel, 8 20 Street, عيال ناصر Dubai",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "OYO 140 Al Hashemi Hotel, 8 20 Street, Ayal Nasir"
-            ],
-            [
-              "Taytay Department Store, 25 Al Wasl Rd., جميرا",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "Taytay Department Store, 25 Al Wasl Road, Jumeira"
+              "Office 31, 18 شtرع 35, مجتمع القوز",
+              "FIX",
+              "LOCALITY",
+              ""
             ]
           ]
         }
@@ -2947,8 +2869,8 @@
         "outcomes": {
           "正确·直接通过": 0.026,
           "正确·要求确认": 0.321,
-          "判 FIX·片区对": 0.1,
-          "判 FIX": 0.144,
+          "判 FIX·片区对": 0.099,
+          "判 FIX": 0.145,
           "错误建议": 0.404,
           "静默错误": 0.005
         },
@@ -2958,12 +2880,11 @@
           "ROUTE": 0.694,
           "LOCALITY": 0.164,
           "OTHER": 0.08,
-          "PREMISE_PROXIMITY": 0.061,
-          "PREMISE": 0.001
+          "PREMISE_PROXIMITY": 0.062
         },
         "median_error_m": 2218.3530845471887,
-        "within_500m": 0.208,
-        "ms": 7.730342877999988,
+        "within_500m": 0.209,
+        "ms": 7.835232487999747,
         "examples": {
           "判 FIX": [
             [
@@ -3048,24 +2969,24 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.101,
-          "正确·要求确认": 0.638,
+          "正确·直接通过": 0.097,
+          "正确·要求确认": 0.646,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.057,
+          "判 FIX": 0.053,
           "错误建议": 0.204,
           "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
         "wrong_over_1km": 0.197,
         "granularity": {
-          "ROUTE": 0.927,
-          "LOCALITY": 0.055,
-          "PREMISE_PROXIMITY": 0.016,
+          "ROUTE": 0.933,
+          "LOCALITY": 0.051,
+          "PREMISE_PROXIMITY": 0.014,
           "OTHER": 0.002
         },
-        "median_error_m": 148.3197773625098,
-        "within_500m": 0.717,
-        "ms": 4.853790116000027,
+        "median_error_m": 148.47745753011066,
+        "within_500m": 0.722,
+        "ms": 2.6189389620003567,
         "examples": {
           "判 FIX": [
             [
@@ -3095,12 +3016,6 @@
           ],
           "错误建议": [
             [
-              "54 يوسف السرخسي, الملك فيصل, محافظة الرياض, Riyadh, 132128071",
-              "CONFIRM",
-              "ROUTE",
-              "54 يوسف السرخسي, محافظة الرياض"
-            ],
-            [
               "30 أربل, بلدية النسيم, Riyadh, Saudi Arabia",
               "CONFIRM",
               "ROUTE",
@@ -3117,6 +3032,12 @@
               "CONFIRM",
               "ROUTE",
               "182B ابن أبي بكر, محافظة الرياض"
+            ],
+            [
+              "30 ibrahim al teleitli, محافظة الرياض الرياض",
+              "CONFIRM",
+              "ROUTE",
+              "30 إبراهيم الطليطلي, محافظة الرياض"
             ]
           ]
         }
@@ -3126,24 +3047,24 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.023,
-          "正确·要求确认": 0.274,
-          "判 FIX·片区对": 0.16,
-          "判 FIX": 0.223,
-          "错误建议": 0.311,
-          "静默错误": 0.009
+          "正确·直接通过": 0.022,
+          "正确·要求确认": 0.273,
+          "判 FIX·片区对": 0.163,
+          "判 FIX": 0.219,
+          "错误建议": 0.315,
+          "静默错误": 0.008
         },
-        "silent_over_1km": 0.006,
-        "wrong_over_1km": 0.283,
+        "silent_over_1km": 0.005,
+        "wrong_over_1km": 0.289,
         "granularity": {
-          "ROUTE": 0.569,
-          "LOCALITY": 0.24,
-          "OTHER": 0.143,
-          "PREMISE_PROXIMITY": 0.048
+          "ROUTE": 0.571,
+          "LOCALITY": 0.242,
+          "OTHER": 0.14,
+          "PREMISE_PROXIMITY": 0.047
         },
-        "median_error_m": 1921.1950236762843,
-        "within_500m": 0.197,
-        "ms": 9.479748966999978,
+        "median_error_m": 1912.6393875054107,
+        "within_500m": 0.198,
+        "ms": 5.7360291210006835,
         "examples": {
           "错误建议": [
             [
@@ -3208,19 +3129,19 @@
               "WPH7+FCM, King Khalid International Airport, Riyadh 13446, Saudi Arabia, Riyadh",
               "ACCEPT",
               "PREMISE_PROXIMITY",
-              "13446, Al Rawda Muncipality, 7HP8WPH7+FC"
-            ],
-            [
-              "QM5W+R7G، النزهة، الرياض, الرياض, 12473",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "التعاون, 12473, 7HP8QM5W+R7"
+              "Al Rawda Muncipality, 13446, 7HP8WPH7+FC"
             ],
             [
               "⁧مجمع الرصيص التجاري, RHOA6468, 6468 شارع العليا, الرياض, 12211",
               "ACCEPT",
               "ROUTE",
               "6468 شارع العليا, 12211"
+            ],
+            [
+              "مبنى رقم 3083 شارع الشيخ حسن بن عبدالله ال الشيخ - حي جامعة الملك سعود, الرياض, 12372",
+              "ACCEPT",
+              "ROUTE",
+              "3083 الشيخ حسن بن عبدالله آل الشيخ, جامعة الملك سعود, 12372"
             ]
           ]
         }
@@ -3228,31 +3149,25 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.115,
-          "正确·要求确认": 0.726,
+          "正确·直接通过": 0.112,
+          "正确·要求确认": 0.731,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.008,
-          "错误建议": 0.15,
+          "判 FIX": 0.007,
+          "错误建议": 0.149,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
         "wrong_over_1km": 0.143,
         "granularity": {
-          "ROUTE": 0.97,
+          "ROUTE": 0.971,
           "PREMISE_PROXIMITY": 0.022,
-          "LOCALITY": 0.008
+          "LOCALITY": 0.007
         },
-        "median_error_m": 112.18674191118646,
-        "within_500m": 0.829,
-        "ms": 1.7399960999999848,
+        "median_error_m": 111.32831364675779,
+        "within_500m": 0.826,
+        "ms": 1.2568436310002653,
         "examples": {
           "错误建议": [
-            [
-              "54 يوسف السرخسي, الملك فيصل, محافظة الرياض, Riyadh, 132128071",
-              "CONFIRM",
-              "ROUTE",
-              "54 يوسف السرخسي"
-            ],
             [
               "12 Bardi",
               "CONFIRM",
@@ -3270,11 +3185,17 @@
               "CONFIRM",
               "ROUTE",
               "11B Lazmah"
+            ],
+            [
+              "10 No. 363, Municipality of Al Shamal, Riyadh",
+              "CONFIRM",
+              "ROUTE",
+              "10 No. 363, Municipality of Al Shamal"
             ]
           ],
           "判 FIX": [
             [
-              "Building 48 محمد المiصف, الرياض, 12571",
+              "Building 48 محمد المiصف, الرياض, 12274",
               "FIX",
               "LOCALITY",
               ""
@@ -3292,7 +3213,7 @@
               ""
             ],
             [
-              "Dhl Diriyah, الملك سلمان Ad Diriyah 13518",
+              "Momar1, 14263",
               "FIX",
               "LOCALITY",
               ""
@@ -3314,24 +3235,23 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.027,
-          "正确·要求确认": 0.357,
-          "判 FIX·片区对": 0.075,
-          "判 FIX": 0.121,
+          "正确·要求确认": 0.358,
+          "判 FIX·片区对": 0.073,
+          "判 FIX": 0.122,
           "错误建议": 0.414,
           "静默错误": 0.006
         },
         "silent_over_1km": 0.004,
-        "wrong_over_1km": 0.36,
+        "wrong_over_1km": 0.361,
         "granularity": {
-          "ROUTE": 0.732,
-          "LOCALITY": 0.123,
+          "ROUTE": 0.733,
+          "LOCALITY": 0.122,
           "OTHER": 0.073,
-          "PREMISE_PROXIMITY": 0.071,
-          "PREMISE": 0.001
+          "PREMISE_PROXIMITY": 0.072
         },
         "median_error_m": 1938.0472046097539,
-        "within_500m": 0.223,
-        "ms": 13.178231080000044,
+        "within_500m": 0.225,
+        "ms": 12.988468222999472,
         "examples": {
           "判 FIX": [
             [
@@ -3416,8 +3336,8 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.115,
-          "正确·要求确认": 0.719,
+          "正确·直接通过": 0.111,
+          "正确·要求确认": 0.723,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.003,
           "错误建议": 0.162,
@@ -3426,21 +3346,15 @@
         "silent_over_1km": 0.0,
         "wrong_over_1km": 0.156,
         "granularity": {
-          "ROUTE": 0.973,
-          "PREMISE_PROXIMITY": 0.024,
+          "ROUTE": 0.975,
+          "PREMISE_PROXIMITY": 0.022,
           "LOCALITY": 0.003
         },
-        "median_error_m": 130.99257681438894,
+        "median_error_m": 132.06677206266184,
         "within_500m": 0.806,
-        "ms": 4.5719138529999555,
+        "ms": 3.8491448709992255,
         "examples": {
           "错误建议": [
-            [
-              "54 يوسف السرخسي, الملك فيصل, محافظة الرياض, Riyadh, 132128071",
-              "CONFIRM",
-              "ROUTE",
-              "54 يوسف السرخسي, محافظة الرياض"
-            ],
             [
               "12 Bardi",
               "CONFIRM",
@@ -3458,6 +3372,12 @@
               "CONFIRM",
               "ROUTE",
               "30 إبراهيم الطليطلي, محافظة الرياض"
+            ],
+            [
+              "Building 11B لزمة, Riyadh, Saudi Arabia",
+              "CONFIRM",
+              "ROUTE",
+              "11B Lazmah"
             ]
           ],
           "静默错误": [
@@ -3497,32 +3417,31 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.288,
-          "正确·要求确认": 0.331,
+          "正确·直接通过": 0.302,
+          "正确·要求确认": 0.341,
           "判 FIX·片区对": 0.032,
           "判 FIX": 0.037,
-          "错误建议": 0.266,
-          "静默错误": 0.046
+          "错误建议": 0.249,
+          "静默错误": 0.039
         },
-        "silent_over_1km": 0.022,
-        "wrong_over_1km": 0.215,
+        "silent_over_1km": 0.02,
+        "wrong_over_1km": 0.204,
         "granularity": {
-          "ROUTE": 0.498,
-          "PREMISE_PROXIMITY": 0.272,
-          "PREMISE": 0.161,
+          "ROUTE": 0.639,
+          "PREMISE_PROXIMITY": 0.292,
           "LOCALITY": 0.068,
           "OTHER": 0.001
         },
-        "median_error_m": 267.3284909562117,
-        "within_500m": 0.597,
-        "ms": 7.846168917,
+        "median_error_m": 278.7428856373914,
+        "within_500m": 0.593,
+        "ms": 7.430699495000226,
         "examples": {
           "错误建议": [
             [
               "2, Jalan Tbk 1/10, Puchong, 47100",
               "CONFIRM",
-              "PREMISE_PROXIMITY",
-              "2 Jalan Puchong, puchong, 47140"
+              "ROUTE",
+              "2 Jalan Puchong, 47100"
             ],
             [
               "35-2, Jalan Prima SG 2, Batu Caves, 68100",
@@ -3533,8 +3452,8 @@
             [
               "Dataran 3 Two Square No. 2,Jalan 19 /1, Petaling Jaya, 46300",
               "CONFIRM",
-              "PREMISE",
-              "1 Jalan Petaling"
+              "ROUTE",
+              "1 Persiaran Petaling, 46300"
             ],
             [
               "145 Jalan Ampang, Bandar Kuala Lumpur, 50450",
@@ -3571,12 +3490,6 @@
           ],
           "静默错误": [
             [
-              "8 Tengkat Tong Shin, Bandar Kuala Lumpur, 50200",
-              "ACCEPT",
-              "PREMISE",
-              "8 Tengkat Tong Shin, 50200"
-            ],
-            [
               "C-20-3A, The Hub SS2, Jalan Harapan, Seksyen 19, 46300, Petaling Jaya, 46300",
               "ACCEPT",
               "PREMISE_PROXIMITY",
@@ -3585,14 +3498,20 @@
             [
               "168 Jalan Bukit Bintang, Kuala Lumpur, 55100",
               "ACCEPT",
-              "PREMISE",
-              "168 Jalan Bukit Bintang, Kuala Lumpur, 55100"
+              "PREMISE_PROXIMITY",
+              "168 Jalan Bukit Bintang"
             ],
             [
-              "20, Jalan Brunei Selatan, off, Jln Pudu, Bandar Kuala Lumpur, 55100",
+              "Heritage House, 33 Jalan Yap Ah Shak, Bandar Kuala Lumpur, 50300",
               "ACCEPT",
-              "PREMISE",
-              "20 Jalan Pudu, Kuala Lumpur"
+              "PREMISE_PROXIMITY",
+              "Heritage House, 33 Jalan Yap Ah Shak, Kuala Lumpur"
+            ],
+            [
+              "6 Jalan Gombak, Setapak, 53000",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "6 Jalan Gombak, Setapak"
             ]
           ]
         }
@@ -3600,25 +3519,23 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.18,
-          "正确·要求确认": 0.647,
+          "正确·直接通过": 0.192,
+          "正确·要求确认": 0.695,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.019,
-          "错误建议": 0.154,
-          "静默错误": 0.0
+          "判 FIX": 0.017,
+          "错误建议": 0.095,
+          "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.138,
+        "wrong_over_1km": 0.083,
         "granularity": {
-          "ROUTE": 0.804,
-          "PREMISE_PROXIMITY": 0.122,
-          "PREMISE": 0.055,
-          "LOCALITY": 0.017,
-          "OTHER": 0.002
+          "ROUTE": 0.907,
+          "PREMISE_PROXIMITY": 0.076,
+          "LOCALITY": 0.017
         },
-        "median_error_m": 77.3761399097225,
-        "within_500m": 0.824,
-        "ms": 2.8099469300000237,
+        "median_error_m": 71.29727422239719,
+        "within_500m": 0.885,
+        "ms": 2.55871749500011,
         "examples": {
           "错误建议": [
             [
@@ -3628,22 +3545,22 @@
               "145 Jalan Tun Abdul Razak"
             ],
             [
-              "Unit 30-20, 28 Jln. Permai 1/14, Petaling Jaya, Selangor",
-              "CONFIRM",
-              "PREMISE_PROXIMITY",
-              "Unit 30-20, 28 Jalan Petaling"
-            ],
-            [
-              "unit 11-29 18 jalan pju 1a/36 petaling",
-              "CONFIRM",
-              "PREMISE",
-              "Unit 11-29, 18 Jalan Petaling"
-            ],
-            [
               "Unit 28-1, 177B Persiaran Ara",
               "CONFIRM",
               "ROUTE",
               "Unit 28-1, 177B Persiaran Ara"
+            ],
+            [
+              "128 Jalan 18, Petaling Jaya, Selangor, 68100",
+              "CONFIRM",
+              "ROUTE",
+              "18 Persiaran Petaling, 68100"
+            ],
+            [
+              "No. 85, Jalan Bandar 10, Pusat Bandar Puchong, பெத்தாலிங் மாவட்டம், KL, 47160",
+              "CONFIRM",
+              "ROUTE",
+              "85 Jalan Bandar, 47160"
             ]
           ],
           "判 FIX": [
@@ -3666,10 +3583,18 @@
               ""
             ],
             [
-              "2B Jl. Impiann Murni 3/5 உலு இலங்காத் மாவட்டம்",
+              "38 Jalan Jalau 1 Taman Sri Bahtera, KL, 56100",
               "FIX",
               "LOCALITY",
               ""
+            ]
+          ],
+          "静默错误": [
+            [
+              "Jakel Square, Level 8 No. 30 Lorog Raja Alang, 甘榜峇鲁, 50560",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Level 8, Jakel Square, 30 Jalan Raja Alang, Kampung Bharu, 50560"
             ]
           ]
         }
@@ -3679,25 +3604,24 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.266,
-          "正确·要求确认": 0.386,
-          "判 FIX·片区对": 0.136,
-          "判 FIX": 0.085,
-          "错误建议": 0.092,
-          "静默错误": 0.035
+          "正确·直接通过": 0.282,
+          "正确·要求确认": 0.389,
+          "判 FIX·片区对": 0.12,
+          "判 FIX": 0.082,
+          "错误建议": 0.095,
+          "静默错误": 0.032
         },
-        "silent_over_1km": 0.02,
-        "wrong_over_1km": 0.06,
+        "silent_over_1km": 0.021,
+        "wrong_over_1km": 0.065,
         "granularity": {
-          "ROUTE": 0.461,
-          "LOCALITY": 0.201,
-          "PREMISE_PROXIMITY": 0.199,
-          "PREMISE": 0.119,
-          "OTHER": 0.02
+          "ROUTE": 0.591,
+          "PREMISE_PROXIMITY": 0.207,
+          "LOCALITY": 0.187,
+          "OTHER": 0.015
         },
-        "median_error_m": 219.9122263525968,
-        "within_500m": 0.65,
-        "ms": 4.459062678000009,
+        "median_error_m": 230.91007921792635,
+        "within_500m": 0.645,
+        "ms": 4.138795057000152,
         "examples": {
           "错误建议": [
             [
@@ -3753,21 +3677,15 @@
           ],
           "静默错误": [
             [
-              "8 Tengkat Tong Shin, Bandar Kuala Lumpur, 50200",
-              "ACCEPT",
-              "PREMISE",
-              "8 Tengkat Tong Shin, 50200"
-            ],
-            [
               "168 Jalan Bukit Bintang, Kuala Lumpur, 55100",
               "ACCEPT",
-              "PREMISE",
-              "168 Jalan Bukit Bintang, Kuala Lumpur, 55100"
+              "PREMISE_PROXIMITY",
+              "168 Jalan Bukit Bintang"
             ],
             [
               "Heritage House, 33 Jalan Yap Ah Shak, Bandar Kuala Lumpur, 50300",
               "ACCEPT",
-              "PREMISE",
+              "PREMISE_PROXIMITY",
               "Heritage House, 33 Jalan Yap Ah Shak"
             ],
             [
@@ -3775,6 +3693,12 @@
               "ACCEPT",
               "PREMISE_PROXIMITY",
               "6 Jalan Gombak, Setapak"
+            ],
+            [
+              "9 Jalan Suasana 2/7A, Cheras, 43200",
+              "ACCEPT",
+              "ROUTE",
+              "9 Jalan Suasana 2/7A, Cheras, 43200"
             ]
           ]
         }
@@ -3782,24 +3706,24 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.246,
+          "正确·直接通过": 0.248,
           "正确·要求确认": 0.715,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.001,
-          "错误建议": 0.038,
+          "判 FIX": 0.003,
+          "错误建议": 0.034,
           "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.036,
+        "wrong_over_1km": 0.031,
         "granularity": {
-          "ROUTE": 0.856,
-          "PREMISE_PROXIMITY": 0.114,
-          "PREMISE": 0.029,
-          "LOCALITY": 0.001
+          "ROUTE": 0.893,
+          "PREMISE_PROXIMITY": 0.104,
+          "LOCALITY": 0.002,
+          "OTHER": 0.001
         },
-        "median_error_m": 65.72644917774616,
-        "within_500m": 0.949,
-        "ms": 1.6780089369999587,
+        "median_error_m": 66.62801850292283,
+        "within_500m": 0.953,
+        "ms": 1.5236936129999776,
         "examples": {
           "错误建议": [
             [
@@ -3817,17 +3741,29 @@
             [
               "Ho Hup Construction Company, 15 Jalan 18, تيراس, 蕉赖六里村, Kuala Lumpur",
               "CONFIRM",
-              "PREMISE",
+              "ROUTE",
               "15 Jalan 18"
             ],
             [
-              "No. 211 Jalan Indah 2, உலு இலங்காத் மாவட்டம், Petaling Jaya, Selangor",
+              "2B Lrg Sepakat 3, Selayang Municipal Council",
               "CONFIRM",
               "ROUTE",
-              "211 Jalan Indah 2"
+              "2B Lorong Sepakat 3, Majlis Perbandaran Selayang"
             ]
           ],
           "判 FIX": [
+            [
+              "38 Jalan Jalau 1 Taman Sri Bahtera, KL, 56100",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Tarmac Gombak, Kuala Lumpur",
+              "FIX",
+              "OTHER",
+              ""
+            ],
             [
               "Heartworks Solution, Parking Lnik Bridge, Bandar Utama, பெடாலிங் ஜெயா, Kuala Lumpur 47800",
               "FIX",
@@ -3842,31 +3778,30 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.298,
-          "正确·要求确认": 0.357,
-          "判 FIX·片区对": 0.025,
-          "判 FIX": 0.03,
-          "错误建议": 0.243,
-          "静默错误": 0.047
+          "正确·直接通过": 0.314,
+          "正确·要求确认": 0.364,
+          "判 FIX·片区对": 0.026,
+          "判 FIX": 0.029,
+          "错误建议": 0.226,
+          "静默错误": 0.041
         },
-        "silent_over_1km": 0.022,
-        "wrong_over_1km": 0.194,
+        "silent_over_1km": 0.021,
+        "wrong_over_1km": 0.182,
         "granularity": {
-          "ROUTE": 0.491,
-          "PREMISE_PROXIMITY": 0.285,
-          "PREMISE": 0.169,
+          "ROUTE": 0.641,
+          "PREMISE_PROXIMITY": 0.304,
           "LOCALITY": 0.055
         },
-        "median_error_m": 228.0446322024768,
-        "within_500m": 0.63,
-        "ms": 11.658288022999953,
+        "median_error_m": 233.9293089076171,
+        "within_500m": 0.626,
+        "ms": 10.288908775999971,
         "examples": {
           "错误建议": [
             [
               "2, Jalan Tbk 1/10, Puchong, 47100",
               "CONFIRM",
-              "PREMISE_PROXIMITY",
-              "2 Jalan Puchong, puchong, 47140"
+              "ROUTE",
+              "2 Jalan Puchong, 47100"
             ],
             [
               "35-2, Jalan Prima SG 2, Batu Caves, 68100",
@@ -3877,8 +3812,8 @@
             [
               "Dataran 3 Two Square No. 2,Jalan 19 /1, Petaling Jaya, 46300",
               "CONFIRM",
-              "PREMISE",
-              "1 Jalan Petaling"
+              "ROUTE",
+              "1 Persiaran Petaling, 46300"
             ],
             [
               "145 Jalan Ampang, Bandar Kuala Lumpur, 50450",
@@ -3915,12 +3850,6 @@
           ],
           "静默错误": [
             [
-              "8 Tengkat Tong Shin, Bandar Kuala Lumpur, 50200",
-              "ACCEPT",
-              "PREMISE",
-              "8 Tengkat Tong Shin, 50200"
-            ],
-            [
               "C-20-3A, The Hub SS2, Jalan Harapan, Seksyen 19, 46300, Petaling Jaya, 46300",
               "ACCEPT",
               "PREMISE_PROXIMITY",
@@ -3929,14 +3858,20 @@
             [
               "168 Jalan Bukit Bintang, Kuala Lumpur, 55100",
               "ACCEPT",
-              "PREMISE",
-              "168 Jalan Bukit Bintang, Kuala Lumpur, 55100"
+              "PREMISE_PROXIMITY",
+              "168 Jalan Bukit Bintang"
             ],
             [
-              "20, Jalan Brunei Selatan, off, Jln Pudu, Bandar Kuala Lumpur, 55100",
+              "Heritage House, 33 Jalan Yap Ah Shak, Bandar Kuala Lumpur, 50300",
               "ACCEPT",
-              "PREMISE",
-              "20 Jalan Pudu, Kuala Lumpur"
+              "PREMISE_PROXIMITY",
+              "Heritage House, 33 Jalan Yap Ah Shak, Kuala Lumpur"
+            ],
+            [
+              "6 Jalan Gombak, Setapak, 53000",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "6 Jalan Gombak, Setapak"
             ]
           ]
         }
@@ -3944,37 +3879,25 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.231,
-          "正确·要求确认": 0.644,
+          "正确·直接通过": 0.244,
+          "正确·要求确认": 0.703,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.0,
-          "错误建议": 0.125,
-          "静默错误": 0.0
+          "判 FIX": 0.001,
+          "错误建议": 0.051,
+          "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.116,
+        "wrong_over_1km": 0.045,
         "granularity": {
-          "ROUTE": 0.777,
-          "PREMISE_PROXIMITY": 0.16,
-          "PREMISE": 0.063
+          "ROUTE": 0.878,
+          "PREMISE_PROXIMITY": 0.121,
+          "LOCALITY": 0.001
         },
-        "median_error_m": 82.44626158934898,
-        "within_500m": 0.865,
-        "ms": 4.618823399999997,
+        "median_error_m": 76.26966528340766,
+        "within_500m": 0.937,
+        "ms": 3.856842484999561,
         "examples": {
           "错误建议": [
-            [
-              "Unit 30-20, 28 Jln. Permai 1/14, Petaling Jaya, Selangor",
-              "CONFIRM",
-              "PREMISE_PROXIMITY",
-              "Unit 30-20, 28 Jalan Petaling"
-            ],
-            [
-              "unit 11-29 18 jalan pju 1a/36 petaling",
-              "CONFIRM",
-              "PREMISE",
-              "Unit 11-29, 18 Jalan Petaling"
-            ],
             [
               "Unit 28-1, 177B Persiaran Ara",
               "CONFIRM",
@@ -3982,10 +3905,38 @@
               "Unit 28-1, 177B Persiaran Ara"
             ],
             [
-              "No. 10 Jalan PUJ 1/10, Petaling Jaya, Selangor",
+              "128 Jalan 18, Petaling Jaya, Selangor, 68100",
+              "CONFIRM",
+              "ROUTE",
+              "128 Jalan 18, 68100"
+            ],
+            [
+              "5 Jalan 9A, Ampang, KL",
               "CONFIRM",
               "PREMISE_PROXIMITY",
-              "10 Jalan Petaling"
+              "5 Jalan Ampang, Kuala Lumpur"
+            ],
+            [
+              "Ho Hup Construction Company, 15 Jalan 18, تيراس, 蕉赖六里村, Kuala Lumpur",
+              "CONFIRM",
+              "ROUTE",
+              "15 Jalan 18"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "38 Jalan Jalau 1 Taman Sri Bahtera, KL, 56100",
+              "FIX",
+              "LOCALITY",
+              ""
+            ]
+          ],
+          "静默错误": [
+            [
+              "Jakel Square, Level 8 No. 30 Lorog Raja Alang, 甘榜峇鲁, 50560",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Level 8, Jakel Square, 30 Jalan Raja Alang, Kampung Bharu, 50560"
             ]
           ]
         }
@@ -3997,25 +3948,24 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.269,
-          "正确·要求确认": 0.29,
+          "正确·直接通过": 0.275,
+          "正确·要求确认": 0.295,
           "判 FIX·片区对": 0.03,
           "判 FIX": 0.045,
-          "错误建议": 0.302,
-          "静默错误": 0.064
+          "错误建议": 0.289,
+          "静默错误": 0.066
         },
-        "silent_over_1km": 0.028,
-        "wrong_over_1km": 0.208,
+        "silent_over_1km": 0.03,
+        "wrong_over_1km": 0.206,
         "granularity": {
-          "ROUTE": 0.609,
-          "PREMISE_PROXIMITY": 0.283,
+          "ROUTE": 0.648,
+          "PREMISE_PROXIMITY": 0.277,
           "LOCALITY": 0.074,
-          "PREMISE": 0.033,
           "OTHER": 0.001
         },
-        "median_error_m": 523.712477999852,
-        "within_500m": 0.487,
-        "ms": 12.533464245000005,
+        "median_error_m": 551.2342673923757,
+        "within_500m": 0.476,
+        "ms": 6.730950281000332,
         "examples": {
           "判 FIX": [
             [
@@ -4060,7 +4010,7 @@
               "Satrio Tower Lantai 26 Unit C & D Jl. Prof Dr. Satrio Kav C4, RT.11/RW.4, Jakarta Selatan,",
               "CONFIRM",
               "ROUTE",
-              "Lantai 26, Jalan Profesor Dokter Satrio, Jakarta Selatan, 12940"
+              "Lantai 26, Gang Tower, Jakarta Selatan, 12940"
             ],
             [
               "Jl. H. Nawawi, RT.010/RW.002, Bekasi Kota, 17136",
@@ -4077,12 +4027,6 @@
               "#129, Jalan Boulevard Bintaro Jaya 2, Bintaro Jaya, 15117"
             ],
             [
-              "Jl. Asia Afrika No.8, RT.1/RW.3, Jakarta Pusat, 10270",
-              "ACCEPT",
-              "PREMISE",
-              "Jalan Asia Afrika 8, Jakarta Pusat, 10270"
-            ],
-            [
               "Jalan Kelapa Puan Timur 1, Jakarta Utara, 14250",
               "ACCEPT",
               "PREMISE_PROXIMITY",
@@ -4093,6 +4037,12 @@
               "ACCEPT",
               "PREMISE_PROXIMITY",
               "Jalan Pangeran Tubagus Angke 2"
+            ],
+            [
+              "Jalan Cikoko Timur II 2B, Jakarta, 12770",
+              "ACCEPT",
+              "ROUTE",
+              "Jalan Cikoko Timur II 2B, 12770"
             ]
           ]
         }
@@ -4100,25 +4050,24 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.212,
-          "正确·要求确认": 0.66,
+          "正确·直接通过": 0.217,
+          "正确·要求确认": 0.648,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.011,
-          "错误建议": 0.117,
-          "静默错误": 0.0
+          "判 FIX": 0.009,
+          "错误建议": 0.125,
+          "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.102,
+        "wrong_over_1km": 0.112,
         "granularity": {
-          "ROUTE": 0.925,
-          "PREMISE_PROXIMITY": 0.06,
-          "LOCALITY": 0.009,
-          "PREMISE": 0.004,
+          "ROUTE": 0.94,
+          "PREMISE_PROXIMITY": 0.051,
+          "LOCALITY": 0.007,
           "OTHER": 0.002
         },
-        "median_error_m": 57.01255471155895,
-        "within_500m": 0.868,
-        "ms": 3.4392113369999606,
+        "median_error_m": 57.06677639597974,
+        "within_500m": 0.862,
+        "ms": 2.367051292999804,
         "examples": {
           "错误建议": [
             [
@@ -4171,6 +4120,14 @@
               "LOCALITY",
               ""
             ]
+          ],
+          "静默错误": [
+            [
+              "Jln. Kavling Bintara 12 No. 22, Bekasi, Jakarta Selatan, 17134",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Jalan Bintara Raya 12, Bekasi"
+            ]
           ]
         }
       }
@@ -4179,25 +4136,24 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.111,
-          "正确·要求确认": 0.205,
-          "判 FIX·片区对": 0.371,
-          "判 FIX": 0.147,
-          "错误建议": 0.154,
-          "静默错误": 0.012
+          "正确·直接通过": 0.077,
+          "正确·要求确认": 0.178,
+          "判 FIX·片区对": 0.459,
+          "判 FIX": 0.145,
+          "错误建议": 0.137,
+          "静默错误": 0.004
         },
-        "silent_over_1km": 0.005,
-        "wrong_over_1km": 0.107,
+        "silent_over_1km": 0.002,
+        "wrong_over_1km": 0.103,
         "granularity": {
-          "LOCALITY": 0.5,
-          "ROUTE": 0.368,
-          "PREMISE_PROXIMITY": 0.103,
-          "OTHER": 0.018,
-          "PREMISE": 0.011
+          "LOCALITY": 0.584,
+          "ROUTE": 0.319,
+          "PREMISE_PROXIMITY": 0.077,
+          "OTHER": 0.02
         },
-        "median_error_m": 749.4316684115673,
-        "within_500m": 0.386,
-        "ms": 5.934254213000031,
+        "median_error_m": 828.8046500320353,
+        "within_500m": 0.349,
+        "ms": 5.888372700999753,
         "examples": {
           "错误建议": [
             [
@@ -4253,18 +4209,6 @@
           ],
           "静默错误": [
             [
-              "Jl. Asia Afrika No.8, RT.1/RW.3, Jakarta Pusat, 10270",
-              "ACCEPT",
-              "PREMISE",
-              "Jalan Asia Afrika 8, Central Jakarta, 10270"
-            ],
-            [
-              "Jl. Pejaten Raya No.9, RT.1/RW.7, Jakarta Selatan, 12510",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "Jalan Pejaten Raya 9, DKI Jakarta, 12510"
-            ],
-            [
               "RR39+WX3, Foodprint, grand Indonesia shopping Town fifth floor, Jl. M.H. Thamrin, Kebon Me",
               "ACCEPT",
               "PREMISE_PROXIMITY",
@@ -4275,6 +4219,18 @@
               "ACCEPT",
               "ROUTE",
               "Jalan Raya Ciracas 8, 13730"
+            ],
+            [
+              "Jl. Raya Gandul No.B3, Depok, 16514",
+              "ACCEPT",
+              "ROUTE",
+              "Jalan Raya Gandul B3, Depok, 16514"
+            ],
+            [
+              "Ruko Mutiara Faza Blok Ra 10, Jl Condet Raya No 27, Jakarta Timur, 13760",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Jalan Condet Raya 27, Jakarta Timur"
             ]
           ]
         }
@@ -4282,25 +4238,24 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.298,
-          "正确·要求确认": 0.612,
+          "正确·直接通过": 0.301,
+          "正确·要求确认": 0.604,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.006,
-          "错误建议": 0.084,
-          "静默错误": 0.0
+          "判 FIX": 0.008,
+          "错误建议": 0.086,
+          "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.082,
+        "wrong_over_1km": 0.084,
         "granularity": {
           "ROUTE": 0.889,
-          "PREMISE_PROXIMITY": 0.104,
-          "LOCALITY": 0.003,
-          "OTHER": 0.003,
-          "PREMISE": 0.001
+          "PREMISE_PROXIMITY": 0.103,
+          "LOCALITY": 0.005,
+          "OTHER": 0.003
         },
-        "median_error_m": 50.34138490501323,
-        "within_500m": 0.898,
-        "ms": 2.1770870610000657,
+        "median_error_m": 50.48456980791343,
+        "within_500m": 0.893,
+        "ms": 1.7282017890001953,
         "examples": {
           "错误建议": [
             [
@@ -4348,10 +4303,18 @@
               ""
             ],
             [
-              "Gang Saidi Sawah Baru, Jakarta Selatan",
+              "Gang Kamboja Utan Kayu Utara, DKI Jakarta, 13120",
               "FIX",
-              "OTHER",
+              "LOCALITY",
               ""
+            ]
+          ],
+          "静默错误": [
+            [
+              "Novell Pharmaceutical Laboratories, Jalan Pos Pengumben Lama Srengseng, 11550",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Novell Pharmaceutical Laboratories, Jalan Pos Pengumben, 11550"
             ]
           ]
         }
@@ -4361,25 +4324,24 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.269,
-          "正确·要求确认": 0.301,
+          "正确·直接通过": 0.275,
+          "正确·要求确认": 0.306,
           "判 FIX·片区对": 0.026,
-          "判 FIX": 0.043,
-          "错误建议": 0.297,
-          "静默错误": 0.064
+          "判 FIX": 0.044,
+          "错误建议": 0.284,
+          "静默错误": 0.065
         },
-        "silent_over_1km": 0.027,
-        "wrong_over_1km": 0.199,
+        "silent_over_1km": 0.029,
+        "wrong_over_1km": 0.197,
         "granularity": {
-          "ROUTE": 0.609,
-          "PREMISE_PROXIMITY": 0.289,
-          "LOCALITY": 0.068,
-          "PREMISE": 0.033,
+          "ROUTE": 0.646,
+          "PREMISE_PROXIMITY": 0.284,
+          "LOCALITY": 0.069,
           "OTHER": 0.001
         },
-        "median_error_m": 499.4759753148657,
-        "within_500m": 0.5,
-        "ms": 13.084707509000054,
+        "median_error_m": 520.6698752942993,
+        "within_500m": 0.489,
+        "ms": 12.65445923400057,
         "examples": {
           "判 FIX": [
             [
@@ -4441,12 +4403,6 @@
               "#129, Jalan Boulevard Bintaro Jaya 2, Bintaro Jaya, 15117"
             ],
             [
-              "Jl. Asia Afrika No.8, RT.1/RW.3, Jakarta Pusat, 10270",
-              "ACCEPT",
-              "PREMISE",
-              "Jalan Asia Afrika 8, Jakarta Pusat, 10270"
-            ],
-            [
               "Jalan Kelapa Puan Timur 1, Jakarta Utara, 14250",
               "ACCEPT",
               "PREMISE_PROXIMITY",
@@ -4457,6 +4413,12 @@
               "ACCEPT",
               "PREMISE_PROXIMITY",
               "Jalan Pangeran Tubagus Angke 2"
+            ],
+            [
+              "Jalan Cikoko Timur II 2B, Jakarta, 12770",
+              "ACCEPT",
+              "ROUTE",
+              "Jalan Cikoko Timur II 2B, 12770"
             ]
           ]
         }
@@ -4464,25 +4426,24 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.293,
-          "正确·要求确认": 0.609,
+          "正确·直接通过": 0.299,
+          "正确·要求确认": 0.607,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.002,
-          "错误建议": 0.096,
-          "静默错误": 0.0
+          "错误建议": 0.091,
+          "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.082,
+        "wrong_over_1km": 0.08,
         "granularity": {
-          "ROUTE": 0.881,
-          "PREMISE_PROXIMITY": 0.113,
-          "PREMISE": 0.004,
+          "ROUTE": 0.89,
+          "PREMISE_PROXIMITY": 0.108,
           "OTHER": 0.001,
           "LOCALITY": 0.001
         },
-        "median_error_m": 58.98435055272241,
-        "within_500m": 0.897,
-        "ms": 4.855170242999975,
+        "median_error_m": 57.90524578713767,
+        "within_500m": 0.9,
+        "ms": 4.096577430000252,
         "examples": {
           "错误建议": [
             [
@@ -4523,6 +4484,14 @@
               "LOCALITY",
               ""
             ]
+          ],
+          "静默错误": [
+            [
+              "Jln. Kavling Bintara 12 No. 22, Bekasi, Jakarta Selatan, 17134",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Jalan Bintara Raya 12, Bekasi"
+            ]
           ]
         }
       }
@@ -4533,25 +4502,24 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.129,
-          "正确·要求确认": 0.377,
-          "判 FIX·片区对": 0.098,
-          "判 FIX": 0.102,
-          "错误建议": 0.234,
-          "静默错误": 0.06
+          "正确·直接通过": 0.151,
+          "正确·要求确认": 0.402,
+          "判 FIX·片区对": 0.099,
+          "判 FIX": 0.104,
+          "错误建议": 0.197,
+          "静默错误": 0.047
         },
-        "silent_over_1km": 0.034,
-        "wrong_over_1km": 0.169,
+        "silent_over_1km": 0.024,
+        "wrong_over_1km": 0.135,
         "granularity": {
-          "ROUTE": 0.508,
-          "PREMISE_PROXIMITY": 0.225,
-          "LOCALITY": 0.189,
-          "PREMISE": 0.067,
+          "ROUTE": 0.592,
+          "PREMISE_PROXIMITY": 0.205,
+          "LOCALITY": 0.192,
           "OTHER": 0.011
         },
-        "median_error_m": 1036.63357978199,
-        "within_500m": 0.361,
-        "ms": 10.985025371999997,
+        "median_error_m": 1002.3267053045718,
+        "within_500m": 0.352,
+        "ms": 10.576274158999695,
         "examples": {
           "判 FIX": [
             [
@@ -4609,7 +4577,7 @@
             [
               "93/136 ซอยเซ็นต์หลุยส์ 3 แยก 30 ถนนจันทน์, กรุงเทพมหานคร, 10120",
               "ACCEPT",
-              "PREMISE_PROXIMITY",
+              "ROUTE",
               "30 ถนนจันทน์, 10120"
             ],
             [
@@ -4636,25 +4604,24 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.163,
-          "正确·要求确认": 0.757,
+          "正确·直接通过": 0.166,
+          "正确·要求确认": 0.769,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.018,
-          "错误建议": 0.061,
+          "判 FIX": 0.02,
+          "错误建议": 0.044,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.046,
+        "wrong_over_1km": 0.029,
         "granularity": {
-          "ROUTE": 0.887,
-          "PREMISE_PROXIMITY": 0.085,
-          "LOCALITY": 0.011,
-          "PREMISE": 0.01,
-          "OTHER": 0.007
+          "ROUTE": 0.909,
+          "PREMISE_PROXIMITY": 0.071,
+          "LOCALITY": 0.012,
+          "OTHER": 0.008
         },
-        "median_error_m": 45.383433884688486,
-        "within_500m": 0.911,
-        "ms": 2.977432700999998,
+        "median_error_m": 44.03210952819285,
+        "within_500m": 0.929,
+        "ms": 2.8488792949997332,
         "examples": {
           "错误建议": [
             [
@@ -4678,13 +4645,19 @@
             [
               "19/56 ซอยระชาชื่น 14, Lak Si, กรุงเทพมหานคร 12000",
               "CONFIRM",
-              "PREMISE_PROXIMITY",
-              "19/56 ถนนประชาชื่น, Lak Si, 11120"
+              "ROUTE",
+              "19/56 ถนนประชาชื่น, Lak Si, 12000"
             ]
           ],
           "判 FIX": [
             [
               "Suhaphiban 5 Soi 68, กรุงเทพมหานคร",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "58 ซอย ๔, กรุงเทพฯ",
               "FIX",
               "OTHER",
               ""
@@ -4697,12 +4670,6 @@
             ],
             [
               "53 ซอย 7 Bangkok, 10150",
-              "FIX",
-              "LOCALITY",
-              ""
-            ],
-            [
-              "24 Soi Pbiulsongklam 28 Nonthaburi, Bangkok",
               "FIX",
               "LOCALITY",
               ""
@@ -4723,25 +4690,24 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.088,
-          "正确·要求确认": 0.251,
-          "判 FIX·片区对": 0.294,
-          "判 FIX": 0.216,
-          "错误建议": 0.108,
-          "静默错误": 0.043
+          "正确·直接通过": 0.105,
+          "正确·要求确认": 0.259,
+          "判 FIX·片区对": 0.295,
+          "判 FIX": 0.221,
+          "错误建议": 0.085,
+          "静默错误": 0.035
         },
-        "silent_over_1km": 0.024,
-        "wrong_over_1km": 0.078,
+        "silent_over_1km": 0.017,
+        "wrong_over_1km": 0.058,
         "granularity": {
-          "LOCALITY": 0.476,
-          "ROUTE": 0.302,
-          "PREMISE_PROXIMITY": 0.146,
-          "PREMISE": 0.042,
-          "OTHER": 0.034
+          "LOCALITY": 0.483,
+          "ROUTE": 0.35,
+          "PREMISE_PROXIMITY": 0.134,
+          "OTHER": 0.033
         },
-        "median_error_m": 1729.8624774077925,
-        "within_500m": 0.239,
-        "ms": 6.266080479000038,
+        "median_error_m": 1700.2717681931601,
+        "within_500m": 0.228,
+        "ms": 6.126419652000095,
         "examples": {
           "判 FIX": [
             [
@@ -4826,25 +4792,23 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.22,
-          "正确·要求确认": 0.756,
+          "正确·直接通过": 0.222,
+          "正确·要求确认": 0.754,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.003,
-          "错误建议": 0.02,
+          "判 FIX": 0.002,
+          "错误建议": 0.021,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.014,
+        "wrong_over_1km": 0.015,
         "granularity": {
-          "ROUTE": 0.894,
-          "PREMISE_PROXIMITY": 0.101,
-          "OTHER": 0.002,
-          "PREMISE": 0.002,
-          "LOCALITY": 0.001
+          "ROUTE": 0.899,
+          "PREMISE_PROXIMITY": 0.099,
+          "OTHER": 0.002
         },
-        "median_error_m": 49.455541720583284,
-        "within_500m": 0.959,
-        "ms": 1.8850779699999975,
+        "median_error_m": 49.29443663776028,
+        "within_500m": 0.961,
+        "ms": 1.8378374170001734,
         "examples": {
           "错误建议": [
             [
@@ -4874,15 +4838,9 @@
           ],
           "判 FIX": [
             [
-              "วัดเฉลิมซอย14, ซอยบางศรีเมือง-วัดโบสถ์ 4/7, กรุงเทพฯ",
+              "Soi Angtrakul, 66",
               "FIX",
               "OTHER",
-              ""
-            ],
-            [
-              "River Plaza (ริเวอร์ พลาซ่า) 6 Soi Pibilsongkram 32, ตำบลสวนใหญ่, กรุงเทพฯ",
-              "FIX",
-              "LOCALITY",
               ""
             ],
             [
@@ -4907,25 +4865,24 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.129,
-          "正确·要求确认": 0.395,
-          "判 FIX·片区对": 0.088,
-          "判 FIX": 0.091,
-          "错误建议": 0.237,
-          "静默错误": 0.06
+          "正确·直接通过": 0.151,
+          "正确·要求确认": 0.418,
+          "判 FIX·片区对": 0.089,
+          "判 FIX": 0.094,
+          "错误建议": 0.201,
+          "静默错误": 0.047
         },
-        "silent_over_1km": 0.034,
-        "wrong_over_1km": 0.173,
+        "silent_over_1km": 0.024,
+        "wrong_over_1km": 0.139,
         "granularity": {
-          "ROUTE": 0.515,
-          "PREMISE_PROXIMITY": 0.237,
-          "LOCALITY": 0.168,
-          "PREMISE": 0.069,
+          "ROUTE": 0.601,
+          "PREMISE_PROXIMITY": 0.216,
+          "LOCALITY": 0.172,
           "OTHER": 0.011
         },
-        "median_error_m": 980.5535959627716,
-        "within_500m": 0.371,
-        "ms": 37.18030678399998,
+        "median_error_m": 964.7039149180944,
+        "within_500m": 0.36,
+        "ms": 16.893581567999718,
         "examples": {
           "判 FIX": [
             [
@@ -4983,7 +4940,7 @@
             [
               "93/136 ซอยเซ็นต์หลุยส์ 3 แยก 30 ถนนจันทน์, กรุงเทพมหานคร, 10120",
               "ACCEPT",
-              "PREMISE_PROXIMITY",
+              "ROUTE",
               "30 ถนนจันทน์, 10120"
             ],
             [
@@ -5010,24 +4967,23 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.213,
-          "正确·要求确认": 0.734,
+          "正确·直接通过": 0.219,
+          "正确·要求确认": 0.745,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.001,
-          "错误建议": 0.05,
+          "错误建议": 0.033,
           "静默错误": 0.002
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.042,
+        "wrong_over_1km": 0.026,
         "granularity": {
-          "ROUTE": 0.872,
-          "PREMISE_PROXIMITY": 0.117,
-          "PREMISE": 0.01,
+          "ROUTE": 0.892,
+          "PREMISE_PROXIMITY": 0.107,
           "OTHER": 0.001
         },
-        "median_error_m": 52.4178615960251,
-        "within_500m": 0.931,
-        "ms": 6.764407323,
+        "median_error_m": 50.83501851987618,
+        "within_500m": 0.951,
+        "ms": 4.538379732000067,
         "examples": {
           "错误建议": [
             [
@@ -5043,16 +4999,16 @@
               "ซอยประชาชื่น 14"
             ],
             [
-              "19/56 ซอยระชาชื่น 14, Lak Si, กรุงเทพมหานคร 12000",
-              "CONFIRM",
-              "PREMISE_PROXIMITY",
-              "19/56 ถนนประชาชื่น, Lak Si, 11120"
-            ],
-            [
               "138/20 Lat Phrao Wang Hin 25, Lat Phrao, 86000",
               "CONFIRM",
               "PREMISE_PROXIMITY",
               "138/20 Lat Phrao Road"
+            ],
+            [
+              "ชั้น 29, 172 ซอยประชาราษฎร์บำเพ็ญญ 18 กรุงเทพฯ, 16000",
+              "CONFIRM",
+              "ROUTE",
+              "ชั้น 29, 172 ถนนประชาราษฎร์บำเพ็ญ, 16000"
             ]
           ],
           "静默错误": [
@@ -5086,30 +5042,29 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.091,
-          "正确·要求确认": 0.569,
+          "正确·直接通过": 0.098,
+          "正确·要求确认": 0.589,
           "判 FIX·片区对": 0.015,
-          "判 FIX": 0.043,
-          "错误建议": 0.263,
-          "静默错误": 0.019
+          "判 FIX": 0.044,
+          "错误建议": 0.24,
+          "静默错误": 0.014
         },
-        "silent_over_1km": 0.014,
-        "wrong_over_1km": 0.181,
+        "silent_over_1km": 0.012,
+        "wrong_over_1km": 0.175,
         "granularity": {
-          "ROUTE": 0.428,
-          "PREMISE_PROXIMITY": 0.403,
-          "PREMISE": 0.111,
-          "LOCALITY": 0.058
+          "ROUTE": 0.671,
+          "PREMISE_PROXIMITY": 0.27,
+          "LOCALITY": 0.059
         },
-        "median_error_m": 276.2654056538298,
-        "within_500m": 0.608,
-        "ms": 16.31029125000009,
+        "median_error_m": 426.48295937938633,
+        "within_500m": 0.544,
+        "ms": 15.882571851999728,
         "examples": {
           "错误建议": [
             [
               "46 Trần Huy Liệu Phú Nhuận, Quận Gò Vấp",
               "CONFIRM",
-              "PREMISE_PROXIMITY",
+              "ROUTE",
               "46 Trần Huy Liệu, Phú Nhuận"
             ],
             [
@@ -5141,20 +5096,20 @@
             [
               "37 Đại Lộ Bình Dương, Thuận An, 75207",
               "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "37 Đại lộ Bình Dương"
+              "ROUTE",
+              "37 Đại lộ Bình Dương, 75207"
             ],
             [
-              "Đông Hưng Thuận 02 (song song Nguyễn Văn Quá), Quận 12, 71509",
+              "123/2A Đường Trần Huy Liệu, Quận Phú Nhuận, 72206",
               "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "02 Nguyễn Văn Quá, Đông Hưng Thuận"
+              "ROUTE",
+              "123/2A Trần Huy Liệu, Phường Phú Nhuận, 72206"
             ],
             [
-              "173 (Số Cũ 258/3), Dương Quảng Hàm, Quận Gò Vấp, 71413",
+              "137 Đường Trần Văn Kiểu, Quận 6, 73116",
               "ACCEPT",
               "PREMISE_PROXIMITY",
-              "258/3 Dương Quảng Hàm, Gò Vấp"
+              "137 Trần Văn Kiểu, Q"
             ]
           ],
           "判 FIX": [
@@ -5188,79 +5143,58 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.294,
-          "正确·要求确认": 0.584,
+          "正确·直接通过": 0.288,
+          "正确·要求确认": 0.606,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.015,
-          "错误建议": 0.103,
+          "判 FIX": 0.014,
+          "错误建议": 0.088,
           "静默错误": 0.004
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.084,
+        "wrong_over_1km": 0.067,
         "granularity": {
-          "ROUTE": 0.849,
-          "PREMISE_PROXIMITY": 0.127,
-          "LOCALITY": 0.012,
-          "PREMISE": 0.009,
+          "ROUTE": 0.898,
+          "PREMISE_PROXIMITY": 0.088,
+          "LOCALITY": 0.011,
           "OTHER": 0.003
         },
-        "median_error_m": 35.294675183185774,
-        "within_500m": 0.887,
-        "ms": 3.238805163000052,
+        "median_error_m": 31.451866518289073,
+        "within_500m": 0.907,
+        "ms": 2.890793386000041,
         "examples": {
           "错误建议": [
             [
-              "36/22, Hẻm 358/6 Cách Mạng Tháng 8, TP.HCM, 700000\\N",
-              "CONFIRM",
-              "PREMISE_PROXIMITY",
-              "36/22 Thạch Thị Thanh"
-            ],
-            [
               "Kdc An Phú - Thảo Điền - Quận 2., 41 Đường Số 2, Hồ Chí Minh",
               "CONFIRM",
-              "PREMISE",
-              "2 Đường An Phú"
+              "PREMISE_PROXIMITY",
+              "2 Thảo Điền"
             ],
             [
-              "Phòng 10 26, Hẻm 265/25 Nơ Trang Long, TP.HCM, 63000",
+              "Phòng 10 26, Hẻm 265/25 Nơ Trang Long, TP.HCM, 71411",
               "CONFIRM",
               "ROUTE",
-              "265/25 Dương Thanh, 63000"
+              "265/25 Dương Thanh, 71411"
             ],
             [
               "29/33 Đường Số 2 Phường Linh Xuân TP. Hồ Chí Minh, 7200000",
               "CONFIRM",
               "ROUTE",
               "29/33 Đường số 2, Phường Linh Xuân"
-            ]
-          ],
-          "静默错误": [
-            [
-              "Quán 29 Cao Lỗ, Hẻm 35/11/18 Cao Lỗ, Phường Chánh Hưng, Hồ Chí Minh 71813",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "29 Cao Lỗ, Phường Chánh Hưng"
             ],
             [
-              "Phòng Trọ Hẻm 413 Lê Văn Quới, 83 Hẻm 365/40 Lê Văn Quới TP.HCM, 71911",
-              "ACCEPT",
+              "hẻm 52 đường trưng đăng quế, quận phường hạnh thông, tp.hcm, 0835151630",
+              "CONFIRM",
               "ROUTE",
-              "83 Hẻm 413 Lê Văn Quới, 71911"
-            ],
-            [
-              "13, Hẻm 39 Đ. số 10 Tăng Nhơn Phú B, Phường Tăng Nhơn Phú, TP.HCM 71206",
-              "ACCEPT",
-              "ROUTE",
-              "39 Đường số 10 Tăng Nhơn Phú B, Phường Tăng Nhơn Phú, 71206"
-            ],
-            [
-              "pisen cube, 122 tôn đản, tp. hồ chí minh",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "PISEN CUBE, Hẻm 122 Đường Tôn Đản"
+              "52 Dương Thanh"
             ]
           ],
           "判 FIX": [
+            [
+              "29/35, Hẻm 736/11 Đường Cách Mạnng Tháng 8 1",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
             [
               "75 Hẻm 5 Đường 385, Sài Gòn",
               "FIX",
@@ -5278,12 +5212,32 @@
               "FIX",
               "LOCALITY",
               ""
+            ]
+          ],
+          "静默错误": [
+            [
+              "Quán 29 Cao Lỗ, Hẻm 35/11/18 Cao Lỗ, Phường Chánh Hưng, Hồ Chí Minh 71813",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "29 Cao Lỗ, Phường Chánh Hưng"
             ],
             [
-              "14/47 Hẻm 38, 71211",
-              "FIX",
-              "LOCALITY",
-              ""
+              "Phòng Trọ Hẻm 413 Lê Văn Quới, 83 Hẻm 365/40 Lê Văn Quới, TP.HCM, 762800",
+              "ACCEPT",
+              "ROUTE",
+              "83 Hẻm 413 Lê Văn Quới, 762800"
+            ],
+            [
+              "13, Hẻm 39 Đ. số 10 Tăng Nhơn Phú B, Phường Tăng Nhơn Phú, TP.HCM 00848",
+              "ACCEPT",
+              "ROUTE",
+              "39 Đường số 10 Tăng Nhơn Phú B, Phường Tăng Nhơn Phú, 00848"
+            ],
+            [
+              "pisen cube, 122 tôn đản, tp. hồ chí minh",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "PISEN CUBE, Hẻm 122 Đường Tôn Đản"
             ]
           ]
         }
@@ -5293,25 +5247,24 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.099,
-          "正确·要求确认": 0.407,
-          "判 FIX·片区对": 0.157,
-          "判 FIX": 0.162,
-          "错误建议": 0.153,
-          "静默错误": 0.022
+          "正确·直接通过": 0.123,
+          "正确·要求确认": 0.373,
+          "判 FIX·片区对": 0.195,
+          "判 FIX": 0.147,
+          "错误建议": 0.139,
+          "静默错误": 0.023
         },
-        "silent_over_1km": 0.013,
-        "wrong_over_1km": 0.091,
+        "silent_over_1km": 0.01,
+        "wrong_over_1km": 0.092,
         "granularity": {
-          "ROUTE": 0.307,
-          "PREMISE_PROXIMITY": 0.295,
-          "LOCALITY": 0.278,
-          "PREMISE": 0.079,
-          "OTHER": 0.041
+          "ROUTE": 0.488,
+          "LOCALITY": 0.298,
+          "PREMISE_PROXIMITY": 0.17,
+          "OTHER": 0.044
         },
-        "median_error_m": 444.21260037967585,
-        "within_500m": 0.504,
-        "ms": 9.490514375999965,
+        "median_error_m": 578.3550766217186,
+        "within_500m": 0.442,
+        "ms": 9.740655971000251,
         "examples": {
           "判 FIX": [
             [
@@ -5327,15 +5280,15 @@
               ""
             ],
             [
-              "46/6B Tổ 33, Khu Phố 2, Quốc Lộ 1A, Quận 12, 71509",
-              "FIX",
-              "LOCALITY",
-              ""
-            ],
-            [
               "Quận 9, Thủ Đức",
               "FIX",
               "OTHER",
+              ""
+            ],
+            [
+              "Lương Định Của, Thủ Đức, 700000",
+              "FIX",
+              "LOCALITY",
               ""
             ]
           ],
@@ -5373,6 +5326,12 @@
               "36 Hẻm 184 Đường Nguyễn Xí, Phường Bình Thạnh, 72310"
             ],
             [
+              "62/11 Hẻm 62 Lữ Gia, Quận 11, 72621",
+              "ACCEPT",
+              "ROUTE",
+              "62/11 Hẻm 62 Lữ Gia, 72621"
+            ],
+            [
               "2 Đường Trần Xuân Hòa, Quận 5, 72706",
               "ACCEPT",
               "PREMISE_PROXIMITY",
@@ -5383,12 +5342,6 @@
               "ACCEPT",
               "PREMISE_PROXIMITY",
               "13 Bình Lợi, Phường Bình Thạnh"
-            ],
-            [
-              "443 Đ. Phạm Văn Đồng, Quận Bình Thạnh, 728600",
-              "ACCEPT",
-              "ROUTE",
-              "443 Đường Phạm Văn Đồng, Bình Thạnh, 728600"
             ]
           ]
         }
@@ -5396,31 +5349,30 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.385,
-          "正确·要求确认": 0.568,
+          "正确·直接通过": 0.377,
+          "正确·要求确认": 0.577,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.002,
-          "错误建议": 0.045,
+          "判 FIX": 0.003,
+          "错误建议": 0.043,
           "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.039,
+        "wrong_over_1km": 0.038,
         "granularity": {
-          "ROUTE": 0.812,
-          "PREMISE_PROXIMITY": 0.18,
-          "PREMISE": 0.006,
-          "LOCALITY": 0.001,
-          "OTHER": 0.001
+          "ROUTE": 0.846,
+          "PREMISE_PROXIMITY": 0.151,
+          "OTHER": 0.002,
+          "LOCALITY": 0.001
         },
-        "median_error_m": 37.816409524394295,
-        "within_500m": 0.945,
-        "ms": 2.460539125999958,
+        "median_error_m": 36.61004142143631,
+        "within_500m": 0.947,
+        "ms": 1.9206965369994577,
         "examples": {
           "错误建议": [
             [
               "Kdc An Phú - Thảo Điền - Quận 2., 41 Đường Số 2, Hồ Chí Minh",
               "CONFIRM",
-              "PREMISE_PROXIMITY",
+              "ROUTE",
               "41 Đường số 2"
             ],
             [
@@ -5444,13 +5396,19 @@
           ],
           "判 FIX": [
             [
+              "29/35, Hẻm 736/11 Đường Cách Mạnng Tháng 8 1",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
               "Yến Sào Ba Phi Đ. số 8, Q.Phường Thủ Đức",
               "FIX",
               "LOCALITY",
               ""
             ],
             [
-              "Hẻm 101 Hoàng Văn Thụ 73",
+              "tôn thấất thuyết, sài gòn",
               "FIX",
               "OTHER",
               ""
@@ -5463,30 +5421,29 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.121,
-          "正确·要求确认": 0.55,
-          "判 FIX·片区对": 0.013,
-          "判 FIX": 0.037,
-          "错误建议": 0.248,
-          "静默错误": 0.031
+          "正确·直接通过": 0.15,
+          "正确·要求确认": 0.544,
+          "判 FIX·片区对": 0.011,
+          "判 FIX": 0.038,
+          "错误建议": 0.228,
+          "静默错误": 0.029
         },
-        "silent_over_1km": 0.023,
-        "wrong_over_1km": 0.166,
+        "silent_over_1km": 0.018,
+        "wrong_over_1km": 0.167,
         "granularity": {
-          "ROUTE": 0.415,
-          "PREMISE_PROXIMITY": 0.413,
-          "PREMISE": 0.122,
-          "LOCALITY": 0.05
+          "ROUTE": 0.667,
+          "PREMISE_PROXIMITY": 0.284,
+          "LOCALITY": 0.049
         },
-        "median_error_m": 266.7466030999957,
-        "within_500m": 0.619,
-        "ms": 31.50884198999995,
+        "median_error_m": 408.47806600474325,
+        "within_500m": 0.552,
+        "ms": 24.566803317999984,
         "examples": {
           "错误建议": [
             [
               "46 Trần Huy Liệu Phú Nhuận, Quận Gò Vấp",
               "CONFIRM",
-              "PREMISE_PROXIMITY",
+              "ROUTE",
               "46 Trần Huy Liệu, Phú Nhuận"
             ],
             [
@@ -5502,10 +5459,10 @@
               "36 Tân Hòa, Phường Dĩ An, 75308"
             ],
             [
-              "246 Lê Văn Việt, Phường Long Trường, Quận 7",
+              "32/13 Nguyễn Cửu Vân, Quận Bình Thạnh, 70000",
               "CONFIRM",
               "PREMISE_PROXIMITY",
-              "246 Lê Văn Việt"
+              "32/13 Thạch Thị Thanh"
             ]
           ],
           "静默错误": [
@@ -5522,16 +5479,16 @@
               "43 Đường Lô C"
             ],
             [
-              "37 Đại Lộ Bình Dương, Thuận An, 75207",
+              "62/11 Hẻm 62 Lữ Gia, Quận 11, 72621",
               "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "37 Đại lộ Bình Dương"
+              "ROUTE",
+              "62/11 Hẻm 62 Lữ Gia, 72621"
             ],
             [
-              "Đông Hưng Thuận 02 (song song Nguyễn Văn Quá), Quận 12, 71509",
+              "37 Đại Lộ Bình Dương, Thuận An, 75207",
               "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "02 Nguyễn Văn Quá, Đông Hưng Thuận"
+              "ROUTE",
+              "37 Đại lộ Bình Dương, 75207"
             ]
           ],
           "判 FIX": [
@@ -5565,36 +5522,30 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.381,
-          "正确·要求确认": 0.538,
+          "正确·直接通过": 0.377,
+          "正确·要求确认": 0.559,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.0,
-          "错误建议": 0.079,
+          "判 FIX": 0.001,
+          "错误建议": 0.061,
           "静默错误": 0.002
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.067,
+        "wrong_over_1km": 0.052,
         "granularity": {
-          "ROUTE": 0.793,
-          "PREMISE_PROXIMITY": 0.198,
-          "PREMISE": 0.009
+          "ROUTE": 0.84,
+          "PREMISE_PROXIMITY": 0.159,
+          "LOCALITY": 0.001
         },
-        "median_error_m": 42.124295991324715,
-        "within_500m": 0.917,
-        "ms": 5.44825756299997,
+        "median_error_m": 39.23220316771235,
+        "within_500m": 0.934,
+        "ms": 4.267531661000248,
         "examples": {
           "错误建议": [
             [
-              "36/22, Hẻm 358/6 Cách Mạng Tháng 8, TP.HCM, 700000\\N",
-              "CONFIRM",
-              "PREMISE_PROXIMITY",
-              "36/22 Thạch Thị Thanh"
-            ],
-            [
               "Kdc An Phú - Thảo Điền - Quận 2., 41 Đường Số 2, Hồ Chí Minh",
               "CONFIRM",
-              "PREMISE",
-              "2 Đường An Phú"
+              "PREMISE_PROXIMITY",
+              "2 Thảo Điền"
             ],
             [
               "29/33 Đường Số 2 Phường Linh Xuân TP. Hồ Chí Minh, 7200000",
@@ -5607,6 +5558,20 @@
               "CONFIRM",
               "ROUTE",
               "Hẻm 42 đường số 5, Phường Bình Hưng Hòa"
+            ],
+            [
+              "Phòng 1, 19 Đường D18 Hồ Chí Minh",
+              "CONFIRM",
+              "ROUTE",
+              "Phong 1, 19 Đường D18"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "29/35, Hẻm 736/11 Đường Cách Mạnng Tháng 8 1",
+              "FIX",
+              "LOCALITY",
+              ""
             ]
           ],
           "静默错误": [
@@ -5617,10 +5582,10 @@
               "29 Cao Lỗ, Phường Chánh Hưng"
             ],
             [
-              "13, Hẻm 39 Đ. số 10 Tăng Nhơn Phú B, Phường Tăng Nhơn Phú, TP.HCM 71206",
+              "13, Hẻm 39 Đ. số 10 Tăng Nhơn Phú B, Phường Tăng Nhơn Phú, TP.HCM 00848",
               "ACCEPT",
               "ROUTE",
-              "39 Đường số 10 Tăng Nhơn Phú B, Phường Tăng Nhơn Phú, 71206"
+              "39 Đường số 10 Tăng Nhơn Phú B, Phường Tăng Nhơn Phú, 00848"
             ]
           ]
         }
@@ -5632,24 +5597,23 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.185,
-          "正确·要求确认": 0.378,
+          "正确·直接通过": 0.193,
+          "正确·要求确认": 0.38,
           "判 FIX·片区对": 0.112,
           "判 FIX": 0.066,
-          "错误建议": 0.227,
-          "静默错误": 0.032
+          "错误建议": 0.224,
+          "静默错误": 0.025
         },
-        "silent_over_1km": 0.016,
-        "wrong_over_1km": 0.188,
+        "silent_over_1km": 0.012,
+        "wrong_over_1km": 0.19,
         "granularity": {
-          "ROUTE": 0.546,
-          "PREMISE_PROXIMITY": 0.222,
-          "LOCALITY": 0.178,
-          "PREMISE": 0.054
+          "ROUTE": 0.63,
+          "PREMISE_PROXIMITY": 0.192,
+          "LOCALITY": 0.178
         },
-        "median_error_m": 593.9066715267344,
-        "within_500m": 0.468,
-        "ms": 6.547556810999936,
+        "median_error_m": 692.1234965050198,
+        "within_500m": 0.439,
+        "ms": 6.168443757000205,
         "examples": {
           "判 FIX": [
             [
@@ -5697,10 +5661,10 @@
               "Ayala Malls Circuit"
             ],
             [
-              "Milano Street, Taguig City, 1634",
+              "Ste 1707, Raffles Corporate Center, F. Ortigas Jr. Rd, Pasig, 1605",
               "CONFIRM",
               "ROUTE",
-              "Mariano Street, Taguig, 1634"
+              "1707 Jacinto Roque Road, 1605"
             ]
           ],
           "静默错误": [
@@ -5709,12 +5673,6 @@
               "ACCEPT",
               "PREMISE_PROXIMITY",
               "699 Tandang Sora Avenue, Quezon City"
-            ],
-            [
-              "138 Dr. Sixto Antonio Ave., Pasig, 1606",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "138 Dr. Sixto Antonio Avenue, Pasig"
             ],
             [
               "Arcovia City, E. Rodriguez Jr. Avenue, C 5 Road, Pasig, 1604",
@@ -5727,6 +5685,12 @@
               "ACCEPT",
               "PREMISE_PROXIMITY",
               "64 J. P. Rizal Extension, Taguig"
+            ],
+            [
+              "Green Sun 1232, 2285 Chino Roces Ave, Makati, 1231",
+              "ACCEPT",
+              "ROUTE",
+              "2285 Chino Roces Avenue, Makati, 1231"
             ]
           ]
         }
@@ -5734,24 +5698,23 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.215,
-          "正确·要求确认": 0.642,
+          "正确·直接通过": 0.216,
+          "正确·要求确认": 0.658,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.031,
-          "错误建议": 0.112,
+          "判 FIX": 0.034,
+          "错误建议": 0.092,
           "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.104,
+        "wrong_over_1km": 0.082,
         "granularity": {
-          "ROUTE": 0.851,
-          "PREMISE_PROXIMITY": 0.109,
-          "LOCALITY": 0.031,
-          "PREMISE": 0.009
+          "ROUTE": 0.892,
+          "PREMISE_PROXIMITY": 0.074,
+          "LOCALITY": 0.034
         },
-        "median_error_m": 84.531971653849,
-        "within_500m": 0.845,
-        "ms": 3.5308078169999817,
+        "median_error_m": 80.38681331819357,
+        "within_500m": 0.863,
+        "ms": 2.7292488620005315,
         "examples": {
           "错误建议": [
             [
@@ -5769,19 +5732,25 @@
             [
               "No., 23 Lopez Jaena Street Manila",
               "CONFIRM",
-              "PREMISE_PROXIMITY",
+              "ROUTE",
               "23 Lopez Jaena Street, Manila"
             ],
             [
-              "Sampaguita St, Sauyo, مدينة كيزون, Manila",
+              "24 Callejon 1 Marilag, Manila",
               "CONFIRM",
               "ROUTE",
-              "Sampaguita Street, Manila"
+              "24 Callejon 1, Manila"
             ]
           ],
           "判 FIX": [
             [
               "Harmony Beauty Essentials 35 Rd. 1 Tandang Sora, Quezon City, 1122",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "Unit 7, Emeraldd Street Pasong Tamo, Quezon City",
               "FIX",
               "LOCALITY",
               ""
@@ -5797,12 +5766,6 @@
               "FIX",
               "LOCALITY",
               ""
-            ],
-            [
-              "57 Pedro Bukanes Street Barangay 76 Manila, Makati City",
-              "FIX",
-              "LOCALITY",
-              ""
             ]
           ]
         }
@@ -5812,25 +5775,24 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.105,
-          "正确·要求确认": 0.336,
-          "判 FIX·片区对": 0.283,
+          "正确·直接通过": 0.108,
+          "正确·要求确认": 0.328,
+          "判 FIX·片区对": 0.294,
           "判 FIX": 0.096,
-          "错误建议": 0.168,
-          "静默错误": 0.012
+          "错误建议": 0.166,
+          "静默错误": 0.008
         },
-        "silent_over_1km": 0.006,
-        "wrong_over_1km": 0.134,
+        "silent_over_1km": 0.002,
+        "wrong_over_1km": 0.138,
         "granularity": {
-          "ROUTE": 0.451,
-          "LOCALITY": 0.343,
-          "PREMISE_PROXIMITY": 0.127,
-          "PREMISE": 0.043,
-          "OTHER": 0.036
+          "ROUTE": 0.516,
+          "LOCALITY": 0.353,
+          "PREMISE_PROXIMITY": 0.094,
+          "OTHER": 0.037
         },
-        "median_error_m": 625.0036346814342,
-        "within_500m": 0.418,
-        "ms": 4.861294294999993,
+        "median_error_m": 677.6448252011311,
+        "within_500m": 0.389,
+        "ms": 4.122431953999694,
         "examples": {
           "判 FIX": [
             [
@@ -5866,12 +5828,6 @@
               "P. Guevarra Street, San Juan"
             ],
             [
-              "Higher Ground, Tandang Sora Ave 699, Quezon City, 1119",
-              "CONFIRM",
-              "ROUTE",
-              "Tandang Sora Avenue, 1119"
-            ],
-            [
               "Milano Street, Taguig City, 1634",
               "CONFIRM",
               "ROUTE",
@@ -5882,15 +5838,15 @@
               "CONFIRM",
               "ROUTE",
               "143 Road 20, 1108"
+            ],
+            [
+              "Administration Building, Basement Floor, MWSS Complex, 489 Katipunan Avenue, Balara, Quezo",
+              "CONFIRM",
+              "ROUTE",
+              "489 Katipunan Avenue, 1105"
             ]
           ],
           "静默错误": [
-            [
-              "138 Dr. Sixto Antonio Ave., Pasig, 1606",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "138 Dr. Sixto Antonio Avenue, Pasig"
-            ],
             [
               "Green Sun 1232, 2285 Chino Roces Ave, Makati, 1231",
               "ACCEPT",
@@ -5898,16 +5854,22 @@
               "2285 Chino Roces Avenue, Makati, 1231"
             ],
             [
-              "155 N. Domingo, San Juan, 1500",
+              "2/F PHINMA Bldg., #166 Salcedo St., Legaspi Village Makati City, Makati, 1226",
               "ACCEPT",
               "PREMISE_PROXIMITY",
-              "155 N. Domingo Street, San Juan"
+              "166 Salcedo Street"
             ],
             [
               "92 MacArthur Hwy, Valenzuela, 1440",
               "ACCEPT",
               "PREMISE_PROXIMITY",
               "92 MacArthur Highway, Valenzuela"
+            ],
+            [
+              "2nd Floor, Unit 2H, Super Miler Bldg, 189 Ortigas Ave, Pasig, 1604",
+              "ACCEPT",
+              "ROUTE",
+              "Unit 2H, 189 Ortigas Avenue, Pasig, 1604"
             ]
           ]
         }
@@ -5915,24 +5877,23 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.277,
-          "正确·要求确认": 0.597,
+          "正确·直接通过": 0.276,
+          "正确·要求确认": 0.619,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.003,
-          "错误建议": 0.123,
+          "错误建议": 0.102,
           "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.111,
+        "wrong_over_1km": 0.091,
         "granularity": {
-          "ROUTE": 0.811,
-          "PREMISE_PROXIMITY": 0.175,
-          "PREMISE": 0.011,
+          "ROUTE": 0.861,
+          "PREMISE_PROXIMITY": 0.136,
           "LOCALITY": 0.003
         },
-        "median_error_m": 78.38887952758678,
-        "within_500m": 0.856,
-        "ms": 2.4853498760001003,
+        "median_error_m": 72.6082948903213,
+        "within_500m": 0.872,
+        "ms": 1.9275739940003405,
         "examples": {
           "错误建议": [
             [
@@ -5950,14 +5911,14 @@
             [
               "No., 23 Lopez Jaena Street Manila",
               "CONFIRM",
-              "PREMISE_PROXIMITY",
-              "23 Lopez Jaena Street, Pasig"
+              "ROUTE",
+              "23 Lopez Jaena Street"
             ],
             [
-              "Sampaguita St, Sauyo, مدينة كيزون, Manila",
+              "Unit 7, Emeraldd Street Pasong Tamo, Quezon City",
               "CONFIRM",
               "ROUTE",
-              "Sampaguita Street"
+              "Unit 7, Emerald Street, Pasong Tamo"
             ]
           ],
           "判 FIX": [
@@ -5968,7 +5929,7 @@
               ""
             ],
             [
-              "Floor 23, No. 40C San Pedro, Pembo Makati City, 1623",
+              "Floor 23, 40C San Pedro, Pembo, Makati City, 1641",
               "FIX",
               "LOCALITY",
               ""
@@ -5987,24 +5948,23 @@
       "real": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.195,
-          "正确·要求确认": 0.435,
-          "判 FIX·片区对": 0.062,
-          "判 FIX": 0.042,
+          "正确·直接通过": 0.203,
+          "正确·要求确认": 0.436,
+          "判 FIX·片区对": 0.063,
+          "判 FIX": 0.04,
           "错误建议": 0.232,
-          "静默错误": 0.034
+          "静默错误": 0.026
         },
-        "silent_over_1km": 0.018,
-        "wrong_over_1km": 0.19,
+        "silent_over_1km": 0.012,
+        "wrong_over_1km": 0.195,
         "granularity": {
-          "ROUTE": 0.577,
-          "PREMISE_PROXIMITY": 0.252,
-          "LOCALITY": 0.104,
-          "PREMISE": 0.067
+          "ROUTE": 0.681,
+          "PREMISE_PROXIMITY": 0.216,
+          "LOCALITY": 0.103
         },
-        "median_error_m": 410.54681398282867,
-        "within_500m": 0.528,
-        "ms": 11.027242825999908,
+        "median_error_m": 511.74762817190157,
+        "within_500m": 0.495,
+        "ms": 10.274515707000319,
         "examples": {
           "判 FIX": [
             [
@@ -6052,10 +6012,10 @@
               "Ayala Malls Circuit"
             ],
             [
-              "Milano Street, Taguig City, 1634",
+              "Ste 1707, Raffles Corporate Center, F. Ortigas Jr. Rd, Pasig, 1605",
               "CONFIRM",
               "ROUTE",
-              "Mariano Street, Taguig, 1634"
+              "1707 Jacinto Roque Road, 1605"
             ]
           ],
           "静默错误": [
@@ -6064,12 +6024,6 @@
               "ACCEPT",
               "PREMISE_PROXIMITY",
               "699 Tandang Sora Avenue, Quezon City"
-            ],
-            [
-              "138 Dr. Sixto Antonio Ave., Pasig, 1606",
-              "ACCEPT",
-              "PREMISE_PROXIMITY",
-              "138 Dr. Sixto Antonio Avenue, Pasig"
             ],
             [
               "Arcovia City, E. Rodriguez Jr. Avenue, C 5 Road, Pasig, 1604",
@@ -6082,6 +6036,12 @@
               "ACCEPT",
               "PREMISE_PROXIMITY",
               "64 J. P. Rizal Extension, Taguig"
+            ],
+            [
+              "Green Sun 1232, 2285 Chino Roces Ave, Makati, 1231",
+              "ACCEPT",
+              "ROUTE",
+              "2285 Chino Roces Avenue, Makati, 1231"
             ]
           ]
         }
@@ -6089,23 +6049,22 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.277,
-          "正确·要求确认": 0.616,
+          "正确·直接通过": 0.278,
+          "正确·要求确认": 0.635,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.0,
-          "错误建议": 0.107,
+          "错误建议": 0.087,
           "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.097,
+        "wrong_over_1km": 0.076,
         "granularity": {
-          "ROUTE": 0.808,
-          "PREMISE_PROXIMITY": 0.181,
-          "PREMISE": 0.011
+          "ROUTE": 0.862,
+          "PREMISE_PROXIMITY": 0.138
         },
-        "median_error_m": 84.53308980081681,
-        "within_500m": 0.871,
-        "ms": 5.723573509999937,
+        "median_error_m": 80.72067531752728,
+        "within_500m": 0.889,
+        "ms": 4.497655256000144,
         "examples": {
           "错误建议": [
             [
@@ -6117,20 +6076,20 @@
             [
               "No., 23 Lopez Jaena Street Manila",
               "CONFIRM",
-              "PREMISE_PROXIMITY",
+              "ROUTE",
               "23 Lopez Jaena Street, Manila"
             ],
             [
-              "Sampaguita St, Sauyo, مدينة كيزون, Manila",
+              "Unit 7, Emeraldd Street Pasong Tamo, Quezon City",
               "CONFIRM",
               "ROUTE",
-              "Sampaguita Street, Manila"
+              "Unit 7, Emerald Street, Pasong Tamo"
             ],
             [
-              "Abraham St. Batasan Hills, Quezon City",
+              "24 Callejon 1 Marilag, Manila",
               "CONFIRM",
               "ROUTE",
-              "Abraham Street, Quezon City"
+              "24 Callejon 1, Manila"
             ]
           ]
         }

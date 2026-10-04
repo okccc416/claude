@@ -21,27 +21,27 @@
 | 荷兰（NL） | A | rules | 1000 | 83.5% | 8.1% | 0.9% | 4.5% | 1.0% | 2.0% | 0.8% | 96.6% | 1 |
 | 荷兰（NL） | A | crf | 1000 | 66.3% | 23.9% | 0.8% | 6.2% | 1.4% | 1.4% | 0.5% | 95.9% | 1 |
 | 荷兰（NL） | A | hybrid | 1000 | 83.5% | 8.0% | 0.8% | 4.9% | 0.8% | 2.0% | 0.8% | 97.0% | 2 |
-| 阿联酋（AE） | B | rules | 1000 | 1.5% | 28.3% | 12.2% | 24.1% | 33.3% | 0.6% | 0.5% | 21.2% | 4 |
-| 阿联酋（AE） | B | crf | 1000 | 1.0% | 16.7% | 6.3% | 57.2% | 18.5% | 0.3% | 0.3% | 10.4% | 2 |
-| 阿联酋（AE） | B | hybrid | 1000 | 1.5% | 29.1% | 11.0% | 22.1% | 35.7% | 0.6% | 0.5% | 21.6% | 6 |
-| 沙特（SA） | B | rules | 1000 | 2.6% | 32.1% | 10.0% | 14.4% | 40.4% | 0.5% | 0.4% | 20.8% | 8 |
-| 沙特（SA） | B | crf | 1000 | 2.3% | 27.4% | 16.0% | 22.3% | 31.1% | 0.9% | 0.6% | 19.7% | 9 |
-| 沙特（SA） | B | hybrid | 1000 | 2.7% | 35.7% | 7.5% | 12.1% | 41.4% | 0.6% | 0.4% | 22.3% | 13 |
-| 马来西亚（MY） | C | rules | 1000 | 28.8% | 33.1% | 3.2% | 3.7% | 26.6% | 4.6% | 2.2% | 59.7% | 8 |
-| 马来西亚（MY） | C | crf | 1000 | 26.6% | 38.6% | 13.6% | 8.5% | 9.2% | 3.5% | 2.0% | 65.0% | 4 |
-| 马来西亚（MY） | C | hybrid | 1000 | 29.8% | 35.7% | 2.5% | 3.0% | 24.3% | 4.7% | 2.2% | 63.0% | 12 |
-| 印尼（ID） | C | rules | 1000 | 26.9% | 29.0% | 3.0% | 4.5% | 30.2% | 6.4% | 2.8% | 48.7% | 13 |
-| 印尼（ID） | C | crf | 1000 | 11.1% | 20.5% | 37.1% | 14.7% | 15.4% | 1.2% | 0.5% | 38.6% | 6 |
-| 印尼（ID） | C | hybrid | 1000 | 26.9% | 30.1% | 2.6% | 4.3% | 29.7% | 6.4% | 2.7% | 50.0% | 13 |
-| 泰国（TH） | C | rules | 1000 | 12.9% | 37.7% | 9.8% | 10.2% | 23.4% | 6.0% | 3.4% | 36.1% | 11 |
-| 泰国（TH） | C | crf | 1000 | 8.8% | 25.1% | 29.4% | 21.6% | 10.8% | 4.3% | 2.4% | 23.9% | 6 |
-| 泰国（TH） | C | hybrid | 1000 | 12.9% | 39.5% | 8.8% | 9.1% | 23.7% | 6.0% | 3.4% | 37.1% | 37 |
-| 越南（VN） | C | rules | 1000 | 9.1% | 56.9% | 1.5% | 4.3% | 26.3% | 1.9% | 1.4% | 60.8% | 16 |
-| 越南（VN） | C | crf | 1000 | 9.9% | 40.7% | 15.7% | 16.2% | 15.3% | 2.2% | 1.3% | 50.4% | 9 |
-| 越南（VN） | C | hybrid | 1000 | 12.1% | 55.0% | 1.3% | 3.7% | 24.8% | 3.1% | 2.3% | 61.9% | 32 |
-| 菲律宾（PH） | C | rules | 1000 | 18.5% | 37.8% | 11.2% | 6.6% | 22.7% | 3.2% | 1.6% | 46.8% | 7 |
-| 菲律宾（PH） | C | crf | 1000 | 10.5% | 33.6% | 28.3% | 9.6% | 16.8% | 1.2% | 0.6% | 41.8% | 5 |
-| 菲律宾（PH） | C | hybrid | 1000 | 19.5% | 43.5% | 6.2% | 4.2% | 23.2% | 3.4% | 1.8% | 52.8% | 11 |
+| 阿联酋（AE） | B | rules | 1000 | 1.5% | 29.1% | 12.0% | 24.3% | 32.5% | 0.6% | 0.5% | 21.0% | 4 |
+| 阿联酋（AE） | B | crf | 1000 | 1.0% | 17.3% | 6.3% | 57.3% | 17.8% | 0.3% | 0.3% | 10.4% | 2 |
+| 阿联酋（AE） | B | hybrid | 1000 | 1.5% | 29.8% | 11.1% | 22.1% | 34.9% | 0.6% | 0.5% | 21.5% | 6 |
+| 沙特（SA） | B | rules | 1000 | 2.6% | 32.1% | 9.9% | 14.5% | 40.4% | 0.5% | 0.4% | 20.9% | 8 |
+| 沙特（SA） | B | crf | 1000 | 2.2% | 27.3% | 16.3% | 21.9% | 31.5% | 0.8% | 0.5% | 19.8% | 6 |
+| 沙特（SA） | B | hybrid | 1000 | 2.7% | 35.8% | 7.3% | 12.2% | 41.4% | 0.6% | 0.4% | 22.5% | 13 |
+| 马来西亚（MY） | C | rules | 1000 | 30.2% | 34.1% | 3.2% | 3.7% | 24.9% | 3.9% | 2.0% | 59.3% | 7 |
+| 马来西亚（MY） | C | crf | 1000 | 28.2% | 38.9% | 12.0% | 8.2% | 9.5% | 3.2% | 2.1% | 64.5% | 4 |
+| 马来西亚（MY） | C | hybrid | 1000 | 31.4% | 36.4% | 2.6% | 2.9% | 22.6% | 4.1% | 2.1% | 62.6% | 10 |
+| 印尼（ID） | C | rules | 1000 | 27.5% | 29.5% | 3.0% | 4.5% | 28.9% | 6.6% | 3.0% | 47.6% | 7 |
+| 印尼（ID） | C | crf | 1000 | 7.7% | 17.8% | 45.9% | 14.5% | 13.7% | 0.4% | 0.2% | 34.9% | 6 |
+| 印尼（ID） | C | hybrid | 1000 | 27.5% | 30.6% | 2.6% | 4.4% | 28.4% | 6.5% | 2.9% | 48.9% | 13 |
+| 泰国（TH） | C | rules | 1000 | 15.1% | 40.2% | 9.9% | 10.4% | 19.7% | 4.7% | 2.4% | 35.2% | 11 |
+| 泰国（TH） | C | crf | 1000 | 10.5% | 25.9% | 29.5% | 22.1% | 8.5% | 3.5% | 1.7% | 22.8% | 6 |
+| 泰国（TH） | C | hybrid | 1000 | 15.1% | 41.8% | 8.9% | 9.4% | 20.1% | 4.7% | 2.4% | 36.0% | 17 |
+| 越南（VN） | C | rules | 1000 | 9.8% | 58.9% | 1.5% | 4.4% | 24.0% | 1.4% | 1.2% | 54.4% | 16 |
+| 越南（VN） | C | crf | 1000 | 12.3% | 37.3% | 19.5% | 14.7% | 13.9% | 2.3% | 1.0% | 44.2% | 10 |
+| 越南（VN） | C | hybrid | 1000 | 15.0% | 54.4% | 1.1% | 3.8% | 22.8% | 2.9% | 1.8% | 55.2% | 25 |
+| 菲律宾（PH） | C | rules | 1000 | 19.3% | 38.0% | 11.2% | 6.6% | 22.4% | 2.5% | 1.2% | 43.9% | 6 |
+| 菲律宾（PH） | C | crf | 1000 | 10.8% | 32.8% | 29.4% | 9.6% | 16.6% | 0.8% | 0.2% | 38.9% | 4 |
+| 菲律宾（PH） | C | hybrid | 1000 | 20.3% | 43.6% | 6.3% | 4.0% | 23.2% | 2.6% | 1.2% | 49.5% | 10 |
 | 加拿大（CA） | A | rules | 1000 | 75.8% | 15.0% | 0.5% | 1.8% | 3.3% | 3.6% | 1.8% | 92.9% | 2 |
 | 加拿大（CA） | A | crf | 1000 | 63.4% | 24.5% | 2.0% | 3.6% | 3.5% | 3.0% | 1.4% | 92.1% | 3 |
 | 加拿大（CA） | A | hybrid | 1000 | 77.6% | 15.0% | 0.4% | 2.1% | 1.3% | 3.6% | 1.8% | 95.2% | 6 |
@@ -158,27 +158,27 @@
 | 荷兰（NL） | A | rules | 1000 | 84.8% | 10.2% | 0.0% | 4.6% | 0.4% | 0.0% | 0.0% | 99.7% | 1 |
 | 荷兰（NL） | A | crf | 1000 | 71.5% | 23.5% | 0.0% | 4.8% | 0.2% | 0.0% | 0.0% | 99.9% | 1 |
 | 荷兰（NL） | A | hybrid | 1000 | 85.0% | 10.4% | 0.0% | 4.6% | 0.0% | 0.0% | 0.0% | 100.0% | 2 |
-| 阿联酋（AE） | B | rules | 1000 | 1.6% | 41.8% | 0.0% | 29.3% | 27.0% | 0.3% | 0.0% | 50.9% | 3 |
-| 阿联酋（AE） | B | crf | 1000 | 4.0% | 61.7% | 0.0% | 1.7% | 32.2% | 0.4% | 0.0% | 69.2% | 3 |
-| 阿联酋（AE） | B | hybrid | 1000 | 4.1% | 61.7% | 0.0% | 0.7% | 33.1% | 0.4% | 0.0% | 69.0% | 6 |
-| 沙特（SA） | B | rules | 1000 | 10.1% | 63.8% | 0.0% | 5.7% | 20.4% | 0.0% | 0.0% | 71.7% | 5 |
-| 沙特（SA） | B | crf | 1000 | 11.5% | 72.6% | 0.0% | 0.8% | 15.0% | 0.1% | 0.0% | 82.9% | 2 |
-| 沙特（SA） | B | hybrid | 1000 | 11.5% | 71.9% | 0.0% | 0.3% | 16.2% | 0.1% | 0.0% | 80.6% | 5 |
-| 马来西亚（MY） | C | rules | 1000 | 18.0% | 64.7% | 0.0% | 1.9% | 15.4% | 0.0% | 0.0% | 82.4% | 3 |
-| 马来西亚（MY） | C | crf | 1000 | 24.6% | 71.5% | 0.0% | 0.1% | 3.8% | 0.0% | 0.0% | 94.9% | 2 |
-| 马来西亚（MY） | C | hybrid | 1000 | 23.1% | 64.4% | 0.0% | 0.0% | 12.5% | 0.0% | 0.0% | 86.5% | 5 |
-| 印尼（ID） | C | rules | 1000 | 21.2% | 66.0% | 0.0% | 1.1% | 11.7% | 0.0% | 0.0% | 86.8% | 3 |
-| 印尼（ID） | C | crf | 1000 | 29.8% | 61.2% | 0.0% | 0.6% | 8.4% | 0.0% | 0.0% | 89.8% | 2 |
-| 印尼（ID） | C | hybrid | 1000 | 29.3% | 60.9% | 0.0% | 0.2% | 9.6% | 0.0% | 0.0% | 89.7% | 5 |
-| 泰国（TH） | C | rules | 1000 | 16.3% | 75.7% | 0.0% | 1.8% | 6.1% | 0.1% | 0.0% | 91.1% | 3 |
-| 泰国（TH） | C | crf | 1000 | 22.0% | 75.6% | 0.0% | 0.3% | 2.0% | 0.1% | 0.0% | 95.9% | 2 |
-| 泰国（TH） | C | hybrid | 1000 | 21.3% | 73.4% | 0.0% | 0.1% | 5.0% | 0.2% | 0.0% | 93.1% | 7 |
-| 越南（VN） | C | rules | 1000 | 29.4% | 58.4% | 0.0% | 1.5% | 10.3% | 0.4% | 0.0% | 88.7% | 3 |
-| 越南（VN） | C | crf | 1000 | 38.5% | 56.8% | 0.0% | 0.2% | 4.5% | 0.0% | 0.0% | 94.5% | 2 |
-| 越南（VN） | C | hybrid | 1000 | 38.1% | 53.8% | 0.0% | 0.0% | 7.9% | 0.2% | 0.0% | 91.7% | 5 |
-| 菲律宾（PH） | C | rules | 1000 | 21.5% | 64.2% | 0.0% | 3.1% | 11.2% | 0.0% | 0.0% | 84.5% | 4 |
-| 菲律宾（PH） | C | crf | 1000 | 27.7% | 59.7% | 0.0% | 0.3% | 12.3% | 0.0% | 0.0% | 85.6% | 2 |
-| 菲律宾（PH） | C | hybrid | 1000 | 27.7% | 61.6% | 0.0% | 0.0% | 10.7% | 0.0% | 0.0% | 87.1% | 6 |
+| 阿联酋（AE） | B | rules | 1000 | 1.7% | 47.4% | 0.0% | 30.0% | 20.9% | 0.0% | 0.0% | 52.2% | 3 |
+| 阿联酋（AE） | B | crf | 1000 | 4.7% | 71.4% | 0.0% | 1.1% | 22.8% | 0.0% | 0.0% | 72.8% | 1 |
+| 阿联酋（AE） | B | hybrid | 1000 | 4.7% | 70.7% | 0.0% | 0.7% | 23.9% | 0.0% | 0.0% | 72.0% | 4 |
+| 沙特（SA） | B | rules | 1000 | 9.7% | 64.6% | 0.0% | 5.3% | 20.4% | 0.0% | 0.0% | 72.2% | 3 |
+| 沙特（SA） | B | crf | 1000 | 11.2% | 73.1% | 0.0% | 0.7% | 14.9% | 0.1% | 0.0% | 82.6% | 1 |
+| 沙特（SA） | B | hybrid | 1000 | 11.1% | 72.3% | 0.0% | 0.3% | 16.2% | 0.1% | 0.0% | 80.6% | 4 |
+| 马来西亚（MY） | C | rules | 1000 | 19.2% | 69.5% | 0.0% | 1.7% | 9.5% | 0.1% | 0.0% | 88.5% | 3 |
+| 马来西亚（MY） | C | crf | 1000 | 24.8% | 71.5% | 0.0% | 0.3% | 3.4% | 0.0% | 0.0% | 95.3% | 2 |
+| 马来西亚（MY） | C | hybrid | 1000 | 24.4% | 70.3% | 0.0% | 0.1% | 5.1% | 0.1% | 0.0% | 93.7% | 4 |
+| 印尼（ID） | C | rules | 1000 | 21.7% | 64.8% | 0.0% | 0.9% | 12.5% | 0.1% | 0.0% | 86.2% | 2 |
+| 印尼（ID） | C | crf | 1000 | 30.1% | 60.4% | 0.0% | 0.8% | 8.6% | 0.1% | 0.0% | 89.3% | 2 |
+| 印尼（ID） | C | hybrid | 1000 | 29.9% | 60.7% | 0.0% | 0.2% | 9.1% | 0.1% | 0.0% | 90.0% | 4 |
+| 泰国（TH） | C | rules | 1000 | 16.6% | 76.9% | 0.0% | 2.0% | 4.4% | 0.1% | 0.0% | 92.9% | 3 |
+| 泰国（TH） | C | crf | 1000 | 22.2% | 75.4% | 0.0% | 0.2% | 2.1% | 0.1% | 0.0% | 96.1% | 2 |
+| 泰国（TH） | C | hybrid | 1000 | 21.9% | 74.5% | 0.0% | 0.1% | 3.3% | 0.2% | 0.0% | 95.1% | 5 |
+| 越南（VN） | C | rules | 1000 | 28.8% | 60.6% | 0.0% | 1.4% | 8.8% | 0.4% | 0.0% | 90.7% | 3 |
+| 越南（VN） | C | crf | 1000 | 37.7% | 57.7% | 0.0% | 0.3% | 4.3% | 0.0% | 0.0% | 94.7% | 2 |
+| 越南（VN） | C | hybrid | 1000 | 37.7% | 55.9% | 0.0% | 0.1% | 6.1% | 0.2% | 0.0% | 93.4% | 4 |
+| 菲律宾（PH） | C | rules | 1000 | 21.6% | 65.8% | 0.0% | 3.4% | 9.2% | 0.0% | 0.0% | 86.3% | 3 |
+| 菲律宾（PH） | C | crf | 1000 | 27.6% | 61.9% | 0.0% | 0.3% | 10.2% | 0.0% | 0.0% | 87.2% | 2 |
+| 菲律宾（PH） | C | hybrid | 1000 | 27.8% | 63.5% | 0.0% | 0.0% | 8.7% | 0.0% | 0.0% | 88.9% | 4 |
 | 加拿大（CA） | A | rules | 1000 | 72.7% | 20.9% | 0.0% | 4.5% | 1.7% | 0.2% | 0.2% | 98.8% | 3 |
 | 加拿大（CA） | A | crf | 1000 | 73.0% | 21.1% | 0.0% | 4.3% | 1.5% | 0.1% | 0.1% | 99.4% | 2 |
 | 加拿大（CA） | A | hybrid | 1000 | 73.4% | 21.4% | 0.0% | 4.3% | 0.8% | 0.1% | 0.1% | 99.5% | 5 |
@@ -447,9 +447,9 @@
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| 2, Jalan Tbk 1/10, Puchong, 47100 | CONFIRM | PREMISE_PROXIMITY | 2 Jalan Puchong, puchong, 47140 |
+| 2, Jalan Tbk 1/10, Puchong, 47100 | CONFIRM | ROUTE | 2 Jalan Puchong, 47100 |
 | 35-2, Jalan Prima SG 2, Batu Caves, 68100 | CONFIRM | PREMISE_PROXIMITY | 35-2 Jalan Batu Caves |
-| Dataran 3 Two Square No. 2,Jalan 19 /1, Petaling Jaya, 46300 | CONFIRM | PREMISE | 1 Jalan Petaling |
+| Dataran 3 Two Square No. 2,Jalan 19 /1, Petaling Jaya, 46300 | CONFIRM | ROUTE | 1 Persiaran Petaling, 46300 |
 | 145 Jalan Ampang, Bandar Kuala Lumpur, 50450 | CONFIRM | PREMISE_PROXIMITY | 145 Jalan Ampang, Kuala Lumpur |
 
 **马来西亚 · 判 FIX**
@@ -465,10 +465,10 @@
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| 8 Tengkat Tong Shin, Bandar Kuala Lumpur, 50200 | ACCEPT | PREMISE | 8 Tengkat Tong Shin, 50200 |
 | C-20-3A, The Hub SS2, Jalan Harapan, Seksyen 19, 46300, Petaling Jaya, 46300 | ACCEPT | PREMISE_PROXIMITY | 20-3A Jalan Harapan, Seksyen 19 |
-| 168 Jalan Bukit Bintang, Kuala Lumpur, 55100 | ACCEPT | PREMISE | 168 Jalan Bukit Bintang, Kuala Lumpur, 55100 |
-| 20, Jalan Brunei Selatan, off, Jln Pudu, Bandar Kuala Lumpur, 55100 | ACCEPT | PREMISE | 20 Jalan Pudu, Kuala Lumpur |
+| 168 Jalan Bukit Bintang, Kuala Lumpur, 55100 | ACCEPT | PREMISE_PROXIMITY | 168 Jalan Bukit Bintang |
+| Heritage House, 33 Jalan Yap Ah Shak, Bandar Kuala Lumpur, 50300 | ACCEPT | PREMISE_PROXIMITY | Heritage House, 33 Jalan Yap Ah Shak, Kuala Lumpur |
+| 6 Jalan Gombak, Setapak, 53000 | ACCEPT | PREMISE_PROXIMITY | 6 Jalan Gombak, Setapak |
 
 **印尼 · 判 FIX**
 
@@ -485,7 +485,7 @@
 |---|---|---|---|
 | Bojong Kulur Gunung Putri, Bekasi, 16969 | CONFIRM | ROUTE | Jalan Putri, Kab Bekasi, 16969 |
 | Jalan Mohammad sahid thamrin, Tangerang | CONFIRM | ROUTE | Jalan Thamrin Raya, Tangerang |
-| Satrio Tower Lantai 26 Unit C & D Jl. Prof Dr. Satrio Kav C4, RT.11/RW.4, Jakarta Selatan, | CONFIRM | ROUTE | Lantai 26, Jalan Profesor Dokter Satrio, Jakarta Selatan, 12940 |
+| Satrio Tower Lantai 26 Unit C & D Jl. Prof Dr. Satrio Kav C4, RT.11/RW.4, Jakarta Selatan, | CONFIRM | ROUTE | Lantai 26, Gang Tower, Jakarta Selatan, 12940 |
 | Jl. H. Nawawi, RT.010/RW.002, Bekasi Kota, 17136 | CONFIRM | ROUTE | Jalan H, Kab Bekasi, 17136 |
 
 **印尼 · 静默错误**
@@ -493,9 +493,9 @@
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
 | Mall Bintaro Jaya X Change Lantai LG #129, Boulevard Bintaro Jaya, Bintaro Jaya Sektor 7 B | ACCEPT | ROUTE | #129, Jalan Boulevard Bintaro Jaya 2, Bintaro Jaya, 15117 |
-| Jl. Asia Afrika No.8, RT.1/RW.3, Jakarta Pusat, 10270 | ACCEPT | PREMISE | Jalan Asia Afrika 8, Jakarta Pusat, 10270 |
 | Jalan Kelapa Puan Timur 1, Jakarta Utara, 14250 | ACCEPT | PREMISE_PROXIMITY | Jalan Kelapa Puan Raya 1, Jakarta Utara |
 | Jalan Pangeran Tubagus Angke 2, Jakarta, 11460 | ACCEPT | PREMISE_PROXIMITY | Jalan Pangeran Tubagus Angke 2 |
+| Jalan Cikoko Timur II 2B, Jakarta, 12770 | ACCEPT | ROUTE | Jalan Cikoko Timur II 2B, 12770 |
 
 **泰国 · 判 FIX**
 
@@ -519,7 +519,7 @@
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| 93/136 ซอยเซ็นต์หลุยส์ 3 แยก 30 ถนนจันทน์, กรุงเทพมหานคร, 10120 | ACCEPT | PREMISE_PROXIMITY | 30 ถนนจันทน์, 10120 |
+| 93/136 ซอยเซ็นต์หลุยส์ 3 แยก 30 ถนนจันทน์, กรุงเทพมหานคร, 10120 | ACCEPT | ROUTE | 30 ถนนจันทน์, 10120 |
 | 40 ถนน หทัยราษฎร์, กรุงเทพมหานคร, 10510 | ACCEPT | ROUTE | 40 ถนนหทัยราษฎร์, 10510 |
 | 33 ถนน สุขุมวิท, กรุงเทพมหานคร, 10110 | ACCEPT | PREMISE_PROXIMITY | 33 ถนนสุขุมวิท |
 | 2 ถนน จรัญสนิทวงศ์, กรุงเทพมหานคร, 10700 | ACCEPT | PREMISE_PROXIMITY | 2 ถนนจรัญสนิทวงศ์ |
@@ -528,7 +528,7 @@
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| 46 Trần Huy Liệu Phú Nhuận, Quận Gò Vấp | CONFIRM | PREMISE_PROXIMITY | 46 Trần Huy Liệu, Phú Nhuận |
+| 46 Trần Huy Liệu Phú Nhuận, Quận Gò Vấp | CONFIRM | ROUTE | 46 Trần Huy Liệu, Phú Nhuận |
 | Trần Quang Khải, phường Tân Định, Quận 1, Quận Bình Thạnh, 700000 | CONFIRM | PREMISE_PROXIMITY | 1 Trần Quang Khải, Phường Tân Định |
 | 36 Đường Tân Hòa, Dĩ An, 75308 | CONFIRM | ROUTE | 36 Tân Hòa, Phường Dĩ An, 75308 |
 | 32/13 Nguyễn Cửu Vân, Quận Bình Thạnh, 70000 | CONFIRM | PREMISE_PROXIMITY | 32/13 Thạch Thị Thanh |
@@ -538,9 +538,9 @@
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
 | 43 Đường Lô C, Thủ Đức, 71312 | ACCEPT | PREMISE_PROXIMITY | 43 Đường Lô C |
-| 37 Đại Lộ Bình Dương, Thuận An, 75207 | ACCEPT | PREMISE_PROXIMITY | 37 Đại lộ Bình Dương |
-| Đông Hưng Thuận 02 (song song Nguyễn Văn Quá), Quận 12, 71509 | ACCEPT | PREMISE_PROXIMITY | 02 Nguyễn Văn Quá, Đông Hưng Thuận |
-| 173 (Số Cũ 258/3), Dương Quảng Hàm, Quận Gò Vấp, 71413 | ACCEPT | PREMISE_PROXIMITY | 258/3 Dương Quảng Hàm, Gò Vấp |
+| 37 Đại Lộ Bình Dương, Thuận An, 75207 | ACCEPT | ROUTE | 37 Đại lộ Bình Dương, 75207 |
+| 123/2A Đường Trần Huy Liệu, Quận Phú Nhuận, 72206 | ACCEPT | ROUTE | 123/2A Trần Huy Liệu, Phường Phú Nhuận, 72206 |
+| 137 Đường Trần Văn Kiểu, Quận 6, 73116 | ACCEPT | PREMISE_PROXIMITY | 137 Trần Văn Kiểu, Q |
 
 **越南 · 判 FIX**
 
@@ -567,16 +567,16 @@
 | P. Guevarra, San Juan | CONFIRM | ROUTE | Guevarra |
 | 2nd floor Uptown Parade 9th Ave, Cor 36th St, Taguig City, 1630 | CONFIRM | ROUTE | 2Nd Floor, 9th Avenue, Taguig, 1630 |
 | Ayala Malls Circuit Cinemas - Third Floor, Ayala Malls Circuit, Hippodromo, Carmona, Makat | CONFIRM | PREMISE_PROXIMITY | Ayala Malls Circuit |
-| Milano Street, Taguig City, 1634 | CONFIRM | ROUTE | Mariano Street, Taguig, 1634 |
+| Ste 1707, Raffles Corporate Center, F. Ortigas Jr. Rd, Pasig, 1605 | CONFIRM | ROUTE | 1707 Jacinto Roque Road, 1605 |
 
 **菲律宾 · 静默错误**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
 | Higher Ground, Tandang Sora Ave 699, Quezon City, 1119 | ACCEPT | PREMISE_PROXIMITY | 699 Tandang Sora Avenue, Quezon City |
-| 138 Dr. Sixto Antonio Ave., Pasig, 1606 | ACCEPT | PREMISE_PROXIMITY | 138 Dr. Sixto Antonio Avenue, Pasig |
 | Arcovia City, E. Rodriguez Jr. Avenue, C 5 Road, Pasig, 1604 | ACCEPT | PREMISE_PROXIMITY | Arcovia City, 5 E. Rodriguez Jr. Avenue, Pasig |
 | 64-B J.P. Rizal Ext, Taguig City, 1215 | ACCEPT | PREMISE_PROXIMITY | 64 J. P. Rizal Extension, Taguig |
+| Green Sun 1232, 2285 Chino Roces Ave, Makati, 1231 | ACCEPT | ROUTE | 2285 Chino Roces Avenue, Makati, 1231 |
 
 **加拿大 · 静默错误**
 
