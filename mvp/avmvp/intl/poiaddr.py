@@ -23,6 +23,9 @@ from .reference import MarketReference, center, haversine, is_test_place, number
 from .text import key
 
 CELL = 0.0005  # 约 50 米的格子（找孪生记录用）
+# 开发集上用了商户地址门牌点反而变差的市场（东南亚、中东、波多黎各、印度：商户自填门牌常挂在同名的另一条路上，
+# 开发集定位对 −1 到 −29 条 / 600），不用；欧洲、美洲其余市场持平或略好（−3 到 +6 条）
+POI_SKIP_MARKETS = {"MY", "ID", "TH", "VN", "PH", "AE", "SA", "PR", "IN"}
 
 
 def _cells(lat: float, lng: float):
@@ -37,6 +40,11 @@ def derive(ref: MarketReference, log=print, limit: int | None = None) -> int:
     from .parse import HOUSE_NO, RuleParser
 
     market = ref.market
+    if market in POI_SKIP_MARKETS:
+        ref.db.execute("DROP TABLE IF EXISTS poiaddr")
+        ref.poi_addr_count = 0
+        log("  商户地址门牌点：本市场不用（见 POI_SKIP_MARKETS）")
+        return 0
     places = pq.read_table(ref.dir / "places.parquet", columns=["id", "names", "addresses", "bbox"]).to_pylist()
     test_grid: dict[tuple[int, int], list[tuple[float, float, str, str]]] = defaultdict(list)
     keep = []
@@ -104,7 +112,7 @@ def derive(ref: MarketReference, log=print, limit: int | None = None) -> int:
 
 def lookup(ref: MarketReference, street: int, numbers: list[str]) -> dict | None:
     """按道路 + 门牌（几种等价写法）查商户地址门牌点；印证的商户多的优先。"""
-    if not getattr(ref, "poi_addr_count", 0):
+    if not getattr(ref, "poi_addr_count", 0) or ref.market in POI_SKIP_MARKETS:
         return None
     for nk in numbers:
         r = ref.db.execute("SELECT number, lat, lng, n FROM poiaddr WHERE street=? AND number_key=? ORDER BY n DESC "
