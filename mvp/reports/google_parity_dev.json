@@ -3,15 +3,15 @@
  "markets": {
   "AU": {
    "n": 600,
-   "ok": 509,
+   "ok": 508,
    "accept_ok": 453,
    "noise": 41,
    "noise_postcode": 0,
    "no_premise": 44,
-   "miss": 6,
+   "miss": 7,
    "miss_nothing": 0,
    "miss_number": 3,
-   "miss_wrong": 3
+   "miss_wrong": 4
   },
   "NZ": {
    "n": 600,
@@ -76,7 +76,7 @@
   "PR": {
    "n": 600,
    "ok": 365,
-   "accept_ok": 81,
+   "accept_ok": 79,
    "noise": 10,
    "noise_postcode": 0,
    "no_premise": 93,
@@ -136,7 +136,7 @@
   "GB": {
    "n": 600,
    "ok": 548,
-   "accept_ok": 427,
+   "accept_ok": 429,
    "noise": 23,
    "noise_postcode": 6,
    "no_premise": 15,
@@ -244,7 +244,7 @@
   "IT": {
    "n": 600,
    "ok": 542,
-   "accept_ok": 502,
+   "accept_ok": 501,
    "noise": 14,
    "noise_postcode": 0,
    "no_premise": 21,
@@ -267,27 +267,27 @@
   },
   "PT": {
    "n": 600,
-   "ok": 453,
+   "ok": 455,
    "accept_ok": 94,
-   "noise": 14,
+   "noise": 13,
    "noise_postcode": 0,
    "no_premise": 89,
-   "miss": 44,
+   "miss": 43,
    "miss_nothing": 1,
    "miss_number": 15,
-   "miss_wrong": 28
+   "miss_wrong": 27
   },
   "DK": {
    "n": 600,
-   "ok": 561,
+   "ok": 562,
    "accept_ok": 527,
    "noise": 13,
    "noise_postcode": 0,
    "no_premise": 16,
-   "miss": 10,
+   "miss": 9,
    "miss_nothing": 0,
    "miss_number": 2,
-   "miss_wrong": 8
+   "miss_wrong": 7
   },
   "SE": {
    "n": 600,
@@ -351,15 +351,15 @@
   },
   "LT": {
    "n": 600,
-   "ok": 547,
+   "ok": 548,
    "accept_ok": 520,
    "noise": 16,
    "noise_postcode": 0,
    "no_premise": 25,
-   "miss": 12,
+   "miss": 11,
    "miss_nothing": 1,
    "miss_number": 2,
-   "miss_wrong": 9
+   "miss_wrong": 8
   },
   "PL": {
    "n": 600,
@@ -399,9 +399,9 @@
   },
   "HU": {
    "n": 600,
-   "ok": 551,
+   "ok": 552,
    "accept_ok": 328,
-   "noise": 22,
+   "noise": 21,
    "noise_postcode": 0,
    "no_premise": 10,
    "miss": 17,
@@ -411,15 +411,15 @@
   },
   "SI": {
    "n": 600,
-   "ok": 519,
-   "accept_ok": 503,
+   "ok": 518,
+   "accept_ok": 502,
    "noise": 45,
    "noise_postcode": 0,
    "no_premise": 25,
-   "miss": 11,
+   "miss": 12,
    "miss_nothing": 1,
    "miss_number": 3,
-   "miss_wrong": 7
+   "miss_wrong": 8
   },
   "HR": {
    "n": 600,
