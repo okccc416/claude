@@ -36,14 +36,14 @@
   },
   "IN": {
    "n": 1000,
-   "ok": 368,
-   "accept_ok": 100,
+   "ok": 383,
+   "accept_ok": 109,
    "noise": 1,
    "no_premise": 236,
-   "miss": 395,
-   "miss_nothing": 170,
+   "miss": 380,
+   "miss_nothing": 168,
    "miss_number": 0,
-   "miss_wrong": 225
+   "miss_wrong": 212
   },
   "CA": {
    "n": 1000,
@@ -69,14 +69,14 @@
   },
   "PR": {
    "n": 1000,
-   "ok": 594,
-   "accept_ok": 137,
+   "ok": 591,
+   "accept_ok": 140,
    "noise": 12,
    "no_premise": 161,
-   "miss": 233,
+   "miss": 236,
    "miss_nothing": 41,
    "miss_number": 0,
-   "miss_wrong": 192
+   "miss_wrong": 195
   },
   "BR": {
    "n": 1000,
@@ -410,14 +410,14 @@
   },
   "MY": {
    "n": 1000,
-   "ok": 678,
-   "accept_ok": 314,
+   "ok": 710,
+   "accept_ok": 323,
    "noise": 0,
    "no_premise": 120,
-   "miss": 202,
+   "miss": 170,
    "miss_nothing": 16,
    "miss_number": 0,
-   "miss_wrong": 186
+   "miss_wrong": 154
   }
  }
 }

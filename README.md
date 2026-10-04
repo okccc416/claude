@@ -46,7 +46,7 @@ Google AV 的核心产出不是坐标，而是一个**可执行的结论**（`AC
 
 ## 可运行的服务：45 个市场
 
-[`mvp/`](mvp/README.md) 是一个已经实现、可在本地运行的地址校验服务（Python，带演示页面和 HTTP 接口，按 `regionCode` 分发），覆盖 **Google Address Validation 覆盖的全部国家 / 地区（美国除外）**，外加 Google 没覆盖的阿联酋、沙特、印尼、泰国、越南、菲律宾：新加坡用专用引擎，其余 44 个市场用多市场引擎（每个国家一个试点城市，见 [13 文档](docs/13-multi-market-product.md)）。
+[`mvp/`](mvp/README.md) 是一个已经实现、可在本地运行的地址校验服务（Python，带演示页面和 HTTP 接口，按 `regionCode` 分发），覆盖 **Google Address Validation 覆盖的全部国家 / 地区（美国除外）**，外加 Google 没覆盖的阿联酋、沙特、印尼、泰国、越南、菲律宾：新加坡用专用引擎，其余 44 个市场用多市场引擎（每个国家一个试点城市，见 [13 文档](docs/13-multi-market-product.md)）。**与 Google 对标：Google 覆盖的 38 个市场里 25 个与 Google 的估计上限相差 ≤ 3 个百分点（持平）**，其余 13 个差在开放数据不够（[13 文档第 2.1 节](docs/13-multi-market-product.md)）。
 
 **多市场**（每市场 1,000 条真实商户自填地址，商户本身不在参考库里；规则 + 机器学习混合解析）：
 

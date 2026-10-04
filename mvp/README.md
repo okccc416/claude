@@ -45,19 +45,21 @@ python scripts/evaluate_labeled.py --orders labeled/testset_sg_research_v1.csv -
 python scripts/evaluate_real_strings.py   # 8,000 条真实人写地址评测
 python scripts/whatif_current_reference.py  # 参考库换成 2026 年数据的效果
 python scripts/profile_countries.py   # 澳洲 / 中东 / 东南亚 / 欧洲 17 个城市的地址画像（见 docs/12）
-pytest -q                             # 109 个单元测试（新加坡用真实数据夹具，多市场用微型悉尼 / 迪拜 / 利雅得 / 布拉格 / 波哥大 / 东京夹具，无需下载）
+pytest -q                             # 111 个单元测试（新加坡用真实数据夹具，多市场用微型悉尼 / 迪拜 / 利雅得 / 布拉格 / 波哥大 / 东京夹具，无需下载）
 ```
 
 多市场（44 个市场，见 [docs/13](../docs/13-multi-market-product.md)）：
 
 ```bash
 python scripts/fetch_markets.py           # 下载 44 个市场试点城市的 Overture 数据（道路线形、片区边界、POI、A 类官方地址点），约 3GB
-python scripts/build_market_reference.py  # 构建参考库（约 7 分钟，澳洲最大）
+python scripts/fetch_osm_addresses.py     # OSM 门牌 + 道路编号（BBBike / openstreetmap.fr 城市摘录）
+python scripts/build_market_reference.py  # 构建参考库（3 路并行约 25 分钟，澳洲最大）
 python scripts/train_market_parsers.py    # 训练各市场的机器学习解析器（CRF，每个市场约 30 秒）
 python scripts/fit_accept_policy.py       # 按市场在开发集上校准直接通过的放宽规则 -> models/accept_policy.json
 python scripts/fit_intl_confidence.py     # 置信度（开发集拟合、测试集检验）-> models/confidence_intl.json
 python scripts/evaluate_markets.py --split dev --n 600    # 开发集：规则 / 机器学习 / 混合三种解析对比
 python scripts/evaluate_markets.py --split test --n 1000  # 测试集（留到最后跑）-> reports/markets_eval.md
+python scripts/google_parity.py --split test   # 与 Google AV 对标（估计 Google 上限）-> reports/google_parity.md
 
 curl -s -X POST http://127.0.0.1:8080/v1/address:validate -H 'Content-Type: application/json' \
   -d '{"address":{"regionCode":"AE","addressLines":["Latifa Tower, Ground Floor - Sheikh Zayed Rd"],"locality":"Dubai"}}'
