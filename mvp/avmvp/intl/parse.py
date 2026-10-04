@@ -164,8 +164,8 @@ class RuleParser:
         if self.ref.market == "CO":  # Carrera 24-30 = Carrera 24 # 30-…（漏了 #，后面的是交叉街编号）
             text = _CO_TRUNC.sub(r"\1 \2 # \3", text)
         text, postcode = self._postcode(text)
-        toks = tokenize(text)
-        seps = tokenize_seps(text)
+        toks = tokenize(text, self.ref.market)
+        seps = tokenize_seps(text, self.ref.market)
         seps = seps if len(seps) == len(toks) else [False] * len(toks)
         if self.ref.market == "JP":
             self._japan_no_chome(toks, seps)
@@ -744,11 +744,11 @@ def generic_name(name: str) -> bool:
                or (len(w) <= 3 and any(ch.isdigit() for ch in w)) for w in name.split())  # A4、B2 这类编号
 
 
-def tokenize_seps(text: str) -> list[bool]:
+def tokenize_seps(text: str, market: str | None = None) -> list[bool]:
     """每个词前面是否有逗号 / 分号 / 换行（与 tokenize(text) 的词一一对应）。"""
     seps: list[bool] = []
     for chunk in re.split(r"[,;\n|،]+", text):
-        n = len(tokenize(chunk))
+        n = len(tokenize(chunk, market))
         seps += [True] + [False] * (n - 1) if n else []
     return seps
 

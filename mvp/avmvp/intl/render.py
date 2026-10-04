@@ -271,7 +271,7 @@ class Renderer:
             else:
                 sep = ", " if rng.random() < 0.8 else " "
             text_parts.append(sep + txt)
-            toks, sp = tokenize_with_sep(txt)
+            toks, sp = tokenize_with_sep(txt, self.market)
             if sp:
                 sp[0] = i == 0 or sep == ", "
             tokens += toks

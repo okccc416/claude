@@ -261,7 +261,18 @@ def _thai_tokenizer():
         return lambda s: [s]
 
 
-def tokenize(text: str) -> list[str]:
+# 粘在词尾的类型词缩写（带点）：德语 Kreuzg. = Kreuzgasse、Yppenpl. = Yppenplatz；瑞典语 Artillerig. = Artillerigatan、
+# Valhallav. = Valhallavägen、Klara S. Kyrkog. = Klara Södra Kyrkogata。按语种展开（不知道市场时按德语）
+_GLUED = {
+    "DE": [(re.compile(r"(?<=[A-Z]{4})G\.(?=[\s,]|$)"), "GASSE"), (re.compile(r"(?<=[A-Z]{3})PL\.(?=[\s,]|$)"), "PLATZ")],
+    "SV": [(re.compile(r"(?<=[A-Z]{3})G\.(?=[\s,]|$)"), "GATAN"), (re.compile(r"(?<=[A-Z]{3})V\.(?=[\s,]|$)"), "VAGEN"),
+           (re.compile(r"(?<=[A-Z]{3})PL\.(?=[\s,]|$)"), "PLAN"), (re.compile(r"\bS\.(?=\s+[A-Z]{3})"), "SODRA"),
+           (re.compile(r"\bN\.(?=\s+[A-Z]{3})"), "NORRA"), (re.compile(r"\bV\.(?=\s+[A-Z]{3})"), "VASTRA"),
+           (re.compile(r"\bO\.(?=\s+[A-Z]{3})"), "OSTRA")],
+}
+
+
+def tokenize(text: str, market: str | None = None) -> list[str]:
     """分词：拉丁 / 数字按空格和标点切开（保留 339/5、12-14 这类门牌），泰文用词典分词。"""
     out: list[str] = []
     t = fold(text)
@@ -272,8 +283,9 @@ def tokenize(text: str) -> list[str]:
     t = re.sub(r"(?:(?<=\d)|(?<=\d[A-Z]))(?:\s*[–—]\s*|\s+-\s*|\s*-\s+)(?=\d+(?![\dA-Z]))|(?<=\d)\s*[–—]\s*(?=\d)",
                "-", t)
     t = re.sub(r"\b(\d{1,5})\s?/\s?([A-Z])\b(?![/\-])", r"\1\2", t)  # 136/A -> 136A（斯洛伐克、捷克）
-    t = re.sub(r"(?<=[A-Z]{4})G\.(?=[\s,]|$)", "GASSE", t)  # 奥地利 Kreuzg. -> KREUZGASSE（Brig. = Brigadeiro 不算）
-    t = re.sub(r"(?<=[A-Z]{3})PL\.(?=[\s,]|$)", "PLATZ", t)  # Yppenpl. -> YPPENPLATZ
+    if "." in t:  # 词尾粘着的类型词缩写（Brig. = Brigadeiro 不算：要求 4 个字母以上的词干）
+        for rx, full in _GLUED.get(MARKET_LANG.get(market, "") if market else "DE", ()):
+            t = rx.sub(full, t)
     t = re.sub(r"(?<=\d)(?=[A-Z]{3,})(?!(?:ST|ND|RD|TH|HS|BG|BV)\b)", " ", t)  # 500OXFORD -> 500 OXFORD
     t = re.sub(r"\b(SHOP|UNIT|LEVEL|SUITE|LOT|BLOCK|BLK|OFFICE)(?=\d)", r"\1 ", t)  # SHOP4068 -> SHOP 4068
     for m in _TOKEN.finditer(t):
@@ -394,7 +406,7 @@ def merge_initials(text: str) -> str:
 
 def key(text: str, market: str) -> str:
     """完整匹配键：规范化 + 缩写展开。"""
-    return " ".join(expand(tokenize(text), market))
+    return " ".join(expand(tokenize(text, market), market))
 
 
 def core_key(text: str, market: str, kind: str = "street") -> str:

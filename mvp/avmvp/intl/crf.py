@@ -22,10 +22,10 @@ from .text import MARKET_LANG, TYPE_WORDS, core_key, fold, key, norm_postcode, s
 SEP = re.compile(r"[,;\n|،]+")
 
 
-def tokenize_with_sep(text: str) -> tuple[list[str], list[bool]]:
+def tokenize_with_sep(text: str, market: str | None = None) -> tuple[list[str], list[bool]]:
     toks, seps = [], []
     for chunk in SEP.split(text):
-        t = tokenize(chunk)
+        t = tokenize(chunk, market)
         toks += t
         seps += [True] + [False] * (len(t) - 1) if t else []
     return toks, seps
@@ -97,7 +97,7 @@ class CRFParser:
         self.neutral = {key(x, ref.market) for x in region_words(ref.market) + city_words(ref.market)}
 
     def tag(self, text: str) -> tuple[list[str], list[str]]:
-        toks, seps = tokenize_with_sep(text)
+        toks, seps = tokenize_with_sep(text, self.ref.market)
         if not toks:
             return [], []
         return toks, self.tagger.tag(features(toks, seps, self.vocab))
