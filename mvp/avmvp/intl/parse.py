@@ -551,8 +551,8 @@ class RuleParser:
     def _landmarks(self, p: Parsed) -> None:
         """方位描述里的参照物（third house behind Café Central、frente al Mercado San Miguel）：只找楼宇 / 商户，
         不匹配道路；找到的楼宇在引擎里带 LANDMARK_RELATIVE，最多 CONFIRM。冠词可能属于名称（Der Landstreicher），两种都试。"""
-        if self.ref.poi_fuzzy is None:
-            return
+        if self.ref.poi_fuzzy is None or p.streets:
+            return  # 已经认出道路：参照物只是"附近有什么"，不能拿它的位置当地址（Road X, near Khar Gymkhana）
         from .noise import LEADING_ARTICLE
         for phrase in p.noise.get("landmarks", []):
             k = " ".join(w for w in key(phrase, self.ref.market).split() if not HOUSE_NO.match(w))

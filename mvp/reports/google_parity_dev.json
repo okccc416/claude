@@ -87,13 +87,13 @@
   },
   "BR": {
    "n": 600,
-   "ok": 536,
-   "accept_ok": 426,
+   "ok": 537,
+   "accept_ok": 427,
    "noise": 18,
    "noise_postcode": 0,
    "no_premise": 29,
-   "miss": 17,
-   "miss_nothing": 4,
+   "miss": 16,
+   "miss_nothing": 3,
    "miss_number": 3,
    "miss_wrong": 10
   },
@@ -255,15 +255,15 @@
   },
   "ES": {
    "n": 600,
-   "ok": 535,
-   "accept_ok": 511,
+   "ok": 536,
+   "accept_ok": 512,
    "noise": 13,
    "noise_postcode": 0,
    "no_premise": 40,
-   "miss": 12,
+   "miss": 11,
    "miss_nothing": 0,
    "miss_number": 2,
-   "miss_wrong": 10
+   "miss_wrong": 9
   },
   "PT": {
    "n": 600,
