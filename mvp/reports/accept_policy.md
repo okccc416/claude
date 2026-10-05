@@ -8,6 +8,7 @@
 | 法国（FR） | PREMISE|POSTCODE_REPLACED | 10 | 80.0% | 0.0% |  |
 | 荷兰（NL） | PREMISE|POSTCODE_REPLACED | 19 | 100.0% | 0.0% |  |
 | 阿联酋（AE） | ROUTE|-|u1|exact | 33 | 72.7% | 21.2% |  |
+| 阿联酋（AE） | ROUTE|-|u1|core | 10 | 70.0% | 30.0% |  |
 | 马来西亚（MY） | ROUTE|-+area|u1|exact | 46 | 95.7% | 2.2% |  |
 | 马来西亚（MY） | ROUTE|pc+area|uN|exact | 21 | 71.4% | 14.3% |  |
 | 马来西亚（MY） | ROUTE|-|u1|exact | 19 | 89.5% | 10.5% |  |
@@ -24,7 +25,7 @@
 | 越南（VN） | ROUTE|-+area|u1|exact | 17 | 100.0% | 0.0% |  |
 | 越南（VN） | ROUTE|pc|uN|exact | 15 | 73.3% | 20.0% |  |
 | 越南（VN） | ROUTE|pc+area|uN|exact | 14 | 71.4% | 21.4% |  |
-| 越南（VN） | ROUTE|-|u1|exact | 14 | 78.6% | 21.4% |  |
+| 越南（VN） | ROUTE|-|u1|exact | 13 | 76.9% | 23.1% |  |
 | 越南（VN） | ROUTE|-+area|uN|exact | 11 | 63.6% | 36.4% |  |
 | 越南（VN） | ROUTE|pc+area|uN|core | 10 | 100.0% | 0.0% |  |
 | 菲律宾（PH） | ROUTE|pc+area|uN|exact | 71 | 91.5% | 4.2% |  |
@@ -35,8 +36,8 @@
 | 加拿大（CA） | OSM|pc|uN|exact | 17 | 100.0% | 0.0% |  |
 | 墨西哥（MX） | PREMISE|POSTCODE_REPLACED | 53 | 75.5% | 18.9% |  |
 | 波多黎各（PR） | ROUTE|pc|uN|exact | 73 | 87.7% | 5.5% |  |
+| 波多黎各（PR） | ROUTE|-|u1|exact | 23 | 87.0% | 13.0% |  |
 | 波多黎各（PR） | ROUTE|pc|uN|suffix | 23 | 69.6% | 17.4% |  |
-| 波多黎各（PR） | ROUTE|-|u1|exact | 22 | 90.9% | 9.1% |  |
 | 波多黎各（PR） | OSM|pc|uN|exact | 19 | 78.9% | 5.3% |  |
 | 波多黎各（PR） | OSM|pc|u1|exact | 19 | 84.2% | 5.3% |  |
 | 波多黎各（PR） | OSM|pc|uN|suffix | 13 | 92.3% | 7.7% |  |
