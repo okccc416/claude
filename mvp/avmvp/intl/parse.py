@@ -259,8 +259,11 @@ class RuleParser:
         if known:  # 参考库里有的邮编优先（与门牌同为 4 位数的市场）
             hits = known[-1:]
         elif market == "AU" or rule == "end":  # 4 位邮编和门牌易混：只认州缩写后面、或整段末尾的 4 位数
+            # （澳洲另认单独成段、参考库里有的邮编：后面还跟着楼层 / 备注，或城市邮编写在最前面）
             hits = [h for h in hits if re.search(r"(?:" + "|".join(AU_STATES) + r")\W*$", text[:h.start()])
-                    or not text[h.end():].strip(" ,.")]
+                    or not text[h.end():].strip(" ,.")
+                    or (market == "AU" and norm_postcode(h.group(0), market) in self.ref.postcodes
+                        and re.search(r"(?:^|[,;\n|])\s*$", text[:h.start()]) and re.match(r"\s*(?:[,;\n|]|$)", text[h.end():]))]
         elif rule == "chunk":  # 欧洲写法（1070 Wien）：不认识的 4 位数只有单独成段时才当邮编，否则多半是门牌
             hits = [h for h in hits if not text[:h.start()].strip() or re.search(r"[,;\n|]\s*$", text[:h.start()])]
         if not hits:
