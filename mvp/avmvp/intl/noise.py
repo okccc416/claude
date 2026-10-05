@@ -47,11 +47,12 @@ _DAY = (r"(?:mon(?:day)?|tue(?:s(?:day)?)?|wed(?:nesday)?|thu(?:r(?:s(?:day)?)?)
         r"pon(?:iedzia[lł]ek)?|wt|[sś]r|czw|pt|pi[aą]tek|sob(?:ota)?|niedz(?:iela)?|nd|"
         r"senin|selasa|rabu|kamis|jumat|sabtu|minggu)")
 _DAY_AR = r"(?:السبت|الأحد|الاثنين|الثلاثاء|الأربعاء|الخميس|الجمعة)"
-_TO = r"(?:-|–|—|a|à|às|al|au|bis|to|till|until|do|s/d|sampai|hingga|ao)"
+# 区间连接：符号两边可以不空格（Mo-Fr）；词两边必须有空格（Ventosa 不是 Ven to Sa）
+_TO = r"(?:\s*[-–—]\s*|\s+(?:a|à|às|al|au|bis|to|till|until|do|s/d|sampai|hingga|ao)\s+)"
 _TIME = r"\d{1,2}(?:[:.h]\d{2})?\s*(?:h|uhr|hrs?|am|pm)?"
 _HOURS = re.compile(
-    rf"(?:\b{_DAY}\.?(?:-feira)?\s*{_TO}\s*{_DAY}\b\.?(?:-feira)?|{_DAY_AR}\s*{_TO}?\s*{_DAY_AR})"
-    rf"(?:\s*[:,]?\s*{_TIME}\s*{_TO}\s*{_TIME})?"
+    rf"(?:\b{_DAY}\b\.?(?:-feira)?{_TO}{_DAY}\b\.?(?:-feira)?|{_DAY_AR}\s*(?:{_TO}|\s)\s*{_DAY_AR})"
+    rf"(?:\s*[:,]?\s*{_TIME}{_TO}{_TIME})?"
     r"|\b\d{1,2}(?::\d{2}|h\d{0,2}|\s*(?:uhr|am|pm))\s*(?:-|–|a|à|às|bis|to)\s*\d{1,2}(?::\d{2}|h\d{0,2}|\s*(?:uhr|am|pm))"
     r"|\b\d{1,2}\s*-\s*\d{1,2}\s*uhr\b", re.I)
 _LABEL = re.compile(
@@ -64,10 +65,12 @@ _RECIPIENT = re.compile(
     r"destinat[aá]rio|alla\s+c\.\s?a\.?|all'attenzione\s+di|destinatario|do\s+r[ąa]k(?:\s+w[łl]asnych)?|odbiorca|"
     r"penerima|kepada|u\.p\.|yth\.?)(?=[\s:：.])|المستلم|إلى|to(?=\s*[:：]))\s*[:：.]?\s*", re.I)
 _LEGAL = re.compile(
-    r"(?:\b(?:gmbh(?:\s*&\s*co\.?\s*kg)?|ag|kg|ohg|ug|sarl|s\.a\.r\.l\.|sas|eurl|s\.\s?a\.(?:\s*de\s*c\.\s?v\.)?|"
+    r"(?:\b(?:gmbh(?:\s*&\s*co\.?\s*kg)?|ag|kg|ohg|sarl|s\.a\.r\.l\.|sas|eurl|s\.\s?a\.(?:\s*de\s*c\.\s?v\.)?|"
     r"s\.\s?l\.|s\.r\.l\.|srl|s\.p\.a\.|spa|ltda|ltd|limited|llc|l\.l\.c\.|inc|corp|pty\.?\s*ltd|pte\.?\s*ltd|"
     r"sdn\.?\s*bhd|bhd|tbk|sp\.\s?z\s?o\.\s?o|sp\.\s?j|b\.v|bv|n\.v|nv|ab|a/s|as|oy|oyj|plc|kft|zrt|s\.r\.o|d\.o\.o|"
     r"oü|sia|uab)\.?|ооо|ООО)\s*$", re.I)
+_NOT_ORG = re.compile(r"\b(?:CHS|SOCIETY|CO-?OP(?:ERATIVE)?|HOUSING|MALL|TOWERS?|PLAZA|CENTRE|CENTER|BUILDING|BLDG|"
+                     r"COMPLEX|ARCADE|ARKADEN|RESIDENC[EY]|APARTMENTS?|HOTEL|HOSPITAL|UNIVERSITY|STATION)\b")
 _LEGAL_PREFIX = re.compile(r"^\s*(?:PT|CV)\.?\s+\S+\s+\S+", re.I)  # 印尼 / 马来西亚：PT Maju Jaya
 _ARTICLES = r"(?:THE|DER|DIE|DAS|DEM|DEN|DES|LE|LA|LES|L|EL|LOS|LAS|IL|LO|O|A|OS|AS|DO|DA|DOS|DAS|DU|AL)"
 # 配送用语（大写、去重音后比较）；不收 RING / TOR 这类会出现在路名里的词
@@ -94,10 +97,11 @@ _STRONG = (r"(?:BEHIND|OPPOSITE|OPP|NEAR|NEXT\s+TO|BESIDE|ACROSS(?:\s+FROM)?|IN\
            r"PERTO\s+D[OAE]S?|PROXIMO\s+A[OS]?|NAPRZECIWKO|OBOK|DI\s+BELAKANG|BELAKANG|DI\s+DEPAN|DEPAN|SEBELAH|DEKAT|"
            r"BERHADAPAN|TRUOC|SAU|GAN|KE\s+BEN)")
 _WEAK = (r"(?:AFTER|PAST|NACH\s+DE[MRN]|APRES|DESPUES\s+DEL?|DOPO|DEPOIS\s+D[OAE]S?|ZA|KOLO|SETELAH|SESUDAH)")
-_AR_REL = r"(?:خلف|مقابل|بجانب|قرب|امام|أمام)"
+# 阿拉伯文方位词要整词出现：الإمام（伊玛目，常见于路名）里也含 امام，不能当"在……前面"
+_AR_REL = r"(?<!\w)(?:خلف|مقابل|بجانب|قرب|امام|أمام)(?!\w)"
 LANDMARK = re.compile(rf"\b{_STRONG}\b|{_AR_REL}")  # 引擎用来标 LANDMARK_RELATIVE（输入先 fold 成大写、去重音）
-_REL_ANY = re.compile(rf"\b(?:{_STRONG}|{_WEAK})\s+|(?:{_AR_REL}|بعد)\s+")
-_REL_STRONG = re.compile(rf"\b{_STRONG}\s+|{_AR_REL}\s+")
+_REL_ANY = re.compile(rf"\b(?:{_STRONG}|{_WEAK})(?:\s+(?:TO|OF))?\s+|(?:{_AR_REL}|(?<!\w)بعد(?!\w))\s+")
+_REL_STRONG = re.compile(rf"\b{_STRONG}(?:\s+(?:TO|OF))?\s+|{_AR_REL}\s+")
 LEADING_ARTICLE = re.compile(rf"^{_ARTICLES}\s+")  # 参照物前的冠词：hinter der Post / behind the station
 
 
@@ -212,8 +216,8 @@ def strip_noise(raw: str, ref=None) -> tuple[str, dict[str, list[str]], dict[str
             kept.append(seg)
             continue
         legal = _LEGAL.search(seg) if not has_digit and len(words) >= 2 else None
-        if legal and known_segment(ref, seg[:legal.start()]):
-            legal = None  # Baden AG：前面是地名，AG 是州名缩写，不是公司
+        if legal and (known_segment(ref, seg[:legal.start()]) or _NOT_ORG.search(up)):
+            legal = None  # Baden AG（州名缩写）、Lotus CHS Ltd（孟买的住宅合作社 = 楼名）、R-City Mall … Limited（商场）
         if legal or (not has_digit and len(words) >= 3 and ref is not None and ref.market in ("ID", "MY")
                      and _LEGAL_PREFIX.match(seg)):
             add("organizations", seg)
@@ -226,10 +230,13 @@ def strip_noise(raw: str, ref=None) -> tuple[str, dict[str, list[str]], dict[str
             m = _REL_STRONG.search(seg)
         if m:
             # "frente al parque" / "Avenida Paulista, perto do metrô"：方位词后面是参照物，只拿去找楼宇 / 商户，不拿去匹配道路
+            # （参照物到" - "为止：próximo ao Metro Trianon - Av. Paulista 后半段是地址）
             src = up if m.string is up else seg
-            add("landmarks", src[m.end():])
-            if src[:m.start()].strip(" .-"):
-                kept.append(src[:m.start()].strip(" .-"))
+            target, _, rest = src[m.end():].partition(" - ")
+            add("landmarks", target)
+            for part in (src[:m.start()], rest):
+                if part.strip(" .-"):
+                    kept.append(part.strip(" .-"))
             continue
         kept.append(seg)
     return ", ".join(kept), noise, codes

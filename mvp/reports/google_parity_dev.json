@@ -40,14 +40,14 @@
   "IN": {
    "n": 600,
    "ok": 222,
-   "accept_ok": 65,
+   "accept_ok": 62,
    "noise": 1,
    "noise_postcode": 0,
-   "no_premise": 165,
-   "miss": 212,
-   "miss_nothing": 96,
+   "no_premise": 162,
+   "miss": 215,
+   "miss_nothing": 95,
    "miss_number": 0,
-   "miss_wrong": 116
+   "miss_wrong": 120
   },
   "CA": {
    "n": 600,
@@ -87,13 +87,13 @@
   },
   "BR": {
    "n": 600,
-   "ok": 537,
-   "accept_ok": 427,
+   "ok": 536,
+   "accept_ok": 426,
    "noise": 18,
    "noise_postcode": 0,
    "no_premise": 29,
-   "miss": 16,
-   "miss_nothing": 3,
+   "miss": 17,
+   "miss_nothing": 4,
    "miss_number": 3,
    "miss_wrong": 10
   },
@@ -148,7 +148,7 @@
   "IE": {
    "n": 600,
    "ok": 440,
-   "accept_ok": 139,
+   "accept_ok": 138,
    "noise": 38,
    "noise_postcode": 0,
    "no_premise": 87,
@@ -255,15 +255,15 @@
   },
   "ES": {
    "n": 600,
-   "ok": 536,
-   "accept_ok": 512,
+   "ok": 535,
+   "accept_ok": 511,
    "noise": 13,
    "noise_postcode": 0,
    "no_premise": 40,
-   "miss": 11,
+   "miss": 12,
    "miss_nothing": 0,
    "miss_number": 2,
-   "miss_wrong": 9
+   "miss_wrong": 10
   },
   "PT": {
    "n": 600,
@@ -339,15 +339,15 @@
   },
   "LV": {
    "n": 600,
-   "ok": 513,
+   "ok": 514,
    "accept_ok": 480,
    "noise": 38,
    "noise_postcode": 0,
    "no_premise": 35,
-   "miss": 14,
+   "miss": 13,
    "miss_nothing": 1,
    "miss_number": 2,
-   "miss_wrong": 11
+   "miss_wrong": 10
   },
   "LT": {
    "n": 600,
