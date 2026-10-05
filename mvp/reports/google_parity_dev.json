@@ -39,15 +39,15 @@
   },
   "IN": {
    "n": 600,
-   "ok": 222,
-   "accept_ok": 62,
+   "ok": 223,
+   "accept_ok": 66,
    "noise": 1,
    "noise_postcode": 0,
-   "no_premise": 162,
-   "miss": 215,
+   "no_premise": 165,
+   "miss": 211,
    "miss_nothing": 95,
    "miss_number": 0,
-   "miss_wrong": 120
+   "miss_wrong": 116
   },
   "CA": {
    "n": 600,
@@ -148,7 +148,7 @@
   "IE": {
    "n": 600,
    "ok": 440,
-   "accept_ok": 138,
+   "accept_ok": 139,
    "noise": 38,
    "noise_postcode": 0,
    "no_premise": 87,
