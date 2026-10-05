@@ -575,3 +575,46 @@ def test_completed_names_and_chilean_numbers(cl):
     assert res.granularity == "PREMISE" and res.best.point["number"] == "091"
     assert key("Tobalaba N° 14.007", "CL") == "TOBALABA N 14007" and key("Av. Paulista, 1.636", "BR").endswith(" 1636")
     assert "1636" not in key("12.1.636", "BR") and key("Kreuzg. 1.636", "AT").endswith("1 636")  # 只在这几个市场、只合并 x.xxx
+
+
+def test_noise_stripping_multilingual():
+    """噪声剥离：HTML / 转义换行、"地址："标签、电话、订单号、营业时间、收件人、公司名、配送备注、度分秒坐标都单独返回，
+    不进入地址解析；营业时间里的 9:00 不能当门牌。"""
+    from avmvp.intl.noise import strip_noise as sn
+    assert sn("<p>Rua Diana<br>777<br>São Paulo</p>")[0] == "Rua Diana, 777, São Paulo"
+    assert sn("Rua Diana\\n777\\nSão Paulo")[0] == "Rua Diana, 777, São Paulo"
+    assert sn("Dirección: C. Velilla, 7, Madrid")[0] == "C. Velilla, 7, Madrid"
+    text, noise, codes = sn("Unit 4, Naas Rd, Dublin, D12 A3VR, Mon-Fri 9:00-18:00")
+    assert text == "Unit 4, Naas Rd, Dublin, D12 A3VR" and noise["openingHours"] == ["Mon-Fri 9:00-18:00"]
+    text, noise, _ = sn("Alla c.a. Sig. Mario Rossi, Via Montenapoleone 1, Milano")
+    assert text == "Via Montenapoleone 1, Milano" and noise["recipients"] == ["Sig. Mario Rossi"]
+    text, noise, _ = sn("Distribuciones García S.A. de C.V., Tuxpan 39, Cuauhtémoc, 06760")
+    assert text == "Tuxpan 39, Cuauhtémoc, 06760" and noise["organizations"]
+    text, noise, _ = sn("Müller GmbH, Friedrichstraße 43, 10117 Berlin, bitte beim Nachbarn abgeben, Tel. +49 30 1234567")
+    assert text == "Friedrichstraße 43, 10117 Berlin" and noise["notes"] and noise["phones"] and noise["organizations"]
+    text, noise, _ = sn("Order #A1234567, 36 Abbott Rd, Sydney, Tel: (11) 98765-4321")
+    assert text == "36 Abbott Rd, Sydney" and noise["orderRefs"] and noise["phones"]
+    assert sn("56°57'10.9N 24°05'11.3E, Balasta dambis, Rīga")[2]["latlng"] == "56.953028,24.086472"
+    # 方位描述：第几栋整段剥出，参照物单独记下（只拿去找楼宇 / 商户）；参照物本身是地址时照常解析，但记为 relativeTo
+    text, noise, _ = sn("segunda casa después del árbol grande, portón azul")
+    assert text == "portón azul" and noise["descriptions"] and noise["landmarks"] == ["ARBOL GRANDE"]
+    text, noise, _ = sn("Avenida Paulista, perto do metrô Consolação")
+    assert text == "Avenida Paulista" and noise["landmarks"] == ["METRO CONSOLACAO"]
+    assert sn("Avenida Paulista perto do metrô")[0] == "AVENIDA PAULISTA"  # 同一段里：方位词前面的留下
+    text, noise, _ = sn("drittes Haus hinter Horstweg 53C")
+    assert text == "HORSTWEG 53C" and noise["relativeTo"] == ["HORSTWEG 53C"]
+
+
+def test_noisy_and_descriptive_inputs(au):
+    """带收件人 / 备注 / 电话 / 营业时间的地址照常逐门牌验真；只有方位描述的：参照物是已知楼宇时定位到楼宇附近并请用户确认，
+    参照物本身是地址时不直接通过，什么都对不上时判 FIX（DESCRIPTIVE_LOCATION）。"""
+    res = au.validate("Attn: John Smith, 100 Crown Street, Surry Hills, 2010, please leave at reception, "
+                      "Tel: 0412 345 678, Mon-Fri 9:00-17:00")
+    assert res.action == ACCEPT and res.best.point["number"] == "100"
+    assert {"recipients", "notes", "phones", "openingHours"} <= set(res.parsed.noise)
+    res = au.validate("third house behind Crown Street Public School")
+    assert res.action == CONFIRM and "LANDMARK_RELATIVE" in res.reasons and res.granularity == "PREMISE_PROXIMITY"
+    res = au.validate("third house behind 100 Crown Street, Surry Hills")
+    assert res.action == CONFIRM and "LANDMARK_RELATIVE" in res.reasons
+    res = au.validate("second house after the big tree, blue gate")
+    assert res.action == FIX and "DESCRIPTIVE_LOCATION" in res.reasons

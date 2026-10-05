@@ -16,14 +16,7 @@ from .reference import BUILDING_WORDS, MarketReference
 from .text import (TYPE_WORDS, core_key, fold, key, merge_initials, norm_postcode, phrase_norm, script_of,
                    skeleton, tokenize, type_words)
 
-PHONE = re.compile(r"(?:\+|00)\d{1,3}[\s\-]?\(?\d{1,4}\)?(?:[\s\-]?\d{2,4}){2,4}|(?<![\d/])0\d{8,10}(?![\d/])|"
-                   r"(?<![\d/])[89]\d{3}\s?\d{4}(?![\d/])")
-EMAIL = re.compile(r"[\w.+-]+@[\w-]+(?:\.[\w-]+)+")
-URL = re.compile(r"https?://\S+|www\.\S+")
-PLUS_CODE = re.compile(r"\b[23456789CFGHJMPQRVWX]{4,8}\+[23456789CFGHJMPQRVWX]{2,3}\b", re.I)
-MAKANI = re.compile(r"(?<!\d)\d{5}\s\d{5}(?!\d)")
-LATLNG = re.compile(r"(?<![\d.])(-?\d{1,2}\.\d{4,})\s*,\s*(-?\d{1,3}\.\d{4,})(?![\d.])")  # 直接贴的坐标
-PO_BOX = re.compile(r"(?:\bP\.?\s?O\.?\s?BOX|\bPOB|\bPOSTBUS|\bPOSTFACH|\bBOITE POSTALE|ص\.?\s?ب)\s*[.:#]?\s*(\d{2,7})\b", re.I)
+from .noise import strip_noise as _strip_noise  # noqa: E402
 # 单独出现时不能当楼名 / 转写道路名的通用词
 GENERIC_WORDS = {"OFFICE", "SHOP", "BUILDING", "TOWER", "TOWERS", "MALL", "CENTER", "CENTRE", "HOTEL", "FLOOR",
                  "GROUND", "LEVEL", "SUITE", "UNIT", "STORE", "PLAZA", "MARKET", "SHOPPING", "COMMERCIAL",
@@ -98,33 +91,9 @@ class Parsed:
     leftover: list[str] = field(default_factory=list)
 
 
-def strip_noise(raw: str) -> tuple[str, dict[str, list[str]], dict[str, str]]:
-    noise: dict[str, list[str]] = {}
-    codes: dict[str, str] = {}
-    text = raw
-    for name, rx in (("urls", URL), ("emails", EMAIL)):
-        found = rx.findall(text)
-        if found:
-            noise[name] = found
-            text = rx.sub(" ", text)
-    m = LATLNG.search(text)
-    if m:
-        codes["latlng"] = f"{m.group(1)},{m.group(2)}"
-        text = text[:m.start()] + " " + text[m.end():]
-    for name, rx in (("plus_code", PLUS_CODE), ("makani", MAKANI)):
-        m = rx.search(text)
-        if m:
-            codes[name] = m.group(0).upper()
-            text = text[:m.start()] + " " + text[m.end():]
-    boxes = PO_BOX.findall(text)
-    if boxes:  # 中东常把邮政信箱号填在邮编栏
-        noise["poBoxes"] = boxes
-        text = PO_BOX.sub(" ", text)
-    phones = PHONE.findall(text)
-    if phones:
-        noise["phones"] = [p.strip() for p in phones]
-        text = PHONE.sub(" ", text)
-    return text, noise, codes
+def strip_noise(raw: str, ref: MarketReference | None = None) -> tuple[str, dict[str, list[str]], dict[str, str]]:
+    """非地址内容（电话、收件人、公司名、备注、营业时间、方位描述……）剥出来单独返回，见 noise.py。"""
+    return _strip_noise(raw, ref)
 
 
 class RuleParser:
@@ -153,7 +122,7 @@ class RuleParser:
 
     # ------------------------------------------------------------------ 主流程
     def parse(self, raw: str) -> Parsed:
-        text, noise, codes = strip_noise(raw)
+        text, noise, codes = strip_noise(raw, self.ref)
         text = fold(text)  # 统一写法后再找邮编、切词（日文町丁目、西里尔文转写都在这一步）
         if self.ref.market == "SA":  # 沙特国家地址短码：4 个字母 + 4 位楼号（RCTB4359）
             m = re.search(r"\b(?!SHOP|UNIT|ROOM|FLAT|SUIT|BLOK|TOWR|GATE|EXIT)([A-Z]{4})\s?(\d{4})\b", fold(text))
@@ -201,6 +170,7 @@ class RuleParser:
             self._fuzzy(p, text, "street")
         self._fuzzy(p, text, "area")  # 已认出城市名（Dubai）时，仍要找拼写不同的片区名（Al Riqa ≈ Al Rigga）
         self._buildings(p, text)
+        self._landmarks(p)
         self._number(p, exp, used)
         p.leftover = [t for t, u in zip(toks, used) if not u]
         if not self.ref.has_addresses:
@@ -575,6 +545,32 @@ class RuleParser:
             seen = {a for s in p.areas for a in s.ids}
             p.areas += [s for s in out[:4] if not set(s.ids) <= seen]
 
+    def _landmarks(self, p: Parsed) -> None:
+        """方位描述里的参照物（third house behind Café Central、frente al Mercado San Miguel）：只找楼宇 / 商户，
+        不匹配道路；找到的楼宇在引擎里带 LANDMARK_RELATIVE，最多 CONFIRM。冠词可能属于名称（Der Landstreicher），两种都试。"""
+        if self.ref.poi_fuzzy is None:
+            return
+        from .noise import LEADING_ARTICLE
+        for phrase in p.noise.get("landmarks", []):
+            k = " ".join(w for w in key(phrase, self.ref.market).split() if not HOUSE_NO.match(w))
+            for cand in dict.fromkeys((k, LEADING_ARTICLE.sub("", k))):
+                if self._landmark(p, cand):
+                    break
+
+    def _landmark(self, p: Parsed, cand: str) -> bool:
+        if len(cand) < 5 or len(cand.split()) > 8 or cand in self.neutral or generic_name(cand):
+            return False
+        found = False
+        for hit, score, ids in self.ref.poi_fuzzy.search(cand, limit=2, min_score=90):  # 楼宇类：容错
+            if len(ids) <= 20 and not generic_name(hit):
+                p.buildings.append(Span(hit, -1, -1, ids, score, "exact" if score == 100 else "fuzzy"))
+                found = True
+        ids = all_poi_names(self.ref).get(cand, []) if not found else []  # 任何商户：名称完全一致才算
+        if 0 < len(ids) <= 20:
+            p.buildings.append(Span(cand, -1, -1, ids, 100.0, "exact"))
+            found = True
+        return found
+
     def _buildings(self, p: Parsed, text: str) -> None:
         if self.ref.poi_fuzzy is None:
             return
@@ -738,6 +734,19 @@ def street_suffixes(ref: MarketReference) -> dict[str, set[int]]:
                 continue
             out.setdefault(suf, set()).update(ids)
     ref.__dict__["_suffix"] = out
+    return out
+
+
+def all_poi_names(ref: MarketReference) -> dict[str, list[int]]:
+    """全部商户的名称 -> 编号（不只楼宇类）：只给方位描述里的参照物用（"第三栋，在 Londis 后面"），用到时才生成。"""
+    out = ref.__dict__.get("_poi_all")
+    if out is None:
+        out = {}
+        for pid, name in ref.db.execute("SELECT id, name FROM poi"):
+            k = key(name or "", ref.market)
+            if len(k) >= 5:
+                out.setdefault(k, []).append(pid)
+        ref.__dict__["_poi_all"] = out
     return out
 
 

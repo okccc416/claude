@@ -189,7 +189,20 @@ components:
             nonAddressInfo:
               type: object
               nullable: true
-              description: 从输入里分离出来的电话、邮箱、网址、邮政信箱、收件人、备注等
+              description: 从输入里分离出来、没有参与地址解析的内容（各键只在有内容时出现）
+              properties:
+                phones: { type: array, items: { type: string } }
+                emails: { type: array, items: { type: string } }
+                urls: { type: array, items: { type: string } }
+                poBoxes: { type: array, items: { type: string } }
+                orderRefs: { type: array, items: { type: string }, description: "订单号 / 运单号" }
+                openingHours: { type: array, items: { type: string }, description: "营业时间（Mo-Fr 9-18 Uhr）" }
+                recipients: { type: array, items: { type: string }, description: "收件人（Attn / z. Hd. / A/C 之后的人名）" }
+                organizations: { type: array, items: { type: string }, description: "公司名（GmbH / Ltda. / LLC …）" }
+                notes: { type: array, items: { type: string }, description: "配送备注" }
+                descriptions: { type: array, items: { type: string }, description: "方位描述（第三栋、segunda casa …）" }
+                landmarks: { type: array, items: { type: string }, description: "方位描述里的参照物，只用来找楼宇 / 商户" }
+                relativeTo: { type: array, items: { type: string }, description: "描述里作为参照物的地址（结论最多 CONFIRM）" }
             codes:
               type: object
               nullable: true

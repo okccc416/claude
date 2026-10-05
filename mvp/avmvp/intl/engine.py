@@ -28,12 +28,10 @@ from .parse import Parsed, RuleParser, Span
 from .poiaddr import lookup as poi_lookup
 from .pluscode import encode, recover
 from .reference import OSM_ID_BASE, MarketReference, haversine, number_key
+from .noise import LANDMARK  # 参照物描述：说明写的楼不是地址本身（behind / gegenüber / frente a / خلف …）
 from .text import fmt_postcode, fold, key, postcode_prefix, script_of
 
 ACCEPT, CONFIRM, FIX, ADD_SUB = "ACCEPT", "CONFIRM", "FIX", "CONFIRM_ADD_SUBPREMISES"
-# 参照物描述：说明写的楼不是地址本身（behind / opposite / near …，阿拉伯文 خلف / مقابل / بجانب / قرب）
-LANDMARK = re.compile(r"\b(?:BEHIND|OPPOSITE|OPP|NEAR|NEXT TO|BESIDE|ACROSS|IN FRONT OF|ADJACENT TO|"
-                      r"DEPAN|BELAKANG|SEBELAH|DEKAT|BERHADAPAN|TRUOC|SAU|GAN|KE BEN)\b|خلف|مقابل|بجانب|قرب|امام", re.I)
 BASE = {"exact": 3.0, "core": 2.6, "thai": 2.4, "suffix": 2.3, "partial": 2.2, "crf": 2.2, "translit": 2.2,
         "alias": 2.0}
 
@@ -387,7 +385,7 @@ class Engine:
         或同名楼宇分布在相距 1 公里以上的多处（迪拜的 Galleria Mall、The Boulevard）：靠楼宇定位时不能直接通过。"""
         if b.score < 97:
             h.notes.append("BUILDING_SPELL_CORRECTED")
-        if LANDMARK.search(fold(p.raw)):
+        if LANDMARK.search(fold(p.raw)) or p.noise.get("landmarks") or p.noise.get("descriptions"):
             h.notes.append("LANDMARK_RELATIVE")
         if len(b.ids) > 1:
             pts = [self.ref.poi(i) for i in b.ids[:10]]
@@ -684,6 +682,8 @@ class Engine:
                 reasons.append("ONLY_LOCALITY")
             else:
                 reasons.append("NO_MATCH")
+            if p.noise.get("descriptions") or p.noise.get("landmarks"):
+                reasons.append("DESCRIPTIVE_LOCATION")
             return Result(self.market, action, gran, lat, lng, p, None, reasons, comps, [], p.parser)
 
         reasons += best.notes
@@ -733,6 +733,10 @@ class Engine:
             comps["subpremise"] = {"text": p.unit, "level": "UNCONFIRMED_BUT_PLAUSIBLE"}
 
         action = self._action(p, best, gran, ambiguous, reasons, strictness)
+        if p.noise.get("relativeTo") and action in (ACCEPT, ADD_SUB):  # "第三栋，在某地址后面"：找到的是参照物，不是目标
+            action = CONFIRM
+            if "LANDMARK_RELATIVE" not in reasons:
+                reasons.append("LANDMARK_RELATIVE")
         cands = [self._describe(h) for h in hyps[:5]] if action != ACCEPT else []
         return Result(self.market, action, gran, lat, lng, p, best, reasons, comps, cands, p.parser)
 
@@ -935,6 +939,7 @@ REASON_TEXT = {
     "STREET_NAME_COMPLETED": "所写道路上没有这个门牌，全称多一两个词的同名道路上有（Gran Avenida -> Gran Avenida José Miguel Carrera），需要用户确认",
     "BUILDING_SPELL_CORRECTED": "楼名是纠错后才对上的，需要用户确认",
     "LANDMARK_RELATIVE": "输入用参照物描述位置（在某楼后面 / 对面 / 附近），楼宇只是参照物",
+    "DESCRIPTIVE_LOCATION": "输入只有方位描述（第几栋、在某物后面），没有可核对的地址；请用户提供门牌地址，或在地图上标点 / 给出 Plus Code",
     "BUILDING_NAME_AMBIGUOUS": "同名楼宇有多处，需要用户确认是哪一处",
     "POSTCODE_NOT_FOUND": "官方地址表里没有这个邮编",
     "POSTCODE_STREET_MISMATCH": "邮编与道路相距很远，互相矛盾",

@@ -176,7 +176,7 @@ class LLMParser:
         self.errors = 0
 
     def parse(self, raw: str) -> Parsed | None:
-        text, noise, codes = strip_noise(raw)
+        text, noise, codes = strip_noise(raw, self.ref)
         t = time.perf_counter()
         try:
             fields = self.llm.extract(text, self.ref.market)

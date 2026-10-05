@@ -103,7 +103,7 @@ class CRFParser:
         return toks, self.tagger.tag(features(toks, seps, self.vocab))
 
     def parse(self, raw: str) -> Parsed:
-        text, noise, codes = strip_noise(raw)
+        text, noise, codes = strip_noise(raw, self.ref)
         toks, labels = self.tag(text)
         p = Parsed(raw=raw, tokens=toks, codes=codes, noise=noise, parser="crf")
         spans: list[tuple[str, int, int]] = []
