@@ -618,3 +618,42 @@ def test_noisy_and_descriptive_inputs(au):
     assert res.action == CONFIRM and "LANDMARK_RELATIVE" in res.reasons
     res = au.validate("second house after the big tree, blue gate")
     assert res.action == FIX and "DESCRIPTIVE_LOCATION" in res.reasons
+
+
+def _geo(number, route, postcode, lat, lng, loc_type="ROOFTOP", locality="Surry Hills"):
+    comps = [{"long_name": number, "types": ["street_number"]}] if number else []
+    comps += [{"long_name": route, "types": ["route"]}, {"long_name": locality, "types": ["locality"]}]
+    comps += [{"long_name": postcode, "types": ["postal_code"]}] if postcode else []
+    return {"results": [{"address_components": comps,
+                         "geometry": {"location": {"lat": lat, "lng": lng}, "location_type": loc_type}}]}
+
+
+def test_geo_result_verification(au):
+    """geo 服务的门址代回输入核对：逐字段一致才直接通过；门牌 / 道路对不上时以本引擎为准；
+    输入没写门牌时 geo 补出来的门牌不能当真；geo 只到道路级时不采用。"""
+    from avmvp.intl.geo_check import parse_geo, validate_with_geo
+    g = parse_geo(_geo("100", "Crown Street", "2010", -33.8850, 151.2121))[0]
+    assert (g.number, g.route, g.postal_code, g.localities) == ("100", "Crown Street", "2010", ["Surry Hills"])
+    # 一致：直接通过，本引擎独立定位到同一处
+    res = validate_with_geo(au, "100 Crown St, Surry Hills NSW 2010", _geo("100", "Crown Street", "2010", -33.8850, 151.2121))
+    assert res.action == ACCEPT and "GEO_VERIFIED" in res.reasons and "GEO_CONFIRMED_BY_ENGINE" in res.reasons
+    # geo 吸附到了别的门牌（输入 104，geo 给 100）：门牌冲突，用本引擎的结论
+    res = validate_with_geo(au, "104 Crown St, Surry Hills NSW 2010", _geo("100", "Crown Street", "2010", -33.8850, 151.2121))
+    assert "GEO_NUMBER_CONFLICT" in res.reasons and "GEO_REJECTED" in res.reasons and res.best.point["number"] == "104"
+    # geo 解析成了另一条路：道路冲突，用本引擎的结论
+    res = validate_with_geo(au, "50 Bourke St, Surry Hills NSW 2010", _geo("50", "Crown Street", "2010", -33.8860, 151.2121))
+    assert "GEO_ROUTE_CONFLICT" in res.reasons and res.action == ACCEPT and res.best.point["number"] == "50"
+    # 输入没写门牌：geo 补出来的门牌不能当真
+    res = validate_with_geo(au, "Crown St, Surry Hills NSW 2010", _geo("100", "Crown Street", "2010", -33.8850, 151.2121))
+    assert res.action == FIX
+    # geo 只到道路级：不采用
+    res = validate_with_geo(au, "100 Crown St, Surry Hills", _geo("", "Crown Street", "", -33.886, 151.212, "GEOMETRIC_CENTER"))
+    assert "GEO_STREET_LEVEL_ONLY" in res.reasons and res.best.point["number"] == "100"
+    # 库里没有的门牌但 geo 有（geo 的门址库更全）：逐字段一致，直接通过
+    res = validate_with_geo(au, "110 Crown St, Surry Hills NSW 2010", _geo("110", "Crown Street", "2010", -33.8858, 151.2121))
+    assert res.action == ACCEPT and "GEO_VERIFIED" in res.reasons and res.lat == -33.8858
+    # 拼写不同：请用户确认
+    res = validate_with_geo(au, "110 Crwn St, Surry Hills NSW 2010", _geo("110", "Crown Street", "2010", -33.8858, 151.2121))
+    assert res.action == CONFIRM
+    # 没有结果：本引擎
+    assert "GEO_NO_RESULT" in validate_with_geo(au, "100 Crown St, Surry Hills", {"results": []}).reasons

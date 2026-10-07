@@ -104,12 +104,17 @@ class MarketRouter:
             if self.available(c):
                 self.engine(c)
 
-    def validate(self, code: str, text: str, strictness: str = "BALANCED", min_confidence: float | None = None) -> dict:
+    def validate(self, code: str, text: str, strictness: str = "BALANCED", min_confidence: float | None = None,
+                 geo=None) -> dict:
+        """geo：可选，geo 服务对同一输入返回的标准门址（Google 地理编码格式），给了就先核对它（见 intl/geo_check.py）。"""
         code = (code or "SG").upper()
         eng = self.engine(code)
         with self._locks[code]:
             if code == "SG":  # 新加坡引擎的置信度门槛在 ConfidenceValidator 里配置
                 res = eng.validate(text, strictness=strictness)
+            elif geo:
+                from .intl.geo_check import validate_with_geo
+                res = validate_with_geo(eng, text, geo, strictness, min_confidence)
             else:
                 res = eng.validate(text, strictness=strictness, min_confidence=min_confidence)
             out = eng.to_response(res)

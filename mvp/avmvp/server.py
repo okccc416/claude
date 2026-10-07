@@ -241,7 +241,7 @@ def validate_one(router: MarketRouter, body: dict) -> dict:
     threshold = request_threshold(body)
     router.engine(region)  # 第一次请求某个市场时加载参考数据，不计入耗时
     t = time.perf_counter()
-    out = router.validate(region, text, strictness, threshold)
+    out = router.validate(region, text, strictness, threshold, body.get("geoResult"))
     out["serverTimeMs"] = round((time.perf_counter() - t) * 1000, 2)
     return out
 
