@@ -21,7 +21,7 @@
         },
         "median_error_m": 18.912316849046643,
         "within_500m": 0.9,
-        "ms": 59.79333440000002,
+        "ms": 8.188070902999925,
         "examples": {
           "静默错误": [
             [
@@ -123,7 +123,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.967,
-        "ms": 27.343191558,
+        "ms": 5.90263564199995,
         "examples": {
           "判 FIX": [
             [
@@ -228,7 +228,7 @@
         },
         "median_error_m": 20.421143269484386,
         "within_500m": 0.885,
-        "ms": 7.88806880300001,
+        "ms": 5.3490586289999555,
         "examples": {
           "静默错误": [
             [
@@ -314,14 +314,14 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.858,
-          "正确·要求确认": 0.069,
+          "正确·要求确认": 0.068,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.052,
-          "错误建议": 0.014,
+          "错误建议": 0.015,
           "静默错误": 0.007
         },
         "silent_over_1km": 0.002,
-        "wrong_over_1km": 0.011,
+        "wrong_over_1km": 0.012,
         "granularity": {
           "PREMISE": 0.944,
           "ROUTE": 0.054,
@@ -329,8 +329,8 @@
           "PREMISE_PROXIMITY": 0.001
         },
         "median_error_m": 0.0,
-        "within_500m": 0.981,
-        "ms": 7.492587958000002,
+        "within_500m": 0.98,
+        "ms": 4.774584888999925,
         "examples": {
           "判 FIX": [
             [
@@ -434,7 +434,7 @@
         },
         "median_error_m": 18.888405135726533,
         "within_500m": 0.901,
-        "ms": 14.11163307200002,
+        "ms": 12.473605231999954,
         "examples": {
           "静默错误": [
             [
@@ -520,14 +520,14 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.855,
-          "正确·要求确认": 0.071,
+          "正确·要求确认": 0.07,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.05,
-          "错误建议": 0.017,
+          "错误建议": 0.018,
           "静默错误": 0.007
         },
         "silent_over_1km": 0.002,
-        "wrong_over_1km": 0.013,
+        "wrong_over_1km": 0.014,
         "granularity": {
           "PREMISE": 0.944,
           "ROUTE": 0.054,
@@ -535,8 +535,8 @@
           "PREMISE_PROXIMITY": 0.001
         },
         "median_error_m": 0.0,
-        "within_500m": 0.979,
-        "ms": 10.420002788000005,
+        "within_500m": 0.978,
+        "ms": 9.677221492999934,
         "examples": {
           "判 FIX": [
             [
@@ -642,7 +642,7 @@
         },
         "median_error_m": 0.4433992827269784,
         "within_500m": 0.978,
-        "ms": 9.147708330999992,
+        "ms": 3.3401053949999095,
         "examples": {
           "错误建议": [
             [
@@ -745,7 +745,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.956,
-        "ms": 4.963946927999985,
+        "ms": 3.991336867999962,
         "examples": {
           "静默错误": [
             [
@@ -850,7 +850,7 @@
         },
         "median_error_m": 0.4434063572497466,
         "within_500m": 0.969,
-        "ms": 2.862552362000031,
+        "ms": 2.7525233520000256,
         "examples": {
           "错误建议": [
             [
@@ -952,7 +952,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.976,
-        "ms": 3.477603160000001,
+        "ms": 3.2276045539999814,
         "examples": {
           "判 FIX": [
             [
@@ -1038,7 +1038,7 @@
         },
         "median_error_m": 0.4433855489100046,
         "within_500m": 0.981,
-        "ms": 5.682813259,
+        "ms": 4.918123451999918,
         "examples": {
           "错误建议": [
             [
@@ -1140,7 +1140,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.976,
-        "ms": 7.250686908999968,
+        "ms": 6.273817191000035,
         "examples": {
           "静默错误": [
             [
@@ -1247,7 +1247,7 @@
         },
         "median_error_m": 6.495521413948258,
         "within_500m": 0.969,
-        "ms": 4.432558328000027,
+        "ms": 3.8810242689999086,
         "examples": {
           "错误建议": [
             [
@@ -1349,7 +1349,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.966,
-        "ms": 4.83069463199996,
+        "ms": 4.275014784999939,
         "examples": {
           "错误建议": [
             [
@@ -1454,7 +1454,7 @@
         },
         "median_error_m": 6.506639270962466,
         "within_500m": 0.965,
-        "ms": 3.0525405469999782,
+        "ms": 2.8033139140000003,
         "examples": {
           "判 FIX": [
             [
@@ -1555,7 +1555,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.99,
-        "ms": 3.6906600190000063,
+        "ms": 3.4171365469999273,
         "examples": {
           "判 FIX": [
             [
@@ -1642,7 +1642,7 @@
         },
         "median_error_m": 6.502233783357126,
         "within_500m": 0.971,
-        "ms": 6.255915718999972,
+        "ms": 6.004778495999972,
         "examples": {
           "错误建议": [
             [
@@ -1743,7 +1743,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.99,
-        "ms": 7.034849490000056,
+        "ms": 6.930183787000033,
         "examples": {
           "判 FIX": [
             [
@@ -1844,7 +1844,7 @@
         },
         "median_error_m": 10.055667794280156,
         "within_500m": 0.966,
-        "ms": 13.133168862000005,
+        "ms": 2.5391682919998857,
         "examples": {
           "错误建议": [
             [
@@ -1946,7 +1946,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.997,
-        "ms": 3.8496522799999866,
+        "ms": 2.1241407459999664,
         "examples": {
           "判 FIX": [
             [
@@ -2025,7 +2025,7 @@
         },
         "median_error_m": 10.523779399948303,
         "within_500m": 0.959,
-        "ms": 6.061072967000001,
+        "ms": 1.8138522850001664,
         "examples": {
           "错误建议": [
             [
@@ -2127,7 +2127,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.999,
-        "ms": 2.062383197000003,
+        "ms": 1.7267603179998332,
         "examples": {
           "判 FIX": [
             [
@@ -2200,7 +2200,7 @@
         },
         "median_error_m": 10.046245091851043,
         "within_500m": 0.97,
-        "ms": 3.6201668369999993,
+        "ms": 3.298411015000056,
         "examples": {
           "错误建议": [
             [
@@ -2301,7 +2301,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 1.0,
-        "ms": 3.3372484969999907,
+        "ms": 3.3206562099999246,
         "examples": {
           "判 FIX": [
             [
@@ -2348,22 +2348,22 @@
         "outcomes": {
           "正确·直接通过": 0.02,
           "正确·要求确认": 0.304,
-          "判 FIX·片区对": 0.117,
+          "判 FIX·片区对": 0.115,
           "判 FIX": 0.245,
-          "错误建议": 0.308,
+          "错误建议": 0.31,
           "静默错误": 0.006
         },
         "silent_over_1km": 0.005,
-        "wrong_over_1km": 0.24,
+        "wrong_over_1km": 0.242,
         "granularity": {
           "ROUTE": 0.469,
           "OTHER": 0.182,
-          "LOCALITY": 0.181,
-          "PREMISE_PROXIMITY": 0.168
+          "LOCALITY": 0.179,
+          "PREMISE_PROXIMITY": 0.17
         },
-        "median_error_m": 1921.8693582625951,
+        "median_error_m": 1932.9305203730473,
         "within_500m": 0.205,
-        "ms": 9.831298456999974,
+        "ms": 8.99624758899995,
         "examples": {
           "判 FIX": [
             [
@@ -2465,7 +2465,7 @@
         },
         "median_error_m": 283.5569508317451,
         "within_500m": 0.523,
-        "ms": 3.9870814709999824,
+        "ms": 3.7946542919999047,
         "examples": {
           "错误建议": [
             [
@@ -2528,22 +2528,22 @@
         "outcomes": {
           "正确·直接通过": 0.01,
           "正确·要求确认": 0.18,
-          "判 FIX·片区对": 0.064,
+          "判 FIX·片区对": 0.063,
           "判 FIX": 0.561,
-          "错误建议": 0.182,
+          "错误建议": 0.183,
           "静默错误": 0.003
         },
         "silent_over_1km": 0.003,
-        "wrong_over_1km": 0.161,
+        "wrong_over_1km": 0.162,
         "granularity": {
           "OTHER": 0.507,
           "ROUTE": 0.308,
-          "LOCALITY": 0.118,
-          "PREMISE_PROXIMITY": 0.067
+          "LOCALITY": 0.117,
+          "PREMISE_PROXIMITY": 0.068
         },
         "median_error_m": 2602.8534503148403,
         "within_500m": 0.105,
-        "ms": 3.8650159620000015,
+        "ms": 3.7206802150001295,
         "examples": {
           "判 FIX": [
             [
@@ -2639,7 +2639,7 @@
         },
         "median_error_m": 159.45253853511315,
         "within_500m": 0.729,
-        "ms": 2.681112487000007,
+        "ms": 2.324473886000078,
         "examples": {
           "错误建议": [
             [
@@ -2702,22 +2702,22 @@
         "outcomes": {
           "正确·直接通过": 0.021,
           "正确·要求确认": 0.31,
-          "判 FIX·片区对": 0.107,
+          "判 FIX·片区对": 0.105,
           "判 FIX": 0.222,
-          "错误建议": 0.334,
+          "错误建议": 0.336,
           "静默错误": 0.006
         },
         "silent_over_1km": 0.005,
-        "wrong_over_1km": 0.269,
+        "wrong_over_1km": 0.271,
         "granularity": {
           "ROUTE": 0.481,
-          "PREMISE_PROXIMITY": 0.189,
+          "PREMISE_PROXIMITY": 0.191,
           "OTHER": 0.167,
-          "LOCALITY": 0.163
+          "LOCALITY": 0.161
         },
-        "median_error_m": 2056.8514087623407,
+        "median_error_m": 2062.70811545058,
         "within_500m": 0.21,
-        "ms": 8.937737120000008,
+        "ms": 8.348877117000029,
         "examples": {
           "判 FIX": [
             [
@@ -2819,7 +2819,7 @@
         },
         "median_error_m": 159.94702055534333,
         "within_500m": 0.727,
-        "ms": 5.940971025999999,
+        "ms": 5.766395021000108,
         "examples": {
           "错误建议": [
             [
@@ -2899,7 +2899,7 @@
         },
         "median_error_m": 1937.1345031435344,
         "within_500m": 0.215,
-        "ms": 12.266853760999993,
+        "ms": 10.907867673000055,
         "examples": {
           "判 FIX": [
             [
@@ -2985,23 +2985,23 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.097,
-          "正确·要求确认": 0.644,
+          "正确·要求确认": 0.645,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.054,
-          "错误建议": 0.205,
+          "错误建议": 0.204,
           "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.198,
+        "wrong_over_1km": 0.197,
         "granularity": {
-          "ROUTE": 0.93,
-          "LOCALITY": 0.054,
+          "ROUTE": 0.931,
+          "LOCALITY": 0.053,
           "PREMISE_PROXIMITY": 0.014,
           "OTHER": 0.002
         },
-        "median_error_m": 150.7067326043878,
-        "within_500m": 0.72,
-        "ms": 5.3626656139999795,
+        "median_error_m": 149.29071614833305,
+        "within_500m": 0.721,
+        "ms": 4.188088572999959,
         "examples": {
           "判 FIX": [
             [
@@ -3079,7 +3079,7 @@
         },
         "median_error_m": 1862.7463140579582,
         "within_500m": 0.197,
-        "ms": 9.554956726,
+        "ms": 7.54400141699989,
         "examples": {
           "错误建议": [
             [
@@ -3165,22 +3165,22 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.112,
-          "正确·要求确认": 0.728,
+          "正确·要求确认": 0.731,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.008,
-          "错误建议": 0.151,
+          "错误建议": 0.148,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.145,
+        "wrong_over_1km": 0.142,
         "granularity": {
-          "ROUTE": 0.968,
+          "ROUTE": 0.969,
           "PREMISE_PROXIMITY": 0.022,
-          "LOCALITY": 0.01
+          "LOCALITY": 0.009
         },
-        "median_error_m": 112.18674191118646,
-        "within_500m": 0.823,
-        "ms": 2.8930221740000093,
+        "median_error_m": 111.32831364675779,
+        "within_500m": 0.826,
+        "ms": 2.569678266999972,
         "examples": {
           "错误建议": [
             [
@@ -3266,7 +3266,7 @@
         },
         "median_error_m": 1897.9776273780874,
         "within_500m": 0.225,
-        "ms": 17.658178821000007,
+        "ms": 16.66161910999995,
         "examples": {
           "判 FIX": [
             [
@@ -3352,22 +3352,22 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.11,
-          "正确·要求确认": 0.72,
+          "正确·要求确认": 0.722,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.004,
-          "错误建议": 0.165,
+          "错误建议": 0.163,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.159,
+        "wrong_over_1km": 0.157,
         "granularity": {
-          "ROUTE": 0.972,
+          "ROUTE": 0.973,
           "PREMISE_PROXIMITY": 0.022,
-          "LOCALITY": 0.006
+          "LOCALITY": 0.005
         },
-        "median_error_m": 132.27038821331553,
-        "within_500m": 0.802,
-        "ms": 6.501793442000007,
+        "median_error_m": 132.08034524364544,
+        "within_500m": 0.804,
+        "ms": 6.459195299000157,
         "examples": {
           "错误建议": [
             [
@@ -3454,7 +3454,7 @@
         },
         "median_error_m": 347.8658792865532,
         "within_500m": 0.562,
-        "ms": 17.039247220999997,
+        "ms": 15.789319184000078,
         "examples": {
           "错误建议": [
             [
@@ -3555,7 +3555,7 @@
         },
         "median_error_m": 69.69346580264948,
         "within_500m": 0.893,
-        "ms": 4.321557119000005,
+        "ms": 3.831568000000061,
         "examples": {
           "错误建议": [
             [
@@ -3641,7 +3641,7 @@
         },
         "median_error_m": 285.11709829128455,
         "within_500m": 0.616,
-        "ms": 6.479725392999995,
+        "ms": 6.483996975999844,
         "examples": {
           "错误建议": [
             [
@@ -3743,7 +3743,7 @@
         },
         "median_error_m": 66.71026711038476,
         "within_500m": 0.952,
-        "ms": 2.996737276000004,
+        "ms": 3.0993368729998565,
         "examples": {
           "错误建议": [
             [
@@ -3820,7 +3820,7 @@
         },
         "median_error_m": 284.34738592155884,
         "within_500m": 0.604,
-        "ms": 14.620909622,
+        "ms": 13.858198998000034,
         "examples": {
           "错误建议": [
             [
@@ -3921,7 +3921,7 @@
         },
         "median_error_m": 74.71906604422517,
         "within_500m": 0.953,
-        "ms": 6.525890736000009,
+        "ms": 5.741497127000002,
         "examples": {
           "错误建议": [
             [
@@ -3991,7 +3991,7 @@
         },
         "median_error_m": 682.7676598709057,
         "within_500m": 0.419,
-        "ms": 18.333760589000008,
+        "ms": 16.99688884599982,
         "examples": {
           "判 FIX": [
             [
@@ -4076,24 +4076,24 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.215,
-          "正确·要求确认": 0.649,
+          "正确·直接通过": 0.216,
+          "正确·要求确认": 0.652,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.009,
-          "错误建议": 0.126,
+          "判 FIX": 0.01,
+          "错误建议": 0.121,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.115,
+        "wrong_over_1km": 0.11,
         "granularity": {
-          "ROUTE": 0.945,
+          "ROUTE": 0.948,
           "PREMISE_PROXIMITY": 0.042,
-          "LOCALITY": 0.011,
+          "LOCALITY": 0.008,
           "OTHER": 0.002
         },
-        "median_error_m": 57.217561503274325,
-        "within_500m": 0.86,
-        "ms": 4.27400338999999,
+        "median_error_m": 57.037752219101336,
+        "within_500m": 0.864,
+        "ms": 3.9046095329999844,
         "examples": {
           "错误建议": [
             [
@@ -4179,7 +4179,7 @@
         },
         "median_error_m": 844.6739478490908,
         "within_500m": 0.344,
-        "ms": 10.970693588999978,
+        "ms": 8.690689656999893,
         "examples": {
           "错误建议": [
             [
@@ -4258,24 +4258,24 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.299,
-          "正确·要求确认": 0.603,
+          "正确·直接通过": 0.3,
+          "正确·要求确认": 0.605,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.008,
-          "错误建议": 0.089,
+          "错误建议": 0.086,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.087,
+        "wrong_over_1km": 0.084,
         "granularity": {
-          "ROUTE": 0.889,
+          "ROUTE": 0.893,
           "PREMISE_PROXIMITY": 0.099,
-          "LOCALITY": 0.009,
+          "LOCALITY": 0.005,
           "OTHER": 0.003
         },
-        "median_error_m": 50.870059159262716,
-        "within_500m": 0.891,
-        "ms": 3.9687602469999774,
+        "median_error_m": 50.48456980791343,
+        "within_500m": 0.894,
+        "ms": 3.2258137240000906,
         "examples": {
           "错误建议": [
             [
@@ -4361,7 +4361,7 @@
         },
         "median_error_m": 635.6708335598255,
         "within_500m": 0.434,
-        "ms": 18.298573930999993,
+        "ms": 17.929151302000033,
         "examples": {
           "判 FIX": [
             [
@@ -4446,24 +4446,24 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.299,
-          "正确·要求确认": 0.608,
+          "正确·直接通过": 0.3,
+          "正确·要求确认": 0.611,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.002,
-          "错误建议": 0.091,
+          "错误建议": 0.087,
           "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.083,
+        "wrong_over_1km": 0.079,
         "granularity": {
-          "ROUTE": 0.895,
+          "ROUTE": 0.899,
           "PREMISE_PROXIMITY": 0.099,
-          "LOCALITY": 0.005,
-          "OTHER": 0.001
+          "OTHER": 0.001,
+          "LOCALITY": 0.001
         },
-        "median_error_m": 57.93056602381186,
-        "within_500m": 0.899,
-        "ms": 6.90536190200001,
+        "median_error_m": 57.873083710595026,
+        "within_500m": 0.903,
+        "ms": 6.234878793000007,
         "examples": {
           "错误建议": [
             [
@@ -4531,7 +4531,7 @@
         },
         "median_error_m": 1166.8303250823242,
         "within_500m": 0.293,
-        "ms": 15.823452966999978,
+        "ms": 14.48877368400008,
         "examples": {
           "判 FIX": [
             [
@@ -4633,7 +4633,7 @@
         },
         "median_error_m": 41.249661724635544,
         "within_500m": 0.943,
-        "ms": 5.085846521000008,
+        "ms": 4.758505817000014,
         "examples": {
           "错误建议": [
             [
@@ -4719,7 +4719,7 @@
         },
         "median_error_m": 1747.0820386698692,
         "within_500m": 0.186,
-        "ms": 9.565860369000005,
+        "ms": 9.69518740799981,
         "examples": {
           "判 FIX": [
             [
@@ -4820,7 +4820,7 @@
         },
         "median_error_m": 49.17360286670517,
         "within_500m": 0.964,
-        "ms": 3.8629755450000403,
+        "ms": 3.4624219779998384,
         "examples": {
           "错误建议": [
             [
@@ -4894,7 +4894,7 @@
         },
         "median_error_m": 1145.074498859871,
         "within_500m": 0.299,
-        "ms": 23.704667829000016,
+        "ms": 23.25733830800004,
         "examples": {
           "判 FIX": [
             [
@@ -4995,7 +4995,7 @@
         },
         "median_error_m": 49.49243910576711,
         "within_500m": 0.962,
-        "ms": 7.5701229360000175,
+        "ms": 7.354782474000103,
         "examples": {
           "错误建议": [
             [
@@ -5056,21 +5056,21 @@
         "outcomes": {
           "正确·直接通过": 0.097,
           "正确·要求确认": 0.597,
-          "判 FIX·片区对": 0.015,
+          "判 FIX·片区对": 0.016,
           "判 FIX": 0.043,
-          "错误建议": 0.235,
+          "错误建议": 0.234,
           "静默错误": 0.013
         },
         "silent_over_1km": 0.01,
-        "wrong_over_1km": 0.168,
+        "wrong_over_1km": 0.167,
         "granularity": {
-          "ROUTE": 0.932,
-          "LOCALITY": 0.058,
+          "ROUTE": 0.931,
+          "LOCALITY": 0.059,
           "PREMISE_PROXIMITY": 0.01
         },
         "median_error_m": 521.3524384719251,
         "within_500m": 0.488,
-        "ms": 33.75455262,
+        "ms": 31.090327697000024,
         "examples": {
           "错误建议": [
             [
@@ -5156,23 +5156,23 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.289,
-          "正确·要求确认": 0.609,
+          "正确·要求确认": 0.61,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.014,
-          "错误建议": 0.085,
+          "错误建议": 0.084,
           "静默错误": 0.003
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.064,
+        "wrong_over_1km": 0.063,
         "granularity": {
-          "ROUTE": 0.912,
+          "ROUTE": 0.913,
           "PREMISE_PROXIMITY": 0.073,
-          "LOCALITY": 0.012,
+          "LOCALITY": 0.011,
           "OTHER": 0.003
         },
-        "median_error_m": 31.265174071064365,
-        "within_500m": 0.91,
-        "ms": 4.914384874999996,
+        "median_error_m": 31.246865501042674,
+        "within_500m": 0.911,
+        "ms": 4.2107337630000075,
         "examples": {
           "错误建议": [
             [
@@ -5256,21 +5256,21 @@
           "正确·直接通过": 0.127,
           "正确·要求确认": 0.378,
           "判 FIX·片区对": 0.196,
-          "判 FIX": 0.146,
-          "错误建议": 0.134,
+          "判 FIX": 0.147,
+          "错误建议": 0.133,
           "静默错误": 0.019
         },
         "silent_over_1km": 0.008,
-        "wrong_over_1km": 0.089,
+        "wrong_over_1km": 0.088,
         "granularity": {
-          "ROUTE": 0.647,
-          "LOCALITY": 0.3,
+          "ROUTE": 0.646,
+          "LOCALITY": 0.301,
           "OTHER": 0.042,
           "PREMISE_PROXIMITY": 0.011
         },
         "median_error_m": 644.6558929057794,
         "within_500m": 0.413,
-        "ms": 13.317191357000013,
+        "ms": 12.463287408999804,
         "examples": {
           "判 FIX": [
             [
@@ -5356,23 +5356,23 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.377,
-          "正确·要求确认": 0.576,
+          "正确·要求确认": 0.578,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.003,
-          "错误建议": 0.044,
+          "错误建议": 0.042,
           "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.039,
+        "wrong_over_1km": 0.037,
         "granularity": {
-          "ROUTE": 0.852,
+          "ROUTE": 0.854,
           "PREMISE_PROXIMITY": 0.143,
-          "LOCALITY": 0.003,
-          "OTHER": 0.002
+          "OTHER": 0.002,
+          "LOCALITY": 0.001
         },
-        "median_error_m": 36.65938102706148,
-        "within_500m": 0.946,
-        "ms": 3.711575794000027,
+        "median_error_m": 36.55904096390957,
+        "within_500m": 0.948,
+        "ms": 3.5345752240000365,
         "examples": {
           "错误建议": [
             [
@@ -5429,21 +5429,21 @@
         "outcomes": {
           "正确·直接通过": 0.153,
           "正确·要求确认": 0.543,
-          "判 FIX·片区对": 0.012,
+          "判 FIX·片区对": 0.013,
           "判 FIX": 0.038,
-          "错误建议": 0.229,
+          "错误建议": 0.228,
           "静默错误": 0.025
         },
         "silent_over_1km": 0.015,
-        "wrong_over_1km": 0.161,
+        "wrong_over_1km": 0.16,
         "granularity": {
-          "ROUTE": 0.933,
-          "LOCALITY": 0.05,
+          "ROUTE": 0.932,
+          "LOCALITY": 0.051,
           "PREMISE_PROXIMITY": 0.017
         },
         "median_error_m": 517.7008728725546,
         "within_500m": 0.49,
-        "ms": 34.850077958000014,
+        "ms": 31.092245606000002,
         "examples": {
           "错误建议": [
             [
@@ -5529,22 +5529,22 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.379,
-          "正确·要求确认": 0.559,
+          "正确·要求确认": 0.561,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.001,
-          "错误建议": 0.06,
+          "错误建议": 0.058,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.052,
+        "wrong_over_1km": 0.05,
         "granularity": {
-          "ROUTE": 0.851,
+          "ROUTE": 0.853,
           "PREMISE_PROXIMITY": 0.146,
-          "LOCALITY": 0.003
+          "LOCALITY": 0.001
         },
-        "median_error_m": 39.23220316771235,
-        "within_500m": 0.935,
-        "ms": 8.889136910000019,
+        "median_error_m": 38.926951508293,
+        "within_500m": 0.937,
+        "ms": 7.457585949000077,
         "examples": {
           "错误建议": [
             [
@@ -5613,7 +5613,7 @@
         },
         "median_error_m": 844.6932538364567,
         "within_500m": 0.382,
-        "ms": 8.885615290999993,
+        "ms": 8.287467177000053,
         "examples": {
           "判 FIX": [
             [
@@ -5699,22 +5699,22 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.217,
-          "正确·要求确认": 0.655,
+          "正确·要求确认": 0.657,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.034,
-          "错误建议": 0.094,
+          "错误建议": 0.092,
           "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.083,
+        "wrong_over_1km": 0.081,
         "granularity": {
-          "ROUTE": 0.894,
+          "ROUTE": 0.896,
           "PREMISE_PROXIMITY": 0.07,
-          "LOCALITY": 0.036
+          "LOCALITY": 0.034
         },
         "median_error_m": 80.38681331819357,
-        "within_500m": 0.861,
-        "ms": 4.485592695999998,
+        "within_500m": 0.863,
+        "ms": 4.290292107000141,
         "examples": {
           "错误建议": [
             [
@@ -5730,16 +5730,16 @@
               "1 Reyes Street, Quezon City"
             ],
             [
-              "72 Real Street, Urdaneta",
-              "CONFIRM",
-              "LOCALITY",
-              "72, Urdaneta"
-            ],
-            [
               "No., 23 Lopez Jaena Street Manila",
               "CONFIRM",
               "ROUTE",
               "23 Lopez Jaena Street, Manila"
+            ],
+            [
+              "24 Callejon 1 Marilag, Manila",
+              "CONFIRM",
+              "ROUTE",
+              "24 Callejon 1, Manila"
             ]
           ],
           "判 FIX": [
@@ -5792,7 +5792,7 @@
         },
         "median_error_m": 719.8284174763993,
         "within_500m": 0.37,
-        "ms": 6.812643878000017,
+        "ms": 6.1323132949999035,
         "examples": {
           "判 FIX": [
             [
@@ -5878,22 +5878,22 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.277,
-          "正确·要求确认": 0.617,
+          "正确·要求确认": 0.619,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.003,
-          "错误建议": 0.102,
+          "错误建议": 0.1,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.091,
+        "wrong_over_1km": 0.089,
         "granularity": {
-          "ROUTE": 0.862,
+          "ROUTE": 0.864,
           "PREMISE_PROXIMITY": 0.133,
-          "LOCALITY": 0.005
+          "LOCALITY": 0.003
         },
         "median_error_m": 72.56306425060103,
-        "within_500m": 0.872,
-        "ms": 3.498840627999982,
+        "within_500m": 0.874,
+        "ms": 3.3744072469999082,
         "examples": {
           "错误建议": [
             [
@@ -5909,16 +5909,16 @@
               "1 Reyes Street"
             ],
             [
-              "72 Real Street, Urdaneta",
-              "CONFIRM",
-              "LOCALITY",
-              "72, Urdaneta"
-            ],
-            [
               "No., 23 Lopez Jaena Street Manila",
               "CONFIRM",
               "ROUTE",
               "23 Lopez Jaena Street"
+            ],
+            [
+              "Unit 7, Emeraldd Street Pasong Tamo, Quezon City",
+              "CONFIRM",
+              "ROUTE",
+              "Unit 7, Emerald Street, Pasong Tamo"
             ]
           ],
           "判 FIX": [
@@ -5972,7 +5972,7 @@
         },
         "median_error_m": 675.3723040658034,
         "within_500m": 0.438,
-        "ms": 14.169472778,
+        "ms": 13.887762080999892,
         "examples": {
           "判 FIX": [
             [
@@ -6058,22 +6058,21 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.279,
-          "正确·要求确认": 0.633,
+          "正确·要求确认": 0.635,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.0,
-          "错误建议": 0.087,
+          "错误建议": 0.085,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.076,
+        "wrong_over_1km": 0.074,
         "granularity": {
-          "ROUTE": 0.864,
-          "PREMISE_PROXIMITY": 0.134,
-          "LOCALITY": 0.002
+          "ROUTE": 0.866,
+          "PREMISE_PROXIMITY": 0.134
         },
         "median_error_m": 80.48344489584903,
-        "within_500m": 0.889,
-        "ms": 7.163285269000027,
+        "within_500m": 0.891,
+        "ms": 6.987168739999788,
         "examples": {
           "错误建议": [
             [
@@ -6081,12 +6080,6 @@
               "CONFIRM",
               "ROUTE",
               "1 Reyes Street, Quezon City"
-            ],
-            [
-              "72 Real Street, Urdaneta",
-              "CONFIRM",
-              "LOCALITY",
-              "72, Urdaneta"
             ],
             [
               "No., 23 Lopez Jaena Street Manila",
@@ -6099,6 +6092,12 @@
               "CONFIRM",
               "ROUTE",
               "Unit 7, Emerald Street, Pasong Tamo"
+            ],
+            [
+              "24 Callejon 1 Marilag, Manila",
+              "CONFIRM",
+              "ROUTE",
+              "24 Callejon 1, Manila"
             ]
           ],
           "静默错误": [
@@ -6136,7 +6135,7 @@
         },
         "median_error_m": 25.862885676374542,
         "within_500m": 0.932,
-        "ms": 5.547523293999974,
+        "ms": 2.8676263729998936,
         "examples": {
           "静默错误": [
             [
@@ -6239,7 +6238,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.989,
-        "ms": 3.1007226589999846,
+        "ms": 2.737378599000067,
         "examples": {
           "判 FIX": [
             [
@@ -6338,7 +6337,7 @@
         },
         "median_error_m": 25.65957060530728,
         "within_500m": 0.934,
-        "ms": 3.379939964000016,
+        "ms": 2.9607783929998277,
         "examples": {
           "错误建议": [
             [
@@ -6441,7 +6440,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.994,
-        "ms": 2.081843296000045,
+        "ms": 1.8725819159999446,
         "examples": {
           "判 FIX": [
             [
@@ -6534,7 +6533,7 @@
         },
         "median_error_m": 25.527515783150456,
         "within_500m": 0.952,
-        "ms": 4.97892861600002,
+        "ms": 5.088592283000025,
         "examples": {
           "错误建议": [
             [
@@ -6636,7 +6635,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.995,
-        "ms": 3.9635576360000186,
+        "ms": 4.019814965000023,
         "examples": {
           "判 FIX": [
             [
@@ -6724,13 +6723,13 @@
         "wrong_over_1km": 0.093,
         "granularity": {
           "PREMISE": 0.618,
-          "ROUTE": 0.204,
+          "ROUTE": 0.205,
           "PREMISE_PROXIMITY": 0.169,
-          "LOCALITY": 0.009
+          "LOCALITY": 0.008
         },
         "median_error_m": 25.4838912437432,
         "within_500m": 0.806,
-        "ms": 16.045392387999982,
+        "ms": 10.867869032000044,
         "examples": {
           "静默错误": [
             [
@@ -6831,7 +6830,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.914,
-        "ms": 14.551484490999995,
+        "ms": 7.043250097000055,
         "examples": {
           "错误建议": [
             [
@@ -6920,8 +6919,8 @@
         "outcomes": {
           "正确·直接通过": 0.341,
           "正确·要求确认": 0.324,
-          "判 FIX·片区对": 0.066,
-          "判 FIX": 0.092,
+          "判 FIX·片区对": 0.067,
+          "判 FIX": 0.091,
           "错误建议": 0.149,
           "静默错误": 0.028
         },
@@ -6936,7 +6935,7 @@
         },
         "median_error_m": 47.23084928994565,
         "within_500m": 0.727,
-        "ms": 5.732860243000005,
+        "ms": 4.9361898069998915,
         "examples": {
           "错误建议": [
             [
@@ -7038,7 +7037,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.962,
-        "ms": 3.567774070999974,
+        "ms": 3.411761856999874,
         "examples": {
           "错误建议": [
             [
@@ -7136,13 +7135,13 @@
         "wrong_over_1km": 0.087,
         "granularity": {
           "PREMISE": 0.668,
-          "ROUTE": 0.173,
+          "ROUTE": 0.174,
           "PREMISE_PROXIMITY": 0.152,
-          "LOCALITY": 0.007
+          "LOCALITY": 0.006
         },
         "median_error_m": 25.017396694311373,
         "within_500m": 0.812,
-        "ms": 14.588321183000005,
+        "ms": 13.750439357999994,
         "examples": {
           "静默错误": [
             [
@@ -7243,7 +7242,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.95,
-        "ms": 9.530406058999972,
+        "ms": 9.607948493000094,
         "examples": {
           "错误建议": [
             [
@@ -7350,7 +7349,7 @@
         },
         "median_error_m": 696.5983754870566,
         "within_500m": 0.434,
-        "ms": 9.192987965000045,
+        "ms": 7.7931481370001165,
         "examples": {
           "错误建议": [
             [
@@ -7436,30 +7435,30 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.061,
-          "正确·要求确认": 0.582,
+          "正确·要求确认": 0.586,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.009,
-          "错误建议": 0.348,
+          "判 FIX": 0.007,
+          "错误建议": 0.346,
           "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.305,
+        "wrong_over_1km": 0.303,
         "granularity": {
-          "ROUTE": 0.859,
+          "ROUTE": 0.866,
           "PREMISE_PROXIMITY": 0.099,
           "PREMISE": 0.027,
-          "LOCALITY": 0.015
+          "LOCALITY": 0.008
         },
-        "median_error_m": 153.2235262321375,
-        "within_500m": 0.637,
-        "ms": 5.017842873999997,
+        "median_error_m": 151.47164339163666,
+        "within_500m": 0.64,
+        "ms": 4.638199145000044,
         "examples": {
           "错误建议": [
             [
               "local 3, 13 camino bonilla, dos bocas, san juan, pr",
               "CONFIRM",
-              "LOCALITY",
-              "13, Dos Bocas"
+              "ROUTE",
+              "Local 3, 13 Camino Bonilla"
             ],
             [
               "plaza di luna, 14 calle 18, hato tejas, san juan, pr",
@@ -7482,12 +7481,6 @@
           ],
           "判 FIX": [
             [
-              "50 Carretera Bayamón - Aguas Buenas, Parcelas Juan Sánchez, San Juan",
-              "FIX",
-              "LOCALITY",
-              "Aguas Buenas"
-            ],
-            [
               "P° de los Robles, El Cinco",
               "FIX",
               "LOCALITY",
@@ -7501,6 +7494,12 @@
             ],
             [
               "52 Cale 257 Sabana Abajo",
+              "FIX",
+              "LOCALITY",
+              ""
+            ],
+            [
+              "91 Calle Rooseevlt Monacillo, 926",
               "FIX",
               "LOCALITY",
               ""
@@ -7531,7 +7530,7 @@
         },
         "median_error_m": 943.7421704391372,
         "within_500m": 0.356,
-        "ms": 4.728369904999965,
+        "ms": 4.484962086999985,
         "examples": {
           "判 FIX": [
             [
@@ -7617,32 +7616,26 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.105,
-          "正确·要求确认": 0.727,
+          "正确·要求确认": 0.733,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.005,
-          "错误建议": 0.163,
+          "错误建议": 0.157,
           "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.14,
+        "wrong_over_1km": 0.133,
         "granularity": {
-          "ROUTE": 0.889,
+          "ROUTE": 0.895,
           "PREMISE_PROXIMITY": 0.078,
-          "PREMISE": 0.02,
-          "LOCALITY": 0.012,
+          "PREMISE": 0.021,
+          "LOCALITY": 0.005,
           "OTHER": 0.001
         },
-        "median_error_m": 97.9855985528762,
-        "within_500m": 0.809,
-        "ms": 3.57476871099999,
+        "median_error_m": 97.07583231817492,
+        "within_500m": 0.815,
+        "ms": 3.42861010799993,
         "examples": {
           "错误建议": [
-            [
-              "local 3, 13 camino bonilla, dos bocas, san juan, pr",
-              "CONFIRM",
-              "LOCALITY",
-              "13, Dos Bocas"
-            ],
             [
               "191 C. 4, Saint Just, San Juan",
               "CONFIRM",
@@ -7658,8 +7651,14 @@
             [
               "50 Carretera Bayamón - Aguas Buenas, Parcelas Juan Sánchez, San Juan",
               "CONFIRM",
-              "LOCALITY",
-              "50, Aguas Buenas"
+              "PREMISE",
+              "50 CARRETERA 174, Parcelas Juan Sánchez"
+            ],
+            [
+              "Calle Azucena",
+              "CONFIRM",
+              "ROUTE",
+              "Calle Azucena"
             ]
           ],
           "判 FIX": [
@@ -7713,7 +7712,7 @@
         },
         "median_error_m": 614.1797799205062,
         "within_500m": 0.458,
-        "ms": 10.564353565999966,
+        "ms": 10.529179301999875,
         "examples": {
           "错误建议": [
             [
@@ -7799,31 +7798,25 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.104,
-          "正确·要求确认": 0.667,
+          "正确·要求确认": 0.673,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.002,
-          "错误建议": 0.227,
+          "错误建议": 0.221,
           "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.199,
+        "wrong_over_1km": 0.192,
         "granularity": {
-          "ROUTE": 0.83,
+          "ROUTE": 0.836,
           "PREMISE_PROXIMITY": 0.126,
-          "PREMISE": 0.034,
-          "LOCALITY": 0.01
+          "PREMISE": 0.035,
+          "LOCALITY": 0.003
         },
-        "median_error_m": 112.55603775836036,
-        "within_500m": 0.753,
-        "ms": 7.953966882999965,
+        "median_error_m": 111.74373785443086,
+        "within_500m": 0.759,
+        "ms": 7.373883933999878,
         "examples": {
           "错误建议": [
-            [
-              "local 3, 13 camino bonilla, dos bocas, san juan, pr",
-              "CONFIRM",
-              "LOCALITY",
-              "13, Dos Bocas"
-            ],
             [
               "plaza di luna, 14 calle 18, hato tejas, san juan, pr",
               "CONFIRM",
@@ -7841,6 +7834,12 @@
               "CONFIRM",
               "ROUTE",
               "191 Calle 4, Saint Just"
+            ],
+            [
+              "HED'NARDOS CORPORATION, SUITE 3, 165 CALLE GUILARTE",
+              "CONFIRM",
+              "ROUTE",
+              "Suite 3, 165 Calle Guilarte"
             ]
           ],
           "判 FIX": [
@@ -7876,15 +7875,15 @@
         "silent_over_1km": 0.013,
         "wrong_over_1km": 0.032,
         "granularity": {
-          "PREMISE": 0.809,
+          "PREMISE": 0.81,
           "PREMISE_PROXIMITY": 0.111,
           "ROUTE": 0.065,
-          "LOCALITY": 0.011,
+          "LOCALITY": 0.01,
           "OTHER": 0.004
         },
         "median_error_m": 20.67765050346666,
         "within_500m": 0.92,
-        "ms": 7.933987639000008,
+        "ms": 5.825261490999992,
         "examples": {
           "判 FIX": [
             [
@@ -7986,7 +7985,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.88,
-        "ms": 8.26318539900001,
+        "ms": 7.135723753000093,
         "examples": {
           "静默错误": [
             [
@@ -8083,15 +8082,15 @@
         "silent_over_1km": 0.009,
         "wrong_over_1km": 0.024,
         "granularity": {
-          "PREMISE": 0.699,
+          "PREMISE": 0.7,
           "PREMISE_PROXIMITY": 0.116,
           "ROUTE": 0.084,
-          "LOCALITY": 0.068,
+          "LOCALITY": 0.067,
           "OTHER": 0.033
         },
         "median_error_m": 21.605188106204434,
         "within_500m": 0.886,
-        "ms": 4.5837120870000385,
+        "ms": 3.3876050169999417,
         "examples": {
           "判 FIX": [
             [
@@ -8192,7 +8191,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.998,
-        "ms": 2.741742124000041,
+        "ms": 2.891671494000093,
         "examples": {
           "静默错误": [
             [
@@ -8289,15 +8288,15 @@
         "silent_over_1km": 0.013,
         "wrong_over_1km": 0.023,
         "granularity": {
-          "PREMISE": 0.82,
+          "PREMISE": 0.821,
           "PREMISE_PROXIMITY": 0.109,
           "ROUTE": 0.056,
-          "LOCALITY": 0.011,
+          "LOCALITY": 0.01,
           "OTHER": 0.004
         },
         "median_error_m": 20.510132509633998,
         "within_500m": 0.93,
-        "ms": 7.894765141999983,
+        "ms": 8.087463800999785,
         "examples": {
           "判 FIX": [
             [
@@ -8398,7 +8397,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.998,
-        "ms": 9.170199860000027,
+        "ms": 9.257328688999905,
         "examples": {
           "静默错误": [
             [
@@ -8504,14 +8503,14 @@
         },
         "median_error_m": 11.536794288233583,
         "within_500m": 0.873,
-        "ms": 7.116488037999999,
+        "ms": 5.533927265000102,
         "examples": {
           "错误建议": [
             [
               "Merlo,Buenos aires, Ciudad de Buenos Aires",
               "CONFIRM",
               "ROUTE",
-              "Merlo, Ciudad Autónoma de Buenos Aires"
+              "Merlo, Buenos Aires"
             ],
             [
               "Parque Centenario, Caballito",
@@ -8589,25 +8588,25 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.27,
-          "正确·要求确认": 0.489,
+          "正确·直接通过": 0.268,
+          "正确·要求确认": 0.492,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.018,
-          "错误建议": 0.216,
+          "错误建议": 0.215,
           "静默错误": 0.007
         },
         "silent_over_1km": 0.002,
-        "wrong_over_1km": 0.198,
+        "wrong_over_1km": 0.197,
         "granularity": {
-          "ROUTE": 0.741,
-          "PREMISE_PROXIMITY": 0.226,
+          "ROUTE": 0.742,
+          "PREMISE_PROXIMITY": 0.225,
           "LOCALITY": 0.018,
           "PREMISE": 0.014,
           "OTHER": 0.001
         },
-        "median_error_m": 269.23408162536975,
+        "median_error_m": 269.5459669636771,
         "within_500m": 0.6,
-        "ms": 7.6654407610000135,
+        "ms": 4.63733106299992,
         "examples": {
           "错误建议": [
             [
@@ -8712,7 +8711,7 @@
         },
         "median_error_m": 13.112846283777792,
         "within_500m": 0.811,
-        "ms": 3.5120395680000343,
+        "ms": 3.158195389999946,
         "examples": {
           "错误建议": [
             [
@@ -8815,7 +8814,7 @@
         },
         "median_error_m": 138.20079916795538,
         "within_500m": 0.732,
-        "ms": 3.070501278999984,
+        "ms": 3.0878589469998587,
         "examples": {
           "错误建议": [
             [
@@ -8907,14 +8906,14 @@
         },
         "median_error_m": 11.287250104513568,
         "within_500m": 0.88,
-        "ms": 8.414942878000035,
+        "ms": 7.921746556000016,
         "examples": {
           "错误建议": [
             [
               "Merlo,Buenos aires, Ciudad de Buenos Aires",
               "CONFIRM",
               "ROUTE",
-              "Merlo, Ciudad Autónoma de Buenos Aires"
+              "Merlo, Buenos Aires"
             ],
             [
               "Parque Centenario, Caballito",
@@ -8992,25 +8991,25 @@
       "synthetic": {
         "n": 1000,
         "outcomes": {
-          "正确·直接通过": 0.284,
-          "正确·要求确认": 0.515,
+          "正确·直接通过": 0.283,
+          "正确·要求确认": 0.517,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.006,
-          "错误建议": 0.188,
+          "错误建议": 0.187,
           "静默错误": 0.007
         },
         "silent_over_1km": 0.002,
-        "wrong_over_1km": 0.172,
+        "wrong_over_1km": 0.171,
         "granularity": {
-          "ROUTE": 0.728,
-          "PREMISE_PROXIMITY": 0.251,
+          "ROUTE": 0.729,
+          "PREMISE_PROXIMITY": 0.25,
           "PREMISE": 0.014,
           "LOCALITY": 0.006,
           "OTHER": 0.001
         },
-        "median_error_m": 238.227295369483,
+        "median_error_m": 241.30133923162455,
         "within_500m": 0.627,
-        "ms": 6.718794037999998,
+        "ms": 6.966642224999987,
         "examples": {
           "错误建议": [
             [
@@ -9117,7 +9116,7 @@
         },
         "median_error_m": 19.779013481813436,
         "within_500m": 0.864,
-        "ms": 14.72300033900001,
+        "ms": 8.047383066000066,
         "examples": {
           "错误建议": [
             [
@@ -9203,14 +9202,14 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.742,
-          "正确·要求确认": 0.164,
+          "正确·要求确认": 0.163,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.045,
-          "错误建议": 0.045,
+          "错误建议": 0.046,
           "静默错误": 0.004
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.028,
+        "wrong_over_1km": 0.029,
         "granularity": {
           "PREMISE": 0.901,
           "ROUTE": 0.066,
@@ -9219,8 +9218,8 @@
           "LOCALITY": 0.005
         },
         "median_error_m": 0.0,
-        "within_500m": 0.947,
-        "ms": 5.347703458000013,
+        "within_500m": 0.946,
+        "ms": 4.958833769999956,
         "examples": {
           "错误建议": [
             [
@@ -9325,7 +9324,7 @@
         },
         "median_error_m": 20.968031392749307,
         "within_500m": 0.825,
-        "ms": 4.550698819000046,
+        "ms": 4.530180578999989,
         "examples": {
           "错误建议": [
             [
@@ -9428,7 +9427,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.982,
-        "ms": 2.544410834999951,
+        "ms": 2.2066158499999347,
         "examples": {
           "判 FIX": [
             [
@@ -9507,7 +9506,7 @@
         },
         "median_error_m": 19.430423085948657,
         "within_500m": 0.874,
-        "ms": 11.830933405999986,
+        "ms": 11.253656164999938,
         "examples": {
           "错误建议": [
             [
@@ -9610,7 +9609,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.98,
-        "ms": 6.9795235830000015,
+        "ms": 6.226510899000004,
         "examples": {
           "判 FIX": [
             [
@@ -9717,7 +9716,7 @@
         },
         "median_error_m": 47.78077814965902,
         "within_500m": 0.717,
-        "ms": 15.447155409999993,
+        "ms": 10.595195971000066,
         "examples": {
           "错误建议": [
             [
@@ -9820,7 +9819,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.912,
-        "ms": 3.8129420390000064,
+        "ms": 3.664858974000026,
         "examples": {
           "错误建议": [
             [
@@ -9902,24 +9901,24 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.383,
-          "正确·要求确认": 0.22,
+          "正确·要求确认": 0.219,
           "判 FIX·片区对": 0.111,
-          "判 FIX": 0.065,
-          "错误建议": 0.19,
+          "判 FIX": 0.064,
+          "错误建议": 0.192,
           "静默错误": 0.031
         },
         "silent_over_1km": 0.028,
-        "wrong_over_1km": 0.148,
+        "wrong_over_1km": 0.149,
         "granularity": {
           "PREMISE": 0.44,
-          "ROUTE": 0.243,
-          "PREMISE_PROXIMITY": 0.157,
+          "ROUTE": 0.245,
+          "PREMISE_PROXIMITY": 0.156,
           "LOCALITY": 0.141,
-          "OTHER": 0.019
+          "OTHER": 0.018
         },
-        "median_error_m": 116.39914238270359,
-        "within_500m": 0.601,
-        "ms": 7.4784461489999785,
+        "median_error_m": 118.45059716923564,
+        "within_500m": 0.6,
+        "ms": 7.3364015229999495,
         "examples": {
           "判 FIX": [
             [
@@ -10020,7 +10019,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.954,
-        "ms": 2.3280355049999457,
+        "ms": 2.3819968699999663,
         "examples": {
           "错误建议": [
             [
@@ -10096,24 +10095,24 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.475,
-          "正确·要求确认": 0.256,
+          "正确·要求确认": 0.255,
           "判 FIX·片区对": 0.009,
           "判 FIX": 0.048,
-          "错误建议": 0.174,
+          "错误建议": 0.175,
           "静默错误": 0.038
         },
         "silent_over_1km": 0.033,
-        "wrong_over_1km": 0.136,
+        "wrong_over_1km": 0.137,
         "granularity": {
           "PREMISE": 0.542,
-          "PREMISE_PROXIMITY": 0.226,
-          "ROUTE": 0.203,
+          "PREMISE_PROXIMITY": 0.225,
+          "ROUTE": 0.204,
           "LOCALITY": 0.024,
           "OTHER": 0.005
         },
-        "median_error_m": 44.754607352332684,
-        "within_500m": 0.728,
-        "ms": 16.63814733499999,
+        "median_error_m": 45.161527511410945,
+        "within_500m": 0.727,
+        "ms": 15.892841905000068,
         "examples": {
           "错误建议": [
             [
@@ -10214,7 +10213,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.947,
-        "ms": 5.606503955999983,
+        "ms": 5.301059821000081,
         "examples": {
           "错误建议": [
             [
@@ -10315,7 +10314,7 @@
         },
         "median_error_m": 25.373982816543187,
         "within_500m": 0.893,
-        "ms": 7.436107613000048,
+        "ms": 3.767936918000032,
         "examples": {
           "判 FIX": [
             [
@@ -10401,10 +10400,10 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.306,
-          "正确·要求确认": 0.646,
+          "正确·要求确认": 0.647,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.018,
-          "错误建议": 0.029,
+          "错误建议": 0.028,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
@@ -10415,9 +10414,9 @@
           "PREMISE": 0.092,
           "LOCALITY": 0.018
         },
-        "median_error_m": 55.34997071580317,
+        "median_error_m": 55.307650865259866,
         "within_500m": 0.948,
-        "ms": 5.028713528000026,
+        "ms": 5.087374324999928,
         "examples": {
           "错误建议": [
             [
@@ -10504,7 +10503,7 @@
         },
         "median_error_m": 24.758919791273122,
         "within_500m": 0.897,
-        "ms": 3.4335499929999855,
+        "ms": 3.1895301839999775,
         "examples": {
           "判 FIX": [
             [
@@ -10597,17 +10596,17 @@
           "静默错误": 0.0
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.031,
+        "wrong_over_1km": 0.032,
         "granularity": {
           "ROUTE": 0.727,
-          "PREMISE_PROXIMITY": 0.179,
-          "PREMISE": 0.092,
+          "PREMISE_PROXIMITY": 0.178,
+          "PREMISE": 0.093,
           "LOCALITY": 0.001,
           "OTHER": 0.001
         },
         "median_error_m": 48.80108277436272,
-        "within_500m": 0.953,
-        "ms": 5.362936590000004,
+        "within_500m": 0.952,
+        "ms": 3.604006432999995,
         "examples": {
           "错误建议": [
             [
@@ -10674,7 +10673,7 @@
         },
         "median_error_m": 25.096730137023382,
         "within_500m": 0.901,
-        "ms": 6.393445194000037,
+        "ms": 6.620075399000143,
         "examples": {
           "判 FIX": [
             [
@@ -10767,15 +10766,15 @@
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.025,
+        "wrong_over_1km": 0.026,
         "granularity": {
           "ROUTE": 0.723,
-          "PREMISE_PROXIMITY": 0.182,
-          "PREMISE": 0.095
+          "PREMISE_PROXIMITY": 0.181,
+          "PREMISE": 0.096
         },
         "median_error_m": 55.62807679490868,
-        "within_500m": 0.96,
-        "ms": 7.5292046029999815,
+        "within_500m": 0.959,
+        "ms": 7.084564226999873,
         "examples": {
           "错误建议": [
             [
@@ -10838,7 +10837,7 @@
         },
         "median_error_m": 85.44456700583005,
         "within_500m": 0.732,
-        "ms": 5.7752040020000095,
+        "ms": 4.319997318999867,
         "examples": {
           "错误建议": [
             [
@@ -10941,7 +10940,7 @@
         },
         "median_error_m": 63.33702539795847,
         "within_500m": 0.913,
-        "ms": 5.135737120000044,
+        "ms": 4.453996931999882,
         "examples": {
           "错误建议": [
             [
@@ -11031,22 +11030,22 @@
           "正确·直接通过": 0.222,
           "正确·要求确认": 0.451,
           "判 FIX·片区对": 0.038,
-          "判 FIX": 0.155,
-          "错误建议": 0.116,
+          "判 FIX": 0.154,
+          "错误建议": 0.117,
           "静默错误": 0.018
         },
         "silent_over_1km": 0.01,
-        "wrong_over_1km": 0.079,
+        "wrong_over_1km": 0.08,
         "granularity": {
-          "ROUTE": 0.329,
+          "ROUTE": 0.33,
           "PREMISE": 0.263,
           "PREMISE_PROXIMITY": 0.215,
-          "OTHER": 0.151,
+          "OTHER": 0.15,
           "LOCALITY": 0.042
         },
-        "median_error_m": 62.84760208617376,
+        "median_error_m": 63.253713492425234,
         "within_500m": 0.674,
-        "ms": 3.1106162359999985,
+        "ms": 3.041489748999993,
         "examples": {
           "判 FIX": [
             [
@@ -11149,7 +11148,7 @@
         },
         "median_error_m": 47.682815571368614,
         "within_500m": 0.95,
-        "ms": 3.0196783910000136,
+        "ms": 2.7525630090001414,
         "examples": {
           "错误建议": [
             [
@@ -11213,22 +11212,22 @@
           "正确·直接通过": 0.24,
           "正确·要求确认": 0.497,
           "判 FIX·片区对": 0.048,
-          "判 FIX": 0.044,
-          "错误建议": 0.15,
+          "判 FIX": 0.043,
+          "错误建议": 0.151,
           "静默错误": 0.021
         },
         "silent_over_1km": 0.01,
-        "wrong_over_1km": 0.091,
+        "wrong_over_1km": 0.092,
         "granularity": {
-          "ROUTE": 0.373,
+          "ROUTE": 0.374,
           "PREMISE": 0.295,
           "PREMISE_PROXIMITY": 0.24,
           "LOCALITY": 0.058,
-          "OTHER": 0.034
+          "OTHER": 0.033
         },
-        "median_error_m": 84.53764541352255,
+        "median_error_m": 84.69050118413445,
         "within_500m": 0.734,
-        "ms": 7.49217659499999,
+        "ms": 6.946782385999995,
         "examples": {
           "错误建议": [
             [
@@ -11330,7 +11329,7 @@
         },
         "median_error_m": 63.48739405421037,
         "within_500m": 0.922,
-        "ms": 5.830985843999997,
+        "ms": 5.9497047600000315,
         "examples": {
           "错误建议": [
             [
@@ -11425,7 +11424,7 @@
         },
         "median_error_m": 9.064975502974333,
         "within_500m": 0.94,
-        "ms": 15.477348348000021,
+        "ms": 8.367299230000071,
         "examples": {
           "判 FIX": [
             [
@@ -11527,7 +11526,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.992,
-        "ms": 8.153727941999989,
+        "ms": 7.291413063999926,
         "examples": {
           "判 FIX": [
             [
@@ -11606,7 +11605,7 @@
         },
         "median_error_m": 9.116877369691505,
         "within_500m": 0.923,
-        "ms": 6.414459155000031,
+        "ms": 6.595306703999995,
         "examples": {
           "判 FIX": [
             [
@@ -11707,7 +11706,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.994,
-        "ms": 6.535482978999994,
+        "ms": 6.653204152999933,
         "examples": {
           "判 FIX": [
             [
@@ -11786,7 +11785,7 @@
         },
         "median_error_m": 9.03884129951613,
         "within_500m": 0.94,
-        "ms": 14.028653844999951,
+        "ms": 13.745800063999923,
         "examples": {
           "判 FIX": [
             [
@@ -11887,7 +11886,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.995,
-        "ms": 13.38978302999999,
+        "ms": 12.703130080999927,
         "examples": {
           "判 FIX": [
             [
@@ -11968,7 +11967,7 @@
         },
         "median_error_m": 13.577651851576388,
         "within_500m": 0.924,
-        "ms": 3.887283231999959,
+        "ms": 3.774499072000026,
         "examples": {
           "错误建议": [
             [
@@ -12069,7 +12068,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.984,
-        "ms": 3.357655457000021,
+        "ms": 3.0830730420000236,
         "examples": {
           "判 FIX": [
             [
@@ -12156,7 +12155,7 @@
         },
         "median_error_m": 17.86657829422911,
         "within_500m": 0.801,
-        "ms": 2.789183505999972,
+        "ms": 2.6626914629998737,
         "examples": {
           "错误建议": [
             [
@@ -12258,7 +12257,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.983,
-        "ms": 2.7250766039999803,
+        "ms": 2.737283882000156,
         "examples": {
           "判 FIX": [
             [
@@ -12337,7 +12336,7 @@
         },
         "median_error_m": 13.65384952698264,
         "within_500m": 0.918,
-        "ms": 5.861381547000009,
+        "ms": 5.797608295999908,
         "examples": {
           "错误建议": [
             [
@@ -12438,7 +12437,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.989,
-        "ms": 5.206425807000016,
+        "ms": 5.116015005000008,
         "examples": {
           "判 FIX": [
             [
@@ -12527,7 +12526,7 @@
         },
         "median_error_m": 9.123946889045579,
         "within_500m": 0.962,
-        "ms": 2.1069697870000255,
+        "ms": 1.9567457880000347,
         "examples": {
           "错误建议": [
             [
@@ -12630,7 +12629,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.939,
-        "ms": 5.47972087200003,
+        "ms": 4.4518030009999165,
         "examples": {
           "判 FIX": [
             [
@@ -12723,7 +12722,7 @@
         },
         "median_error_m": 9.207994234316034,
         "within_500m": 0.955,
-        "ms": 3.5955008569999904,
+        "ms": 1.9226321629998893,
         "examples": {
           "错误建议": [
             [
@@ -12826,7 +12825,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.979,
-        "ms": 3.0187239960000056,
+        "ms": 2.8705390719999286,
         "examples": {
           "错误建议": [
             [
@@ -12931,7 +12930,7 @@
         },
         "median_error_m": 9.102279824504647,
         "within_500m": 0.963,
-        "ms": 3.5573353319999796,
+        "ms": 3.28879884700018,
         "examples": {
           "错误建议": [
             [
@@ -13034,7 +13033,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.982,
-        "ms": 7.012353130000009,
+        "ms": 6.786668269000074,
         "examples": {
           "错误建议": [
             [
@@ -13135,7 +13134,7 @@
         },
         "median_error_m": 12.579098457851334,
         "within_500m": 0.934,
-        "ms": 3.7409551119999946,
+        "ms": 3.4479023880001023,
         "examples": {
           "静默错误": [
             [
@@ -13238,7 +13237,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.971,
-        "ms": 5.134725665000019,
+        "ms": 4.197264144999963,
         "examples": {
           "判 FIX": [
             [
@@ -13343,7 +13342,7 @@
         },
         "median_error_m": 12.924086151199301,
         "within_500m": 0.905,
-        "ms": 3.437164658000029,
+        "ms": 2.955872860999989,
         "examples": {
           "静默错误": [
             [
@@ -13444,7 +13443,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.995,
-        "ms": 3.8142520029999787,
+        "ms": 4.002032042999872,
         "examples": {
           "判 FIX": [
             [
@@ -13537,7 +13536,7 @@
         },
         "median_error_m": 12.29040067052188,
         "within_500m": 0.936,
-        "ms": 5.943105114000047,
+        "ms": 5.718305532999921,
         "examples": {
           "静默错误": [
             [
@@ -13638,7 +13637,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.993,
-        "ms": 8.465126424000006,
+        "ms": 8.016077701000086,
         "examples": {
           "判 FIX": [
             [
@@ -13745,7 +13744,7 @@
         },
         "median_error_m": 4.395591958270545,
         "within_500m": 0.951,
-        "ms": 4.9360006549999875,
+        "ms": 3.5723964449998675,
         "examples": {
           "错误建议": [
             [
@@ -13848,7 +13847,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.912,
-        "ms": 2.705550394999989,
+        "ms": 2.436761090000118,
         "examples": {
           "判 FIX": [
             [
@@ -13937,8 +13936,8 @@
         "outcomes": {
           "正确·直接通过": 0.821,
           "正确·要求确认": 0.076,
-          "判 FIX·片区对": 0.027,
-          "判 FIX": 0.021,
+          "判 FIX·片区对": 0.026,
+          "判 FIX": 0.022,
           "错误建议": 0.044,
           "静默错误": 0.011
         },
@@ -13947,13 +13946,13 @@
         "granularity": {
           "PREMISE": 0.905,
           "PREMISE_PROXIMITY": 0.032,
-          "LOCALITY": 0.029,
-          "ROUTE": 0.026,
+          "LOCALITY": 0.028,
+          "ROUTE": 0.027,
           "OTHER": 0.008
         },
         "median_error_m": 4.672567224597568,
         "within_500m": 0.92,
-        "ms": 2.436510295000005,
+        "ms": 2.34911519100001,
         "examples": {
           "判 FIX": [
             [
@@ -14055,7 +14054,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.963,
-        "ms": 1.8029488539999647,
+        "ms": 1.885192619999998,
         "examples": {
           "错误建议": [
             [
@@ -14134,7 +14133,7 @@
         },
         "median_error_m": 4.395591958270545,
         "within_500m": 0.952,
-        "ms": 5.369275074999961,
+        "ms": 5.078267484999969,
         "examples": {
           "判 FIX": [
             [
@@ -14236,7 +14235,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.956,
-        "ms": 4.086123825000016,
+        "ms": 4.123803104999979,
         "examples": {
           "错误建议": [
             [
@@ -14325,7 +14324,7 @@
         },
         "median_error_m": 11.397889343505412,
         "within_500m": 0.932,
-        "ms": 5.498625103999984,
+        "ms": 4.093609543999946,
         "examples": {
           "判 FIX": [
             [
@@ -14426,7 +14425,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.972,
-        "ms": 3.7583406090000153,
+        "ms": 3.6641561709998314,
         "examples": {
           "静默错误": [
             [
@@ -14531,7 +14530,7 @@
         },
         "median_error_m": 13.078936511717917,
         "within_500m": 0.899,
-        "ms": 3.321147747999987,
+        "ms": 3.0032287739998083,
         "examples": {
           "判 FIX": [
             [
@@ -14617,23 +14616,23 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.847,
-          "正确·要求确认": 0.093,
+          "正确·要求确认": 0.094,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.05,
-          "错误建议": 0.009,
+          "错误建议": 0.008,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.001,
-        "wrong_over_1km": 0.007,
+        "wrong_over_1km": 0.006,
         "granularity": {
-          "PREMISE": 0.943,
-          "ROUTE": 0.053,
+          "PREMISE": 0.944,
+          "ROUTE": 0.052,
           "PREMISE_PROXIMITY": 0.003,
           "LOCALITY": 0.001
         },
         "median_error_m": 0.0,
-        "within_500m": 0.987,
-        "ms": 3.032568462000029,
+        "within_500m": 0.988,
+        "ms": 3.0502254190000713,
         "examples": {
           "判 FIX": [
             [
@@ -14720,7 +14719,7 @@
         },
         "median_error_m": 11.080271805127756,
         "within_500m": 0.945,
-        "ms": 5.770041775999971,
+        "ms": 5.895548555999994,
         "examples": {
           "判 FIX": [
             [
@@ -14806,22 +14805,22 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.88,
-          "正确·要求确认": 0.058,
+          "正确·要求确认": 0.059,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.048,
-          "错误建议": 0.009,
+          "错误建议": 0.008,
           "静默错误": 0.005
         },
         "silent_over_1km": 0.001,
-        "wrong_over_1km": 0.006,
+        "wrong_over_1km": 0.005,
         "granularity": {
-          "PREMISE": 0.946,
-          "ROUTE": 0.051,
+          "PREMISE": 0.947,
+          "ROUTE": 0.05,
           "PREMISE_PROXIMITY": 0.003
         },
         "median_error_m": 0.0,
-        "within_500m": 0.989,
-        "ms": 6.434072329999991,
+        "within_500m": 0.99,
+        "ms": 6.01082026500012,
         "examples": {
           "静默错误": [
             [
@@ -14921,14 +14920,14 @@
         "wrong_over_1km": 0.061,
         "granularity": {
           "PREMISE_PROXIMITY": 0.422,
-          "PREMISE": 0.355,
+          "PREMISE": 0.356,
           "ROUTE": 0.192,
-          "LOCALITY": 0.025,
+          "LOCALITY": 0.024,
           "OTHER": 0.006
         },
         "median_error_m": 25.07110498594888,
         "within_500m": 0.869,
-        "ms": 6.1764973639999985,
+        "ms": 5.638137474999894,
         "examples": {
           "判 FIX": [
             [
@@ -15030,7 +15029,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.964,
-        "ms": 8.138468845999967,
+        "ms": 5.208883803999925,
         "examples": {
           "错误建议": [
             [
@@ -15130,12 +15129,12 @@
           "PREMISE_PROXIMITY": 0.409,
           "PREMISE": 0.25,
           "ROUTE": 0.209,
-          "LOCALITY": 0.071,
-          "OTHER": 0.061
+          "LOCALITY": 0.07,
+          "OTHER": 0.062
         },
-        "median_error_m": 28.533556900001575,
+        "median_error_m": 28.451768042257473,
         "within_500m": 0.827,
-        "ms": 3.627979630000027,
+        "ms": 3.5612147730000743,
         "examples": {
           "错误建议": [
             [
@@ -15237,7 +15236,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.985,
-        "ms": 2.7588838259999875,
+        "ms": 2.7469106670000656,
         "examples": {
           "判 FIX": [
             [
@@ -15335,14 +15334,14 @@
         "wrong_over_1km": 0.059,
         "granularity": {
           "PREMISE_PROXIMITY": 0.422,
-          "PREMISE": 0.362,
+          "PREMISE": 0.363,
           "ROUTE": 0.187,
-          "LOCALITY": 0.023,
+          "LOCALITY": 0.022,
           "OTHER": 0.006
         },
         "median_error_m": 24.949156101129986,
         "within_500m": 0.87,
-        "ms": 7.251456742000017,
+        "ms": 7.559319642999981,
         "examples": {
           "判 FIX": [
             [
@@ -15443,7 +15442,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.986,
-        "ms": 6.908685043999981,
+        "ms": 6.767915848999792,
         "examples": {
           "错误建议": [
             [
@@ -15550,7 +15549,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.954,
-        "ms": 2.9587561759999517,
+        "ms": 2.359803850000162,
         "examples": {
           "静默错误": [
             [
@@ -15653,7 +15652,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.984,
-        "ms": 3.6914667469999927,
+        "ms": 3.2983922169999005,
         "examples": {
           "错误建议": [
             [
@@ -15758,7 +15757,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.94,
-        "ms": 2.1447033840000245,
+        "ms": 1.9219710380000379,
         "examples": {
           "静默错误": [
             [
@@ -15859,7 +15858,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.998,
-        "ms": 2.966359659000034,
+        "ms": 3.058524762000161,
         "examples": {
           "判 FIX": [
             [
@@ -15932,7 +15931,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.954,
-        "ms": 3.818272424999975,
+        "ms": 4.075044279999929,
         "examples": {
           "静默错误": [
             [
@@ -16033,7 +16032,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.998,
-        "ms": 5.943585262999988,
+        "ms": 6.163108286999886,
         "examples": {
           "静默错误": [
             [
@@ -16140,7 +16139,7 @@
         },
         "median_error_m": 15.654320284984287,
         "within_500m": 0.942,
-        "ms": 2.7415192180000076,
+        "ms": 2.0624776670001665,
         "examples": {
           "静默错误": [
             [
@@ -16243,7 +16242,7 @@
         },
         "median_error_m": 72.33583768750849,
         "within_500m": 0.934,
-        "ms": 3.0330283359999726,
+        "ms": 2.7304996980001306,
         "examples": {
           "错误建议": [
             [
@@ -16323,14 +16322,14 @@
         "wrong_over_1km": 0.015,
         "granularity": {
           "PREMISE": 0.677,
-          "PREMISE_PROXIMITY": 0.191,
-          "ROUTE": 0.08,
+          "PREMISE_PROXIMITY": 0.19,
+          "ROUTE": 0.081,
           "OTHER": 0.031,
           "LOCALITY": 0.021
         },
         "median_error_m": 15.228573953866748,
         "within_500m": 0.919,
-        "ms": 1.9351876350000339,
+        "ms": 1.947256298999946,
         "examples": {
           "判 FIX": [
             [
@@ -16432,7 +16431,7 @@
         },
         "median_error_m": 69.30846762028835,
         "within_500m": 0.947,
-        "ms": 2.108633451000003,
+        "ms": 2.376593137999862,
         "examples": {
           "错误建议": [
             [
@@ -16493,7 +16492,7 @@
         },
         "median_error_m": 15.608793975008332,
         "within_500m": 0.943,
-        "ms": 3.299691696000025,
+        "ms": 3.2777825589998884,
         "examples": {
           "静默错误": [
             [
@@ -16594,7 +16593,7 @@
         },
         "median_error_m": 71.84558859668599,
         "within_500m": 0.944,
-        "ms": 4.499104875999991,
+        "ms": 4.179575354999997,
         "examples": {
           "错误建议": [
             [
@@ -16657,7 +16656,7 @@
         },
         "median_error_m": 14.703056120850421,
         "within_500m": 0.96,
-        "ms": 2.6860429410000393,
+        "ms": 2.010499195999955,
         "examples": {
           "错误建议": [
             [
@@ -16758,7 +16757,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.989,
-        "ms": 2.774827731999949,
+        "ms": 2.218644585999982,
         "examples": {
           "判 FIX": [
             [
@@ -16837,7 +16836,7 @@
         },
         "median_error_m": 14.849563352047095,
         "within_500m": 0.946,
-        "ms": 1.878369025999973,
+        "ms": 1.8378812329999619,
         "examples": {
           "错误建议": [
             [
@@ -16937,7 +16936,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.997,
-        "ms": 1.730226492999975,
+        "ms": 1.868962406000037,
         "examples": {
           "判 FIX": [
             [
@@ -17004,7 +17003,7 @@
         },
         "median_error_m": 14.703056120850421,
         "within_500m": 0.96,
-        "ms": 3.0121350630000165,
+        "ms": 3.075247562999948,
         "examples": {
           "错误建议": [
             [
@@ -17104,7 +17103,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.997,
-        "ms": 3.626434432999986,
+        "ms": 3.190518054999984,
         "examples": {
           "判 FIX": [
             [
@@ -17173,7 +17172,7 @@
         },
         "median_error_m": 25.231319390088622,
         "within_500m": 0.964,
-        "ms": 3.3299264809999727,
+        "ms": 1.8507137629999306,
         "examples": {
           "判 FIX": [
             [
@@ -17275,7 +17274,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.988,
-        "ms": 2.063921956999991,
+        "ms": 2.01516082299986,
         "examples": {
           "判 FIX": [
             [
@@ -17362,7 +17361,7 @@
         },
         "median_error_m": 26.842232777701117,
         "within_500m": 0.933,
-        "ms": 2.471565188999989,
+        "ms": 1.6793819580000218,
         "examples": {
           "错误建议": [
             [
@@ -17462,7 +17461,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.999,
-        "ms": 1.7389910859999986,
+        "ms": 1.6150992169998517,
         "examples": {
           "判 FIX": [
             [
@@ -17523,7 +17522,7 @@
         },
         "median_error_m": 24.52159668161572,
         "within_500m": 0.962,
-        "ms": 2.9230563649999795,
+        "ms": 3.1324841780001407,
         "examples": {
           "判 FIX": [
             [
@@ -17623,7 +17622,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.999,
-        "ms": 3.132409112000005,
+        "ms": 3.173910388000195,
         "examples": {
           "判 FIX": [
             [
@@ -17694,7 +17693,7 @@
         },
         "median_error_m": 28.450513078684754,
         "within_500m": 0.955,
-        "ms": 3.9932326619999685,
+        "ms": 2.305535652999879,
         "examples": {
           "静默错误": [
             [
@@ -17780,14 +17779,14 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.827,
-          "正确·要求确认": 0.075,
+          "正确·要求确认": 0.076,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.049,
-          "错误建议": 0.035,
+          "错误建议": 0.034,
           "静默错误": 0.014
         },
         "silent_over_1km": 0.002,
-        "wrong_over_1km": 0.02,
+        "wrong_over_1km": 0.019,
         "granularity": {
           "PREMISE": 0.932,
           "ROUTE": 0.036,
@@ -17796,8 +17795,8 @@
           "OTHER": 0.002
         },
         "median_error_m": 1.8364453863191477,
-        "within_500m": 0.961,
-        "ms": 2.4040594510000233,
+        "within_500m": 0.962,
+        "ms": 2.194864237999809,
         "examples": {
           "判 FIX": [
             [
@@ -17902,7 +17901,7 @@
         },
         "median_error_m": 31.237706729907444,
         "within_500m": 0.924,
-        "ms": 2.1694126979999737,
+        "ms": 1.7763346700000966,
         "examples": {
           "静默错误": [
             [
@@ -17988,14 +17987,14 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.836,
-          "正确·要求确认": 0.077,
+          "正确·要求确认": 0.078,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.06,
-          "错误建议": 0.022,
+          "错误建议": 0.021,
           "静默错误": 0.005
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.016,
+        "wrong_over_1km": 0.015,
         "granularity": {
           "PREMISE": 0.935,
           "ROUTE": 0.05,
@@ -18003,8 +18002,8 @@
           "PREMISE_PROXIMITY": 0.004
         },
         "median_error_m": 0.0,
-        "within_500m": 0.974,
-        "ms": 1.6558318440000335,
+        "within_500m": 0.975,
+        "ms": 1.5894732719998501,
         "examples": {
           "判 FIX": [
             [
@@ -18109,7 +18108,7 @@
         },
         "median_error_m": 28.494011505275587,
         "within_500m": 0.955,
-        "ms": 3.5036757650000254,
+        "ms": 3.6885667200001535,
         "examples": {
           "静默错误": [
             [
@@ -18195,14 +18194,14 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.829,
-          "正确·要求确认": 0.088,
+          "正确·要求确认": 0.089,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.042,
-          "错误建议": 0.028,
+          "错误建议": 0.027,
           "静默错误": 0.013
         },
         "silent_over_1km": 0.001,
-        "wrong_over_1km": 0.018,
+        "wrong_over_1km": 0.017,
         "granularity": {
           "PREMISE": 0.945,
           "ROUTE": 0.037,
@@ -18210,8 +18209,8 @@
           "LOCALITY": 0.007
         },
         "median_error_m": 0.8754166081502296,
-        "within_500m": 0.973,
-        "ms": 3.3269851289999792,
+        "within_500m": 0.974,
+        "ms": 3.475322686000027,
         "examples": {
           "判 FIX": [
             [
@@ -18318,7 +18317,7 @@
         },
         "median_error_m": 22.479836559163655,
         "within_500m": 0.893,
-        "ms": 2.883734606999951,
+        "ms": 2.376614557000039,
         "examples": {
           "错误建议": [
             [
@@ -18419,7 +18418,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.983,
-        "ms": 3.267020503000026,
+        "ms": 2.795364667000058,
         "examples": {
           "静默错误": [
             [
@@ -18524,7 +18523,7 @@
         },
         "median_error_m": 24.362787872546576,
         "within_500m": 0.823,
-        "ms": 1.951134015999969,
+        "ms": 1.5734255249999478,
         "examples": {
           "错误建议": [
             [
@@ -18625,7 +18624,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.975,
-        "ms": 2.4680602009999575,
+        "ms": 2.4502347820000523,
         "examples": {
           "静默错误": [
             [
@@ -18730,7 +18729,7 @@
         },
         "median_error_m": 22.48154545716294,
         "within_500m": 0.892,
-        "ms": 3.367940252999915,
+        "ms": 3.380958454000165,
         "examples": {
           "错误建议": [
             [
@@ -18831,7 +18830,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.986,
-        "ms": 4.769856425000057,
+        "ms": 4.42304500299997,
         "examples": {
           "静默错误": [
             [
@@ -18938,7 +18937,7 @@
         },
         "median_error_m": 22.72808148506476,
         "within_500m": 0.957,
-        "ms": 2.344339945999991,
+        "ms": 2.4269445499999165,
         "examples": {
           "静默错误": [
             [
@@ -19038,7 +19037,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.979,
-        "ms": 2.7692077410000024,
+        "ms": 2.714976598999783,
         "examples": {
           "判 FIX": [
             [
@@ -19143,7 +19142,7 @@
         },
         "median_error_m": 23.713374719589808,
         "within_500m": 0.88,
-        "ms": 1.5754988659999754,
+        "ms": 1.4221681199999239,
         "examples": {
           "判 FIX": [
             [
@@ -19243,7 +19242,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.993,
-        "ms": 2.2934510380000006,
+        "ms": 2.1624776390001443,
         "examples": {
           "判 FIX": [
             [
@@ -19322,7 +19321,7 @@
         },
         "median_error_m": 22.604408280850116,
         "within_500m": 0.96,
-        "ms": 3.442884585999991,
+        "ms": 3.262580584000034,
         "examples": {
           "静默错误": [
             [
@@ -19422,7 +19421,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.99,
-        "ms": 4.031565741999998,
+        "ms": 3.8702461989998937,
         "examples": {
           "判 FIX": [
             [
@@ -19529,7 +19528,7 @@
         },
         "median_error_m": 20.78467584441041,
         "within_500m": 0.935,
-        "ms": 2.9415049920000342,
+        "ms": 2.916205667999975,
         "examples": {
           "错误建议": [
             [
@@ -19632,7 +19631,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.974,
-        "ms": 3.1393084430000044,
+        "ms": 2.98342829000012,
         "examples": {
           "判 FIX": [
             [
@@ -19731,7 +19730,7 @@
         },
         "median_error_m": 25.763865847206205,
         "within_500m": 0.877,
-        "ms": 2.233902725000007,
+        "ms": 2.391240390999883,
         "examples": {
           "错误建议": [
             [
@@ -19833,7 +19832,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.988,
-        "ms": 2.196786734999989,
+        "ms": 2.0932549039998776,
         "examples": {
           "判 FIX": [
             [
@@ -19912,7 +19911,7 @@
         },
         "median_error_m": 19.720666293057594,
         "within_500m": 0.939,
-        "ms": 4.232393042999946,
+        "ms": 4.066267881000158,
         "examples": {
           "错误建议": [
             [
@@ -20013,7 +20012,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.988,
-        "ms": 4.403837484000064,
+        "ms": 4.4881558740000855,
         "examples": {
           "判 FIX": [
             [
@@ -20108,7 +20107,7 @@
         },
         "median_error_m": 11.666193275094319,
         "within_500m": 0.939,
-        "ms": 3.1808197850000397,
+        "ms": 2.3034743420000723,
         "examples": {
           "判 FIX": [
             [
@@ -20209,7 +20208,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.991,
-        "ms": 3.0927892290000045,
+        "ms": 2.9691927769999893,
         "examples": {
           "判 FIX": [
             [
@@ -20296,7 +20295,7 @@
         },
         "median_error_m": 12.06771917280039,
         "within_500m": 0.914,
-        "ms": 2.1063517070000444,
+        "ms": 2.068785521999871,
         "examples": {
           "判 FIX": [
             [
@@ -20397,7 +20396,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.998,
-        "ms": 2.736232555000015,
+        "ms": 2.62603234900007,
         "examples": {
           "判 FIX": [
             [
@@ -20466,7 +20465,7 @@
         },
         "median_error_m": 11.70386288223302,
         "within_500m": 0.939,
-        "ms": 4.0515508299999965,
+        "ms": 4.1748144160001175,
         "examples": {
           "判 FIX": [
             [
@@ -20566,7 +20565,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.999,
-        "ms": 5.241862089999927,
+        "ms": 4.942988608000178,
         "examples": {
           "判 FIX": [
             [
@@ -20637,7 +20636,7 @@
         },
         "median_error_m": 17.592796079063305,
         "within_500m": 0.951,
-        "ms": 3.054142043000013,
+        "ms": 2.282862638000097,
         "examples": {
           "判 FIX": [
             [
@@ -20740,7 +20739,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.981,
-        "ms": 2.303659077999953,
+        "ms": 2.5808122119999553,
         "examples": {
           "判 FIX": [
             [
@@ -20819,7 +20818,7 @@
         },
         "median_error_m": 18.314208958222885,
         "within_500m": 0.914,
-        "ms": 1.8832896160000132,
+        "ms": 1.9626875480000763,
         "examples": {
           "判 FIX": [
             [
@@ -20921,7 +20920,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.992,
-        "ms": 2.1393278580000015,
+        "ms": 2.1003089719999934,
         "examples": {
           "判 FIX": [
             [
@@ -20994,7 +20993,7 @@
         },
         "median_error_m": 17.583274426739468,
         "within_500m": 0.95,
-        "ms": 3.4119947049999837,
+        "ms": 3.515403623000111,
         "examples": {
           "判 FIX": [
             [
@@ -21096,7 +21095,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.991,
-        "ms": 3.965538734000006,
+        "ms": 4.049317672999905,
         "examples": {
           "判 FIX": [
             [
@@ -21177,7 +21176,7 @@
         },
         "median_error_m": 24.376767584588332,
         "within_500m": 0.923,
-        "ms": 6.252239969000016,
+        "ms": 2.3416629559999365,
         "examples": {
           "错误建议": [
             [
@@ -21263,14 +21262,14 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.225,
-          "正确·要求确认": 0.715,
+          "正确·要求确认": 0.716,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.008,
-          "错误建议": 0.051,
+          "错误建议": 0.05,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.043,
+        "wrong_over_1km": 0.042,
         "granularity": {
           "ROUTE": 0.681,
           "PREMISE_PROXIMITY": 0.17,
@@ -21278,8 +21277,8 @@
           "LOCALITY": 0.008
         },
         "median_error_m": 108.6126975436699,
-        "within_500m": 0.902,
-        "ms": 3.7067399479999494,
+        "within_500m": 0.903,
+        "ms": 3.036209706999898,
         "examples": {
           "错误建议": [
             [
@@ -21301,10 +21300,10 @@
               "Előd utca 17, 1192 XIX. kerület"
             ],
             [
-              "Szefű u. 46, XIX. kerület",
+              "Waiznergasse, Göncz Árpád városközpont, Budapest 1139, Budapest",
               "CONFIRM",
               "ROUTE",
-              "Szegfű utca 46, XX. kerület"
+              "Váci út, 1139 Göncz Árpád városközpont"
             ]
           ],
           "判 FIX": [
@@ -21366,7 +21365,7 @@
         },
         "median_error_m": 24.376767584588332,
         "within_500m": 0.914,
-        "ms": 2.029985599999918,
+        "ms": 2.118254224000111,
         "examples": {
           "判 FIX": [
             [
@@ -21468,7 +21467,7 @@
         },
         "median_error_m": 102.3408078032445,
         "within_500m": 0.907,
-        "ms": 2.4016417860000274,
+        "ms": 2.5364520470000116,
         "examples": {
           "错误建议": [
             [
@@ -21547,7 +21546,7 @@
         },
         "median_error_m": 24.24774008892023,
         "within_500m": 0.926,
-        "ms": 3.8446282929999143,
+        "ms": 4.128095937000126,
         "examples": {
           "错误建议": [
             [
@@ -21633,22 +21632,22 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.234,
-          "正确·要求确认": 0.715,
+          "正确·要求确认": 0.716,
           "判 FIX·片区对": 0.0,
           "判 FIX": 0.0,
-          "错误建议": 0.05,
+          "错误建议": 0.049,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.0,
-        "wrong_over_1km": 0.044,
+        "wrong_over_1km": 0.043,
         "granularity": {
           "ROUTE": 0.672,
           "PREMISE_PROXIMITY": 0.185,
           "PREMISE": 0.143
         },
         "median_error_m": 108.8460448483053,
-        "within_500m": 0.908,
-        "ms": 4.820782540999971,
+        "within_500m": 0.909,
+        "ms": 4.734565255000007,
         "examples": {
           "错误建议": [
             [
@@ -21670,10 +21669,10 @@
               "Előd utca 17, 1192 XIX. kerület"
             ],
             [
-              "Szefű u. 46, XIX. kerület",
+              "Waiznergasse, Göncz Árpád városközpont, Budapest 1139, Budapest",
               "CONFIRM",
               "ROUTE",
-              "Szegfű utca 46, XX. kerület"
+              "Váci út, 1139 Göncz Árpád városközpont"
             ]
           ],
           "静默错误": [
@@ -21711,7 +21710,7 @@
         },
         "median_error_m": 15.210558411570481,
         "within_500m": 0.8728260869565218,
-        "ms": 5.5057762586956285,
+        "ms": 4.823214298913014,
         "examples": {
           "静默错误": [
             [
@@ -21813,7 +21812,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.966,
-        "ms": 6.952484185999992,
+        "ms": 6.4943532830000095,
         "examples": {
           "判 FIX": [
             [
@@ -21918,7 +21917,7 @@
         },
         "median_error_m": 15.247855770569082,
         "within_500m": 0.8554347826086957,
-        "ms": 4.796218376086892,
+        "ms": 4.820008991304516,
         "examples": {
           "静默错误": [
             [
@@ -22018,7 +22017,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.994,
-        "ms": 6.6384524960000135,
+        "ms": 6.345684004000077,
         "examples": {
           "判 FIX": [
             [
@@ -22093,7 +22092,7 @@
         },
         "median_error_m": 15.103748341564954,
         "within_500m": 0.8782608695652174,
-        "ms": 9.21428550000003,
+        "ms": 9.01743491630436,
         "examples": {
           "静默错误": [
             [
@@ -22193,7 +22192,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.988,
-        "ms": 12.302612124999996,
+        "ms": 12.348599669999885,
         "examples": {
           "判 FIX": [
             [
@@ -22293,7 +22292,7 @@
         },
         "median_error_m": 12.004950045013263,
         "within_500m": 0.942,
-        "ms": 7.107948572000055,
+        "ms": 7.025103632000082,
         "examples": {
           "错误建议": [
             [
@@ -22395,7 +22394,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.989,
-        "ms": 3.6881138129999727,
+        "ms": 3.847368338000024,
         "examples": {
           "静默错误": [
             [
@@ -22482,7 +22481,7 @@
         },
         "median_error_m": 11.673298019700432,
         "within_500m": 0.885,
-        "ms": 3.1236403899999914,
+        "ms": 1.7202874930001144,
         "examples": {
           "错误建议": [
             [
@@ -22584,7 +22583,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.995,
-        "ms": 3.346915997999986,
+        "ms": 3.4760281950000262,
         "examples": {
           "静默错误": [
             [
@@ -22688,7 +22687,7 @@
         },
         "median_error_m": 12.004950045013263,
         "within_500m": 0.946,
-        "ms": 8.27666017900003,
+        "ms": 7.91030233399988,
         "examples": {
           "错误建议": [
             [
@@ -22789,7 +22788,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.998,
-        "ms": 7.20768250499998,
+        "ms": 6.649916561000055,
         "examples": {
           "静默错误": [
             [
@@ -22866,7 +22865,7 @@
         },
         "median_error_m": 25.30474896881611,
         "within_500m": 0.844,
-        "ms": 3.690744708000011,
+        "ms": 3.3006886450000366,
         "examples": {
           "错误建议": [
             [
@@ -22969,7 +22968,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.96,
-        "ms": 1.71245400600003,
+        "ms": 1.539497438999888,
         "examples": {
           "判 FIX": [
             [
@@ -23068,7 +23067,7 @@
         },
         "median_error_m": 27.775119193770514,
         "within_500m": 0.811,
-        "ms": 2.7102209079999966,
+        "ms": 2.834439950999922,
         "examples": {
           "判 FIX": [
             [
@@ -23171,7 +23170,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.97,
-        "ms": 1.2693494229999942,
+        "ms": 1.242678984999884,
         "examples": {
           "错误建议": [
             [
@@ -23270,7 +23269,7 @@
         },
         "median_error_m": 24.564625458467177,
         "within_500m": 0.849,
-        "ms": 5.155317759000013,
+        "ms": 5.251817158999984,
         "examples": {
           "错误建议": [
             [
@@ -23372,7 +23371,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.97,
-        "ms": 2.4429845200000955,
+        "ms": 2.423300905999895,
         "examples": {
           "错误建议": [
             [
@@ -23467,13 +23466,13 @@
         "granularity": {
           "PREMISE": 0.773,
           "PREMISE_PROXIMITY": 0.138,
-          "ROUTE": 0.063,
-          "LOCALITY": 0.02,
+          "ROUTE": 0.064,
+          "LOCALITY": 0.019,
           "OTHER": 0.006
         },
         "median_error_m": 19.226114634874698,
         "within_500m": 0.913,
-        "ms": 3.185629304000031,
+        "ms": 3.158999040999788,
         "examples": {
           "错误建议": [
             [
@@ -23576,7 +23575,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.976,
-        "ms": 1.6840797319999865,
+        "ms": 1.8806730320000042,
         "examples": {
           "错误建议": [
             [
@@ -23675,13 +23674,13 @@
         "granularity": {
           "PREMISE": 0.754,
           "PREMISE_PROXIMITY": 0.131,
-          "ROUTE": 0.064,
-          "LOCALITY": 0.041,
+          "ROUTE": 0.065,
+          "LOCALITY": 0.04,
           "OTHER": 0.01
         },
         "median_error_m": 19.60233966734757,
         "within_500m": 0.89,
-        "ms": 2.587801548000016,
+        "ms": 2.6979541329999392,
         "examples": {
           "判 FIX": [
             [
@@ -23784,7 +23783,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.987,
-        "ms": 1.3098043459999644,
+        "ms": 1.4836835860000974,
         "examples": {
           "错误建议": [
             [
@@ -23883,13 +23882,13 @@
         "granularity": {
           "PREMISE": 0.785,
           "PREMISE_PROXIMITY": 0.137,
-          "ROUTE": 0.055,
-          "LOCALITY": 0.017,
+          "ROUTE": 0.056,
+          "LOCALITY": 0.016,
           "OTHER": 0.006
         },
         "median_error_m": 19.063693197235505,
         "within_500m": 0.917,
-        "ms": 4.852478825000048,
+        "ms": 5.415623183999969,
         "examples": {
           "判 FIX": [
             [
@@ -23992,7 +23991,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.986,
-        "ms": 2.6331830950000494,
+        "ms": 2.6520142760000454,
         "examples": {
           "错误建议": [
             [
@@ -24098,7 +24097,7 @@
         },
         "median_error_m": 34.56137772322258,
         "within_500m": 0.945,
-        "ms": 5.245004889000029,
+        "ms": 4.8146806889999425,
         "examples": {
           "静默错误": [
             [
@@ -24188,7 +24187,7 @@
         },
         "median_error_m": 0.0,
         "within_500m": 0.95,
-        "ms": 3.3032698330000585,
+        "ms": 2.958712993000063,
         "examples": {
           "判 FIX": [
             [
@@ -24257,7 +24256,7 @@
         },
         "median_error_m": 53.69845453033498,
         "within_500m": 0.745,
-        "ms": 3.392198293999968,
+        "ms": 3.213227360000019,
         "examples": {
           "判 FIX": [
             [
@@ -24343,23 +24342,23 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.881,
-          "正确·要求确认": 0.025,
+          "正确·要求确认": 0.026,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.091,
+          "判 FIX": 0.09,
           "错误建议": 0.002,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.001,
         "wrong_over_1km": 0.001,
         "granularity": {
-          "PREMISE": 0.909,
+          "PREMISE": 0.91,
           "ROUTE": 0.047,
-          "LOCALITY": 0.04,
+          "LOCALITY": 0.039,
           "OTHER": 0.004
         },
         "median_error_m": 0.0,
-        "within_500m": 0.963,
-        "ms": 2.4832890069999394,
+        "within_500m": 0.964,
+        "ms": 2.399279751999984,
         "examples": {
           "判 FIX": [
             [
@@ -24433,7 +24432,7 @@
         },
         "median_error_m": 34.49971544075983,
         "within_500m": 0.944,
-        "ms": 6.365434187999995,
+        "ms": 5.773443473000043,
         "examples": {
           "静默错误": [
             [
@@ -24519,23 +24518,23 @@
         "n": 1000,
         "outcomes": {
           "正确·直接通过": 0.887,
-          "正确·要求确认": 0.019,
+          "正确·要求确认": 0.02,
           "判 FIX·片区对": 0.0,
-          "判 FIX": 0.091,
+          "判 FIX": 0.09,
           "错误建议": 0.002,
           "静默错误": 0.001
         },
         "silent_over_1km": 0.001,
         "wrong_over_1km": 0.001,
         "granularity": {
-          "PREMISE": 0.909,
+          "PREMISE": 0.91,
           "ROUTE": 0.047,
-          "LOCALITY": 0.04,
+          "LOCALITY": 0.039,
           "OTHER": 0.004
         },
         "median_error_m": 0.0,
-        "within_500m": 0.966,
-        "ms": 4.457262112999956,
+        "within_500m": 0.967,
+        "ms": 4.617289568999922,
         "examples": {
           "判 FIX": [
             [
@@ -24596,23 +24595,23 @@
         "outcomes": {
           "正确·直接通过": 0.109,
           "正确·要求确认": 0.263,
-          "判 FIX·片区对": 0.282,
+          "判 FIX·片区对": 0.281,
           "判 FIX": 0.058,
-          "错误建议": 0.253,
+          "错误建议": 0.254,
           "静默错误": 0.035
         },
         "silent_over_1km": 0.011,
-        "wrong_over_1km": 0.19,
+        "wrong_over_1km": 0.191,
         "granularity": {
-          "ROUTE": 0.515,
-          "LOCALITY": 0.329,
+          "ROUTE": 0.516,
+          "LOCALITY": 0.328,
           "PREMISE_PROXIMITY": 0.138,
           "OTHER": 0.013,
           "PREMISE": 0.005
         },
         "median_error_m": 618.1804938173578,
         "within_500m": 0.417,
-        "ms": 14.087060952000002,
+        "ms": 11.79091808499993,
         "examples": {
           "错误建议": [
             [
@@ -24715,7 +24714,7 @@
         },
         "median_error_m": 130.2275291138652,
         "within_500m": 0.851,
-        "ms": 4.068413310999972,
+        "ms": 4.231725783999991,
         "examples": {
           "判 FIX": [
             [
@@ -24804,23 +24803,23 @@
         "outcomes": {
           "正确·直接通过": 0.036,
           "正确·要求确认": 0.197,
-          "判 FIX·片区对": 0.571,
+          "判 FIX·片区对": 0.57,
           "判 FIX": 0.085,
-          "错误建议": 0.102,
+          "错误建议": 0.103,
           "静默错误": 0.009
         },
         "silent_over_1km": 0.002,
-        "wrong_over_1km": 0.068,
+        "wrong_over_1km": 0.07,
         "granularity": {
-          "LOCALITY": 0.629,
-          "ROUTE": 0.304,
+          "LOCALITY": 0.628,
+          "ROUTE": 0.305,
           "PREMISE_PROXIMITY": 0.037,
           "OTHER": 0.027,
           "PREMISE": 0.003
         },
         "median_error_m": 651.2578489831752,
         "within_500m": 0.38,
-        "ms": 5.169052610999984,
+        "ms": 5.212412961999917,
         "examples": {
           "判 FIX": [
             [
@@ -24923,7 +24922,7 @@
         },
         "median_error_m": 100.93892260082477,
         "within_500m": 0.92,
-        "ms": 3.274588474999973,
+        "ms": 3.4180445739998504,
         "examples": {
           "错误建议": [
             [
@@ -24980,23 +24979,23 @@
         "outcomes": {
           "正确·直接通过": 0.108,
           "正确·要求确认": 0.275,
-          "判 FIX·片区对": 0.262,
+          "判 FIX·片区对": 0.261,
           "判 FIX": 0.054,
-          "错误建议": 0.266,
+          "错误建议": 0.267,
           "静默错误": 0.035
         },
         "silent_over_1km": 0.011,
-        "wrong_over_1km": 0.196,
+        "wrong_over_1km": 0.198,
         "granularity": {
-          "ROUTE": 0.532,
-          "LOCALITY": 0.305,
+          "ROUTE": 0.533,
+          "LOCALITY": 0.304,
           "PREMISE_PROXIMITY": 0.145,
           "OTHER": 0.013,
           "PREMISE": 0.005
         },
         "median_error_m": 604.5573073580382,
         "within_500m": 0.421,
-        "ms": 12.22191199100007,
+        "ms": 12.605400673999839,
         "examples": {
           "错误建议": [
             [
@@ -25097,7 +25096,7 @@
         },
         "median_error_m": 124.54995899139696,
         "within_500m": 0.909,
-        "ms": 6.479616495999949,
+        "ms": 6.774818844000038,
         "examples": {
           "错误建议": [
             [
