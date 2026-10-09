@@ -1107,5 +1107,182 @@
     "bad|ACCEPT|bad": 1
    }
   }
+ },
+ "configs": {
+  "全部": {
+   "只用 geo": {
+    "n": 851,
+    "accept": 851,
+    "accept_ok": 561,
+    "accept_bad": 213,
+    "located_ok": 561,
+    "complete": 558,
+    "standard_ok": 458,
+    "need_pc": 223,
+    "pc_filled": 0
+   },
+   "只用本引擎": {
+    "n": 851,
+    "accept": 73,
+    "accept_ok": 54,
+    "accept_bad": 9,
+    "located_ok": 89,
+    "complete": 86,
+    "standard_ok": 63,
+    "need_pc": 49,
+    "pc_filled": 16
+   },
+   "geo + 核对层（最终方案）": {
+    "n": 851,
+    "accept": 437,
+    "accept_ok": 390,
+    "accept_bad": 14,
+    "located_ok": 546,
+    "complete": 545,
+    "standard_ok": 451,
+    "need_pc": 217,
+    "pc_filled": 2
+   }
+  },
+  "本方案 44 个市场": {
+   "只用 geo": {
+    "n": 573,
+    "accept": 573,
+    "accept_ok": 403,
+    "accept_bad": 128,
+    "located_ok": 403,
+    "complete": 401,
+    "standard_ok": 342,
+    "need_pc": 223,
+    "pc_filled": 0
+   },
+   "只用本引擎": {
+    "n": 573,
+    "accept": 73,
+    "accept_ok": 54,
+    "accept_bad": 9,
+    "located_ok": 89,
+    "complete": 86,
+    "standard_ok": 63,
+    "need_pc": 49,
+    "pc_filled": 16
+   },
+   "geo + 核对层（最终方案）": {
+    "n": 573,
+    "accept": 313,
+    "accept_ok": 290,
+    "accept_bad": 9,
+    "located_ok": 398,
+    "complete": 397,
+    "standard_ok": 340,
+    "need_pc": 217,
+    "pc_filled": 2
+   }
+  },
+  "其中试点城市内": {
+   "只用 geo": {
+    "n": 217,
+    "accept": 217,
+    "accept_ok": 147,
+    "accept_bad": 47,
+    "located_ok": 147,
+    "complete": 146,
+    "standard_ok": 125,
+    "need_pc": 89,
+    "pc_filled": 0
+   },
+   "只用本引擎": {
+    "n": 217,
+    "accept": 73,
+    "accept_ok": 54,
+    "accept_bad": 9,
+    "located_ok": 87,
+    "complete": 86,
+    "standard_ok": 63,
+    "need_pc": 49,
+    "pc_filled": 16
+   },
+   "geo + 核对层（最终方案）": {
+    "n": 217,
+    "accept": 123,
+    "accept_ok": 110,
+    "accept_bad": 5,
+    "located_ok": 161,
+    "complete": 160,
+    "standard_ok": 134,
+    "need_pc": 97,
+    "pc_filled": 2
+   }
+  },
+  "其中试点城市外": {
+   "只用 geo": {
+    "n": 356,
+    "accept": 356,
+    "accept_ok": 256,
+    "accept_bad": 81,
+    "located_ok": 256,
+    "complete": 255,
+    "standard_ok": 217,
+    "need_pc": 134,
+    "pc_filled": 0
+   },
+   "只用本引擎": {
+    "n": 356,
+    "accept": 0,
+    "accept_ok": 0,
+    "accept_bad": 0,
+    "located_ok": 2,
+    "complete": 0,
+    "standard_ok": 0,
+    "need_pc": 0,
+    "pc_filled": 0
+   },
+   "geo + 核对层（最终方案）": {
+    "n": 356,
+    "accept": 190,
+    "accept_ok": 180,
+    "accept_bad": 4,
+    "located_ok": 237,
+    "complete": 237,
+    "standard_ok": 206,
+    "need_pc": 120,
+    "pc_filled": 0
+   }
+  },
+  "没有参考库的国家": {
+   "只用 geo": {
+    "n": 278,
+    "accept": 278,
+    "accept_ok": 158,
+    "accept_bad": 85,
+    "located_ok": 158,
+    "complete": 157,
+    "standard_ok": 116,
+    "need_pc": 0,
+    "pc_filled": 0
+   },
+   "只用本引擎": {
+    "n": 278,
+    "accept": 0,
+    "accept_ok": 0,
+    "accept_bad": 0,
+    "located_ok": 0,
+    "complete": 0,
+    "standard_ok": 0,
+    "need_pc": 0,
+    "pc_filled": 0
+   },
+   "geo + 核对层（最终方案）": {
+    "n": 278,
+    "accept": 124,
+    "accept_ok": 100,
+    "accept_bad": 5,
+    "located_ok": 148,
+    "complete": 148,
+    "standard_ok": 111,
+    "need_pc": 0,
+    "pc_filled": 0
+   }
+  }
  }
 }

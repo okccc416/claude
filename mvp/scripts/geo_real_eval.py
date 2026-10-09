@@ -43,6 +43,48 @@ def label(lat, lng, truth) -> str:
     return "ok" if d <= OK_M else "bad" if d > BAD_M else "near"
 
 
+def target_fields(addr: str) -> tuple[str, str]:
+    """库内目标门址（"26, R. Padre Sena de Freitas, 里斯本, 里斯本, 葡萄牙"）-> (门牌, 路名)。"""
+    parts = [x.strip() for x in addr.split(",")]
+    return (parts[0], parts[1]) if len(parts) >= 2 else ("", "")
+
+
+def fields_of_geo(g) -> dict:
+    if g is None:
+        return {}
+    return {"street": g.route, "number": g.number, "postcode": g.postal_code,
+            "locality": g.localities[0] if g.localities else ""}
+
+
+def fields_of(res) -> dict:
+    """结论里输出的标准地址字段（本方案的 Result；没有参考库的国家是 FreeResult，字段来自核对过的 geo 门址）。"""
+    if res is None or res.lat is None:
+        return {}
+    if hasattr(res, "components"):
+        c = res.components
+        return {"street": c.get("route", {}).get("text", ""), "number": c.get("street_number", {}).get("text", ""),
+                "postcode": c.get("postal_code", {}).get("text", ""), "locality": c.get("locality", {}).get("text", ""),
+                "postcode_inferred": bool(c.get("postal_code", {}).get("inferred"))}
+    return fields_of_geo(res.check.geo) if res.check is not None else {}
+
+
+def same_street(a: str, b: str) -> bool:
+    """两个路名是否同一条路（各语言类型词、缩写、拼写容错；编号道路号码一致）。"""
+    from avmvp.intl.coverage import norm
+    from avmvp.intl.geo_text import _core, _hit
+    if not a or not b:
+        return False
+    a_alpha, a_nums = _core(norm(a).split())
+    b_alpha, b_nums = _core(norm(b).split())
+    if set(a_nums) != set(b_nums):
+        return False
+    if not a_alpha or not b_alpha:
+        return not a_alpha and not b_alpha and bool(a_nums)
+    hit_a = sum(bool(_hit(w, b_alpha, set(), " " + " ".join(b_alpha))) for w in a_alpha) / len(a_alpha)
+    hit_b = sum(bool(_hit(w, a_alpha, set(), " " + " ".join(a_alpha))) for w in b_alpha) / len(b_alpha)
+    return hit_a >= 0.5 and hit_b >= 0.5
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--responses", required=True)
@@ -56,16 +98,25 @@ def main() -> None:
         tl, tg = (float(x) for x in r["target_coordinate"].split(","))
         geos = parse_geo(r.get("response_body") or "")
         g = geos[0] if geos else None
+        ours = None
         if cc in MARKETS:
             eng = engines.get(cc) or engines.setdefault(cc, Engine(cc, "hybrid"))
             res = validate_with_geo(eng, r["query"], r.get("response_body") or "")
+            ours = eng.validate(r["query"])  # 只用本引擎（不看 geo）
             mode = "outside" if res.coverage is not None and res.coverage.status == "OUTSIDE" else "reference"
         else:
             res = validate_free(cc, r["query"], r.get("response_body") or "")
             mode = "no_reference"
+        t_num, t_street = target_fields(r.get("target_address", ""))
+        has_pc = bool(ours.parsed.postcode) if ours is not None else None
         out.append({"case": r["case_id"], "cc": cc, "mode": mode, "noise": r.get("noise_severity", ""),
                     "geo": label(g.lat, g.lng, (tl, tg)) if g else "empty",
                     "action": res.action, "final": label(res.lat, res.lng, (tl, tg)),
+                    "ours_action": ours.action if ours is not None else "NONE",
+                    "ours_final": label(ours.lat, ours.lng, (tl, tg)) if ours is not None else "none",
+                    "input_has_postcode": has_pc,
+                    "out_geo": fields_of_geo(g), "out_final": fields_of(res), "out_ours": fields_of(ours),
+                    "t_num": t_num, "t_street": t_street,
                     "reasons": list(res.reasons)[:6], "query": r["query"],
                     "geo_addr": g.formatted if g else "", "geo_num": g.number if g else "",
                     "geo_route": g.route if g else "", "target": r.get("target_address", "")})
@@ -103,7 +154,33 @@ def main() -> None:
     by_cc = defaultdict(list)
     for o in out:
         by_cc[o["cc"]].append(o)
-    rep = {"groups": {k: summary(v) for k, v in groups.items()}, "countries": {k: summary(v) for k, v in by_cc.items()}}
+    def config(xs: list[dict], act: str, fin: str, outk: str) -> dict:
+        """一种用法的验真 + 补齐：直接通过 / 定位对 / 输出的路名、门牌与目标门址一致 / 邮编补齐。"""
+        from avmvp.intl.reference import number_key
+        n = len(xs)
+        acc = [x for x in xs if act is None or x[act] == ACCEPT]
+        got = [x for x in xs if (x[fin] if fin else x["geo"]) == "ok" and (act is None or x[act] in (ACCEPT, CONFIRM))]
+        ok_acc = [x for x in acc if (x[fin] if fin else x["geo"]) == "ok"]
+        bad_acc = [x for x in acc if (x[fin] if fin else x["geo"]) == "bad"]
+        comp = [x for x in got if x[outk].get("street") and x[outk].get("number")]
+        std = [x for x in got if same_street(x[outk].get("street", ""), x["t_street"])
+               and number_key(x[outk].get("number", "")).split("/")[0] == number_key(x["t_num"]).split("-")[0].split("/")[0]]
+        need_pc = [x for x in got if x["input_has_postcode"] is False]
+        pc_filled = [x for x in need_pc if x[outk].get("postcode")]
+        return {"n": n, "accept": len(acc), "accept_ok": len(ok_acc), "accept_bad": len(bad_acc), "located_ok": len(got),
+                "complete": len(comp), "standard_ok": len(std), "need_pc": len(need_pc), "pc_filled": len(pc_filled)}
+
+    configs = {}
+    for name, sel in (("全部", lambda x: True), ("本方案 44 个市场", lambda x: x["mode"] != "no_reference"),
+                      ("其中试点城市内", lambda x: x["mode"] == "reference"),
+                      ("其中试点城市外", lambda x: x["mode"] == "outside"),
+                      ("没有参考库的国家", lambda x: x["mode"] == "no_reference")):
+        xs = [x for x in out if sel(x)]
+        configs[name] = {"只用 geo": config(xs, None, None, "out_geo"),
+                         "只用本引擎": config(xs, "ours_action", "ours_final", "out_ours"),
+                         "geo + 核对层（最终方案）": config(xs, "action", "final", "out_final")}
+    rep = {"groups": {k: summary(v) for k, v in groups.items()}, "countries": {k: summary(v) for k, v in by_cc.items()},
+           "configs": configs}
     json.dump(rep, open(ROOT / "reports" / "geo_real_eval.json", "w"), ensure_ascii=False, indent=1)
 
     def pct(a, b):
@@ -119,6 +196,18 @@ def main() -> None:
                   f"{pct(s['geo_empty'], s['n'])} | {s['geo_bad']}（{pct(s['geo_bad'], s['n'])}） | {s['accept']}（{pct(s['accept'], s['n'])}） | "
                   f"{pct(s['accept_ok'], s['accept'])} | {s['accept_bad']}（{pct(s['accept_bad'], s['accept'])}） | "
                   f"{pct(s['geo_bad_caught'], s['geo_bad'])} | {pct(s['geo_ok_accepted'], s['geo_ok'])} |")
+    md += ["", "## 验真与补齐：三种用法对比", "",
+           "只用 geo = geo 有结果就采用（全部算直接通过）；只用本引擎 = 不看 geo（没有参考库的国家没有结果）；"
+           "最终方案 = geo + 核对层，本引擎兜底。定位对 = 直接通过或请用户确认、且位置离目标 ≤ 100 米。"
+           "补齐看定位对的那些：输出是否有路名 + 门牌、路名和门牌是否与库内目标门址一致、输入没写邮编时是否补上。", "",
+           "| 范围 | 用法 | 条数 | 直接通过 | 其中对 | 其中错（静默错误） | 定位对 | 输出完整（路名 + 门牌） | 路名门牌与目标一致 | 邮编补齐 |",
+           "|---|---|---|---|---|---|---|---|---|---|"]
+    for scope, cs in configs.items():
+        for name, c in cs.items():
+            md.append(f"| {scope} | {name} | {c['n']} | {c['accept']}（{pct(c['accept'], c['n'])}） | {pct(c['accept_ok'], c['accept'])} | "
+                      f"{c['accept_bad']}（{pct(c['accept_bad'], c['accept'])}） | {c['located_ok']}（{pct(c['located_ok'], c['n'])}） | "
+                      f"{pct(c['complete'], c['located_ok'])} | {pct(c['standard_ok'], c['located_ok'])} | "
+                      f"{pct(c['pc_filled'], c['need_pc'])}（{c['pc_filled']} / {c['need_pc']}） |")
     md += ["", "## 各国", "", "| 国家 | 条数 | geo 对 | geo 错 | geo 空 | 直接通过 | 其中错 | geo 错被拦下 | geo 对被放行 |",
            "|---|---|---|---|---|---|---|---|---|"]
     for k, s in sorted(rep["countries"].items(), key=lambda kv: -kv[1]["n"]):
