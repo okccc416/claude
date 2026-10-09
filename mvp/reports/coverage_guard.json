@@ -76,7 +76,7 @@
    "real": 600,
    "synth": 300,
    "real_outside": 0,
-   "synth_outside": 1,
+   "synth_outside": 0,
    "real_inside": 600,
    "synth_inside": 217
   },
@@ -84,9 +84,9 @@
    "real": 600,
    "synth": 300,
    "real_outside": 0,
-   "synth_outside": 1,
+   "synth_outside": 0,
    "real_inside": 599,
-   "synth_inside": 266
+   "synth_inside": 267
   },
   "CA": {
    "real": 600,
@@ -99,9 +99,9 @@
   "MX": {
    "real": 600,
    "synth": 300,
-   "real_outside": 3,
+   "real_outside": 2,
    "synth_outside": 0,
-   "real_inside": 596,
+   "real_inside": 597,
    "synth_inside": 285
   },
   "PR": {
@@ -235,9 +235,9 @@
   "NO": {
    "real": 600,
    "synth": 300,
-   "real_outside": 1,
+   "real_outside": 0,
    "synth_outside": 0,
-   "real_inside": 599,
+   "real_inside": 600,
    "synth_inside": 294
   },
   "FI": {
@@ -347,9 +347,9 @@
   "IN": {
    "real": 600,
    "synth": 300,
-   "real_outside": 2,
+   "real_outside": 1,
    "synth_outside": 0,
-   "real_inside": 598,
+   "real_inside": 599,
    "synth_inside": 252
   }
  },
@@ -421,24 +421,8 @@
    }
   ],
   "TH": [],
-  "VN": [
-   {
-    "input": "Ilahui - Nguyễn TRÃI, 11 Hẻm 213/19 Nguyễn Trãi Quận Phường Chợ Quán TP. Hồ Chí Minh",
-    "outside": [
-     "place:NGUYEN TRAI"
-    ],
-    "inside": []
-   }
-  ],
-  "PH": [
-   {
-    "input": "37 BUENCAMINO ST, POBLACION, ماكاتي MANILA 5316",
-    "outside": [
-     "place:POBLACION"
-    ],
-    "inside": []
-   }
-  ],
+  "VN": [],
+  "PH": [],
   "CA": [
    {
     "input": "1 Long Branch Trl, Brampton, L6P 3V7",
@@ -471,14 +455,6 @@
     "outside": [
      "postcode:58089",
      "place:MORELIA"
-    ],
-    "inside": []
-   },
-   {
-    "input": "Av acueducto s/n Sta Isabel, Juárez, 67286",
-    "outside": [
-     "postcode:67286",
-     "place:JUAREZ"
     ],
     "inside": []
    }
@@ -607,17 +583,7 @@
    }
   ],
   "SE": [],
-  "NO": [
-   {
-    "input": "Bråteveien 200, Hellerud gård, Oslo, 2013 Skjetten",
-    "outside": [
-     "place:SKJETTEN"
-    ],
-    "inside": [
-     "city:OSLO"
-    ]
-   }
-  ],
+  "NO": [],
   "FI": [
    {
     "input": "University in Oulu, Finland, Oulu, 90570",
@@ -741,18 +707,6 @@
      "place:KAMPTEE"
     ],
     "inside": [
-     "city:MUMBAI"
-    ]
-   },
-   {
-    "input": "Office no 3, Parmar, Paranjpe B Scheme Road, Parle, East, Above Naturals ice Cream, Mumbai, 400057",
-    "outside": [
-     "place:PARMAR",
-     "place:PARLE",
-     "place:EAST"
-    ],
-    "inside": [
-     "postcode:400057",
      "city:MUMBAI"
     ]
    }
