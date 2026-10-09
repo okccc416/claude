@@ -157,12 +157,15 @@ class Gazetteer:
         out: list[tuple[str, float]] = []
         seen_digit = False
         types = {t for t in type_words(self.market) if len(t) >= 3 and t not in _PARTICLES}
-        segs = _SEG.split(fold(strip_noise(text, self.ref)[0]))  # 先去掉收件人、公司、备注、营业时间等
+        parts = re.split(f"({_SEG.pattern})", fold(strip_noise(text, self.ref)[0]))  # 先去掉收件人、公司、备注等
+        segs, dash = parts[0::2], [False] + [bool(re.search(r"[-–—]", x)) for x in parts[1::2]]
         for i, seg in enumerate(segs):
             s = self.pc_re.sub(" ", seg) if self.pc_re else seg  # 去掉邮编
             ks = key(s, self.market)
             streetish = bool(re.search(r"\d", s)) or bool(set(ks.split()) & types) or bool(
-                street and (ks == street or (len(street) >= 5 and f" {street} " in f" {ks} ")))
+                street and (ks == street or (len(street) >= 5 and f" {street} " in f" {ks} ")
+                            # 路名本身带" - "（Carretera Bayamón - Aguas Buenas）：后半段是路名的一部分
+                            or (dash[i] and len(ks) >= 5 and f" {ks} " in f" {street} ")))
             w = 0.0 if i == 0 or streetish else 0.5 if not seen_digit else 1.0
             seen_digit = seen_digit or bool(re.search(r"\d", seg))
             toks = norm(s).split()
@@ -193,7 +196,7 @@ class Gazetteer:
 
     def assess(self, text: str, postcode: str | None, street: str | None = None) -> Coverage:
         """逐段给证据打分，范围外的分数高于范围内才判 OUTSIDE（越具体的证据分越高）：
-          邮编 3；城镇 2（人口不详的小村 1；权重系数见 _candidates）；参考库片区名 / 城区片区 / 既是试点城市又是所在州的
+          邮编 3；城镇 2（人口不详的小村 0.5；权重系数见 _candidates）；参考库片区名 / 城区片区 / 既是试点城市又是所在州的
           名称 1；范围外的州 1；国家 / 州 / 全城名 0.5。
         同一段既有范围内又有范围外的同名地点时算范围内，除非范围外那处是大城市而范围内只是同名小村（Porto）。"""
         if not self.ok:
@@ -241,9 +244,12 @@ class Gazetteer:
             big_out = max((h[3] for h in towns_out), default=0)
             small_in = max((h[3] for h in towns_in + towns_part), default=0)
             # 小片区与范围外的大城市同名（波哥大的 Santa Marta、墨西哥城的 Puebla 区）不作范围内证据；
-            # 区县级的片区（东京的江東区，GeoNames 里另有同名的外地城市）照算
-            area_in = self._area_in(k, 2000.0) or (big_out < 100000 and (self._area_in(k) or any(
-                h[2] in ("X", "A2", "A3") and self.in_pilot(h[0], h[1]) for h in hits)))
+            # 区县级的片区（东京的江東区，GeoNames 里另有同名的外地城市）、参考库和 GeoNames 都在范围内的片区
+            #（雅加达的 Grogol）照算
+            gaz_in = any(h[2] in ("X", "A2", "A3") and self.in_pilot(h[0], h[1]) for h in hits)
+            ref_in = self._area_in(k)
+            area_in = self._area_in(k, 2000.0) or (ref_in and (gaz_in or bool(towns_in))) or (
+                big_out < 100000 and (ref_in or gaz_in))
             if towns_in and not (big_out >= 10000 and small_in * 20 < big_out and not area_in):
                 cov.inside.append(f"place:{k}")
                 score_in += 1 if a1_pilot else 2  # Berlin / Madrid / Auckland：既是城市也是州，写的可能是州
@@ -255,7 +261,7 @@ class Gazetteer:
             if towns_out and w > 0:
                 cov.outside.append(f"place:{k}")
                 h = max(towns_out, key=lambda e: e[3])
-                score_out += (2 if h[3] >= 1000 else 1) * w  # 人口不详的小村常与普通词同名（Gracias）
+                score_out += (2 if h[3] >= 1000 else 0.5) * w  # 人口不详的小村常与普通词、城区片区同名（Gracias、El Cinco）
                 outs.append((2, h[3], h[0], h[1], h[5]))
                 big = [e for e in towns_out if e[3] >= max(1000, h[3] * 0.05)] or sorted(towns_out, key=lambda e: -e[3])[:5]
                 cov.points += [(e[0], e[1], town_radius(e[3])) for e in big]  # 同名小村太多时只看像样的城镇
