@@ -657,3 +657,50 @@ def test_geo_result_verification(au):
     assert res.action == CONFIRM
     # 没有结果：本引擎
     assert "GEO_NO_RESULT" in validate_with_geo(au, "100 Crown St, Surry Hills", {"results": []}).reasons
+
+
+@pytest.fixture(scope="module")
+def au_cov(tmp_path_factory):
+    """微型"悉尼"+ 全国地名 / 邮编表（试点范围外有卧龙岗、布里斯班），测试范围守卫。"""
+    import gzip
+    root = tmp_path_factory.mktemp("markets")
+    surry = (151.200, -33.895, 151.220, -33.880)
+    segs = [("Crown Street", -33.884 - 0.001 * i, 151.212) for i in range(6)]
+    addrs = [("100", "Crown Street", "", "2010", -33.8850, 151.2121)]
+    _write(root / "AU", [("Surry Hills", "neighborhood", surry)], segs,
+           [("Crown Street Public School", "elementary_school", -33.8870, 151.2125)], addrs)
+    places = [[["Sydney"], -33.8688, 151.2093, "P", 5000000, "02"],
+              [["Surry Hills"], -33.885, 151.211, "X", 15000, "02"],
+              [["Wollongong"], -34.424, 150.893, "P", 300000, "02"],
+              [["Brisbane"], -27.47, 153.02, "P", 2000000, "04"],
+              [["State of Queensland", "Queensland"], -22.5, 144.5, "A1", 5000000, "04"],
+              [["State of New South Wales", "New South Wales"], -32.0, 147.0, "A1", 8000000, "02"]]
+    pcs = [["2500", "Wollongong", -34.42, 150.89], ["2010", "Surry Hills", -33.885, 151.211],
+           ["4000", "Brisbane", -27.47, 153.02]]
+    with gzip.open(root / "AU" / "gazetteer.json.gz", "wt", encoding="utf-8") as f:
+        json.dump({"places": places, "postcodes": pcs}, f)
+    return Engine("AU", "rules", build("AU", "A", log=lambda *_: None, root=root))
+
+
+def test_outside_coverage_guard(au_cov):
+    """写的城镇 / 邮编 / 州都在试点范围外：不再匹配试点城市里的同名路，只给城镇级位置并请用户确认；
+    geo 门址与输入逐字段一致（门牌、道路、所写城镇 / 邮编附近）时可以采用，geo 选了试点城市的同名路则不采用。"""
+    from avmvp.intl.geo_check import validate_with_geo
+    res = au_cov.validate("100 Crown St, Surry Hills NSW 2010")
+    assert res.action == ACCEPT and res.coverage.status == "INSIDE"
+    assert au_cov.validate("100 Crown St, Sydney").coverage.status == "INSIDE"
+    # 卧龙岗的 Crown Street：试点参考库里没有，不能匹配到悉尼的同名路
+    res = au_cov.validate("100 Crown St, Wollongong NSW 2500")
+    assert res.coverage.status == "OUTSIDE" and "OUTSIDE_COVERAGE" in res.reasons
+    assert res.action == CONFIRM and res.granularity == "LOCALITY" and res.best is None
+    assert abs(res.lat - -34.42) < 0.05 and res.components["locality"]["text"] == "Wollongong"
+    res = au_cov.validate("100 Crown Street, Brisbane, Queensland")
+    assert res.coverage.status == "OUTSIDE" and res.coverage.place == "Brisbane"
+    assert au_cov.validate("Crown Street, Wollongong").action == FIX  # 没写门牌：请用户补全
+    # 范围外 + geo：逐字段一致 -> 采用 geo；geo 给的是悉尼的同名路 -> 所写城镇里没有这处，不采用
+    ok = _geo("100", "Crown Street", "2500", -34.425, 150.89, locality="Wollongong")
+    res = validate_with_geo(au_cov, "100 Crown St, Wollongong NSW 2500", ok)
+    assert res.action == ACCEPT and {"OUTSIDE_COVERAGE", "GEO_VERIFIED"} <= set(res.reasons)
+    bad = _geo("100", "Crown Street", "2010", -33.8850, 151.2121)
+    res = validate_with_geo(au_cov, "100 Crown St, Wollongong NSW 2500", bad)
+    assert "GEO_REJECTED" in res.reasons and res.granularity == "LOCALITY" and res.lat < -34.3

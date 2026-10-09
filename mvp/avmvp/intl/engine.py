@@ -23,6 +23,7 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
+from .coverage import gazetteer
 from .markets import MARKETS
 from .parse import Parsed, RuleParser, Span
 from .poiaddr import lookup as poi_lookup
@@ -64,6 +65,7 @@ class Result:
     parser: str
     confidence: float | None = None  # 校准过的置信度（有置信度模型时在 validate 里算好）
     confidence_note: str = ""
+    coverage: object | None = None  # 试点范围判断（coverage.Coverage）
 
     @property
     def location(self):
@@ -164,7 +166,27 @@ class Engine:
                     if _rank(res) > _rank(best_res):
                         res.parser = self.parser + "+llm"
                         best_res = res
+        # 试点范围守卫：写的城镇 / 邮编 / 州都在试点范围外，匹配上的只会是试点城市里的同名路
+        b = best_res.best
+        cov = gazetteer(self.ref).assess(text, best_res.parsed.postcode,
+                                         b.street_span.text if b is not None and b.street_span is not None else None)
+        if cov.status == "OUTSIDE":
+            best_res = self._outside(best_res, cov)
+        best_res.coverage = cov
         return best_res
+
+    def _outside(self, res: Result, cov) -> Result:
+        """范围外的地址：参考库验证不了，只给出城镇级位置。写全了道路和门牌的请用户确认，否则请用户补全。"""
+        p = res.parsed
+        reasons = (["NON_ADDRESS_INFO_EXTRACTED"] if p.noise else []) + ["OUTSIDE_COVERAGE"]
+        complete = bool(p.number and (p.streets or p.leftover or p.buildings))
+        comps = {"locality": {"text": cov.place, "level": "UNCONFIRMED_BUT_PLAUSIBLE", "inferred": True}}
+        if p.postcode:
+            comps["postal_code"] = {"text": fmt_postcode(p.postcode, self.market), "level": "UNCONFIRMED_BUT_PLAUSIBLE"}
+        if p.number:
+            comps["street_number"] = {"text": p.number, "level": "UNCONFIRMED_BUT_PLAUSIBLE"}
+        return Result(self.market, CONFIRM if complete else FIX, "LOCALITY", cov.lat, cov.lng, p, None, reasons,
+                      comps, [], res.parser)
 
     def _llm_cap(self, res: Result) -> Result:
         """模型解析出的结果：改写过原文的最多给 CONFIRM；没有官方地址表的市场（B / C 类）一律最多 CONFIRM
@@ -953,6 +975,7 @@ REASON_TEXT = {
     "GEO_POSTCODE_FAR": "所写邮编的位置离 geo 服务给的坐标很远，二者必有一错",
     "GEO_STREET_LEVEL_ONLY": "geo 服务只定位到道路或区域级，没有门牌",
     "GEO_AMBIGUOUS": "同名道路在别处也有这个门牌，输入里没有邮编或片区能确定是哪一处",
+    "OUTSIDE_COVERAGE": "所写城镇 / 邮编 / 州在参考数据覆盖范围外：无法逐门牌验证，只定位到城镇",
     "DESCRIPTIVE_LOCATION": "输入只有方位描述（第几栋、在某物后面），没有可核对的地址；请用户提供门牌地址，或在地图上标点 / 给出 Plus Code",
     "BUILDING_NAME_AMBIGUOUS": "同名楼宇有多处，需要用户确认是哪一处",
     "POSTCODE_NOT_FOUND": "官方地址表里没有这个邮编",

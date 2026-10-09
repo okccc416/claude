@@ -55,12 +55,14 @@ python scripts/fetch_markets.py           # 下载 44 个市场试点城市的 O
 python scripts/fetch_osm_addresses.py     # OSM 门牌 + 道路编号（BBBike / openstreetmap.fr 城市摘录）
 python scripts/fetch_extra_addresses.py   # 政府开放地址：波哥大门牌牌号、索非亚地址；英国邮编中心点（只用于估计标注噪声）
 python scripts/build_market_reference.py  # 构建参考库（3 路并行约 25 分钟，澳洲最大）
+python scripts/fetch_gazetteer.py         # 全国地名 / 邮编表（GeoNames）：判断输入写的地点在不在试点范围内（试点范围守卫）
 python scripts/train_market_parsers.py    # 训练各市场的机器学习解析器（CRF，每个市场约 30 秒）
 python scripts/fit_accept_policy.py       # 按市场在开发集上校准直接通过的放宽规则 -> models/accept_policy.json
 python scripts/fit_intl_confidence.py     # 置信度（开发集拟合、测试集检验）-> models/confidence_intl.json
 python scripts/evaluate_markets.py --split dev --n 600    # 开发集：规则 / 机器学习 / 混合三种解析对比
 python scripts/evaluate_markets.py --split test --n 1000  # 测试集（留到最后跑）-> reports/markets_eval.md
 python scripts/google_parity.py --split test   # 与 Google AV 对标（估计 Google 上限）-> reports/google_parity.md
+python scripts/coverage_eval.py --jobs 4       # 试点范围守卫：开发集误判率 -> reports/coverage_guard.md
 
 curl -s -X POST http://127.0.0.1:8080/v1/address:validate -H 'Content-Type: application/json' \
   -d '{"address":{"regionCode":"AE","addressLines":["Latifa Tower, Ground Floor - Sheikh Zayed Rd"],"locality":"Dubai"}}'
@@ -190,10 +192,12 @@ mvp/
 │   ├── build_market_reference.py  构建多市场参考库
 │   ├── train_market_parsers.py    训练多市场机器学习解析器
 │   ├── evaluate_markets.py        多市场评测（真实商户地址 + 合成地址，规则 / 机器学习 / 混合）
+│   ├── fetch_gazetteer.py         下载全国地名 / 邮编表（试点范围守卫用）
+│   ├── coverage_eval.py           试点范围守卫评测（开发集误判率 / 线上查询分布）
 │   └── fit_accept_policy.py       按市场校准直接通过的放宽规则（开发集）
 ├── labeled/            标注数据（模拟订单 orders_sg_v1.csv、调研测试集 testset_sg_research_v1.csv）、数据说明、标注规范
 ├── models/             贝叶斯参数（证据权重、置信度统计表）
-├── tests/              109 个单元测试（新加坡 58 条真实地址夹具；多市场微型夹具）
+├── tests/              116 个单元测试（新加坡 58 条真实地址夹具；多市场微型夹具）
 └── reports/            评测报告与演示截图
 ```
 
@@ -202,6 +206,7 @@ mvp/
 多市场数据来自 [Overture Maps](https://overturemaps.org/)（release 2026-09-23.1），各主题许可不同，商用前需法务确认：
 - 道路、片区：来自 OpenStreetMap 等，ODbL（衍生数据库需按 ODbL 共享）。
 - POI：CDLA-Permissive-2.0 等。
+- 全国地名 / 邮编表（试点范围守卫）：[GeoNames](https://www.geonames.org/) 国家文件与邮编文件，CC BY 4.0（需署名）。
 - 官方地址点（A 类，逐市场来源见 [docs/13 第 4 节](../docs/13-multi-market-product.md)）：
   - Overture 标注为 `LicenseRef-Proprietary`（**商用前必须法务确认**）：澳洲 G-NAF（G-NAF 最终用户许可，限制用于邮寄地址的生成）、巴西、加拿大、墨西哥、丹麦、爱沙尼亚、克罗地亚、瑞士；
   - 开放许可：德国柏林 `DL-DE-ZERO-2.0`、勃兰登堡 `DL-DE-BY-2.0`（需署名）；法国 BAN `etalab-2.0`；荷兰 BAG、卢森堡、斯洛伐克 `CC0-1.0`；波兰（测绘法公有领域）；智利、哥伦比亚、比利时、奥地利、意大利、西班牙、葡萄牙、挪威、芬兰、拉脱维亚、立陶宛、捷克、斯洛文尼亚、新西兰、日本（OpenAddresses jp/tokyo）`CC-BY-4.0`（需署名）。

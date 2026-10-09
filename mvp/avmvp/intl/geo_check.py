@@ -28,6 +28,7 @@ from dataclasses import dataclass, field
 
 from rapidfuzz import fuzz
 
+from .coverage import locality_check
 from .engine import ACCEPT, ADD_SUB, CONFIRM, FIX, Engine, Hypothesis, Result, dist_to_street
 from .reference import haversine, number_key
 from .text import core_key, key, norm_postcode, postcode_prefix, type_words
@@ -117,9 +118,11 @@ class GeoCheck:
     hard: list[str] = field(default_factory=list)  # 否决的依据：number / route / postcode
 
 
-def check(eng: Engine, p, g: GeoAddress) -> GeoCheck:
-    """把一条 geo 门址代回解析后的输入（p）和参考数据，逐字段判定。"""
+def check(eng: Engine, p, g: GeoAddress, cov=None) -> GeoCheck:
+    """把一条 geo 门址代回解析后的输入（p）和参考数据，逐字段判定。
+    cov：试点范围判断。范围外的地址参考库里没有，片区 / 邮编位置改用全国地名 / 邮编表核对，不查同名道路。"""
     m, ref = eng.market, eng.ref
+    outside = cov is not None and cov.status == "OUTSIDE"
     fields: dict[str, str] = {}
     flags: list[str] = []
     itxt = " " + " ".join(" ".join(key(t, m).split()) for t in p.tokens) + " "
@@ -150,11 +153,13 @@ def check(eng: Engine, p, g: GeoAddress) -> GeoCheck:
         fields["postal_code"] = "CONFIRMED"  # 英国 / 爱尔兰一户一码：同一个邮区内只差最后几位，与本引擎同样不算替换
     else:
         fields["postal_code"] = "REPLACED"
-    pc = eng._postcode_point(p)
+    pc = None if outside else eng._postcode_point(p)
     if pc and haversine(pc[0], pc[1], g.lat, g.lng) > eng._pc_far():
         flags.append("GEO_POSTCODE_FAR")
     # ---- 片区：所写片区要包含 geo 坐标（名称一致也算）
-    if p.areas:
+    if outside:  # 所写城镇 / 邮编所在地（全国地名表）要包含 geo 坐标
+        fields["locality"] = locality_check(cov, g.lat, g.lng) or ("INFERRED" if g.localities else "")
+    elif p.areas:
         names = {" ".join(key(x, m).split()) for x in g.localities}
         inside = any(s.text in names for s in p.areas) or any(
             haversine(ref.areas[a].lat, ref.areas[a].lng, g.lat, g.lng) <= max(ref.areas[a].radius_m * 1.5, 2000)
@@ -171,11 +176,13 @@ def check(eng: Engine, p, g: GeoAddress) -> GeoCheck:
         fields["subpremise"] = "INFERRED"
     # ---- 同名道路：别处也有这个门牌，输入里又没有邮编 / 片区能区分
     if fields["number"] in ("CONFIRMED", "CORRECTED") and g.route and fields["postal_code"] != "CONFIRMED" \
-            and fields["locality"] != "CONFIRMED" and _elsewhere(eng, g):
+            and fields["locality"] != "CONFIRMED" and not outside and _elsewhere(eng, g):
         flags.append("GEO_AMBIGUOUS")
 
     # ---- 结论
     hard = [f for f in ("number", "route") if fields[f] == "CONFLICT"]
+    if outside and fields["locality"] == "CONFLICT":
+        hard.append("locality")  # 所写城镇里没有这处：geo 选了别的城镇的同名路
     if "GEO_POSTCODE_FAR" in flags and eng.pc_weight >= 1.5:  # 商户邮编不准的市场（pc_weight 减半）不据此否决
         hard.append("postcode")
     if fields["number"] == "MISSING" or fields["route"] == "MISSING":
@@ -183,7 +190,7 @@ def check(eng: Engine, p, g: GeoAddress) -> GeoCheck:
         flags.append("GEO_STREET_LEVEL_ONLY")
     elif hard:
         verdict = "REJECTED"
-        flags += [{"number": "GEO_NUMBER_CONFLICT", "route": "GEO_ROUTE_CONFLICT",
+        flags += [{"number": "GEO_NUMBER_CONFLICT", "route": "GEO_ROUTE_CONFLICT", "locality": "AREA_STREET_MISMATCH",
                    "postcode": "GEO_POSTCODE_FAR"}[h] for h in hard if h != "postcode"]
     elif fields["number"] == "INFERRED":
         verdict = "MISSING_NUMBER"
@@ -260,10 +267,13 @@ def validate_with_geo(eng: Engine, text: str, geo, strictness: str = "BALANCED",
     if not use_engine:
         ours = Result(eng.market, FIX, "OTHER", None, None, ours.parsed, None, ["NO_MATCH"], {}, [], ours.parser)
     p = ours.parsed
-    checks = [check(eng, p, g) for g in parse_geo(geo)]
+    cov = ours.coverage if use_engine else None
+    checks = [check(eng, p, g, cov) for g in parse_geo(geo)]
     if not checks:
         ours.reasons.append("GEO_NO_RESULT")
         return ours
+    if cov is not None and cov.status == "OUTSIDE":
+        return _outside_with_geo(eng, ours, checks, strictness)
     rank = {"VERIFIED": 4, "PLAUSIBLE": 3, "MISSING_NUMBER": 2, "STREET_LEVEL": 1, "REJECTED": 0}
     c = max(checks, key=lambda x: rank[x.verdict])
     g = c.geo
@@ -316,6 +326,25 @@ def validate_with_geo(eng: Engine, text: str, geo, strictness: str = "BALANCED",
     res = _from_geo(eng, ours, c, FIX, ["MISSING_PREMISE"])
     res.granularity = "ROUTE"
     return res
+
+
+def _outside_with_geo(eng: Engine, ours: Result, checks: list[GeoCheck], strictness: str) -> Result:
+    """试点范围外的地址：参考库没有它，只能核对 geo 门址与输入是否逐字段一致（门牌、道路、城镇 / 邮编位置）。
+    全部一致 -> ACCEPT（GEO_VERIFIED，并标 OUTSIDE_COVERAGE：没有参考数据独立印证）；改动过的 -> CONFIRM；
+    冲突 / 只到道路级 -> 保留范围外的结论（城镇级），geo 结果作为候选。"""
+    rank = {"VERIFIED": 4, "PLAUSIBLE": 3, "MISSING_NUMBER": 2, "STREET_LEVEL": 1, "REJECTED": 0}
+    c = max(checks, key=lambda x: rank[x.verdict])
+    if c.verdict in ("REJECTED", "STREET_LEVEL"):
+        ours.reasons += c.flags + ["GEO_REJECTED"]
+        ours.candidates = (ours.candidates or []) + [_cand(c.geo)]
+        return ours
+    if c.verdict == "MISSING_NUMBER":
+        res = _from_geo(eng, ours, c, FIX, ["OUTSIDE_COVERAGE", "MISSING_PREMISE"])
+        res.granularity = "ROUTE"
+        return res
+    ok = c.verdict == "VERIFIED" and c.fields["locality"] == "CONFIRMED" and strictness != "STRICT" \
+        and c.geo.location_type != "RANGE_INTERPOLATED"
+    return _from_geo(eng, ours, c, ACCEPT if ok else CONFIRM, ["OUTSIDE_COVERAGE"] + (["GEO_VERIFIED"] if ok else []))
 
 
 def _from_geo(eng: Engine, ours: Result, c: GeoCheck, action: str, extra: list[str]) -> Result:

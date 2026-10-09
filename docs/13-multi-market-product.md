@@ -223,6 +223,8 @@ python -m avmvp.server            # http://127.0.0.1:8080/  演示页面（可�
 
 **OSM 门牌**（[`scripts/fetch_osm_addresses.py`](../mvp/scripts/fetch_osm_addresses.py)）：BBBike 城市摘录（每周更新），没有城市摘录的用 openstreetmap.fr 的省 / 国家摘录；取带 `addr:housenumber` + `addr:street` 的节点和建筑轮廓，落在试点范围里的并入地址点表（编号从 10 亿起区分来源）。官方表已有的"道路 + 门牌"不重复收；道路名对不上路网、但同一名称下有 3 个以上门牌的（小区、住宅区）按片区建道路；与留出测试商户同名且相距 40 米内的 OSM 商户节点不收。各市场并入的 OSM 门牌点（官方表已有的除外）：英国 31 万、荷兰 29 万、阿根廷 15 万、爱尔兰 14 万、匈牙利 11 万、智利 10 万、瑞典 7.6 万、加拿大 7.3 万、波多黎各 6.7 万、巴西 3.2 万、保加利亚 2.8 万，其余官方表完整的市场 0.01–2 万；印度（孟买）只有 1,325 个。**东南亚、中东不用 OSM 门牌**：那里 OSM 门牌稀少、常挂在同名的另一条路上，开发集上加了反而少对 6–27 条 / 600。许可 ODbL（与路网相同）。
 
+**全国地名 / 邮编表**（[`scripts/fetch_gazetteer.py`](../mvp/scripts/fetch_gazetteer.py)）：GeoNames 国家文件（居民点、各级行政区、当地语言别名）和邮编文件，覆盖整个国家，只用于判断输入写的地点在不在试点范围内（范围守卫，见第 8 节），不参与匹配。许可 CC BY 4.0。
+
 **商户地址门牌点**（[`avmvp/intl/poiaddr.py`](../mvp/avmvp/intl/poiaddr.py)）：参考库里（不含留出的测试商户及其孪生记录）商户自填的地址解析成"道路 + 门牌 → 坐标"，只用完全一致的道路、商户在路旁 150 米内，同一门牌多家商户取中位位置。欧洲、美洲持平或略好（开发集 −3 到 +6 条 / 600），东南亚、中东、波多黎各、印度变差（−1 到 −29 条），这 9 个市场不用。
 
 **补充官方开放数据**（[`scripts/fetch_extra_addresses.py`](../mvp/scripts/fetch_extra_addresses.py)，并入官方地址表）：
@@ -450,6 +452,7 @@ B / C 类没有门牌数据，**"道路级直接通过"是最容易出静默错�
 | 全部 | 只有方位描述（第三栋、在某物后面）：描述里的词被当成路名（`árbol grande` → Grande 路） | 描述整段剥出；参照物只拿去找楼宇和全部商户（名称完全一致），找到则定位到参照物附近、最多 CONFIRM，找不到判 FIX（`DESCRIPTIVE_LOCATION`）；参照物本身是地址时最多 CONFIRM；已经认出道路时参照物不参与定位（`Road X, near Khar Gymkhana`） |
 | 沙特 | `طريق الإمام عبدالله بن سعود`（伊玛目路）里的 `امام` 被当成"在……前面" | 阿拉伯文方位词整词匹配 |
 | 巴西 | `próximo ao Metro Trianon - Av. Paulista` 整段被当成参照物 | 参照物到 ` - ` 为止，后半段照常解析 |
+| 全部 | 试点城市以外的地址（`Goethestr. 38, Glienicke/Nordbahn`、`Plaszowska 15a, 30-713 Kraków`）被配到试点城市的同名路，评测样本都在试点城市里所以看不出（geo 测试日志里所在州明确不是试点州的 391 条，289 条被配到试点城市，21 条直接通过） | 范围守卫（`coverage.py`）：GeoNames 全国地名 / 邮编表判断所写城镇 / 邮编 / 州是否在试点范围内，按段计分；范围外的只给城镇级位置（`OUTSIDE_COVERAGE`），带 geo 结果时按所写城镇核对 geo 坐标。拦下 371 / 391 条，配错 289 → 18、直接通过 21 → 3；开发集误判 0.14%（真实）/ 0.03%（合成）（[报告](../mvp/reports/coverage_guard.md)） |
 | 拉脱维亚 | 度分秒坐标 `56°57'10.9N 24°05'11.3E` 没识别，`3E` 被当成门牌 | 度分秒坐标解码，直接定位 |
 | 澳洲 | `…, 2147, 2nd floor, Suite 210`、`2147, 36 Abbott Rd`：邮编不在末尾就不认，悉尼两条 Abbott Rd 选错 | 单独成段、参考库里有的 4 位数认作邮编 |
 
@@ -543,7 +546,7 @@ B / C 类没有门牌数据，**"道路级直接通过"是最容易出静默错�
 | 局限 | 影响 | 下一步 |
 |---|---|---|
 | 12 个 Google 覆盖的市场还没持平 | 拉脱维亚、巴西、英国、智利差 3.2–4.3 个百分点（同名道路、商户坐标噪声、门牌不在表里）；墨西哥、葡萄牙（官方表不全）；哥伦比亚（商户邮编不准、路网碎段）；保加利亚（只写楼号）；马来西亚、波多黎各、印度（没有官方表、OSM 少）；爱尔兰（Eircode 一户一码，开放数据没有 Eircode 库） | 当地官方全量数据：INEGI、CTT、An Post Eircode；中东 / 南亚 / 东南亚接自有楼栋门牌 |
-| 每个国家只建了一个试点城市 | 结果代表首都 / 最大城市，乡村写法没覆盖 | `markets.py` 里扩大范围后重跑 `fetch_markets.py` / `fetch_osm_addresses.py` / `build_market_reference.py`，引擎不用改 |
+| 每个国家只建了一个试点城市 | 结果代表首都 / 最大城市，乡村写法没覆盖。线上这 44 个市场的查询约七成在试点城市外：范围守卫保证不配到试点城市的同名路，但只能给城镇级位置，验不了 | `markets.py` 里扩大范围后重跑 `fetch_markets.py` / `fetch_osm_addresses.py` / `build_market_reference.py`，引擎不用改 |
 | 部分地址表标为专有许可 | 澳洲、巴西、加拿大、墨西哥、丹麦、爱沙尼亚、克罗地亚、瑞士 | 法务逐一确认；或与当地机构签约获取授权数据 |
 | 噪声词表只覆盖 9 种语言 | 配送用语、收件人标记、方位词有英、德、法、西、意、葡、波、印尼 / 马来、阿拉伯文；北欧、波罗的海、中东欧、日、泰、越文的备注只按格式剥离（电话、订单号、营业时间等） | 按真实订单的备注补各语言词表 |
 | 只有方位描述的地址 | "第几栋"推不出具体门牌，只能定位到参照物附近请用户确认 | 前端引导用户在地图上标点 / 给 Plus Code；有配送轨迹后可以学参照物到门牌的对应 |
@@ -563,6 +566,7 @@ python scripts/fetch_markets.py               # Overture 数据（44 个市场�
 python scripts/fetch_osm_addresses.py         # OSM 门牌 + 道路编号（BBBike / openstreetmap.fr 摘录，约 2.5 GB 下载，处理完删除）
 python scripts/fetch_extra_addresses.py       # 政府开放地址：波哥大门牌牌号、索非亚地址；英国邮编中心点（只用于估计标注噪声）
 python scripts/build_market_reference.py      # 参考库（3 路并行约 25 分钟）
+python scripts/fetch_gazetteer.py             # 全国地名 / 邮编表（GeoNames，范围守卫用）
 python scripts/train_market_parsers.py        # 机器学习解析器（每个市场约 30 秒）
 python scripts/fit_accept_policy.py           # 按市场校准直接通过的放宽规则（开发集）
 python scripts/fit_intl_confidence.py         # 置信度（开发集拟合、测试集检验）

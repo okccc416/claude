@@ -134,7 +134,8 @@ components:
             可选（多市场引擎）。geo 服务对同一输入返回的标准门址，格式同 Google 地理编码（{"results": [{"address_components":
             [{"long_name", "types"}], "geometry": {"location": {"lat", "lng"}, "location_type"}}]}），也接受单条结果或结果列表。
             给了就先把 geo 的门址代回输入核对：逐字段一致直接采用（GEO_VERIFIED）；有纠正 / 补全时 CONFIRM；
-            门牌 / 道路对不上时改用本引擎的结论，geo 结果列在候选里（GEO_REJECTED）。见 mvp/avmvp/intl/geo_check.py
+            门牌 / 道路对不上时改用本引擎的结论，geo 结果列在候选里（GEO_REJECTED）。见 mvp/avmvp/intl/geo_check.py。
+            输入写的城镇 / 邮编在试点范围外（原因码 OUTSIDE_COVERAGE）时，改用全国地名 / 邮编表核对 geo 坐标是否在所写城镇附近
     ValidateResponse:
       type: object
       properties:
