@@ -704,3 +704,53 @@ def test_outside_coverage_guard(au_cov):
     bad = _geo("100", "Crown Street", "2010", -33.8850, 151.2121)
     res = validate_with_geo(au_cov, "100 Crown St, Wollongong NSW 2500", bad)
     assert "GEO_REJECTED" in res.reasons and res.granularity == "LOCALITY" and res.lat < -34.3
+
+
+def test_amap_geo_format_and_route_text_match():
+    """高德海外地理编码格式：street / number 拆错时按 formatted_address 重拆、单元截掉、乱码还原；
+    路名只和原文的道路段比（城镇名冒充路名判冲突），跨语言类型词、缩写、只写姓算对上。"""
+    import re
+    from avmvp.intl.geo_check import parse_geo
+    from avmvp.intl.geo_text import route_match
+
+    def amap(fa, street, number):
+        return {"status": "1", "geocodes": [{"formatted_address": fa, "street": street, "number": number,
+                                             "location": "16.2465,50.4425", "city": "x", "district": []}]}
+    g = parse_geo(json.dumps(amap("ULICA 1 MAJA 3", "1 MAJA 3", "ULICA")))[0]
+    assert (g.number, g.route, g.lat) == ("3", "ULICA 1 MAJA", 50.4425)
+    g = parse_geo(amap("AVENIDA JOAO FRANCESCHI 2101, BLOCO 2, APTO 303", "AVENIDA JOAO FRANCESCHI 2101, BLOCO 2", "AVENIDA"))[0]
+    assert (g.number, g.route) == ("2101", "AVENIDA JOAO FRANCESCHI")
+    g = parse_geo(amap("Avenida MÃ©xico 27", "Avenida MÃ©xico", "27"))[0]
+    assert g.route == "Avenida México"
+    pl = re.compile(r"\b\d{2}-\d{3}\b")
+    assert route_match("HAMILTON ROAD", "12 auchingramont rd, hamilton, ml3 6jt, Hamilton") == "CONFLICT"
+    assert route_match("Акжар улица", "Акжар, улица Даулеткерея 32, Алматы") == "CONFLICT"
+    assert route_match("CALLE 46D", "Calle 16 #22-53 apto 401, MANIZALES") == "CONFLICT"
+    assert route_match("Carrer del Torrent de Can Miano", "5, Torrent de Can Miano, Barcelona") == "CONFIRMED"
+    assert route_match("Straße der Nationen", "Str. d. Nationen 5, Hannover") == "CONFIRMED"
+    assert route_match("ULICA ZOFII KOSSAK-SZCZUCKIEJ", "ul. Kossak-Szczuckiej 14, 59-241 Legnickie Pole", pl) == "CONFIRMED"
+    assert route_match("R. Limeira", "Rua Limeira 179 fundo casa, Mogi Guaçu, São Paulo") == "CONFIRMED"
+    assert route_match("Calle Isabel Clara Eugenia", "Calle De Isabel Clara Eujenia 14, Madrid") == "CORRECTED"
+
+
+def test_geo_check_without_reference_data():
+    """没有参考库的国家：门牌、道路对上且坐标在所写城镇里 -> 直接通过；门牌冲突 -> FIX；
+    坐标不在所写城镇 -> FIX；编号路名（شارع 18）同城很多条 -> 最多请用户确认。"""
+    from avmvp.intl import geo_free
+    idx = geo_free.TownIndex("ZZ")
+    idx.names = {"LIMA": [(-12.05, -77.04, 20000.0)], "AREQUIPA": [(-16.40, -71.54, 15000.0)]}
+    geo_free._TOWNS["ZZ"] = idx
+
+    def amap(fa, lat, lng):
+        street, num = fa.rsplit(" ", 1)
+        return {"geocodes": [{"formatted_address": fa, "street": street, "number": num, "location": f"{lng},{lat}"}]}
+    res = geo_free.validate_free("ZZ", "Jr. Los Eucaliptos 371, Lima, Perú", amap("Jirón Los Eucaliptos 371", -12.06, -77.03))
+    assert res.action == "ACCEPT" and "GEO_VERIFIED" in res.reasons
+    res = geo_free.validate_free("ZZ", "Jr. Los Eucaliptos 371, Lima, Perú", amap("Jirón Los Eucaliptos 37", -12.06, -77.03))
+    assert res.action == "FIX" and "GEO_NUMBER_CONFLICT" in res.reasons
+    res = geo_free.validate_free("ZZ", "Jr. Los Eucaliptos 371, Lima, Perú", amap("Jirón Los Eucaliptos 371", -16.40, -71.54))
+    assert res.action == "FIX" and "AREA_STREET_MISMATCH" in res.reasons
+    res = geo_free.validate_free("ZZ", "منزل 20 شارع 18, Lima", amap("شارع 18 20", -12.06, -77.03))
+    assert res.action == "CONFIRM" and "GEO_AMBIGUOUS" in res.reasons
+    out = geo_free.to_response(geo_free.validate_free("ZZ", "Jr. Los Eucaliptos 371, Lima", amap("Jirón Los Eucaliptos 371", -12.06, -77.03)))
+    assert out["result"]["verdict"]["possibleNextAction"] == "ACCEPT" and out["result"]["metadata"]["marketClass"] == "none"

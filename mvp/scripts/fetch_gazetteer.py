@@ -6,6 +6,7 @@
   postcodes [邮编, 地名, 纬度, 经度]
 
   python scripts/fetch_gazetteer.py [--markets DE,PL,...] [--cache 下载目录]
+默认包括 44 个市场和 EXTRA 里没有参考库的国家（后者只用于 geo 核对层）。
 """
 
 from __future__ import annotations
@@ -32,7 +33,10 @@ ZIP = "https://download.geonames.org/export/zip/{cc}.zip"
 KIND = {"ADM1": "A1", "ADM2": "A2", "ADM3": "A3", "PPLX": "X"}
 SKIP_P = {"PPLH", "PPLQ", "PPLW", "PPLCH"}  # 历史上的 / 废弃的 / 已毁的居民点
 # 各市场保留哪些文字的别名（GeoNames 别名混着几十种语言和机场代码，只留当地会写的）
-SCRIPTS = {"SA": "ARAB", "AE": "ARAB", "TH": "THAI", "JP": "CJK", "BG": "CYRL"}
+SCRIPTS = {"SA": "ARAB", "AE": "ARAB", "TH": "THAI", "JP": "CJK", "BG": "CYRL", "KW": "ARAB", "BH": "ARAB", "OM": "ARAB",
+           "QA": "ARAB", "EG": "ARAB", "KZ": "CYRL", "UZ": "CYRL"}
+# 没有参考库的国家：只生成地名表，供 geo 核对层（geo_free.py）核对 geo 坐标是否在所写城镇里
+EXTRA = ("KW", "BH", "OM", "QA", "EG", "KZ", "UZ", "PE", "DO", "TR", "ZA", "SG")
 _LATIN = re.compile(r"^[A-Za-zÀ-ɏḀ-ỿ'’.\- ()/]+$")
 _RANGES = {"ARAB": re.compile(r"^[؀-ۿݐ-ݿ\s'’.\-]+$"), "THAI": re.compile(r"^[฀-๿\s.\-]+$"),
            "CJK": re.compile(r"^[぀-ヿ一-鿿々ヶ\s]+$"), "CYRL": re.compile(r"^[Ѐ-ӿ\s'’.\-]+$")}
@@ -46,8 +50,8 @@ def fetch(url: str, path: Path) -> Path:
             with urllib.request.urlopen(url, timeout=120) as r:
                 path.write_bytes(r.read())
             return path
-        except Exception as e:  # noqa: BLE001  网络抖动：退避重试
-            if i == 3:
+        except Exception as e:  # noqa: BLE001  网络抖动：退避重试（404 = 没有这个文件，不重试）
+            if i == 3 or getattr(e, "code", None) == 404:
                 raise
             print(f"  重试 {url}: {e}")
             time.sleep(2 ** (i + 1))
@@ -96,7 +100,7 @@ def read_zip(path: Path, cc: str) -> list[list]:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--markets", default=",".join(c for c in MARKETS if c != "SG"))
+    ap.add_argument("--markets", default=",".join([c for c in MARKETS if c != "SG"] + list(EXTRA)))
     ap.add_argument("--cache", default=str(DATA.parent / "geonames"))
     args = ap.parse_args()
     cache = Path(args.cache)
@@ -110,6 +114,7 @@ def main() -> None:
             print(f"  {market} 没有邮编文件：{e}")
             pcs = []
         out = DATA / market / "gazetteer.json.gz"
+        out.parent.mkdir(parents=True, exist_ok=True)
         with gzip.open(out, "wt", encoding="utf-8") as f:
             json.dump({"source": "GeoNames (CC BY 4.0) https://www.geonames.org", "places": places,
                        "postcodes": pcs}, f, ensure_ascii=False)

@@ -63,6 +63,7 @@ python scripts/evaluate_markets.py --split dev --n 600    # 开发集：规则 /
 python scripts/evaluate_markets.py --split test --n 1000  # 测试集（留到最后跑）-> reports/markets_eval.md
 python scripts/google_parity.py --split test   # 与 Google AV 对标（估计 Google 上限）-> reports/google_parity.md
 python scripts/coverage_eval.py --jobs 4       # 试点范围守卫：开发集误判率 -> reports/coverage_guard.md
+python scripts/geo_real_eval.py --responses <geo 返回.jsonl>  # geo 真实返回 + 核对层 -> reports/geo_real_eval.md
 
 curl -s -X POST http://127.0.0.1:8080/v1/address:validate -H 'Content-Type: application/json' \
   -d '{"address":{"regionCode":"AE","addressLines":["Latifa Tower, Ground Floor - Sheikh Zayed Rd"],"locality":"Dubai"}}'
@@ -194,10 +195,11 @@ mvp/
 │   ├── evaluate_markets.py        多市场评测（真实商户地址 + 合成地址，规则 / 机器学习 / 混合）
 │   ├── fetch_gazetteer.py         下载全国地名 / 邮编表（试点范围守卫用）
 │   ├── coverage_eval.py           试点范围守卫评测（开发集误判率 / 线上查询分布）
+│   ├── geo_real_eval.py           geo 服务真实返回评测（核对层，按目标门址坐标判对错）
 │   └── fit_accept_policy.py       按市场校准直接通过的放宽规则（开发集）
 ├── labeled/            标注数据（模拟订单 orders_sg_v1.csv、调研测试集 testset_sg_research_v1.csv）、数据说明、标注规范
 ├── models/             贝叶斯参数（证据权重、置信度统计表）
-├── tests/              116 个单元测试（新加坡 58 条真实地址夹具；多市场微型夹具）
+├── tests/              118 个单元测试（新加坡 58 条真实地址夹具；多市场微型夹具）
 └── reports/            评测报告与演示截图
 ```
 

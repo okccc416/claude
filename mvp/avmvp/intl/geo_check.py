@@ -29,8 +29,9 @@ from dataclasses import dataclass, field
 
 from rapidfuzz import fuzz
 
-from .coverage import locality_check
+from .coverage import gazetteer, locality_check
 from .engine import ACCEPT, ADD_SUB, CONFIRM, FIX, Engine, Hypothesis, Result, dist_to_street
+from .geo_text import numbered_only, route_match
 from .reference import haversine, number_key
 from .text import core_key, key, norm_postcode, postcode_prefix, type_words
 
@@ -38,6 +39,8 @@ LOCALITY_TYPES = ("locality", "sublocality", "sublocality_level_1", "sublocality
                   "neighborhood", "administrative_area_level_2", "administrative_area_level_3")
 STREET_LEVEL_TYPES = ("GEOMETRIC_CENTER", "APPROXIMATE")
 AGREE_M, DISAGREE_M, ELSEWHERE_M = 250.0, 1000.0, 2000.0
+NATIONAL_PC_FAR_M = 10000.0  # 全国邮编表的邮编位置离 geo 坐标超过这个距离：二者必有一错
+FINE_PC = {"GB", "IE", "SE", "HU", "AR"}  # 没有官方地址表、但邮编细的市场（其余只用 A 类市场的全国邮编表）
 
 
 @dataclass
@@ -113,20 +116,36 @@ def _amap(it: dict) -> GeoAddress | None:
     """高德海外地理编码的一条结果。它的 street / number 常拆错：门牌号字段里是类型词、门牌号混进了 street
     （ULICA / 1 MAJA 3、CALLE / 46D 22、Грузинская / улица 2）——这时按 formatted_address 重新拆：末尾的数字是门牌。"""
     def txt(v) -> str:
-        return v if isinstance(v, str) else ""
+        if not isinstance(v, str):
+            return ""
+        if "Ã" in v or "Â" in v:  # UTF-8 被当成 Latin-1 解码的乱码（Avenida MÃ©xico）：还原
+            try:
+                return v.encode("latin-1").decode("utf-8")
+            except (UnicodeEncodeError, UnicodeDecodeError):
+                return v
+        return v
     loc = txt(it.get("location"))
     if "," not in loc:
         return None
     lng, lat = (float(x) for x in loc.split(",")[:2])
     fa, num, street = txt(it.get("formatted_address")).strip(), txt(it.get("number")).strip(), txt(it.get("street")).strip()
+    fa_main = fa.split(",")[0].strip()  # 逗号后面是单元 / 楼栋（AVENIDA JOAO FRANCESCHI 2101, BLOCO 2, APTO 303）
+    street = street.split(",")[0].strip()
+    num = num.replace("_", "/")
     if num and not re.search(r"\d", num):
-        toks = fa.split()
-        if len(toks) >= 2 and re.match(r"^\d+[A-Za-z]?(?:[/\-]\d+[A-Za-z]?)?$", toks[-1]):
+        toks = fa_main.replace("_", "/").split()
+        house = re.compile(r"^\d+[A-Za-z]?(?:[/\-]\w+)?$")
+        if len(toks) >= 3 and house.match(toks[-1]) and house.match(toks[-2]):  # Baron Ruzettelaan 29 0401：后一个是信箱号
+            num, street = toks[-2], " ".join(toks[:-2])
+        elif len(toks) >= 2 and house.match(toks[-1]):
             num, street = toks[-1], " ".join(toks[:-1])
         elif len(toks) >= 2 and re.match(r"^\d+[A-Za-z]?$", toks[0]):
             num, street = toks[0], " ".join(toks[1:])
         else:
-            num, street = "", fa
+            num, street = "", fa_main
+    m = re.match(r"^(\d+[A-Za-z]?(?:/\d+[A-Za-z]?)?)[\-/](?:LOC|LOCAL|AP|APT|APTO|DEPTO|INT)\b", num, re.I)
+    if m:  # 1432-Loc 6：门牌后面接的是单元
+        num = m.group(1)
     g = GeoAddress(number=num, route=street, lat=lat, lng=lng, formatted=fa, id=txt(it.get("adcode")))
     g.localities = [x for x in (txt(it.get("district")), txt(it.get("city")), txt(it.get("township"))) if x]
     level = txt(it.get("level"))
@@ -186,7 +205,14 @@ def check(eng: Engine, p, g: GeoAddress, cov=None) -> GeoCheck:
         else:
             fields["number"] = "CONFLICT"
     # ---- 道路
-    fields["route"] = _route(eng, p, g, itxt) if g.route else "MISSING"
+    pc_re = eng.rules.pc_re
+    if not g.route:
+        fields["route"] = "MISSING"
+    else:  # 参考库判定（别名、全称 / 简称）+ 原文道路段判定（不被城镇名冒充，见 geo_text.py）
+        by_text = route_match(g.route, p.raw, pc_re)
+        fields["route"] = by_text if outside else _combine(_route(eng, p, g, itxt), by_text)
+        if outside and numbered_only(g.route):
+            flags.append("GEO_AMBIGUOUS")  # 编号路名（Street 7）同城有很多条，范围外又没有参考库可查
     # ---- 邮编（所写邮编的中心离 geo 坐标太远：二者必有一错）
     g_pc = norm_postcode(g.postal_code, m) if g.postal_code else ""
     if not p.postcode:
@@ -199,6 +225,11 @@ def check(eng: Engine, p, g: GeoAddress, cov=None) -> GeoCheck:
     pc = None if outside else eng._postcode_point(p)
     if pc and haversine(pc[0], pc[1], g.lat, g.lng) > eng._pc_far():
         flags.append("GEO_POSTCODE_FAR")
+    elif pc is None and p.postcode and (eng.m.cls == "A" or m in FINE_PC):  # 参考库没有这个邮编：用全国邮编表的位置
+        #（东南亚、中东的全国邮编表坐标粗，不据此判断）
+        hits = gazetteer(ref)._postcode_place(p.postcode) if gazetteer(ref).ok else None
+        if hits and all(haversine(h[0], h[1], g.lat, g.lng) > max(NATIONAL_PC_FAR_M, eng._pc_far()) for h in hits):
+            flags.append("GEO_POSTCODE_FAR")
     # ---- 片区：所写片区要包含 geo 坐标（名称一致也算）
     if outside:  # 所写城镇 / 邮编所在地（全国地名表）要包含 geo 坐标
         fields["locality"] = locality_check(cov, g.lat, g.lng) or ("INFERRED" if g.localities else "")
@@ -226,7 +257,7 @@ def check(eng: Engine, p, g: GeoAddress, cov=None) -> GeoCheck:
     hard = [f for f in ("number", "route") if fields[f] == "CONFLICT"]
     if outside and fields["locality"] == "CONFLICT":
         hard.append("locality")  # 所写城镇里没有这处：geo 选了别的城镇的同名路
-    if "GEO_POSTCODE_FAR" in flags and eng.pc_weight >= 1.5:  # 商户邮编不准的市场（pc_weight 减半）不据此否决
+    if "GEO_POSTCODE_FAR" in flags and (eng.pc_weight >= 1.5 or outside):  # 商户邮编不准的市场（pc_weight 减半）不据此否决
         hard.append("postcode")
     if fields["number"] == "MISSING" or fields["route"] == "MISSING":
         verdict = "STREET_LEVEL"
@@ -250,6 +281,20 @@ def check(eng: Engine, p, g: GeoAddress, cov=None) -> GeoCheck:
         flags += ["POSTCODE_REPLACED"] if fields["postal_code"] == "REPLACED" else []
         flags += ["AREA_STREET_MISMATCH"] if fields["locality"] == "CONFLICT" else []
     return GeoCheck(g, fields, list(dict.fromkeys(flags)), verdict, hard)
+
+
+def _combine(by_ref: str, by_text: str) -> str:
+    """参考库判定与原文判定合并：两边一致照用；参考库确认、原文对不上（城镇名冒充路名）-> 纠正；
+    参考库冲突、原文对得上（别的语言 / 缩写的写法）-> 纠正；都只是"没写"时以原文为准。"""
+    if by_ref == by_text:
+        return by_ref
+    if by_ref == "CONFIRMED":
+        return "CORRECTED" if by_text == "CONFLICT" else "CONFIRMED"
+    if by_ref == "CORRECTED":
+        return "CONFIRMED" if by_text == "CONFIRMED" else "CORRECTED"
+    if by_ref == "CONFLICT":
+        return "CORRECTED" if by_text in ("CONFIRMED", "CORRECTED") else "CONFLICT"
+    return by_text  # 参考库判 INFERRED（原文里没有可对照的路名）
 
 
 def _route(eng: Engine, p, g: GeoAddress, itxt: str) -> str:
@@ -417,8 +462,10 @@ def _from_geo(eng: Engine, ours: Result, c: GeoCheck, action: str, extra: list[s
                                   "postcode": norm_postcode(g.postal_code, m) if g.postal_code else "",
                                   "locality": g.localities[0] if g.localities else "", "lat": g.lat, "lng": g.lng})
     reasons = [r for r in ours.reasons if r in ("NON_ADDRESS_INFO_EXTRACTED",)] + c.flags + extra
-    return Result(eng.market, action, gran, g.lat, g.lng, ours.parsed, best, list(dict.fromkeys(reasons)), comps,
-                  [], f"{ours.parser}+geo")
+    res = Result(eng.market, action, gran, g.lat, g.lng, ours.parsed, best, list(dict.fromkeys(reasons)), comps,
+                 [], f"{ours.parser}+geo")
+    res.coverage = ours.coverage  # 试点范围判断随结论一起返回
+    return res
 
 
 def _cand(g: GeoAddress) -> dict:

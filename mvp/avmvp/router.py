@@ -108,6 +108,10 @@ class MarketRouter:
                  geo=None) -> dict:
         """geo：可选，geo 服务对同一输入返回的标准门址（Google 地理编码格式），给了就先核对它（见 intl/geo_check.py）。"""
         code = (code or "SG").upper()
+        if geo and code != "SG" and (code not in self.codes or not self.available(code)):
+            # 没有参考库的国家：只用原文 + 全国地名表核对 geo 的门址（intl/geo_free.py）
+            from .intl.geo_free import to_response, validate_free
+            return to_response(validate_free(code, text, geo, strictness))
         eng = self.engine(code)
         with self._locks[code]:
             if code == "SG":  # 新加坡引擎的置信度门槛在 ConfidenceValidator 里配置

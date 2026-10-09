@@ -239,7 +239,8 @@ def request_text(body: dict) -> tuple[str, str, str]:
 def validate_one(router: MarketRouter, body: dict) -> dict:
     region, text, strictness = request_text(body)
     threshold = request_threshold(body)
-    router.engine(region)  # 第一次请求某个市场时加载参考数据，不计入耗时
+    if not (body.get("geoResult") and region != "SG" and (region not in router.codes or not router.available(region))):
+        router.engine(region)  # 第一次请求某个市场时加载参考数据，不计入耗时（没有参考库的国家带 geo 结果时不需要）
     t = time.perf_counter()
     out = router.validate(region, text, strictness, threshold, body.get("geoResult"))
     out["serverTimeMs"] = round((time.perf_counter() - t) * 1000, 2)

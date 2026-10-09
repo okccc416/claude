@@ -975,6 +975,7 @@ REASON_TEXT = {
     "GEO_POSTCODE_FAR": "所写邮编的位置离 geo 服务给的坐标很远，二者必有一错",
     "GEO_STREET_LEVEL_ONLY": "geo 服务只定位到道路或区域级，没有门牌",
     "GEO_AMBIGUOUS": "同名道路在别处也有这个门牌，输入里没有邮编或片区能确定是哪一处",
+    "NO_REFERENCE_DATA": "这个国家没有参考库：只用原文和全国地名表核对 geo 的门址",
     "OUTSIDE_COVERAGE": "所写城镇 / 邮编 / 州在参考数据覆盖范围外：无法逐门牌验证，只定位到城镇",
     "DESCRIPTIVE_LOCATION": "输入只有方位描述（第几栋、在某物后面），没有可核对的地址；请用户提供门牌地址，或在地图上标点 / 给出 Plus Code",
     "BUILDING_NAME_AMBIGUOUS": "同名楼宇有多处，需要用户确认是哪一处",
