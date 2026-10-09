@@ -23,6 +23,7 @@ geo 只定位到道路 / 区域级（location_type 不是 ROOFTOP）。
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass, field
 
@@ -57,14 +58,27 @@ class GeoAddress:
 def parse_geo(obj) -> list[GeoAddress]:
     """geo 服务的返回 -> GeoAddress 列表。接受 Google 地理编码响应（{"results": [...]}）、单条结果、结果列表，
     组件既可以是 Geocoding 的 long_name / types，也可以是 Address Validation 的 componentName.text / componentType；
-    也接受扁平字段（street_number、route、postal_code、locality、lat、lng …）。"""
+    也接受扁平字段（street_number、route、postal_code、locality、lat、lng …），以及高德海外地理编码的响应
+    （{"geocodes": [{"formatted_address", "street", "number", "location": "经度,纬度", …}]}，JSON 字符串也行）。"""
     if not obj:
         return []
+    if isinstance(obj, str):
+        try:
+            obj = json.loads(obj)
+        except ValueError:
+            return []
     if isinstance(obj, dict) and "results" in obj:
         obj = obj["results"]
+    if isinstance(obj, dict) and "geocodes" in obj:
+        return [g for g in (_amap(x) for x in obj["geocodes"] or [] if isinstance(x, dict)) if g is not None]
     out = []
     for it in obj if isinstance(obj, list) else [obj]:
         if not isinstance(it, dict):
+            continue
+        if "formatted_address" in it and isinstance(it.get("location"), str) and "," in it["location"]:
+            g = _amap(it)
+            if g is not None:
+                out.append(g)
             continue
         g = GeoAddress()
         comps = it.get("address_components") or it.get("addressComponents")
@@ -89,6 +103,35 @@ def parse_geo(obj) -> list[GeoAddress]:
         if (g.route or g.number) and g.lat is not None:
             out.append(g)
     return out
+
+
+AMAP_LEVEL = {"门牌号": "ROOFTOP", "兴趣点": "ROOFTOP", "单元号": "ROOFTOP", "楼栋": "ROOFTOP",
+              "道路": "GEOMETRIC_CENTER", "道路交叉路口": "GEOMETRIC_CENTER"}
+
+
+def _amap(it: dict) -> GeoAddress | None:
+    """高德海外地理编码的一条结果。它的 street / number 常拆错：门牌号字段里是类型词、门牌号混进了 street
+    （ULICA / 1 MAJA 3、CALLE / 46D 22、Грузинская / улица 2）——这时按 formatted_address 重新拆：末尾的数字是门牌。"""
+    def txt(v) -> str:
+        return v if isinstance(v, str) else ""
+    loc = txt(it.get("location"))
+    if "," not in loc:
+        return None
+    lng, lat = (float(x) for x in loc.split(",")[:2])
+    fa, num, street = txt(it.get("formatted_address")).strip(), txt(it.get("number")).strip(), txt(it.get("street")).strip()
+    if num and not re.search(r"\d", num):
+        toks = fa.split()
+        if len(toks) >= 2 and re.match(r"^\d+[A-Za-z]?(?:[/\-]\d+[A-Za-z]?)?$", toks[-1]):
+            num, street = toks[-1], " ".join(toks[:-1])
+        elif len(toks) >= 2 and re.match(r"^\d+[A-Za-z]?$", toks[0]):
+            num, street = toks[0], " ".join(toks[1:])
+        else:
+            num, street = "", fa
+    g = GeoAddress(number=num, route=street, lat=lat, lng=lng, formatted=fa, id=txt(it.get("adcode")))
+    g.localities = [x for x in (txt(it.get("district")), txt(it.get("city")), txt(it.get("township"))) if x]
+    level = txt(it.get("level"))
+    g.location_type = AMAP_LEVEL.get(level, "APPROXIMATE" if level else ("ROOFTOP" if num else "APPROXIMATE"))
+    return g if (g.route or g.number) else None
 
 
 def _put(g: GeoAddress, types: list[str], name: str) -> None:
