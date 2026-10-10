@@ -8,6 +8,7 @@
 关心的数字：直接通过（ACCEPT）里错的有多少（静默错误）、geo 错的被拦下多少、geo 对的放行多少。
 
   python scripts/geo_real_eval.py --responses final_effective_full_responses_851.jsonl [--details 明细.jsonl]
+  python scripts/geo_real_eval.py --from-details 明细.jsonl      # 不重跑，按上次的明细重新出报告
 输出：reports/geo_real_eval.md、reports/geo_real_eval.json（只有汇总数字，不含原文）
 """
 
@@ -102,13 +103,33 @@ def same_street(a: str, b: str) -> bool:
     return hit_a >= 0.5 and hit_b >= 0.5
 
 
+def failure_buckets(out: list[dict]) -> dict:
+    """最终方案没定位对的条数，按正确答案在不在我们手里分桶（geo 只给 Top1，判断模型没有别的候选可选）。"""
+    ok = [x for x in out if x["final"] == "ok" and x["action"] in (ACCEPT, CONFIRM)]  # 与上面"定位对"同一口径
+    fail = [x for x in out if x not in ok]
+    rows = [
+        ("geo 的 Top1 是对的，但核对层判掉 / 换掉了", sum(x["geo"] == "ok" for x in fail), "能：判\"geo 结果对不对\"更准就能救"),
+        ("geo 错 / 没有结果，本引擎是对的，但没选本引擎", sum(x["geo"] != "ok" and x["ours_final"] == "ok" for x in fail),
+         "能：在两个结果里二选一"),
+        ("geo 只差 100–500 米（门址精度不够），本引擎也没有", sum(x["geo"] == "near" and x["ours_final"] != "ok" for x in fail),
+         "不能：没有更准的坐标可选"),
+        ("geo 错，本引擎也错 / 没有结果（试点城市外、没有参考库的国家）",
+         sum(x["geo"] == "bad" and x["ours_final"] != "ok" for x in fail), "不能：要靠参考数据覆盖"),
+        ("geo 没有结果，本引擎也没有", sum(x["geo"] == "empty" and x["ours_final"] != "ok" for x in fail), "不能"),
+    ]
+    return {"success": len(ok), "fail": len(fail), "rows": rows, "recoverable": rows[0][1] + rows[1][1]}
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--responses", required=True)
+    ap.add_argument("--responses")
     ap.add_argument("--details")
+    ap.add_argument("--from-details", help="上次 --details 写出的明细：不重跑，只重新出报告")
     ap.add_argument("--competitor", help="competitor_geocode.py 的输出：竞品对同一批查询的返回")
     args = ap.parse_args()
-    rows = [json.loads(x) for x in open(args.responses, encoding="utf-8")]
+    if not args.responses and not args.from_details:
+        ap.error("需要 --responses 或 --from-details")
+    rows = [json.loads(x) for x in open(args.responses, encoding="utf-8")] if not args.from_details else []
     comp = {}
     if args.competitor:
         for x in open(args.competitor, encoding="utf-8"):
@@ -146,7 +167,9 @@ def main() -> None:
                     "geo_addr": g.formatted if g else "", "geo_num": g.number if g else "",
                     "geo_route": g.route if g else "", "target": r.get("target_address", "")})
         print(len(out), cc, out[-1]["geo"], res.action, out[-1]["final"], flush=True) if len(out) % 50 == 0 else None
-    if args.details:
+    if args.from_details:
+        out = [json.loads(x) for x in open(args.from_details, encoding="utf-8")]
+    if args.details and not args.from_details:
         with open(args.details, "w", encoding="utf-8") as f:
             for o in out:
                 f.write(json.dumps(o, ensure_ascii=False) + "\n")
@@ -212,7 +235,7 @@ def main() -> None:
                          "只用本引擎": config(xs, "ours_action", "ours_final", "out_ours"),
                          "geo + 核对层（最终方案）": config(xs, "action", "final", "out_final")}
     rep = {"groups": {k: summary(v) for k, v in groups.items()}, "countries": {k: summary(v) for k, v in by_cc.items()},
-           "configs": configs}
+           "configs": configs, "failure_buckets": failure_buckets(out)}
     json.dump(rep, open(ROOT / "reports" / "geo_real_eval.json", "w"), ensure_ascii=False, indent=1)
 
     def pct(a, b):
@@ -245,6 +268,16 @@ def main() -> None:
     for k, s in sorted(rep["countries"].items(), key=lambda kv: -kv[1]["n"]):
         md.append(f"| {k} | {s['n']} | {pct(s['geo_ok'], s['n'])} | {pct(s['geo_bad'], s['n'])} | {pct(s['geo_empty'], s['n'])} | "
                   f"{s['accept']} | {s['accept_bad']} | {pct(s['geo_bad_caught'], s['geo_bad'])} | {pct(s['geo_ok_accepted'], s['geo_ok'])} |")
+    fb = rep["failure_buckets"]
+    md += ["", "## 失败分桶：换一个更强的判断模型（Jev 类）最多能救回多少", "",
+           f"最终方案定位对（直接通过或请用户确认、且离目标 ≤ 100 米）{fb['success']} 条，其余 {fb['fail']} 条按"
+           "正确答案在不在我们手里分桶。geo 每次只返回 1 个结果，判断模型只能在\"geo 的结果\"和\"本引擎的结果\"之间判断，"
+           "两者都不对时谁也救不回来。", "",
+           "| 桶 | 条数 | 占失败 | 判断模型能不能救 |", "|---|---|---|---|"]
+    for k, v, how in fb["rows"]:
+        md.append(f"| {k} | {v} | {pct(v, fb['fail'])} | {how} |")
+    md.append(f"| **判断模型最多能救回** | **{fb['recoverable']}** | {pct(fb['recoverable'], fb['fail'])} | "
+              f"定位对从 {pct(fb['success'], len(out))} 升到最多 {pct(fb['success'] + fb['recoverable'], len(out))} |")
     (ROOT / "reports" / "geo_real_eval.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 
 
