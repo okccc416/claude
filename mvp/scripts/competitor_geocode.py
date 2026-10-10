@@ -1,7 +1,8 @@
 """竞品地理编码对比：把评测集的查询逐条发给竞品接口，原样保存返回，供 geo_real_eval.py --competitor 评测。
 
 只用于评测打分，不用竞品的返回改进本方案（使用前确认竞品平台的服务条款允许这类对比测试）。
-key 从环境变量 COMP_AK 读取，不写进代码、不提交。默认是百度地图地理编码接口（返回 GCJ-02 坐标，
+key 从环境变量 COMP_AK 读取，不写进代码、不提交；应用开了 SN 签名校验（百度返回 status 211）时，
+再设 COMP_SK（应用的 Secret Key），脚本按百度的规则算 sn 签名。默认是百度地图地理编码接口（返回 GCJ-02 坐标，
 海外 GCJ-02 与 WGS-84 相同）；--endpoint 可换成别的接口，{address} 和 {ak} 会被替换。
 
   COMP_AK=... python scripts/competitor_geocode.py --cases final_effective_full_responses_851.jsonl \\
@@ -12,6 +13,7 @@ key 从环境变量 COMP_AK 读取，不写进代码、不提交。默认是百�
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import sys
@@ -21,6 +23,16 @@ import urllib.request
 from pathlib import Path
 
 DEFAULT = "https://api.map.baidu.com/geocoding/v3/?address={address}&output=json&ret_coordtype=gcj02ll&ak={ak}"
+SAFE = "/:=&?#+!$,;'@()*[]"
+
+
+def signed(url: str, sk: str) -> str:
+    """百度 SN 签名：sn = MD5(quote_plus(quote(路径?参数) + SK))，加在参数末尾。"""
+    parts = urllib.parse.urlsplit(url)
+    query_str = f"{parts.path}?{parts.query}"
+    raw = urllib.parse.quote(query_str, safe=SAFE) + sk
+    sn = hashlib.md5(urllib.parse.quote_plus(raw).encode()).hexdigest()
+    return f"{parts.scheme}://{parts.netloc}{query_str}&sn={sn}"
 
 
 def main() -> None:
@@ -33,6 +45,7 @@ def main() -> None:
     ak = os.environ.get("COMP_AK")
     if not ak:
         sys.exit("需要环境变量 COMP_AK")
+    sk = os.environ.get("COMP_SK", "")
     done = set()
     out = Path(args.out)
     if out.exists():
@@ -43,6 +56,8 @@ def main() -> None:
             if c["case_id"] in done:
                 continue
             url = args.endpoint.format(address=urllib.parse.quote(c["query"]), ak=ak)
+            if sk:
+                url = signed(url, sk)
             body, err = "", ""
             for attempt in range(3):
                 try:
