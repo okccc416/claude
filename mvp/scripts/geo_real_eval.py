@@ -43,6 +43,23 @@ def label(lat, lng, truth) -> str:
     return "ok" if d <= OK_M else "bad" if d > BAD_M else "near"
 
 
+def competitor_point(body: str) -> tuple[float, float] | None:
+    """竞品返回 -> (纬度, 经度)。百度：{"status": 0, "result": {"location": {"lng", "lat"}}}（列表结果取第一条）；
+    也接受 Google 式 results[0].geometry.location。"""
+    try:
+        d = json.loads(body)
+    except ValueError:
+        return None
+    if isinstance(d, dict) and d.get("status") in (0, "0", "OK"):
+        res = d.get("result") or d.get("results")
+        res = res[0] if isinstance(res, list) and res else res
+        if isinstance(res, dict):
+            loc = res.get("location") or (res.get("geometry") or {}).get("location") or {}
+            if "lat" in loc and "lng" in loc:
+                return float(loc["lat"]), float(loc["lng"])
+    return None
+
+
 def target_fields(addr: str) -> tuple[str, str]:
     """库内目标门址（"26, R. Padre Sena de Freitas, 里斯本, 里斯本, 葡萄牙"）-> (门牌, 路名)。"""
     parts = [x.strip() for x in addr.split(",")]
@@ -89,8 +106,14 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--responses", required=True)
     ap.add_argument("--details")
+    ap.add_argument("--competitor", help="competitor_geocode.py 的输出：竞品对同一批查询的返回")
     args = ap.parse_args()
     rows = [json.loads(x) for x in open(args.responses, encoding="utf-8")]
+    comp = {}
+    if args.competitor:
+        for x in open(args.competitor, encoding="utf-8"):
+            c = json.loads(x)
+            comp[c["case_id"]] = competitor_point(c.get("response") or "")
     engines: dict[str, Engine] = {}
     out = []
     for r in rows:
@@ -115,6 +138,8 @@ def main() -> None:
                     "ours_action": ours.action if ours is not None else "NONE",
                     "ours_final": label(ours.lat, ours.lng, (tl, tg)) if ours is not None else "none",
                     "input_has_postcode": has_pc,
+                    "comp": (label(comp[r["case_id"]][0], comp[r["case_id"]][1], (tl, tg))
+                             if comp.get(r["case_id"]) else "empty") if comp else None,
                     "out_geo": fields_of_geo(g), "out_final": fields_of(res), "out_ours": fields_of(ours),
                     "t_num": t_num, "t_street": t_street,
                     "reasons": list(res.reasons)[:6], "query": r["query"],
@@ -176,7 +201,14 @@ def main() -> None:
                       ("其中试点城市外", lambda x: x["mode"] == "outside"),
                       ("没有参考库的国家", lambda x: x["mode"] == "no_reference")):
         xs = [x for x in out if sel(x)]
-        configs[name] = {"只用 geo": config(xs, None, None, "out_geo"),
+        if comp:  # 竞品：有结果就算采用（与"只用 geo"同一口径）
+            cs = [x for x in xs]
+            configs.setdefault(name, {})["竞品"] = {
+                "n": len(cs), "accept": sum(x["comp"] != "empty" for x in cs),
+                "accept_ok": sum(x["comp"] == "ok" for x in cs), "accept_bad": sum(x["comp"] == "bad" for x in cs),
+                "located_ok": sum(x["comp"] == "ok" for x in cs), "complete": 0, "standard_ok": 0, "need_pc": 0,
+                "pc_filled": 0}
+        configs[name] = {**configs.get(name, {}), "只用 geo": config(xs, None, None, "out_geo"),
                          "只用本引擎": config(xs, "ours_action", "ours_final", "out_ours"),
                          "geo + 核对层（最终方案）": config(xs, "action", "final", "out_final")}
     rep = {"groups": {k: summary(v) for k, v in groups.items()}, "countries": {k: summary(v) for k, v in by_cc.items()},
