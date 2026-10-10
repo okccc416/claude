@@ -26,13 +26,17 @@ DEFAULT = "https://api.map.baidu.com/geocoding/v3/?address={address}&output=json
 SAFE = "/:=&?#+!$,;'@()*[]"
 
 
-def signed(url: str, sk: str) -> str:
-    """百度 SN 签名：sn = MD5(quote_plus(quote(路径?参数) + SK))，加在参数末尾。"""
-    parts = urllib.parse.urlsplit(url)
-    query_str = f"{parts.path}?{parts.query}"
-    raw = urllib.parse.quote(query_str, safe=SAFE) + sk
-    sn = hashlib.md5(urllib.parse.quote_plus(raw).encode()).hexdigest()
-    return f"{parts.scheme}://{parts.netloc}{query_str}&sn={sn}"
+def build_url(template: str, address: str, ak: str, sk: str) -> str:
+    """请求地址。有 SK 时按百度 SN 规则：未转码的"路径?参数"整体转码一次、末尾接 SK，quote_plus 后取 MD5 作 sn，
+    最终地址是同一串原始参数加 sn 再整体转码（不能先转码地址再签名，否则两边算出的串不一致）。
+    转码时保留的字符里有 # & =，所以地址里的这几个字符先换掉（Calle 16 #22-53 -> Calle 16 No. 22-53）。"""
+    if not sk:
+        return template.format(address=urllib.parse.quote(address), ak=ak)
+    address = address.replace("#", " No. ").replace("&", " y ").replace("=", " ")
+    parts = urllib.parse.urlsplit(template)
+    raw = f"{parts.path}?{parts.query}".format(address=address, ak=ak)
+    sn = hashlib.md5(urllib.parse.quote_plus(urllib.parse.quote(raw, safe=SAFE) + sk).encode("utf-8")).hexdigest()
+    return urllib.parse.quote(f"{parts.scheme}://{parts.netloc}{raw}&sn={sn}", safe=SAFE)
 
 
 def main() -> None:
@@ -55,9 +59,7 @@ def main() -> None:
         for i, c in enumerate(cases):
             if c["case_id"] in done:
                 continue
-            url = args.endpoint.format(address=urllib.parse.quote(c["query"]), ak=ak)
-            if sk:
-                url = signed(url, sk)
+            url = build_url(args.endpoint, c["query"], ak, sk)
             body, err = "", ""
             for attempt in range(3):
                 try:
