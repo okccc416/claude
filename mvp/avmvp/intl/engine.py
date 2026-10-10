@@ -23,9 +23,10 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
+from . import google
 from .coverage import gazetteer
 from .markets import MARKETS
-from .parse import Parsed, RuleParser, Span
+from .parse import AU_STATES, Parsed, RuleParser, Span
 from .poiaddr import lookup as poi_lookup
 from .pluscode import encode, recover
 from .reference import OSM_ID_BASE, MarketReference, haversine, number_key
@@ -744,7 +745,7 @@ class Engine:
             comps["street_number"] = {"text": best.point["number"] if exact else p.number,
                                       "level": "CONFIRMED" if exact else "UNCONFIRMED_BUT_PLAUSIBLE"}
         if p.postcode:
-            comps["postal_code"] = {"text": best.point["postcode"] if best.point else p.postcode,
+            comps["postal_code"] = {"text": best.point["postcode"] if best.point and best.point["postcode"] else p.postcode,
                                     "level": "CONFIRMED" if (best.point and best.point["postcode"] == p.postcode)
                                     or "POSTCODE_STREET_MISMATCH" not in best.notes else "UNCONFIRMED_AND_SUSPICIOUS",
                                     "replaced": "POSTCODE_REPLACED" in best.notes}
@@ -875,72 +876,349 @@ class Engine:
 
     # ------------------------------------------------------------------ 响应
     def to_response(self, res: Result) -> dict:
-        """Google AV 风格的响应（字段含义与新加坡引擎一致，见 docs/13）。"""
-        names = {"route": "route", "locality": "sublocality", "premise_name": "premise_name",
-                 "street_number": "street_number", "postal_code": "postal_code", "subpremise": "subpremise",
-                 "plus_code": "plus_code"}
-        comps = []
-        for k, v in res.components.items():
-            text = fmt_postcode(v["text"], self.market) if k == "postal_code" else v["text"]
-            c = {"componentType": names[k], "componentName": {"text": text}, "confirmationLevel": v["level"]}
-            c.update({f: True for f in ("inferred", "spellCorrected", "replaced") if v.get(f)})
-            comps.append(c)
-        missing = [t for t, k in (("route", "route"), ("street_number", "street_number"))
-                   if k not in res.components and not (k == "street_number" and res.best and res.best.building)]
-        levels = [c["confirmationLevel"] for c in comps]
+        """Google Address Validation 的响应：字段、取值和含义按 Google AV（见 google.py、docs/13 第 6 节）。
+        结论（possibleNextAction）就是内部结论；组件补全城市 / 州 / 国家，缺失字段按 Google 的各国必填规则。"""
+        cc, p, b = self.market, res.parsed, res.best
+        lang = google.language_of(p.raw, cc, self.m.languages)
+        latin = google.script(p.raw) == "latin"
+        outside = getattr(res.coverage, "status", "") == "OUTSIDE"
+        comps, consumed = self._google_components(res, lang, latin, outside)
+        types = {c["componentType"] for c in comps}
+        unresolved = self._unresolved(res, comps, consumed)
+        # 楼宇本身验证到了（商场、写字楼）、原文也没写门牌：不要求道路和门牌
+        building_only = not p.number and any(c["componentType"] == "premise" and c["confirmationLevel"] == "CONFIRMED"
+                                             for c in comps)
+        missing = google.required_missing(cc, types, building_only)
+        if res.action == ADD_SUB:  # 多户楼没写单元号：Google 只对美国返回 CONFIRM_ADD_SUBPREMISES，其他国家列为缺失
+            missing.append("subpremise")
+        flags = google.verdict_flags(comps, unresolved, missing)
+        val, geo_gran = self._granularities(res, comps)
+        by = {c["componentType"]: c["componentName"]["text"] for c in comps}
+        parts = {"A": self._street_line(by), "C": by.get(google.city_type(cc)) or by.get("locality", ""),
+                 "S": by.get(google.admin_type(cc), ""), "Z": by.get("postal_code", ""),
+                 "D": by.get("sublocality_level_1") or by.get("neighborhood", "")}
+        lines = google.format_lines(cc, parts, lang)
+        country = by.get("country", "")
+        formatted = google.join_lines(cc, lines, country, lang)
+        street_lines = [parts["A"]] if parts["A"] else []
+        geocode = None
+        if res.lat is not None:
+            geocode = {"location": {"latitude": res.lat, "longitude": res.lng},
+                       "plusCode": {"globalCode": encode(res.lat, res.lng)}, **self._geocode_extent(res),
+                       "placeTypes": self._place_types(res)}
+        unconfirmed = flags.pop("_unconfirmed")
         return {"responseId": str(uuid.uuid4()), "result": {
-            "verdict": {"possibleNextAction": res.action, "validationGranularity": res.granularity,
-                        **({"confidence": round(res.confidence, 4),
-                            "confidenceNote": res.confidence_note}
+            "verdict": {"inputGranularity": self._input_granularity(p),
+                        "validationGranularity": val, "geocodeGranularity": geo_gran, **flags,
+                        "possibleNextAction": google.next_action(res.action, cc),
+                        **({"confidence": round(res.confidence, 4), "confidenceNote": res.confidence_note}
                            if res.confidence is not None else {}),
-                        "geocodeGranularity": res.granularity,
-                        "addressComplete": res.action == ACCEPT,
-                        "hasUnconfirmedComponents": any(x != "CONFIRMED" for x in levels) or res.best is None,
-                        "hasInferredComponents": any(c.get("inferred") for c in res.components.values()),
-                        "hasReplacedComponents": any(c.get("replaced") for c in res.components.values()),
-                        "hasSpellCorrectedComponents": any(c.get("spellCorrected")
-                                                           for c in res.components.values()),
                         "reasons": [{"code": r, "message": REASON_TEXT.get(r, r)} for r in dict.fromkeys(res.reasons)]},
-            "address": {"formattedAddress": self._format(res.components), "addressComponents": comps,
-                        "missingComponentTypes": missing if res.action != ACCEPT else []},
-            "geocode": {"location": {"latitude": res.lat, "longitude": res.lng},
-                        "plusCode": {"globalCode": encode(res.lat, res.lng)}} if res.lat is not None else None,
-            "nonAddressInfo": res.parsed.noise or None,
-            "codes": res.parsed.codes or None,
+            "address": {"formattedAddress": formatted,
+                        "postalAddress": google.postal_address(cc, lang, comps, street_lines),
+                        "addressComponents": comps, "missingComponentTypes": missing,
+                        "unconfirmedComponentTypes": unconfirmed, "unresolvedTokens": unresolved},
+            "geocode": geocode,
+            "metadata": {**({"business": True} if b is not None and b.building and not b.building.get("is_bldg")
+                            else {}),
+                         **({"poBox": True} if p.noise.get("poBoxes") else {}),
+                         "regionCode": cc, "marketClass": self.m.cls, "parser": res.parser},
+            "nonAddressInfo": p.noise or None,
+            "codes": p.codes or None,
             "candidates": [{"formattedAddress": ", ".join(str(c[k]) for k in ("building", "number", "street", "area",
                                                                               "postcode") if c.get(k)),
                             **({"location": {"latitude": c["lat"], "longitude": c["lng"]}} if "lat" in c else {})}
                            for c in res.candidates],
-            "metadata": {"regionCode": res.market, "marketClass": self.m.cls, "parser": res.parser},
         }}
 
+    def _google_components(self, res: Result, lang: str, latin: bool, outside: bool) -> tuple[list[dict], list[str]]:
+        """内部组件 -> Google 的组件类型；补全城市（locality）、州 / 省、国家。另返回进了判断、但不单独作组件的
+        原文地名（不算 unresolvedTokens）。"""
+        cc, p, b = self.market, res.parsed, res.best
+        out: list[dict] = []
+        own = {"route": "route", "street_number": "street_number", "postal_code": "postal_code",
+               "subpremise": "subpremise", "plus_code": "plus_code", "premise_name": "premise"}
+        for k, v in res.components.items():
+            if k not in own:
+                continue
+            text = fmt_postcode(v["text"], cc) if k == "postal_code" else _unit_text(v["text"]) if k == "subpremise" \
+                else google.one_language(v["text"], lang) if k == "route" else v["text"]
+            level = v["level"]
+            if k == "subpremise" and self._unit_known(res):
+                level = "CONFIRMED"
+            out.append(google.component(own[k], text, level, lang, inferred=v.get("inferred"),
+                                        spellCorrected=v.get("spellCorrected"), replaced=v.get("replaced"),
+                                        unexpected=k == "postal_code" and not google.uses(cc, "Z")))
+        if b is None and not outside:  # 什么都没匹配上：原文里认出的组件照样返回（未确认）
+            have = {c["componentType"] for c in out}
+            for k, ctype in (("number", "street_number"), ("postcode", "postal_code"), ("unit", "subpremise")):
+                val = getattr(p, k)
+                if val and ctype not in have:
+                    out.append(google.component(ctype, fmt_postcode(val, cc) if k == "postcode" else _unit_text(val)
+                                                if k == "unit" else val,
+                                                "UNCONFIRMED_BUT_PLAUSIBLE", lang,
+                                                unexpected=k == "postcode" and not google.uses(cc, "Z")))
+        if not any(c["componentType"] == "route" for c in out) and p.number:
+            raw = _raw_route(p.raw, p.number, self.rules.pc_re)
+            if raw:  # 试点范围内的官方地址表 / 路网里没有这条路：可疑；其他情况只是没法核实
+                sus = self.ref.has_addresses and not outside
+                out.append(google.component("route", raw, "UNCONFIRMED_AND_SUSPICIOUS" if sus
+                                            else "UNCONFIRMED_BUT_PLAUSIBLE", lang))
+        places, consumed = self._places(res, lang, latin, outside)
+        return google.sort_components(out + places), consumed
 
-    def _format(self, comps: dict[str, dict]) -> str:
-        """按各市场习惯排版：12 Smith Street / Musterstraße 12；邮编在城市前（欧洲）或后。"""
-        t = {k: v["text"] for k, v in comps.items()}
-        unit = t.get("subpremise", "")
-        unit = unit.title() if unit.isupper() and len(unit) > 2 and any(c.isalpha() for c in unit) else unit
-        num, route = t.get("street_number"), t.get("route")
-        pc, loc = fmt_postcode(t.get("postal_code"), self.market), t.get("locality")
-        if self.market == "NL":  # 荷兰写法：Rozengracht 162A、Aalsmeerderweg 283-30、邮编 1016 NK
-            if num and unit and len(unit) <= 4:
-                num, unit = (num + unit if len(unit) == 1 and unit.isalpha() else f"{num}-{unit.upper()}"), ""
-        if self.market == "JP":  # 〒150-0041 渋谷区神南一丁目12（从大到小连写）
-            head = f"{loc or ''}{route or ''}{num or ''}"
-            return " ".join(x for x in (f"〒{pc}" if pc else "", head, t.get("premise_name"), unit,
-                                        t.get("plus_code")) if x)
+    def _places(self, res: Result, lang: str, latin: bool, outside: bool) -> tuple[list[dict], list[str]]:
+        """片区 / 城市 / 州 / 国家。城市（Google 的 locality）按来源优先级：
+          官方地址表登记的邮寄地名（REGISTER_CITY 的市场：澳洲 suburb、丹麦 København S、瑞典 postort …）
+          -> Overture 行政区层级里对应 locality 的那一级（google.city_node）-> 全国地名表里包含这个点的城市。
+        原文写的片区不是城市本身时按片区类型给 sublocality / neighborhood。"""
+        cc, p, b = self.market, res.parsed, res.best
+        out: list[dict] = []
+        consumed: list[str] = []  # 进了判断、但不单独作组件的原文地名（澳洲写的 Melbourne）
+        loc = res.components.get("locality")
+        area = self.ref.areas[b.area] if b is not None and b.area is not None else None
+        chain = google.divisions(self.ref).chain(res.lat, res.lng) if res.lat is not None and not outside else []
+        gaz = gazetteer(self.ref)
+        city, names, level = None, [], "CONFIRMED"
+        reg = google.title(b.point.get("locality") or "") if (b is not None and b.point and cc in REGISTER_CITY) else ""
+        if outside:
+            if loc:
+                city, names, level = loc["text"], [loc["text"]], loc["level"]
+        elif reg:
+            city, names = reg, [reg]
+        elif cc == "AU":  # 澳洲的 locality 是 suburb（层级里城市下面一级）
+            sub = [n for n in chain if n.subtype in ("macrohood", "locality") and n.local_type != "city"]
+            if sub:
+                city, names = sub[-1].label(lang), [sub[-1].name, *sub[-1].names.values()]
+        else:
+            node = google.city_node(chain, cc)
+            if node is not None:
+                city = google.clean_city(google.one_language(node.label(lang), lang), cc,
+                                         set(gaz.names) if gaz.ok else None)
+                names = [city, node.name, *node.names.values()]
+            elif res.lat is not None:
+                hit = google.gazetteer_city(gaz, res.lat, res.lng, lang, p.raw)
+                if hit:
+                    city, names, level = hit[0], hit[1], "UNCONFIRMED_BUT_PLAUSIBLE"
+        if loc and not outside:
+            text = google.title(google.one_language(loc["text"], lang))
+            rel = google.place_relation(text, city) if city else ""
+            if city is None:
+                city, names, level = text, [text], loc["level"]
+            elif rel == "same":
+                names.append(text)
+            elif not loc.get("inferred") and area is not None and cc == "AU" and area.radius_m > 15000:
+                consumed.append(text)  # 澳洲原文写的 Sydney / Melbourne：城市名，不是 suburb
+            else:
+                ctype = "sublocality_level_1"
+                if rel != "part" and not loc.get("inferred") and area is not None:
+                    ctype = AREA_TYPE.get(area.subtype, "sublocality_level_1")
+                out.append(google.component(ctype, text, loc["level"], lang, inferred=loc.get("inferred")))
+        if city:
+            said = _mentioned(p.raw, names)
+            out.append(google.component(google.city_type(cc), city, "CONFIRMED" if said else level, lang,
+                                        inferred=not said))
+        if cc == "NZ" and not any(c["componentType"] in ("sublocality_level_1", "neighborhood") for c in out):
+            sub = google.title(b.point.get("locality") or "") if b is not None and b.point else ""
+            subs = [n for n in chain if n.subtype == "macrohood"]
+            if not sub and subs:
+                sub = subs[-1].label(lang)
+            if sub and not google.place_relation(sub, city or ""):  # 新西兰必填 suburb（%D）
+                out.append(google.component("sublocality_level_1", sub, "CONFIRMED", lang,
+                                            inferred=not _mentioned(p.raw, [sub])))
+        admin = self._admin(res, chain, latin, lang, names)
+        if admin:
+            out.append(admin)
+        said = _mentioned(p.raw, list(google.country_names(cc)))
+        out.append(google.component("country", google.country_name(cc, lang), "CONFIRMED", lang, inferred=not said))
+        return out, consumed
+
+    def _admin(self, res: Result, chain: list, latin: bool, lang: str, city_names: list) -> dict | None:
+        """州 / 省（只在这个国家的邮寄地址用州 / 省时）：邮编前缀 -> 行政区层级 -> 城市本身就是州（迪拜、墨西哥城）
+        -> 原文里写的。"""
+        cc = self.market
+        subs = google.subdivisions(cc)
+        if not google.uses(cc, "S") or not subs.keys:
+            return None
+        pc = res.components.get("postal_code", {}).get("text") or res.parsed.postcode
+        i = subs.by_postcode(pc)
+        if i is None and chain:
+            level = "county" if cc in google.ADMIN2 else "region"
+            names = [x for n in chain if n.subtype == level for x in (n.name, *n.names.values())]
+            i = subs.by_names(names) if names else None
+        if i is None and not chain and city_names:
+            i = subs.by_names(city_names)
+        said = subs.in_text(res.parsed.raw)
+        if i is None and said is None:
+            return None
+        if i is None:
+            return google.component(google.admin_type(cc), subs.text(said, latin), "UNCONFIRMED_BUT_PLAUSIBLE", lang)
+        return google.component(google.admin_type(cc), subs.text(i, latin), "CONFIRMED", lang,
+                                inferred=said is None, replaced=said is not None and said != i)
+
+    def _unit_known(self, res: Result) -> bool:
+        """单元号在官方地址表里登记过（澳洲 G-NAF 的 UNIT 23、丹麦 st tv、挪威 H0101 …）：子门牌级验真。"""
+        b, p = res.best, res.parsed
+        if not (p.unit and b is not None and b.point and res.granularity == "PREMISE" and self.ref.has_addresses
+                and self.market in UNIT_MARKETS):
+            return False
+        want = _unit_key(p.unit)
+        return bool(want) and any(_unit_key(u) == want for u in self.ref.units(b.point["street"], b.point["number"]))
+
+    def _granularities(self, res: Result, comps: list[dict]) -> tuple[str, str]:
+        """(validationGranularity, geocodeGranularity)。门牌按相邻门牌推算 / 来自商户地址时，门牌本身没有验证：
+        验证到道路级、定位接近门牌级（PREMISE_PROXIMITY）；日本的门牌点是街区（番）级：BLOCK。"""
+        b, g = res.best, res.granularity
+        notes = set(b.notes) if b is not None else set()
+        geo = {"LOCALITY": "OTHER"}.get(g, g)
+        if g == "PREMISE":
+            val = "PREMISE"
+        elif g == "PREMISE_PROXIMITY":
+            if b is not None and b.building and not ({"PREMISE_INTERPOLATED", "PREMISE_FROM_POI"} & notes):
+                val = "PREMISE"
+            else:
+                val = "ROUTE" if b is not None and b.street is not None else "OTHER"
+        else:
+            val = "ROUTE" if g == "ROUTE" else "OTHER"
+        if val == "PREMISE" and any(c["componentType"] == "subpremise" and c["confirmationLevel"] == "CONFIRMED"
+                                    for c in comps):
+            val = "SUB_PREMISE"
+        if self.market == "JP":
+            val, geo = ("BLOCK" if val == "PREMISE" else val), ("BLOCK" if geo == "PREMISE" else geo)
+        return val, geo
+
+    def _input_granularity(self, p: Parsed) -> str:
+        if p.unit:
+            return "SUB_PREMISE"
+        if p.number or p.buildings or p.codes:
+            return "BLOCK" if self.market == "JP" and p.number and "-" not in p.number else "PREMISE"
+        return "ROUTE" if p.streets else "OTHER"
+
+    def _geocode_extent(self, res: Result) -> dict:
+        """geocode.bounds / featureSizeMeters：道路取道路范围，Plus Code 取格子，片区取片区半径；门牌点不给。"""
+        b, g = res.best, res.granularity
+        if b is not None and b.code and g == "PREMISE_PROXIMITY":
+            half = b.code[2] / 2
+        elif g == "ROUTE" and b is not None and b.street is not None:
+            s = self.ref.streets[b.street]
+            x0, y0, x1, y1 = s.bbox
+            size = haversine(y0, x0, y1, x1)
+            return {"bounds": {"low": {"latitude": y0, "longitude": x0}, "high": {"latitude": y1, "longitude": x1}},
+                    "featureSizeMeters": round(max(size, s.length_m or 0.0), 1)}
+        elif g == "LOCALITY" and res.parsed.areas and res.parsed.areas[0].ids and b is None:
+            half = self.ref.areas[res.parsed.areas[0].ids[0]].radius_m
+        else:
+            return {}
+        return {"bounds": google.bounds(res.lat, res.lng, half), "featureSizeMeters": round(half * 2, 1)}
+
+    def _place_types(self, res: Result) -> list[str]:
+        b, g, p = res.best, res.granularity, res.parsed
+        if g in ("PREMISE", "PREMISE_PROXIMITY"):
+            if b is not None and b.code and b.street is None and not b.building:
+                return ["plus_code"]
+            if b is not None and b.building and (b.street is None or not p.number):
+                return ["premise"]
+            return ["street_address"]
+        if g == "ROUTE":
+            return ["route"]
+        if g == "LOCALITY":
+            return ["locality", "political"] if p.areas else ["postal_code"]
+        return []
+
+    def _unresolved(self, res: Result, comps: list[dict], consumed: list[str]) -> list[str]:
+        """Google 的 unresolvedTokens：原文里没归入任何组件的词。去掉已进组件的词、国家 / 州 / 全城名、楼层 / 单元标记、
+        冠词连词和标点。"""
+        cc, p = self.market, res.parsed
+        used: set[str] = set()
+        for c in comps:
+            t = c["componentName"]["text"]
+            used |= set(key(t, cc).split()) | set(google.norm(t).split())
+        for t in consumed:
+            used |= set(key(t, cc).split()) | set(google.norm(t).split())
+        used |= {w for k in self.rules.neutral for w in k.split()} | AU_STATES | google.ADMIN_WORDS
+        used |= {w for n in google.country_names(cc) for w in n.split()}
+        subs = google.subdivisions(cc)
+        used |= {w for n in subs.keys + subs.names + subs.lnames for w in google.norm(n).split() if len(w) >= 3}
+        out = []
+        for t in p.leftover:
+            if not re.search(r"\w", t) or t in used or google.norm(t) in used:
+                continue
+            if all(w in used for w in key(t, cc).split()):
+                continue
+            if t in UNIT_TOKENS or t in PARTICLES or FLOOR.fullmatch(t):
+                continue
+            out.append(t)
+        return out
+
+    def _street_line(self, by: dict[str, str]) -> str:
+        """街道行（Google 的 addressLines / fmt 里的 %A）：按各市场习惯，12 Smith Street / Musterstraße 12；
+        单元、楼名在前；日本从大到小连写（渋谷区神南一丁目12，区写在街道行里）。"""
+        unit = by.get("subpremise", "")
+        num, route, premise = by.get("street_number"), by.get("route"), by.get("premise")
+        if self.market == "NL" and num and unit and len(unit) <= 4:  # Rozengracht 162A、Aalsmeerderweg 283-30
+            num, unit = (num + unit if len(unit) == 1 and unit.isalpha() else f"{num}-{unit.upper()}"), ""
+        if self.market == "JP":
+            head = f"{by.get('locality', '')}{route or ''}{num or ''}"
+            return " ".join(x for x in (head, premise, unit) if x) or by.get("plus_code", "")
         line = " ".join(x for x in ((num, route) if self.m.number_first else (route, num)) if x)
         if self.market == "CO" and num and route:  # Calle 72 # 8-24
             line = f"{route} # {num}"
-        if self.m.postcode_first:
-            tail = " ".join(x for x in (pc, loc) if x)
-        elif self.market == "AU" and pc:
-            tail = " ".join(x for x in (loc, AU_STATE.get(pc[:1], ""), pc) if x)
-        elif self.m.state and pc:  # Toronto ON M5V 2K4
-            tail = " ".join(x for x in (loc, self.m.state, pc) if x)
-        else:
-            tail = ", ".join(x for x in (loc, pc) if x)
-        return ", ".join(x for x in (unit, t.get("premise_name"), line, tail, t.get("plus_code")) if x)
+        return ", ".join(x for x in (unit, premise, line) if x) or by.get("plus_code", "")
+
+
+def _mentioned(text: str, names: list[str]) -> bool:
+    """原文里写了这个地名（整词出现）。"""
+    t = f" {norm_place(text)} "
+    return any(len(k) >= 2 and f" {k} " in t for k in (norm_place(n) for n in names if n))
+
+
+def norm_place(s: str) -> str:
+    return google.norm(s)
+
+
+def _raw_route(text: str, number: str, pc_re) -> str:
+    """没有匹配上道路时，原文里门牌号所在那一段去掉门牌 / 邮编后的文字（按原文大小写），作为未确认的 route。"""
+    for seg in re.split(r"\s*[,;|\n،]\s*", text):
+        plain = pc_re.sub(" ", seg) if pc_re else seg
+        if not re.search(rf"(?<![\w]){re.escape(number)}(?![\w])", plain, re.I):
+            continue
+        rest = re.sub(rf"(?<![\w])(?:No\.?|Nr\.?|N[º°o]\.?|#)?\s*{re.escape(number)}(?![\w])", " ", plain, flags=re.I)
+        rest = re.sub(r"\s+", " ", rest).strip(" ,.-#/")
+        return rest if len(re.sub(r"[\W\d_]", "", rest)) >= 3 else ""
+    return ""
+
+
+def _unit_text(u: str) -> str:
+    """单元号按常见写法显示：UNIT 5 -> Unit 5、14TH FLOOR -> 14th Floor（解析时统一成了大写）。"""
+    if u.isupper() and len(u) > 2 and any(c.isalpha() for c in u) and u.isascii():
+        return " ".join(w.capitalize() for w in u.split(" "))
+    return u
+
+
+def _unit_key(u: str) -> str:
+    return re.sub(r"[^A-Z0-9]", "", re.sub(r"\b(UNIT|APT|APARTMENT|FLAT|SUITE|STE|BUS|BTE|BOITE|NO|NR|LGH|H)\b\.?",
+                                           "", fold(u)))
+
+
+# Overture 片区类型 -> Google 组件类型（片区不是城市本身时）
+AREA_TYPE = {"locality": "sublocality_level_1", "localadmin": "sublocality_level_1", "borough": "sublocality_level_1",
+             "macrohood": "sublocality_level_1", "neighborhood": "neighborhood", "microhood": "neighborhood",
+             "county": "administrative_area_level_2", "region": "administrative_area_level_1"}
+# 官方地址表登记的地名就是邮寄地址里的城市 / 地名（Google 的 locality）；其余市场登记的是区 / 街道级地名
+#（德国 Ortsteil、法国 arrondissement、墨西哥 alcaldía、爱沙尼亚 linnaosa …），作 sublocality
+REGISTER_CITY = {"AU", "NL", "PR", "BR", "CL", "GB", "IE", "BE", "LU", "CH", "AT", "IT", "ES", "PT", "DK", "SE", "NO",
+                 "FI", "LV", "PL", "HU", "SI", "HR", "BG", "JP"}
+UNIT_MARKETS = {"AU", "CA", "NZ", "NO", "DK", "PT", "EE", "BE"}  # 官方地址表登记了单元号的市场
+UNIT_TOKENS = {"UNIT", "APT", "APARTMENT", "SUITE", "STE", "FLAT", "LEVEL", "FLOOR", "LVL", "GROUND", "PISO", "PLANTA",
+               "ANDAR", "ETAGE", "OG", "EG", "DG", "UG", "STOCK", "PIANO", "INTERNO", "INT", "LOCAL", "LOC", "OFICINA",
+               "OF", "DEPTO", "DPTO", "SALA", "LOJA", "BLOCO", "TORRE", "TOWER", "BLOCK", "BLK", "ROOM", "RM", "SHOP",
+               "KIOSK", "STALL", "WHG", "TOP", "STIEGE", "LGH", "BUS", "BTE", "LANTAI", "TANG", "階", "室", "号室",
+               "番館", "ชั้น", "ห้อง", "الطابق", "شقه", "طابق", "دور", "مكتب", "محل", "#", "PB", "BAJO", "MZ", "LT",
+               "LOTE", "MANZANA", "EDIFICIO", "EDIF", "UND", "DEP"}
+PARTICLES = {"AND", "Y", "UND", "ET", "E", "&", "OF", "THE", "DE", "DEL", "DA", "DO", "DI", "DU", "LA", "LE", "EL",
+             "AL", "ال", "VON", "VAN", "DER", "CON", "SIN", "NAME"}
+FLOOR = re.compile(r"(?:[BLG]?\d{1,3}F|[BL]\d{1,2}|GF|UG|LG|UGF|LGF|\d{1,3}(?:ST|ND|RD|TH|O|A|ER|E)|\d{1,3}階|"
+                   r"L\d{1,2}/\d{1,5}[A-Z]?)")
 
 
 REASON_TEXT = {
@@ -999,8 +1277,10 @@ REASON_TEXT = {
 def _display(names: list[str], raw: str) -> str:
     """返回与输入同一种文字的名称（输入写英文就给英文名，写阿拉伯文 / 泰文就给当地文字）。"""
     counts = {"arabic": len(re.findall(r"[؀-ۿ]", raw)), "thai": len(re.findall(r"[฀-๿]", raw)),
-              "latin": len(LATIN.findall(raw))}
+              "latin": len(LATIN.findall(raw)), "cjk": len(_CJK.findall(raw)), "cyrillic": len(_CYRL.findall(raw))}
     want = max(counts, key=counts.get)  # 混写时按字数多的文字（"Sheikh Zayed Rd, دبي" -> 英文）
+    if not counts[want]:
+        return names[0]
     return next((n for n in names if _script(n) == want), names[0])
 
 
@@ -1010,14 +1290,19 @@ def _script(name: str) -> str:
         return "arabic"
     if re.search(r"[฀-๿]", name):
         return "thai"
+    if _CJK.search(name):
+        return "cjk"
+    if _CYRL.search(name):
+        return "cyrillic"
     letters = [c for c in name if c.isalpha()]
     return "latin" if letters and all(LATIN.match(c) for c in letters) else "other"
 
 
 LATIN = re.compile(r"[A-Za-z\u00C0-\u024F\u1E00-\u1EFF]")  # 拉丁字母（含越南文、德法重音）；不能写成 À-ỹ，那会包含印度诸文字
+_CJK = re.compile(r"[\u3040-\u30ff\u3400-\u9fff]")
+_CYRL = re.compile(r"[\u0400-\u04ff]")
 
 
-AU_STATE = {"2": "NSW", "3": "VIC", "4": "QLD", "5": "SA", "6": "WA", "7": "TAS", "8": "NT"}
 
 
 # ---------------------------------------------------------------------------------------------- 放宽规则

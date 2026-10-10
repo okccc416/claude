@@ -25,7 +25,7 @@ from .reference import MarketReference, haversine
 from .noise import strip_noise
 from .text import TYPE_WORDS, fold, key, norm_postcode, type_words
 
-VERSION = 2  # 索引格式 / 规范化方式变了就加一，缓存自动重建
+VERSION = 3  # 索引格式 / 规范化方式变了就加一，缓存自动重建
 MARGIN_DEG = 0.03  # 试点范围向外放宽约 3 公里（边界附近的城镇，参考库里可能有它的一部分道路）
 _SEG = re.compile(r"\s*(?:[,;|\n]|\s[-–—]\s)\s*")
 _PARTICLES = {"DE", "DA", "DO", "DAS", "DOS", "DEL", "DI", "DU", "LA", "LE", "EL", "AL", "VON", "VAN", "DER", "DEN", "THE"}
@@ -58,6 +58,7 @@ class Gazetteer:
         self.postcodes: dict[str, list[tuple]] = {}  # 规范化邮编 -> [(纬度, 经度, 地名)]
         self.pc_lens: list[int] = []
         self.pilot_admin1: set[str] = set()
+        self.cities: list[tuple] = []  # 人口 1.5 万以上的城镇 (纬度, 经度, 人口, 各语种名称)：响应里补全城市名（google.py）
         self.ok = self._load()
         self.neutral = {norm(w) for w in region_words(self.market)}
         self.city = {norm(w) for w in city_words(self.market)} | {norm(c) for c in self.m.cities}
@@ -74,8 +75,8 @@ class Gazetteer:
                 with open(cache, "rb") as f:
                     d = pickle.load(f)
                 if d.get("v") == VERSION:
-                    self.names, self.postcodes, self.pc_lens, self.pilot_admin1 = (
-                        d["names"], d["postcodes"], d["pc_lens"], d["pilot_admin1"])
+                    self.names, self.postcodes, self.pc_lens, self.pilot_admin1, self.cities = (
+                        d["names"], d["postcodes"], d["pc_lens"], d["pilot_admin1"], d["cities"])
                     return True
             except Exception:  # noqa: BLE001  缓存损坏：重建
                 pass
@@ -85,7 +86,7 @@ class Gazetteer:
         try:
             with open(cache, "wb") as f:
                 pickle.dump({"v": VERSION, "names": self.names, "postcodes": self.postcodes,
-                             "pc_lens": self.pc_lens, "pilot_admin1": self.pilot_admin1}, f)
+                             "pc_lens": self.pc_lens, "pilot_admin1": self.pilot_admin1, "cities": self.cities}, f)
         except OSError:  # 只读部署目录：每次启动重建
             pass
         return True
@@ -96,6 +97,8 @@ class Gazetteer:
             if kind == "P" and pop > 0 and self.in_pilot(lat, lng):
                 self.pilot_admin1.add(a1)
             entry = (lat, lng, kind, pop, a1, nms[0])
+            if kind == "P" and pop >= 15000:
+                self.cities.append((lat, lng, pop, nms))
             for k in {norm(n) for n in nms}:
                 if len(k) >= 3 and not k.isdigit():
                     names.setdefault(k, []).append(entry)

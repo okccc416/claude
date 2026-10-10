@@ -171,6 +171,11 @@ class MarketReference:
         cols = ("id", "number", "street", "unit", "postcode", "locality", "lat", "lng")
         return [dict(zip(cols, r)) for r in self.db.execute(q + " LIMIT 400", args)]
 
+    def units(self, street_id: int, number: str) -> list[str]:
+        """这个门牌下官方地址表登记的单元号（UNIT 23、st tv、H0101、1 ESQ）。"""
+        return [r[0] for r in self.db.execute("SELECT DISTINCT unit FROM addr WHERE street=? AND number_key=? AND unit != ''",
+                                              (street_id, number_key(number)))]
+
     def units_at(self, street_id: int, number: str) -> int:
         r = self.db.execute("SELECT COUNT(DISTINCT unit) FROM addr WHERE street=? AND number_key=? AND unit != ''",
                             (street_id, number_key(number))).fetchone()
@@ -203,7 +208,7 @@ class MarketReference:
 
 
 # 用到时才生成、按市场缓存在参考库对象上的派生索引（不存盘）
-DERIVED = ("_np", "_core_fuzzy", "_suffix", "_completed", "_first_names", "_last_names", "_stems", "_jp_chome",
+DERIVED = ("_divisions", "_np", "_core_fuzzy", "_suffix", "_completed", "_first_names", "_last_names", "_stems", "_jp_chome",
            "_pc_far_share", "_has_pts", "_poi_all", "_gazetteer")
 
 

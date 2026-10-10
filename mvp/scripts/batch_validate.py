@@ -7,8 +7,11 @@
   可选：--intl-llm data/models/xxx.gguf（离线批量可以接受本地小模型的延迟）
 
 输出新增的列：
-  av_action           ACCEPT / CONFIRM / FIX / CONFIRM_ADD_SUBPREMISES
-  av_granularity      PREMISE / PREMISE_PROXIMITY / ROUTE / LOCALITY / OTHER
+  av_action           ACCEPT / CONFIRM / FIX（与 Google 一致，CONFIRM_ADD_SUBPREMISES 只用于美国地址）
+  av_granularity      验证到哪一级：SUB_PREMISE / PREMISE / BLOCK（日本）/ ROUTE / OTHER
+  av_geocode_granularity  坐标精度：PREMISE / PREMISE_PROXIMITY / BLOCK / ROUTE / OTHER
+  av_complete         地址是否完整（Google 的 addressComplete：没有缺失字段、没有未识别的词）
+  av_missing          缺的字段（Google 的 missingComponentTypes，| 分隔）
   av_address          标准化地址
   av_lat, av_lng      坐标
   av_reasons          原因码（| 分隔）
@@ -31,16 +34,20 @@ sys.path.insert(0, str(ROOT))
 from avmvp.intl.markets import MARKETS  # noqa: E402
 from avmvp.router import MarketRouter  # noqa: E402
 
-OUT_COLS = ["av_action", "av_granularity", "av_address", "av_lat", "av_lng", "av_reasons", "av_candidates",
-            "av_error"]
+OUT_COLS = ["av_action", "av_granularity", "av_geocode_granularity", "av_complete", "av_missing", "av_address",
+            "av_lat", "av_lng", "av_reasons", "av_candidates", "av_error"]
 
 
 def flatten(resp: dict) -> dict:
+    """一条响应 -> 追加的列（字段含义同 Google AV：验证到哪一级、坐标精度、地址是否完整、缺哪些字段）。"""
     r = resp["result"]
+    v, a = r["verdict"], r["address"]
     loc = (r.get("geocode") or {}).get("location") or {}
-    return {"av_action": r["verdict"]["possibleNextAction"], "av_granularity": r["verdict"]["validationGranularity"],
-            "av_address": r["address"]["formattedAddress"], "av_lat": loc.get("latitude", ""),
-            "av_lng": loc.get("longitude", ""), "av_reasons": "|".join(x["code"] for x in r["verdict"]["reasons"]),
+    return {"av_action": v["possibleNextAction"], "av_granularity": v["validationGranularity"],
+            "av_geocode_granularity": v.get("geocodeGranularity", ""), "av_complete": v.get("addressComplete", ""),
+            "av_missing": "|".join(a.get("missingComponentTypes") or []),
+            "av_address": a["formattedAddress"], "av_lat": loc.get("latitude", ""),
+            "av_lng": loc.get("longitude", ""), "av_reasons": "|".join(x["code"] for x in v["reasons"]),
             "av_candidates": "|".join(c["formattedAddress"] for c in (r.get("candidates") or [])[:3]),
             "av_error": ""}
 

@@ -56,6 +56,7 @@ python scripts/fetch_osm_addresses.py     # OSM 门牌 + 道路编号（BBBike /
 python scripts/fetch_extra_addresses.py   # 政府开放地址：波哥大门牌牌号、索非亚地址；英国邮编中心点（只用于估计标注噪声）
 python scripts/build_market_reference.py  # 构建参考库（3 路并行约 25 分钟，澳洲最大）
 python scripts/fetch_gazetteer.py         # 全国地名 / 邮编表（GeoNames）：判断输入写的地点在不在试点范围内（试点范围守卫）
+python scripts/fetch_address_formats.py   # Google 地址格式元数据（各国必填字段、排版、州 / 省邮编前缀），已随代码提交，更新时才需要跑
 python scripts/train_market_parsers.py    # 训练各市场的机器学习解析器（CRF，每个市场约 30 秒）
 python scripts/fit_accept_policy.py       # 按市场在开发集上校准直接通过的放宽规则 -> models/accept_policy.json
 python scripts/fit_intl_confidence.py     # 置信度（开发集拟合、测试集检验）-> models/confidence_intl.json
@@ -166,7 +167,9 @@ mvp/
 │       ├── parse.py        规则解析：噪声 / 编码识别、邮编、单元、道路 / 片区 / 楼宇匹配、门牌
 │       ├── crf.py          机器学习解析（条件随机场）：特征、训练、解析
 │       ├── render.py       按各国写法把参考库渲染成带标签地址（训练数据 + 合成测试集）
-│       ├── engine.py       证据打分、结论与粒度、Google AV 风格响应
+│       ├── engine.py       证据打分、结论与粒度、响应组装
+│       ├── google.py       与 Google AV 对齐的响应层：各国必填字段 / 排版 / 州省邮编前缀（address_formats.json）、
+│       │                   补全城市 / 州省 / 国家（Overture 行政区层级 + 全国地名表）、Google 的取值
 │       ├── llm.py          本地小模型解析器（llama.cpp / OpenAI 兼容接口）+ 防编造 + 输出缓存
 │       ├── pluscode.py     Plus Code 解码（含短码按城市补齐）
 │       └── fuzzy.py        三元组倒排索引 + 容错检索
@@ -194,12 +197,13 @@ mvp/
 │   ├── train_market_parsers.py    训练多市场机器学习解析器
 │   ├── evaluate_markets.py        多市场评测（真实商户地址 + 合成地址，规则 / 机器学习 / 混合）
 │   ├── fetch_gazetteer.py         下载全国地名 / 邮编表（试点范围守卫用）
+│   ├── fetch_address_formats.py   下载 Google 地址格式元数据（响应对齐 Google AV 用）
 │   ├── coverage_eval.py           试点范围守卫评测（开发集误判率 / 线上查询分布）
 │   ├── geo_real_eval.py           geo 服务真实返回评测（核对层，按目标门址坐标判对错）
 │   └── fit_accept_policy.py       按市场校准直接通过的放宽规则（开发集）
 ├── labeled/            标注数据（模拟订单 orders_sg_v1.csv、调研测试集 testset_sg_research_v1.csv）、数据说明、标注规范
 ├── models/             贝叶斯参数（证据权重、置信度统计表）
-├── tests/              118 个单元测试（新加坡 58 条真实地址夹具；多市场微型夹具）
+├── tests/              120 个单元测试（新加坡 58 条真实地址夹具；多市场微型夹具）
 └── reports/            评测报告与演示截图
 ```
 
@@ -209,6 +213,7 @@ mvp/
 - 道路、片区：来自 OpenStreetMap 等，ODbL（衍生数据库需按 ODbL 共享）。
 - POI：CDLA-Permissive-2.0 等。
 - 全国地名 / 邮编表（试点范围守卫）：[GeoNames](https://www.geonames.org/) 国家文件与邮编文件，CC BY 4.0（需署名）。
+- 各国地址格式元数据（`avmvp/intl/address_formats.json`）：Google [libaddressinput](https://github.com/google/libaddressinput) 项目公开的 Address Data Service（项目以 Apache License 2.0 发布）；正式商用前请法务确认数据条款。
 - 官方地址点（A 类，逐市场来源见 [docs/13 第 4 节](../docs/13-multi-market-product.md)）：
   - Overture 标注为 `LicenseRef-Proprietary`（**商用前必须法务确认**）：澳洲 G-NAF（G-NAF 最终用户许可，限制用于邮寄地址的生成）、巴西、加拿大、墨西哥、丹麦、爱沙尼亚、克罗地亚、瑞士；
   - 开放许可：德国柏林 `DL-DE-ZERO-2.0`、勃兰登堡 `DL-DE-BY-2.0`（需署名）；法国 BAN `etalab-2.0`；荷兰 BAG、卢森堡、斯洛伐克 `CC0-1.0`；波兰（测绘法公有领域）；智利、哥伦比亚、比利时、奥地利、意大利、西班牙、葡萄牙、挪威、芬兰、拉脱维亚、立陶宛、捷克、斯洛文尼亚、新西兰、日本（OpenAddresses jp/tokyo）`CC-BY-4.0`（需署名）。

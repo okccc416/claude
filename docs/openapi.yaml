@@ -1,10 +1,12 @@
 openapi: 3.0.3
 info:
   title: Address Validation API
-  version: "0.3"
+  version: "0.4"
   description: |
-    地址校验服务（对应 mvp/avmvp/server.py）。请求结构与 Google Address Validation API 相同，响应在 Google 字段之外
-    增加了原因码、候选地址、非地址信息、地址编码等扩展字段。
+    地址校验服务（对应 mvp/avmvp/server.py）。请求结构与 Google Address Validation API 相同；响应的字段、取值和含义
+    按 Google AV（validateAddress）对齐（mvp/avmvp/intl/google.py）：各国"该有哪些字段"、排版、州 / 省的邮编前缀
+    用 Google 的地址格式元数据（mvp/avmvp/intl/address_formats.json），并补全 Google 会补的城市、州 / 省、国家。
+    在 Google 字段之外另有扩展字段：原因码（reasons）、置信度（confidence）、候选地址、非地址信息、地址编码。
 
     覆盖 Google Address Validation 覆盖的全部国家 / 地区（美国除外），外加中东和东南亚，共 45 个市场：
     - 新加坡（SG）：专用引擎，逐门牌验真，带贝叶斯置信度（docs/07、09）
@@ -152,14 +154,27 @@ components:
                 possibleNextAction:
                   type: string
                   enum: [ACCEPT, CONFIRM, FIX, CONFIRM_ADD_SUBPREMISES]
-                  description: ACCEPT 直接通过；CONFIRM 请用户确认（给出候选）；FIX 请用户修改；CONFIRM_ADD_SUBPREMISES 地址对但缺单元号
+                  description: |
+                    ACCEPT 直接通过；CONFIRM 请用户确认（给出候选）；FIX 请用户修改。与 Google 一致，CONFIRM_ADD_SUBPREMISES
+                    只用于美国地址：其他国家"地址对但多户楼缺单元号"返回 CONFIRM，并在 missingComponentTypes 里列出 subpremise
+                inputGranularity:
+                  type: string
+                  enum: [SUB_PREMISE, PREMISE, BLOCK, ROUTE, OTHER]
+                  description: 输入写到哪一级（只看解析，不代表验证结果）
                 validationGranularity:
                   type: string
-                  enum: [SUB_PREMISE, PREMISE, PREMISE_PROXIMITY, ROUTE, LOCALITY, OTHER]
-                geocodeGranularity: { type: string }
-                addressComplete: { type: boolean }
-                hasUnconfirmedComponents: { type: boolean }
-                hasInferredComponents: { type: boolean }
+                  enum: [SUB_PREMISE, PREMISE, BLOCK, ROUTE, OTHER]
+                  description: |
+                    验证到哪一级。门牌在官方地址表 / 门牌点里 = PREMISE（单元号也登记过 = SUB_PREMISE）；
+                    楼宇（商场、写字楼）本身验证到了 = PREMISE；门牌按相邻门牌推算或来自商户地址 = ROUTE（门牌本身没验证）；
+                    日本的门牌点是街区（番）级 = BLOCK；只到片区 / 城镇 = OTHER
+                geocodeGranularity:
+                  type: string
+                  enum: [PREMISE, PREMISE_PROXIMITY, BLOCK, ROUTE, OTHER]
+                  description: 坐标的精度（PREMISE_PROXIMITY = 接近门牌：推算的门牌点、楼宇点、Plus Code）
+                addressComplete: { type: boolean, description: "没有 unresolvedTokens、没有 missingComponentTypes、没有 unexpected 组件" }
+                hasUnconfirmedComponents: { type: boolean, description: 有组件没能确认，或有词没能归入任何组件 }
+                hasInferredComponents: { type: boolean, description: 有补全的组件（城市、州 / 省、邮编、国家） }
                 hasReplacedComponents: { type: boolean }
                 hasSpellCorrectedComponents: { type: boolean }
                 confidence: { type: number, description: 结论的置信度（同类结论在标注 / 开发数据上的实际正确率，已校准）；只有给出位置时才有 }
@@ -175,27 +190,63 @@ components:
             address:
               type: object
               properties:
-                formattedAddress: { type: string }
+                formattedAddress: { type: string, description: 按 Google 地址元数据里该国的格式排版，末尾接国家名（日文从大到小连写） }
+                postalAddress:
+                  type: object
+                  description: 规范化后的邮寄地址（Google PostalAddress 的字段）
+                  properties:
+                    regionCode: { type: string }
+                    languageCode: { type: string }
+                    postalCode: { type: string }
+                    administrativeArea: { type: string, description: "州 / 省（只在该国邮寄地址用到时）：NSW、ON、SP、CDMX、MI、東京都" }
+                    locality: { type: string }
+                    sublocality: { type: string }
+                    addressLines: { type: array, items: { type: string } }
                 addressComponents:
                   type: array
+                  description: 从小到大排列；类型名与 Google 相同
                   items:
                     type: object
                     properties:
-                      componentType: { type: string, example: route }
-                      componentName: { type: object, properties: { text: { type: string } } }
+                      componentType:
+                        type: string
+                        example: route
+                        description: |
+                          subpremise / premise（楼名）/ street_number / route / plus_code / neighborhood /
+                          sublocality_level_1 / locality / postal_town（英国）/ administrative_area_level_2（意大利、西班牙的省）/
+                          administrative_area_level_1 / postal_code / country
+                      componentName:
+                        type: object
+                        properties:
+                          text: { type: string }
+                          languageCode: { type: string, description: 输入地址的语言（按文字和该国语种判断） }
                       confirmationLevel:
                         type: string
                         enum: [CONFIRMED, UNCONFIRMED_BUT_PLAUSIBLE, UNCONFIRMED_AND_SUSPICIOUS]
-                      inferred: { type: boolean }
+                      inferred: { type: boolean, description: 原文没写、补全的 }
                       replaced: { type: boolean }
                       spellCorrected: { type: boolean }
-                missingComponentTypes: { type: array, items: { type: string } }
+                      unexpected: { type: boolean, description: 该国邮寄地址里不该有的组件（如阿联酋地址里的邮编） }
+                missingComponentTypes:
+                  type: array
+                  items: { type: string }
+                  description: 该国必填（Google 地址元数据的 require）却既不在输入里、也补不出来的组件类型
+                unconfirmedComponentTypes: { type: array, items: { type: string } }
+                unresolvedTokens: { type: array, items: { type: string }, description: 原文里没能归入任何组件的词 }
             geocode:
               type: object
               nullable: true
               properties:
                 location: { type: object, properties: { latitude: { type: number }, longitude: { type: number } } }
                 plusCode: { type: object, properties: { globalCode: { type: string } } }
+                bounds:
+                  type: object
+                  description: 道路 / Plus Code 格子 / 片区的范围（门牌点不给）
+                  properties:
+                    low: { type: object, properties: { latitude: { type: number }, longitude: { type: number } } }
+                    high: { type: object, properties: { latitude: { type: number }, longitude: { type: number } } }
+                featureSizeMeters: { type: number }
+                placeTypes: { type: array, items: { type: string }, example: [street_address] }
             nonAddressInfo:
               type: object
               nullable: true
@@ -228,8 +279,10 @@ components:
             metadata:
               type: object
               properties:
+                business: { type: boolean, description: 匹配上的是商户 / 机构（Google 的 metadata.business） }
+                poBox: { type: boolean, description: 输入里有邮政信箱 }
                 regionCode: { type: string }
-                marketClass: { type: string, enum: [A, B, C] }
+                marketClass: { type: string, enum: [A, B, C, none], description: "none = 没有参考库，只核对 geo 结果" }
                 parser: { type: string, description: "rules / crf / hybrid / hybrid+llm" }
     Error:
       type: object

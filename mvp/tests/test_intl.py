@@ -39,7 +39,7 @@ def _place_ids(n):
     return out
 
 
-def _write(d: Path, areas, segments, places, addresses=None):
+def _write(d: Path, areas, segments, places, addresses=None, locality="Sydney"):
     """areas: [(名称, 子类型, (xmin, ymin, xmax, ymax))]；segments: [(名称, 纬度, 经度)] 或 [(名称, [(纬度, 经度), …])]
     （后者带线形）；places: [(名称, 类别, 纬度, 经度[, 邮编])]；addresses: [(门牌, 道路, 单元, 邮编, 纬度, 经度)]"""
     from shapely.geometry import LineString, box
@@ -72,7 +72,7 @@ def _write(d: Path, areas, segments, places, addresses=None):
         for pid, (n, c, lat, lng, *pc) in zip(ids, places)]), d / "places.parquet")
     if addresses:
         pq.write_table(pa.Table.from_pylist([
-            {"number": n, "street": s, "unit": u, "postcode": pc, "address_levels": [{"value": "Sydney"}],
+            {"number": n, "street": s, "unit": u, "postcode": pc, "address_levels": [{"value": locality}],
              "bbox": _bbox(lat, lng, 0.00005)} for n, s, u, pc, lat, lng in addresses]), d / "addresses.parquet")
 
 
@@ -91,7 +91,7 @@ def au(tmp_path_factory):
              ("200", "King Street", "", "2042", -33.8950, 151.1801)]
     places = [("Crown Street Public School", "elementary_school", -33.8870, 151.2125)]
     _write(root / "AU", [("Surry Hills", "neighborhood", surry), ("Newtown", "neighborhood", newtown)],
-           segs, places, addrs)
+           segs, places, addrs, locality="SURRY HILLS")  # G-NAF 登记的是 suburb（大写）
     return Engine("AU", "rules", build("AU", "A", log=lambda *_: None, root=root))
 
 
@@ -208,11 +208,81 @@ def test_ae_area_only_is_fix(ae):
 def test_response_shape(ae):
     out = ae.to_response(ae.validate("Mall of the Emirates, Sheikh Zayed Road, Al Barsha, Dubai, Makani 12345 67890"))
     v = out["result"]["verdict"]
-    assert v["possibleNextAction"] == ACCEPT and v["validationGranularity"] == "PREMISE_PROXIMITY"
+    # Google 的含义：楼宇本身验证到了（PREMISE），坐标是楼宇点、不是门牌点（PREMISE_PROXIMITY）
+    assert v["possibleNextAction"] == ACCEPT and v["validationGranularity"] == "PREMISE"
+    assert v["geocodeGranularity"] == "PREMISE_PROXIMITY" and v["inputGranularity"] == "PREMISE"
     assert all({"code", "message"} <= set(x) for x in v["reasons"])
     assert out["result"]["codes"]["makani"] == "12345 67890"
     assert out["result"]["metadata"]["regionCode"] == "AE"
+    a = out["result"]["address"]
+    assert {"formattedAddress", "postalAddress", "addressComponents", "missingComponentTypes",
+            "unconfirmedComponentTypes", "unresolvedTokens"} <= set(a)
+    types = [c["componentType"] for c in a["addressComponents"]]
+    assert "premise" in types and "route" in types and types[-1] == "country"  # 楼名的类型是 Google 的 premise
+    assert all(c["componentName"]["languageCode"] == "en" for c in a["addressComponents"])
+    country = a["addressComponents"][-1]
+    assert country["componentName"]["text"] == "United Arab Emirates" and country.get("inferred")
+    assert v["hasInferredComponents"] and a["postalAddress"]["regionCode"] == "AE"
+    assert a["formattedAddress"].endswith("United Arab Emirates")
+    assert "street_number" not in a["missingComponentTypes"]  # 只写楼名的地址不要求门牌
     json.dumps(out, ensure_ascii=False)
+
+
+def test_google_response_semantics(au):
+    """与 Google AV 对齐：CONFIRM_ADD_SUBPREMISES 只给美国地址（其他国家 CONFIRM + subpremise 列为缺失）；
+    州从邮编前缀补全（Google 地址元数据）；地址完整 = 没有缺失、没有未识别的词；排版按各国格式。"""
+    out = au.to_response(au.validate("102 Crown St, Surry Hills NSW 2010"))
+    v, a = out["result"]["verdict"], out["result"]["address"]
+    assert v["possibleNextAction"] == CONFIRM and a["missingComponentTypes"] == ["subpremise"]
+    assert not v["addressComplete"]
+    by = {c["componentType"]: c for c in a["addressComponents"]}
+    assert by["administrative_area_level_1"]["componentName"]["text"] == "NSW"
+    assert not by["administrative_area_level_1"].get("inferred")  # 原文写了 NSW
+    assert by["locality"]["componentName"]["text"] == "Surry Hills"
+    assert a["formattedAddress"] == "102 Crown Street, Surry Hills NSW 2010, Australia"
+    assert a["postalAddress"] == {"regionCode": "AU", "languageCode": "en", "addressLines": ["102 Crown Street"],
+                                  "postalCode": "2010", "administrativeArea": "NSW", "locality": "Surry Hills"}
+    ok = au.to_response(au.validate("100 Crown Street, Surry Hills 2010"))
+    v, a = ok["result"]["verdict"], ok["result"]["address"]
+    assert v["possibleNextAction"] == ACCEPT and v["addressComplete"] and a["missingComponentTypes"] == []
+    nsw = next(c for c in a["addressComponents"] if c["componentType"] == "administrative_area_level_1")
+    assert nsw["componentName"]["text"] == "NSW" and nsw.get("inferred")  # 没写州：按邮编 2xxx 补全
+    unit = au.to_response(au.validate("Unit 2, 102 Crown Street, Surry Hills NSW 2010"))["result"]
+    sub = next(c for c in unit["address"]["addressComponents"] if c["componentType"] == "subpremise")
+    assert sub["componentName"]["text"] == "Unit 2" and unit["verdict"]["inputGranularity"] == "SUB_PREMISE"
+    bad = au.to_response(au.validate("12 Wallaby Way, Surry Hills NSW 2010"))["result"]
+    route = next(c for c in bad["address"]["addressComponents"] if c["componentType"] == "route")
+    assert route["componentName"]["text"] == "Wallaby Way" and route["confirmationLevel"] == "UNCONFIRMED_AND_SUSPICIOUS"
+
+
+def test_google_address_metadata():
+    from avmvp.intl import google
+    subs = {cc: google.subdivisions(cc) for cc in ("AU", "BR", "CA", "JP", "MX", "IT")}
+    assert subs["AU"].keys[subs["AU"].by_postcode("3000")] == "VIC"
+    assert subs["BR"].keys[subs["BR"].by_postcode("01310-100")] == "SP"
+    assert subs["CA"].keys[subs["CA"].by_postcode("M5V 2K4")] == "ON"
+    assert subs["JP"].keys[subs["JP"].by_postcode("150-0041")] == "東京都"
+    assert subs["MX"].keys[subs["MX"].by_postcode("07870")] == "CDMX"
+    assert subs["IT"].keys[subs["IT"].by_names(["Milano"])] == "MI"
+    assert subs["AU"].keys[subs["AU"].in_text("1 King St, Newtown NSW 2042")] == "NSW"
+    assert subs["AU"].in_text("NSW Health, 1 King St") is None  # 缩写只认第一段之后
+    assert google.required_missing("DE", {"route", "street_number", "locality"}) == ["postal_code"]
+    assert google.required_missing("AE", {"route", "street_number"}) == ["administrative_area_level_1"]
+    assert google.required_missing("GB", {"premise"}, building_only=True) == ["postal_town", "postal_code"]
+    assert google.next_action("CONFIRM_ADD_SUBPREMISES", "AU") == "CONFIRM"
+    assert google.next_action("CONFIRM_ADD_SUBPREMISES", "US") == "CONFIRM_ADD_SUBPREMISES"
+    assert google.format_lines("CH", {"A": "Bahnhofstrasse 1", "Z": "8001", "C": "Zürich"}) == \
+        ["Bahnhofstrasse 1", "8001 Zürich"]  # 不带 CH- 前缀
+    assert google.format_lines("CO", {"A": "Calle 72 # 8-24", "C": "Bogotá", "S": "", "Z": "110231"}) == \
+        ["Calle 72 # 8-24", "Bogotá, 110231"]
+    assert google.join_lines("JP", ["〒150-0041", "東京都", "渋谷区神南一丁目12"], "日本", "ja") == \
+        "日本、〒150-0041 東京都渋谷区神南一丁目12"
+    assert google.place_relation("Bogotá Distrito Capital", "Bogotá") == "same"
+    assert google.place_relation("Paris 15e Arrondissement", "Paris") == "part"
+    assert google.one_language("Rue Simonis - Simonisstraat", "nl") == "Simonisstraat"
+    assert google.language_of("Rue Simonis 46, 1050 Ixelles", "BE", ("fr", "nl")) == "fr"
+    assert google.language_of("شارع الملك فهد، الرياض", "SA", ("ar", "en")) == "ar"
+    assert google.clean_city("Majlis Perbandaran Kajang", "MY") == "Kajang"
 
 
 # ---------------------------------------------------------------------------------------------- 中东：线形 / 转写 / Plus Code

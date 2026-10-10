@@ -18,11 +18,12 @@ import re
 import uuid
 from dataclasses import dataclass, field
 
+from . import google
 from .coverage import norm, town_radius
 from .geo_check import STREET_LEVEL_TYPES, GeoAddress, GeoCheck, parse_geo
 from .noise import strip_noise
 from .reference import DATA, haversine, number_key
-from .geo_text import numbered_only, route_match
+from .geo_text import PARTICLES, TYPES, UNIT_WORDS, numbered_only, route_match
 from .text import fold
 
 ACCEPT, CONFIRM, FIX = "ACCEPT", "CONFIRM", "FIX"
@@ -55,7 +56,11 @@ class TownIndex:
 
     def locality(self, text: str, lat: float, lng: float) -> str:
         """原文写的城镇 / 区包含 geo 坐标 -> CONFIRMED；写了但都离得远 -> CONFLICT；原文没有可查的城镇 -> ""。"""
-        found = False
+        return self.find(text, lat, lng)[0]
+
+    def find(self, text: str, lat: float, lng: float) -> tuple[str, str]:
+        """(判定, 原文里写的城镇名)。"""
+        found = ""
         for i, seg in enumerate(_SEG.split(text)):
             if i == 0:  # 第一段多是道路 / 楼名
                 continue
@@ -64,11 +69,11 @@ class TownIndex:
                 hits = self.names.get(k)
                 if not hits:
                     continue
-                found = True
+                found = found or cand.strip()
                 if any(haversine(lat, lng, a, b) <= r for a, b, r in hits):
-                    return "CONFIRMED"
+                    return "CONFIRMED", re.sub(r"\s*\d+\s*", " ", cand).strip()
                 break
-        return "CONFLICT" if found else ""
+        return ("CONFLICT", found) if found else ("", "")
 
 
 _TOWNS: dict[str, TownIndex] = {}
@@ -134,6 +139,7 @@ class FreeResult:
     reasons: list[str]
     check: GeoCheck | None = None
     candidates: list[GeoAddress] = field(default_factory=list)
+    text: str = ""
 
 
 def validate_free(cc: str, text: str, geo, strictness: str = "BALANCED") -> FreeResult:
@@ -142,21 +148,27 @@ def validate_free(cc: str, text: str, geo, strictness: str = "BALANCED") -> Free
     idx = towns(cc)
     checks = [check_free(text, g, idx) for g in parse_geo(geo)]
     if not checks:
-        return FreeResult(cc, FIX, "OTHER", None, None, ["NO_REFERENCE_DATA", "GEO_NO_RESULT"])
+        return FreeResult(cc, FIX, "OTHER", None, None, ["NO_REFERENCE_DATA", "GEO_NO_RESULT"], text=text)
     c = max(checks, key=lambda x: RANK[x.verdict])
     g = c.geo
     reasons = ["NO_REFERENCE_DATA"] + c.flags
     if c.verdict in ("REJECTED", "STREET_LEVEL", "MISSING_NUMBER"):
         reasons += ["GEO_REJECTED"] if c.verdict != "MISSING_NUMBER" else ["MISSING_PREMISE"]
-        return FreeResult(cc, FIX, "ROUTE" if c.verdict == "MISSING_NUMBER" else "OTHER", None, None, reasons, c, [g])
+        return FreeResult(cc, FIX, "ROUTE" if c.verdict == "MISSING_NUMBER" else "OTHER", None, None, reasons, c, [g],
+                          text)
     ok = c.verdict == "VERIFIED" and c.fields["locality"] == "CONFIRMED" and strictness != "STRICT"
     gran = "PREMISE_PROXIMITY" if g.location_type == "RANGE_INTERPOLATED" else "PREMISE"
-    return FreeResult(cc, ACCEPT if ok else CONFIRM, gran, g.lat, g.lng, reasons + (["GEO_VERIFIED"] if ok else []), c)
+    return FreeResult(cc, ACCEPT if ok else CONFIRM, gran, g.lat, g.lng, reasons + (["GEO_VERIFIED"] if ok else []), c,
+                      text=text)
 
 
 def to_response(res: FreeResult) -> dict:
-    """与多市场引擎相同的 Google AV 风格响应（没有参考库：组件只来自 geo，确认级别按逐字段判定）。"""
+    """Google Address Validation 的响应（与多市场引擎相同，见 google.py）。没有参考库：组件来自 geo 的门址，
+    确认级别按逐字段判定；缺失字段按 Google 的各国必填规则；州 / 省按邮编前缀或原文。"""
     from .engine import REASON_TEXT
+    cc, text = res.market, res.text
+    lang = google.language_of(text, cc)
+    latin = google.script(text) == "latin"
     level = {"CONFIRMED": "CONFIRMED", "CORRECTED": "UNCONFIRMED_BUT_PLAUSIBLE", "INFERRED": "UNCONFIRMED_BUT_PLAUSIBLE",
              "CONFLICT": "UNCONFIRMED_AND_SUSPICIOUS", "MISSING": "UNCONFIRMED_BUT_PLAUSIBLE", "": "UNCONFIRMED_BUT_PLAUSIBLE"}
     comps = []
@@ -164,19 +176,88 @@ def to_response(res: FreeResult) -> dict:
     if g is not None:
         f = res.check.fields
         for ctype, val, key in (("street_number", g.number, "number"), ("route", g.route, "route"),
-                                ("locality", g.localities[0] if g.localities else "", "locality")):
+                                (google.city_type(cc), g.localities[0] if g.localities else "", "locality")):
             if val:
-                comps.append({"componentType": ctype, "componentName": {"text": val}, "confirmationLevel": level[f[key]],
-                              **({"inferred": True} if f[key] == "INFERRED" else {}),
-                              **({"spellCorrected": True} if f[key] == "CORRECTED" else {})})
+                comps.append(google.component(ctype, val, level[f[key]], lang, inferred=f[key] == "INFERRED",
+                                              spellCorrected=f[key] == "CORRECTED"))
+        if not g.localities and f.get("locality") == "CONFIRMED" and g.lat is not None:
+            town = towns(cc).find(text, g.lat, g.lng)[1]  # geo 没给城镇：用原文写的、而且坐标就在那里的城镇
+            if town:
+                comps.append(google.component(google.city_type(cc), town, "CONFIRMED", lang))
+        if g.subpremise:
+            comps.append(google.component("subpremise", g.subpremise, "UNCONFIRMED_BUT_PLAUSIBLE", lang))
+        if g.postal_code:
+            comps.append(google.component("postal_code", g.postal_code, "UNCONFIRMED_BUT_PLAUSIBLE", lang,
+                                          inferred=g.postal_code not in fold(text).replace(" ", ""),
+                                          unexpected=not google.uses(cc, "Z")))
+    subs = google.subdivisions(cc)
+    if google.uses(cc, "S") and subs.keys:
+        i = subs.by_postcode(g.postal_code) if g is not None else None
+        said = subs.in_text(text)
+        if i is not None or said is not None:
+            comps.append(google.component(google.admin_type(cc), subs.text(i if i is not None else said, latin),
+                                          "CONFIRMED" if i is not None and said in (None, i) else
+                                          "UNCONFIRMED_BUT_PLAUSIBLE", lang, inferred=said is None))
+    said = any(f" {k} " in f" {norm(text)} " for k in google.country_names(cc))
+    comps.append(google.component("country", google.country_name(cc, lang), "CONFIRMED", lang, inferred=not said))
+    comps = google.sort_components(comps)
+    unresolved = _unresolved(text, comps, cc)
+    types = {c["componentType"] for c in comps}
+    missing = google.required_missing(cc, types)
+    flags = google.verdict_flags(comps, unresolved, missing)
+    unconfirmed = flags.pop("_unconfirmed")
+    by = {c["componentType"]: c["componentName"]["text"] for c in comps}
+    line = ""
+    if g is not None:
+        first = _number_first(text, g)
+        line = " ".join(x for x in ((g.number, g.route) if first else (g.route, g.number)) if x)
+    parts = {"A": line, "C": by.get(google.city_type(cc), ""), "S": by.get(google.admin_type(cc), ""),
+             "Z": by.get("postal_code", "")}
+    formatted = google.join_lines(cc, google.format_lines(cc, parts, lang), by.get("country", ""), lang) \
+        if line else ""
+    gran = {"LOCALITY": "OTHER"}.get(res.granularity, res.granularity)
+    val = ("PREMISE" if res.action == ACCEPT else "ROUTE" if g is not None and res.check.fields["route"] == "CONFIRMED"
+           else "OTHER")
+    nums = re.search(r"\d", text)
     return {"responseId": str(uuid.uuid4()), "result": {
-        "verdict": {"possibleNextAction": res.action, "validationGranularity": res.granularity,
-                    "geocodeGranularity": res.granularity, "addressComplete": res.action == ACCEPT,
-                    "hasUnconfirmedComponents": any(c["confirmationLevel"] != "CONFIRMED" for c in comps) or not comps,
+        "verdict": {"inputGranularity": "PREMISE" if nums else "ROUTE" if re.search(r"[^\W\d_]", text) else "OTHER",
+                    "validationGranularity": val, "geocodeGranularity": gran, **flags,
+                    "possibleNextAction": google.next_action(res.action, cc),
                     "reasons": [{"code": r, "message": REASON_TEXT.get(r, r)} for r in dict.fromkeys(res.reasons)]},
-        "address": {"formattedAddress": g.formatted if g is not None else "", "addressComponents": comps},
-        "geocode": {"location": {"latitude": res.lat, "longitude": res.lng}} if res.lat is not None else None,
+        "address": {"formattedAddress": formatted,
+                    "postalAddress": google.postal_address(cc, lang, comps, [line] if line else []),
+                    "addressComponents": comps, "missingComponentTypes": missing,
+                    "unconfirmedComponentTypes": unconfirmed, "unresolvedTokens": unresolved},
+        "geocode": {"location": {"latitude": res.lat, "longitude": res.lng},
+                    "placeTypes": ["street_address"]} if res.lat is not None else None,
         "candidates": [{"formattedAddress": c.formatted, "location": {"latitude": c.lat, "longitude": c.lng}}
                        for c in res.candidates],
         "metadata": {"regionCode": res.market, "marketClass": "none", "parser": "geo-only"},
     }}
+
+
+def _number_first(text: str, g: GeoAddress) -> bool:
+    """原文里门牌号写在路名前面（12 Smith St）还是后面（Calle 16 # 22-53、شارع 18 منزل 20）。"""
+    t = fold(text)
+    words = [w for w in norm(g.route).split() if len(w) >= 3 and w not in TYPES]
+    i_num = t.find(fold(g.number)) if g.number else -1
+    i_route = min((t.find(w) for w in words if w in t), default=-1)
+    return i_num >= 0 and (i_route < 0 or i_num < i_route)
+
+
+def _unresolved(text: str, comps: list[dict], cc: str) -> list[str]:
+    """原文里没归入任何组件的词（去掉道路类型词、单元标记、冠词、国家 / 州名和已进组件的数字）。"""
+    used: set[str] = set()
+    for c in comps:
+        used |= set(norm(c["componentName"]["text"]).split())
+    used |= {w for n in google.country_names(cc) for w in n.split()} | google.ADMIN_WORDS
+    subs = google.subdivisions(cc)
+    used |= {w for n in subs.keys + subs.names + subs.lnames for w in norm(n).split()}
+    out = []
+    for w in norm(strip_noise(text)[0]).split():
+        if w in used or w in TYPES or w in UNIT_WORDS or w in PARTICLES or len(w) == 1:
+            continue
+        if w.isdigit() and any(w in re.split(r"[/\-]", x) for x in used):
+            continue
+        out.append(w)
+    return list(dict.fromkeys(out))

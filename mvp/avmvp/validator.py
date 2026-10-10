@@ -17,6 +17,7 @@ from rapidfuzz import fuzz
 from .noise import NoiseResult, strip_noise
 from .normalize import canon_tokens, clean_text, match_key, strip_punct, title_case
 from .parser import BLOCK_RE, ParsedAddress, parse
+from .intl.pluscode import encode
 from .reference import Entity, ReferenceDB, RoadMatch
 
 ACCEPT, CONFIRM, FIX, ADD_SUB = "ACCEPT", "CONFIRM", "FIX", "CONFIRM_ADD_SUBPREMISES"
@@ -596,13 +597,13 @@ def build_response(db: ReferenceDB, res: Result) -> dict:
     road_orig = " ".join(res.orig_tokens[res.road.start:res.road.end]) if res.road else None
     if e is not None:
         comps = [
-            comp("premise", e.blk, "premise", res.blk),
+            comp("street_number", e.blk, "premise", res.blk),
             comp("route", title_case(e.road), "route", road_orig),
             comp("postal_code", e.postal, "postal", p.postal),
             comp("subpremise", p.unit, "subpremise"),
         ]
         if res.building_confirmed:
-            comps.append({"componentType": "premise_name",
+            comps.append({"componentType": "premise",
                           "componentName": {"text": title_case(res.building_confirmed), "languageCode": "en"},
                           "confirmationLevel": "CONFIRMED"})
         formatted = _format_address(e, p.unit, res.building_confirmed or e.primary_building)
@@ -610,7 +611,7 @@ def build_response(db: ReferenceDB, res: Result) -> dict:
         geo_gran = "PREMISE"
     else:
         comps = [
-            comp("premise", res.blk, "premise"),
+            comp("street_number", res.blk, "premise"),
             comp("route", road_text, "route", road_orig),
             comp("postal_code", p.postal, "postal"),
             comp("subpremise", p.unit, "subpremise"),
@@ -627,6 +628,10 @@ def build_response(db: ReferenceDB, res: Result) -> dict:
         else:
             location, geo_gran = None, "OTHER"
     comps = [c for c in comps if c]
+    # Google 的国家组件：原文没写 Singapore 时是补全的
+    comps.append({"componentType": "country", "componentName": {"text": "Singapore", "languageCode": "en"},
+                  "confirmationLevel": "CONFIRMED",
+                  **({} if p.country_suffix or p.country_prefix else {"inferred": True})})
 
     input_gran = ("SUB_PREMISE" if p.unit else "PREMISE" if (p.block_marked or res.blk or p.postal)
                   else "ROUTE" if res.road else "OTHER")
@@ -648,12 +653,20 @@ def build_response(db: ReferenceDB, res: Result) -> dict:
     missing = []
     if e is None:
         if not res.blk:
-            missing.append("premise")
+            missing.append("street_number")
         if not res.road:
             missing.append("route")
         if not p.postal:
             missing.append("postal_code")
 
+    if res.action == ADD_SUB:
+        missing.append("subpremise")  # Google 只对美国地址返回 CONFIRM_ADD_SUBPREMISES：新加坡返回 CONFIRM，单元号列为缺失
+    unresolved = res.unresolved or []
+    unconfirmed = list(dict.fromkeys(c["componentType"] for c in comps if c["confirmationLevel"] != "CONFIRMED"))
+    lines = [formatted.rsplit(", Singapore", 1)[0]] if formatted else []
+    postal = {"regionCode": "SG", "languageCode": "en", "addressLines": lines,
+              **({"postalCode": e.postal} if e is not None else {"postalCode": p.postal} if p.postal else {})}
+    place_types = (["street_address"] if geo_gran == "PREMISE" else ["route"] if geo_gran == "ROUTE" else [])
     return {
         "responseId": str(uuid.uuid4()),
         "result": {
@@ -662,13 +675,12 @@ def build_response(db: ReferenceDB, res: Result) -> dict:
                 "validationGranularity": val_gran,
                 "preCorrectionGranularity": pre_gran,
                 "geocodeGranularity": geo_gran,
-                "addressComplete": res.action == ACCEPT,
-                "hasUnconfirmedComponents": any(v in ("plausible", "suspicious", "missing") for v in vals)
-                or (e is None),
-                "hasInferredComponents": "inferred" in vals,
+                "addressComplete": not unresolved and not missing,
+                "hasUnconfirmedComponents": bool(unconfirmed) or bool(unresolved),
+                "hasInferredComponents": any(c.get("inferred") for c in comps),
                 "hasReplacedComponents": "replaced" in vals,
                 "hasSpellCorrectedComponents": "corrected" in vals,
-                "possibleNextAction": res.action,
+                "possibleNextAction": CONFIRM if res.action == ADD_SUB else res.action,
                 **({"confidence": round(res.confidence, 4)} if res.confidence is not None else {}),
                 "changeScore": change,
                 "verificationCode": code,
@@ -676,11 +688,15 @@ def build_response(db: ReferenceDB, res: Result) -> dict:
             },
             "address": {
                 "formattedAddress": formatted,
+                "postalAddress": postal,
                 "addressComponents": comps,
                 "missingComponentTypes": missing,
-                "unresolvedTokens": res.unresolved,
+                "unconfirmedComponentTypes": unconfirmed,
+                "unresolvedTokens": unresolved,
             },
-            "geocode": {"location": location} if location else None,
+            "geocode": {"location": location, "plusCode": {"globalCode": encode(location["latitude"],
+                                                                                 location["longitude"])},
+                        "placeTypes": place_types} if location else None,
             "metadata": {"buildingNames": [title_case(b) for b in e.buildings]} if e else None,
             "nonAddressInfo": res.noise.as_dict() if res.noise else None,
             "candidates": [

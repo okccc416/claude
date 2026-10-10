@@ -175,14 +175,14 @@ python -m avmvp.server            # http://127.0.0.1:8080/  演示页面（可�
 
 **部署**：[`mvp/Dockerfile`](../mvp/Dockerfile)。参考数据不打进镜像、运行时挂载（`docker run -p 8080:8080 -v $PWD/data:/app/data address-validation`），数据更新不用重新发版；各市场的参考库在第一次请求时加载（44 个市场合计约 3.8 GB，最大的澳洲约 650 MB）。
 
-响应字段与新加坡引擎一致（`verdict.possibleNextAction / validationGranularity / reasons / confidence`、`address.formattedAddress / addressComponents / missingComponentTypes`、`geocode.location / plusCode`、`nonAddressInfo`、`candidates`），多市场引擎另有 `result.codes`（Plus Code、迪拜 Makani、沙特国家地址短码）和 `result.metadata`（`regionCode`、`marketClass`、`parser`）。标准化地址按当地习惯排版：`Vodičkova 1935/38, 110 00 Praha`、`Carrera 14 # 66-33`、`〒150-0041 渋谷区神南一丁目12`、`20 Camden St, Toronto ON M5V 1V1`。
+响应的字段、取值和含义按 Google AV 对齐，见下面 3.4。多市场引擎另有 `result.codes`（Plus Code、迪拜 Makani、沙特国家地址短码）。
 
 ### 3.2 结论怎么定
 
 | | A 类（30 个市场 + 新加坡） | B 类（中东）/ C 类（没有开放地址表） |
 |---|---|---|
 | 验真依据 | 官方地址表：这条路上有没有这个门牌；官方表没有时再看 OSM 门牌、商户地址门牌点 | 地图数据（道路、片区、邮编、楼宇 / POI）+ **OSM 门牌**、商户地址门牌点 |
-| 最高粒度 | `PREMISE`（门牌），多单元楼缺单元号时 `CONFIRM_ADD_SUBPREMISES` | `PREMISE`（OSM 门牌）、`PREMISE_PROXIMITY`（推算 / 商户门牌点 / 楼宇 / Plus Code）、`ROUTE`（道路） |
+| 最高粒度 | `PREMISE`（门牌）；单元号也在官方表里时 `SUB_PREMISE`；多单元楼缺单元号时 `CONFIRM` + `missingComponentTypes: [subpremise]`（Google 的 `CONFIRM_ADD_SUBPREMISES` 只用于美国地址） | `PREMISE`（OSM 门牌）、`PREMISE_PROXIMITY`（推算 / 商户门牌点 / 楼宇 / Plus Code）、`ROUTE`（道路） |
 | ACCEPT | 门牌在官方表里，且没有纠错 / 替换；只有 OSM 有的门牌按开发集校准的组合放行 | 门牌点 / 道路级：邮编与道路相互印证、道路名在城市里唯一、名称完全一致（或该市场开发集上校准过的同样可靠的组合，第 7 节）；楼宇在所写道路旁；Plus Code / 坐标与所写道路、片区一致 |
 | CONFIRM | 道路名纠错、邮编被替换、只凭楼宇定位、门牌按相邻门牌推算（`PREMISE_INTERPOLATED`）、门牌来自商户登记（`PREMISE_FROM_POI`）；**道路对上、门牌不在表里**（`ROUTE` + `PREMISE_NOT_FOUND`，与 Google 一致） | 缺少印证或同名道路不止一条、只匹配上部分道路名、拼写纠错、缺门牌 / 楼名 |
 | FIX | 没写门牌，或只能确认到片区 / 什么都找不到 | 只能确认到片区，或什么都找不到 |
@@ -212,6 +212,56 @@ python -m avmvp.server            # http://127.0.0.1:8080/  演示页面（可�
 
 ---
 
+
+### 3.4 响应与 Google AV 对齐
+
+三个引擎（新加坡、多市场、没有参考库的 geo 核对）共用一个响应层（[`google.py`](../mvp/avmvp/intl/google.py)），字段、取值和含义按 Google AV（`validateAddress`）定义。内部结论不变：`possibleNextAction` 就是校准过的内部结论，评测数字不受影响。
+
+**每个国家"该有哪些字段"用 Google 自己的规则。** Google 的地址格式元数据（libaddressinput 的 Address Data Service，[`scripts/fetch_address_formats.py`](../mvp/scripts/fetch_address_formats.py) 下载到 [`address_formats.json`](../mvp/avmvp/intl/address_formats.json)，57 个国家）给出三样东西：
+- 必填字段（`require`：A 街道、C 城市、S 州 / 省、Z 邮编、D 区）：既不在输入里、也补不出来的列进 `missingComponentTypes`；
+- 排版（`fmt`）：`formattedAddress` 和 `postalAddress.addressLines`，例如 `Musterstraße 12, 10115 Berlin, Deutschland`、`Unit 5, 100 Crown Street, Surry Hills NSW 2010, Australia`、`Calle 72 # 8-24, Bogotá, 110231, Colombia`、`日本、〒150-0041 東京都渋谷区神南一丁目12`；
+- 州 / 省列表和各自的邮编前缀：从邮编补全州 / 省（澳洲 2xxx = NSW、巴西 0–1 = SP、加拿大 M = ON、墨西哥 07870 = CDMX）。
+
+**补全 Google 会补的组件**（`inferred: true`）：
+- 城市（`locality`，英国是 `postal_town`）：按以下顺序取。
+  1. 官方地址表登记的邮寄地名：澳洲 suburb、丹麦 `København S`、瑞典 postort、卢森堡 `Belvaux`。
+  2. Overture 行政区层级里对应城市的那一级：柏林的区归 Berlin，墨西哥城的 alcaldía 归 Ciudad de México，Wallisellen 不归 Zürich。
+  3. 全国地名表里包含这个点的城市。这一级只标 `UNCONFIRMED_BUT_PLAUSIBLE`。
+- 区（`sublocality_level_1`）：例如 Charlottenburg、Paris 4e Arrondissement、Gustavo A. Madero。
+- 州 / 省：先看邮编前缀，再看行政区层级。只在该国邮寄地址用州 / 省时才给，意大利、西班牙的省是 `administrative_area_level_2`。
+- 国家。
+
+补不出来的照实列为缺失。马来西亚、沙特这类没有邮编来源的市场，地址写全了也会在 `missingComponentTypes` 里看到 `postal_code`，所以 `addressComplete` 是 false。
+
+开发集抽样（44 个市场各 60 条）的补全率：
+- 城市：99%（阿联酋 78%、沙特 87%）；
+- 用州 / 省的 19 个市场，州 / 省：99%。
+
+这里是补全率，不是正确率。补全值有三种来源：邮编前缀（Google 的规则表）、官方地址表、行政区边界；正确性只做过逐条抽查，没有成套评测。
+
+**字段对照：**
+
+| | Google AV | 本方案 |
+|---|---|---|
+| `verdict` | `inputGranularity`、`validationGranularity`、`geocodeGranularity`、`addressComplete`、`has*Components`、`possibleNextAction` | 全部都有；另有 `reasons`（原因码 + 说明）、`confidence` / `confidenceNote` |
+| `address` | `formattedAddress`、`postalAddress`、`addressComponents`（带 `languageCode`、`inferred` / `spellCorrected` / `replaced` / `unexpected`）、`missingComponentTypes`、`unconfirmedComponentTypes`、`unresolvedTokens` | 全部都有 |
+| `geocode` | `location`、`plusCode`、`bounds`、`featureSizeMeters`、`placeId`、`placeTypes` | 没有 `placeId`（Google 自己的地点编号）；门牌点不给 `bounds`（没有建筑轮廓） |
+| `metadata` | `business`、`poBox`、`residential` | `business`、`poBox`；没有 `residential`（没有数据来源）；另有 `regionCode`、`marketClass`、`parser` |
+| 其他 | `uspsData`（美国）、`englishLatinAddress` | 没有；另有 `candidates`、`nonAddressInfo`、`codes` |
+
+**取值按 Google 的含义：**
+- `CONFIRM_ADD_SUBPREMISES` 只用于美国地址。其他国家返回 `CONFIRM`，同时把 `subpremise` 列为缺失。
+- 粒度：
+  - 门牌按相邻门牌推算、或来自商户地址：`validationGranularity = ROUTE`（门牌本身没验证），`geocodeGranularity = PREMISE_PROXIMITY`。
+  - 楼宇（商场、写字楼）本身验证到了：`PREMISE`。
+  - 日本的门牌点是街区（番）级：`BLOCK`。
+  - 单元号在官方表里登记过：`SUB_PREMISE`。适用市场：澳洲、加拿大、新西兰、挪威、丹麦、葡萄牙、爱沙尼亚、比利时。
+- 组件类型用 Google 的名称：`premise`（楼名）、`street_number`（新加坡的 Blk 号也是）、`sublocality_level_1`、`neighborhood`、`administrative_area_level_1/2`、`country`。
+- 没匹配上的道路：照样按原文返回 `route`。试点范围内官方表 / 路网里没有这条路时标 `UNCONFIRMED_AND_SUSPICIOUS`，其他情况标 `UNCONFIRMED_BUT_PLAUSIBLE`。
+- `unresolvedTokens`：原文里没归入任何组件的词。已去掉国家 / 州 / 全城名、楼层和单元标记、冠词连词。
+- `addressComplete` 的定义：没有缺失字段、没有未识别的词、没有 `unexpected` 组件。
+
+每条响应约 1–2 ms。每个市场第一次请求要加载行政区边界，多 50–70 ms。
 ## 4. 参考数据
 
 道路、片区、POI、官方地址表来自 [Overture Maps](https://overturemaps.org/)（release 2026-09-23.1）；门牌另补两层开放数据：
