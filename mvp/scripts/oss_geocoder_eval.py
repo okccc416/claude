@@ -127,13 +127,14 @@ def score(args) -> None:
                     "score": a.get("score") or 0.0, "type": a.get("type", "")})
     acc = [o for o in ours if o["action"] == ACCEPT]
     acc_prec = sum(o["ok"] for o in acc) / max(len(acc), 1)
-    # 开源引擎按分数从高到低自动通过：准确率不低于本方案"直接通过"的准确率时，最多能通过多少
+    # 开源引擎按分数门槛自动通过（分数 ≥ 门槛的全部通过，同分的一起进出）：准确率不低于本方案"直接通过"的
+    # 准确率时，最多能通过多少
     ranked = sorted(oss, key=lambda a: -a["score"])
-    best_k, hit = 0, 0
-    for k, a in enumerate(ranked, 1):
-        hit += a["ok"]
-        if hit / k >= acc_prec:
-            best_k = k
+    best_k = 0
+    for t in sorted({a["score"] for a in oss if a["score"] > 0}, reverse=True):
+        sel = [a for a in oss if a["score"] >= t]
+        if sum(a["ok"] for a in sel) / len(sel) >= acc_prec:
+            best_k = len(sel)
     entry = {
         "market": args.market, "n": len(qs), "ok_m": OK_M,
         "ours": {"located_ok": sum(o["ok"] for o in ours),
@@ -141,6 +142,8 @@ def score(args) -> None:
                  "far": sum(o["far"] for o in ours), "accept": len(acc), "accept_ok": sum(o["ok"] for o in acc),
                  "accept_far": sum(o["far"] for o in acc)},
         "other": {"located_ok": sum(a["ok"] for a in oss), "far": sum(a["far"] for a in oss),
+                  "top_score": sum(a["score"] >= max(a_["score"] for a_ in oss) for a in oss),
+                  "top_score_ok": sum(a["ok"] and a["score"] >= max(a_["score"] for a_ in oss) for a in oss),
                   "premise": sum(a["type"] in ("housenumber", "address") for a in oss),
                   "auto_at_same_precision": best_k, "auto_ok": sum(a["ok"] for a in ranked[:best_k]),
                   "auto_far": sum(a["far"] for a in ranked[:best_k])},
@@ -175,6 +178,12 @@ def write_md(rep: dict) -> None:
         md.append(f"| | | | | {name} | {a['located_ok']}（{pct(a['located_ok'])}） | {a['far']}（{pct(a['far'])}） | "
                   f"{a['auto_at_same_precision']}（{pct(a['auto_at_same_precision'])}） | "
                   f"{100 * a['auto_ok'] / max(a['auto_at_same_precision'], 1):.1f}% | {a['auto_far']} |")
+    md.append("")
+    for key_, e in rep["runs"].items():
+        a = e["other"]
+        if "top_score" in a:
+            md.append(f"- {key_.split('|')[0]}：分数最高（同分）的 {a['top_score']} 条里定位对 {a['top_score_ok']} 条"
+                      f"（{100 * a['top_score_ok'] / max(a['top_score'], 1):.1f}%）——分数门槛最严时的准确率。")
     (ROOT / "reports" / "oss_geocoder_eval.md").write_text("\n".join(md) + "\n", encoding="utf-8")
     print("\n".join(md))
 

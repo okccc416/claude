@@ -293,8 +293,8 @@ class RuleParser:
                 p.unit = p.unit or f"FLOOR {t}"
                 used[i] = True
             elif t in UNIT_WORDS and i + 1 < len(toks) and re.match(r"^[A-Z]?\d", toks[i + 1]):
-                m = re.fullmatch(r"([A-Z]?\d+[A-Z]?)/(\d+[A-Z]?)", toks[i + 1])
-                if m:  # Unit 2/45 Lyons Rd：斜杠前是单元号，斜杠后是门牌
+                m = re.fullmatch(r"([A-Z]?\d+[A-Z]?)/(\d+[A-Z]?(?:-\d+[A-Z]?)?)", toks[i + 1])
+                if m:  # Unit 2/45 Lyons Rd、Level 1/133-135 Oxford St：斜杠前是单元 / 楼层号，斜杠后是门牌（可以是区间）
                     p.unit = f"{t} {m.group(1)}"
                     toks[i + 1] = m.group(2)
                     used[i] = True
@@ -308,13 +308,16 @@ class RuleParser:
                 used[i] = used[i + 1] = True
             elif t in MARKER_WORDS:  # No. / Kav. / KM 等门牌标记词本身不参与道路匹配（参考库里有叫 "Jalan N:O" 的路）
                 used[i] = True
-        # 澳洲 5/12 Smith St：斜杠前是单元号
-        if self.ref.market == "AU":
+        # 澳洲 / 新西兰 5/12 Smith St：斜杠前是单元号，斜杠后是门牌（可以是区间：11/41-43）；
+        # 斜杠前带楼层 / 铺位字母的：L1/592（1 楼）、G105/1169（G105 号铺）
+        if self.ref.market in ("AU", "NZ"):
             for i, t in enumerate(toks):
-                m = re.fullmatch(r"(\d+[A-Z]?)/(\d+[A-Z]?)", t)
-                if m and not used[i]:
-                    p.unit = p.unit or f"UNIT {m.group(1)}"
-                    toks[i] = m.group(2)
+                m = re.fullmatch(r"([A-Z]{0,2})(\d+[A-Z]?)/(\d+[A-Z]?(?:-\d+[A-Z]?)?)", t)
+                if m and not used[i] and m.group(1) in ("", "L", "G", "GF", "U", "SH", "S"):
+                    unit = f"LEVEL {m.group(2)}" if m.group(1) == "L" else \
+                        f"UNIT {m.group(2)}" if m.group(1) in ("", "U") else m.group(1) + m.group(2)
+                    p.unit = p.unit or unit
+                    toks[i] = m.group(3)
 
     def _match(self, p: Parsed, exp: list[str], used: list[bool], kind: str, seps: list[bool]) -> None:
         """最长匹配：从长到短扫描连续的词，完整键或核心键在参考库里即命中。"""

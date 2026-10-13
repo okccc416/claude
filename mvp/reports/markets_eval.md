@@ -9,9 +9,9 @@
 
 | 市场 | 类别 | 解析 | 条数 | 正确·直接通过 | 正确·要求确认 | 判 FIX·片区对 | 判 FIX | 错误建议 | 静默错误 | 其中偏差 >1 公里 | 500 米内 | 毫秒/条 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 澳大利亚（AU） | A | rules | 1000 | 73.1% | 11.6% | 0.4% | 6.4% | 4.4% | 4.1% | 1.4% | 90.0% | 8 |
+| 澳大利亚（AU） | A | rules | 1000 | 74.9% | 11.2% | 0.4% | 5.0% | 4.3% | 4.2% | 1.4% | 90.6% | 7 |
 | 澳大利亚（AU） | A | crf | 1000 | 69.7% | 8.3% | 3.5% | 11.2% | 3.6% | 3.7% | 1.4% | 88.5% | 5 |
-| 澳大利亚（AU） | A | hybrid | 1000 | 73.9% | 10.8% | 0.4% | 6.4% | 4.2% | 4.3% | 1.5% | 90.1% | 12 |
+| 澳大利亚（AU） | A | hybrid | 1000 | 75.7% | 10.5% | 0.4% | 5.0% | 4.0% | 4.4% | 1.5% | 90.8% | 10 |
 | 德国（DE） | A | rules | 1000 | 93.6% | 3.1% | 0.4% | 0.8% | 1.6% | 0.5% | 0.1% | 97.8% | 3 |
 | 德国（DE） | A | crf | 1000 | 92.3% | 3.1% | 0.3% | 1.4% | 2.3% | 0.6% | 0.1% | 96.9% | 3 |
 | 德国（DE） | A | hybrid | 1000 | 94.1% | 2.9% | 0.3% | 0.9% | 1.2% | 0.6% | 0.1% | 98.1% | 5 |
@@ -132,9 +132,9 @@
 | 保加利亚（BG） | A | rules | 1000 | 56.8% | 19.3% | 3.9% | 8.0% | 6.4% | 5.6% | 2.7% | 84.4% | 3 |
 | 保加利亚（BG） | A | crf | 1000 | 51.6% | 21.4% | 8.7% | 8.3% | 5.9% | 4.1% | 1.8% | 81.1% | 3 |
 | 保加利亚（BG） | A | hybrid | 1000 | 57.5% | 19.8% | 2.9% | 7.8% | 6.1% | 5.9% | 2.8% | 84.9% | 5 |
-| 新西兰（NZ） | A | rules | 1000 | 66.4% | 19.9% | 1.5% | 5.8% | 2.9% | 3.5% | 1.8% | 91.3% | 3 |
-| 新西兰（NZ） | A | crf | 1000 | 65.5% | 19.6% | 3.3% | 5.8% | 2.5% | 3.3% | 1.6% | 89.0% | 3 |
-| 新西兰（NZ） | A | hybrid | 1000 | 68.0% | 19.2% | 1.3% | 5.3% | 2.5% | 3.7% | 1.8% | 91.7% | 5 |
+| 新西兰（NZ） | A | rules | 1000 | 67.3% | 20.4% | 1.5% | 5.0% | 2.7% | 3.1% | 1.5% | 91.8% | 5 |
+| 新西兰（NZ） | A | crf | 1000 | 65.5% | 19.6% | 3.3% | 5.8% | 2.5% | 3.3% | 1.6% | 89.0% | 2 |
+| 新西兰（NZ） | A | hybrid | 1000 | 68.9% | 19.1% | 1.3% | 4.7% | 2.4% | 3.6% | 1.8% | 91.8% | 4 |
 | 日本（JP） | A | rules | 1000 | 88.8% | 1.7% | 2.6% | 0.2% | 1.7% | 5.0% | 1.7% | 94.5% | 5 |
 | 日本（JP） | A | crf | 1000 | 59.6% | 4.8% | 24.9% | 4.0% | 4.3% | 2.4% | 0.4% | 74.5% | 3 |
 | 日本（JP） | A | hybrid | 1000 | 88.8% | 1.7% | 2.1% | 0.6% | 1.8% | 5.0% | 1.7% | 94.4% | 6 |
@@ -146,9 +146,9 @@
 
 | 市场 | 类别 | 解析 | 条数 | 正确·直接通过 | 正确·要求确认 | 判 FIX·片区对 | 判 FIX | 错误建议 | 静默错误 | 其中偏差 >1 公里 | 500 米内 | 毫秒/条 |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 澳大利亚（AU） | A | rules | 1000 | 82.2% | 9.1% | 0.0% | 5.2% | 2.8% | 0.7% | 0.2% | 96.7% | 6 |
-| 澳大利亚（AU） | A | crf | 1000 | 85.8% | 6.8% | 0.0% | 5.2% | 1.5% | 0.7% | 0.2% | 98.0% | 5 |
-| 澳大利亚（AU） | A | hybrid | 1000 | 85.5% | 7.0% | 0.0% | 5.0% | 1.8% | 0.7% | 0.2% | 97.8% | 10 |
+| 澳大利亚（AU） | A | rules | 1000 | 83.0% | 9.2% | 0.0% | 5.2% | 2.6% | 0.0% | 0.0% | 97.0% | 5 |
+| 澳大利亚（AU） | A | crf | 1000 | 85.8% | 6.8% | 0.0% | 5.2% | 1.5% | 0.7% | 0.2% | 98.0% | 4 |
+| 澳大利亚（AU） | A | hybrid | 1000 | 86.3% | 7.1% | 0.0% | 5.0% | 1.6% | 0.0% | 0.0% | 98.1% | 8 |
 | 德国（DE） | A | rules | 1000 | 77.4% | 10.0% | 0.0% | 6.0% | 3.5% | 3.1% | 0.1% | 95.6% | 4 |
 | 德国（DE） | A | crf | 1000 | 81.2% | 12.0% | 0.0% | 5.7% | 1.0% | 0.1% | 0.1% | 97.6% | 3 |
 | 德国（DE） | A | hybrid | 1000 | 80.0% | 11.1% | 0.0% | 5.7% | 1.1% | 2.1% | 0.1% | 97.6% | 6 |
@@ -271,7 +271,7 @@
 | 保加利亚（BG） | A | hybrid | 1000 | 68.2% | 18.1% | 0.0% | 5.7% | 7.7% | 0.3% | 0.1% | 97.0% | 2 |
 | 新西兰（NZ） | A | rules | 1000 | 85.9% | 5.8% | 0.0% | 6.0% | 1.9% | 0.4% | 0.0% | 97.6% | 2 |
 | 新西兰（NZ） | A | crf | 1000 | 86.9% | 6.9% | 0.0% | 5.2% | 0.6% | 0.4% | 0.0% | 98.7% | 1 |
-| 新西兰（NZ） | A | hybrid | 1000 | 86.2% | 7.1% | 0.0% | 5.1% | 1.2% | 0.4% | 0.0% | 98.6% | 3 |
+| 新西兰（NZ） | A | hybrid | 1000 | 86.2% | 7.1% | 0.0% | 5.1% | 1.2% | 0.4% | 0.0% | 98.6% | 2 |
 | 日本（JP） | A | rules | 1000 | 88.7% | 0.0% | 0.0% | 11.1% | 0.1% | 0.1% | 0.1% | 95.0% | 3 |
 | 日本（JP） | A | crf | 1000 | 88.1% | 2.6% | 0.0% | 9.0% | 0.2% | 0.1% | 0.1% | 96.4% | 2 |
 | 日本（JP） | A | hybrid | 1000 | 88.7% | 2.0% | 0.0% | 9.0% | 0.2% | 0.1% | 0.1% | 96.7% | 5 |
@@ -285,28 +285,28 @@
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| 155 Queen St Level 10, Melbourne, 3000 | ACCEPT | PREMISE | Level 10, 155 Queen Street, Melbourne VIC 3000 |
-| 345 Pacific Hwy Suite 9, North Sydney, 2060 | ACCEPT | PREMISE | Suite 9, 345 Pacific Highway, North Sydney NSW 2060 |
-| 233 Riversdale Road, Hawthorn, VIC, 3122, 3122 | ACCEPT | PREMISE | 233 Riversdale Road, Hawthorn VIC 3122 |
-| 25A Barker Rd, Sydney, 2135 | ACCEPT | PREMISE | 25A Barker Road, Sydney NSW 2135 |
+| 155 Queen St Level 10, Melbourne, 3000 | ACCEPT | PREMISE | Level 10, 155 Queen Street, Melbourne VIC 3000, Australia |
+| 345 Pacific Hwy Suite 9, North Sydney, 2060 | ACCEPT | PREMISE | Suite 9, 345 Pacific Highway, North Sydney NSW 2060, Australia |
+| 233 Riversdale Road, Hawthorn, VIC, 3122, 3122 | ACCEPT | PREMISE | 233 Riversdale Road, Hawthorn VIC 3122, Australia |
+| 25A Barker Rd, Sydney, 2135 | ACCEPT | PREMISE | 25A Barker Road, Strathfield NSW 2135, Australia |
 
 **澳大利亚 · 判 FIX**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| Cnr Davies &, Arab Rd, Sydney, 2211 | FIX | ROUTE | Arab Road, Sydney NSW 2211 |
-| Unit 2/153/155 Orchardleigh St, Sydney, 2161 | FIX | ROUTE | Unit 2/153/155, Orchardleigh Street, Sydney NSW 2161 |
-| Oak Rd N, Kirrawee, 2232 | FIX | ROUTE | Oak Road, Kirrawee NSW 2232 |
-| U17/48a Consul Rd, Sydney, 2099 | FIX | ROUTE | Consul Road, Sydney NSW 2099 |
+| Cnr Davies &, Arab Rd, Sydney, 2211 | FIX | ROUTE | Arab Road, Padstow NSW 2211, Australia |
+| Unit 2/153/155 Orchardleigh St, Sydney, 2161 | FIX | ROUTE | Unit 2/153/155, Orchardleigh Street, Old Guildford NSW 2161, Australia |
+| Oak Rd N, Kirrawee, 2232 | FIX | ROUTE | Oak Road, Kirrawee NSW 2232, Australia |
+| Musgrave St, Sydney, 2088 | FIX | ROUTE | Musgrave Street, Sydney NSW 2088, Australia |
 
 **澳大利亚 · 错误建议**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| Building A, Level, 1, Room A.1.08, Lidcombe, 2141 | CONFIRM | PREMISE | Level 1, 1 Eucalyptus Street, LIDCOMBE NSW 2141 |
-| 89-93 High St, Melbourne, 3101 | CONFIRM | PREMISE | 93 High Street, Melbourne VIC 3070 |
-| KINGS ARCADE, Suites 11-12, 2/978 High St, Melbourne, 3143 | CONFIRM | PREMISE | Unit 2, 11 High Street, Melbourne VIC 3181 |
-| G-098A/1341 Dandenong Rd, Melbourne, 3148 | CONFIRM | PREMISE | 1341 Dandenong Road, Melbourne VIC 3145 |
+| Building A, Level, 1, Room A.1.08, Lidcombe, 2141 | CONFIRM | PREMISE | Level 1, 1 Eucalyptus Street, Lidcombe NSW 2141, Australia |
+| 89-93 High St, Melbourne, 3101 | CONFIRM | PREMISE | 93 High Street, Northcote VIC 3070, Australia |
+| KINGS ARCADE, Suites 11-12, 2/978 High St, Melbourne, 3143 | CONFIRM | PREMISE | Unit 2, 11 High Street, Prahran VIC 3181, Australia |
+| G-098A/1341 Dandenong Rd, Melbourne, 3148 | CONFIRM | PREMISE | 1341 Dandenong Road, Malvern East VIC 3145, Australia |
 
 **德国 · 错误建议**
 
@@ -1392,28 +1392,28 @@
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| 10 St Johns Rd, Auckland, 1072 | CONFIRM | PREMISE_PROXIMITY | 10 Johns Lane, Pakuranga |
-| 317 Queen St, Auckland, 1010 | CONFIRM | PREMISE | 317 Queen Street |
-| 22 Queen Street, Auckland, 2120 | CONFIRM | PREMISE | 22 Queen Street, Northcote Point |
-| 58 Queen St, CBD, 1010 | CONFIRM | PREMISE | 58 Queen Street, Northcote Point |
+| 10 St Johns Rd, Auckland, 1072 | CONFIRM | PREMISE_PROXIMITY | 10 Johns Lane, Pakuranga, Auckland 1072, New Zealand |
+| 317 Queen St, Auckland, 1010 | CONFIRM | PREMISE | 317 Queen Street, Auckland 1010, New Zealand |
+| 22 Queen Street, Auckland, 2120 | CONFIRM | PREMISE | 22 Queen Street, Northcote Point, Auckland 2120, New Zealand |
+| 58 Queen St, CBD, 1010 | CONFIRM | PREMISE | 58 Queen Street, Northcote Point, Auckland 1010, New Zealand |
 
 **新西兰 · 判 FIX**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| Stanniland St, Auckland, 2010 | FIX | ROUTE | Stanniland Street, 2010 |
-| Wakefield St., Auckland | FIX | ROUTE | Wakefield Street |
-| Unit 8/150-160 Beaumont St, Auckland, 1010 | FIX | ROUTE | Unit 8/150-160, Beaumont Street, 1010 |
-| Halsey Dr, Auckland, 1042 | FIX | ROUTE | Halsey Drive, 1042 |
+| Stanniland St, Auckland, 2010 | FIX | ROUTE | Stanniland Street, Pakuranga Heights, Auckland 2010, New Zealand |
+| Wakefield St., Auckland | FIX | ROUTE | Wakefield Street, Auckland, New Zealand |
+| Halsey Dr, Auckland, 1042 | FIX | ROUTE | Halsey Drive, Lynfield, Auckland 1042, New Zealand |
+| East Tamaki, Auckland, 2019 | FIX | ROUTE | West Tāmaki Road, Saint Heliers, Auckland 2019, New Zealand |
 
 **新西兰 · 静默错误**
 
 | 输入 | 结论 | 粒度 | 标准化结果 |
 |---|---|---|---|
-| Shopping Centre Shop T208/22 Stoddard Rd, Auckland, 1041 | ACCEPT | PREMISE | Shop T208, 22 Stoddard Road, Wesley |
-| 323 Great South Rd, Auckland, 1062 | ACCEPT | PREMISE | 323 Great South Road, Ellerslie |
-| 147 Fisher Parade, Sunnyhills, 2010 | ACCEPT | PREMISE | 147 Fisher Parade, Sunnyhills |
-| 6/71-75 Marua Rd, Auckland, 1051 | CONFIRM_ADD_SUBPREMISES | PREMISE | 6 Marua Road, Ellerslie |
+| Shopping Centre Shop T208/22 Stoddard Rd, Auckland, 1041 | ACCEPT | PREMISE | Shop T208, 22 Stoddard Road, Wesley, Auckland 1041, New Zealand |
+| 323 Great South Rd, Auckland, 1062 | ACCEPT | PREMISE | 323 Great South Road, Ellerslie, Auckland 1062, New Zealand |
+| 147 Fisher Parade, Sunnyhills, 2010 | ACCEPT | PREMISE | 147 Fisher Parade, Sunnyhills, Auckland 2010, New Zealand |
+| Unit 4/930 Great South Road, Penrose, 1061 | ACCEPT | PREMISE | Unit 4, 930 Great South Road, Penrose, Auckland 1061, New Zealand |
 
 **日本 · 静默错误**
 

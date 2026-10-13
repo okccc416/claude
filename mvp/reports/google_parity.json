@@ -3,11 +3,11 @@
  "markets": {
   "AU": {
    "n": 1000,
-   "ok": 847,
-   "accept_ok": 739,
-   "noise": 63,
+   "ok": 862,
+   "accept_ok": 757,
+   "noise": 62,
    "noise_postcode": 0,
-   "no_premise": 76,
+   "no_premise": 62,
    "miss": 14,
    "miss_nothing": 4,
    "miss_number": 1,
@@ -15,15 +15,15 @@
   },
   "NZ": {
    "n": 1000,
-   "ok": 872,
-   "accept_ok": 680,
-   "noise": 50,
+   "ok": 880,
+   "accept_ok": 689,
+   "noise": 49,
    "noise_postcode": 0,
-   "no_premise": 65,
-   "miss": 13,
+   "no_premise": 59,
+   "miss": 12,
    "miss_nothing": 3,
    "miss_number": 3,
-   "miss_wrong": 7
+   "miss_wrong": 6
   },
   "JP": {
    "n": 1000,
@@ -123,15 +123,15 @@
   },
   "CO": {
    "n": 1000,
-   "ok": 731,
+   "ok": 730,
    "accept_ok": 475,
    "noise": 40,
    "noise_postcode": 0,
-   "no_premise": 69,
+   "no_premise": 70,
    "miss": 160,
    "miss_nothing": 15,
-   "miss_number": 79,
-   "miss_wrong": 66
+   "miss_number": 80,
+   "miss_wrong": 65
   },
   "GB": {
    "n": 1000,
@@ -453,9 +453,9 @@
    "noise_postcode": 0,
    "no_premise": 122,
    "miss": 168,
-   "miss_nothing": 18,
+   "miss_nothing": 17,
    "miss_number": 0,
-   "miss_wrong": 150
+   "miss_wrong": 151
   }
  }
 }

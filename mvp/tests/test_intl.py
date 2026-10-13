@@ -145,6 +145,20 @@ def test_au_parse(au):
     assert au.ref.streets[p.streets[0].ids[0]].name == "Crown Street"
 
 
+def test_au_unit_slash_variants(au):
+    """澳洲 / 新西兰的"单元 / 门牌"写法：门牌可以是区间（11/41-43），斜杠前可以带楼层 / 铺位字母（L1/592、G105/1169）。
+    （与 Pelias 对比时发现：这几种写法原来会把单元号当门牌，或丢掉门牌）"""
+    rp = RuleParser(au.ref)
+    for text, number, unit in (("L1/104 Crown St, Surry Hills 2010", "104", "LEVEL 1"),
+                               ("Level 1/102-104 Crown St, Surry Hills 2010", "102-104", "LEVEL 1"),
+                               ("1/102-104 Crown St, Surry Hills 2010", "102-104", "UNIT 1"),
+                               ("G105/100 Crown St, Surry Hills 2010", "100", "G105")):
+        p = rp.parse(text)
+        assert (p.number, p.unit) == (number, unit), text
+    r = au.validate("1/102-104 Crown St, Surry Hills NSW 2010")  # 区间按首尾门牌都能查到
+    assert r.granularity == "PREMISE" and r.best.point["number"] in ("102", "104")
+
+
 def test_au_exact_premise_accepts(au):
     r = au.validate("100 Crown Street, Surry Hills NSW 2010")
     assert (r.action, r.granularity) == (ACCEPT, "PREMISE")
