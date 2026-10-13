@@ -1,0 +1,25 @@
+{
+ "runs": {
+  "Addok|FR": {
+   "market": "FR",
+   "n": 600,
+   "ok_m": 250.0,
+   "ours": {
+    "located_ok": 566,
+    "located_ok_not_fix": 555,
+    "far": 16,
+    "accept": 535,
+    "accept_ok": 523,
+    "accept_far": 7
+   },
+   "other": {
+    "located_ok": 537,
+    "far": 17,
+    "premise": 330,
+    "auto_at_same_precision": 280,
+    "auto_ok": 274,
+    "auto_far": 3
+   }
+  }
+ }
+}
