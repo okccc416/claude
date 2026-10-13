@@ -362,7 +362,7 @@ def validate_with_geo(eng: Engine, text: str, geo, strictness: str = "BALANCED",
         return ours
     if cov is not None and cov.status == "OUTSIDE":
         if "NATIONAL_ADDRESS" in ours.reasons and ours.granularity == "PREMISE":
-            return _national_with_geo(ours, checks, strictness)
+            return _national_with_geo(eng, ours, checks, strictness)
         return _outside_with_geo(eng, ours, checks, strictness)
     rank = {"VERIFIED": 4, "PLAUSIBLE": 3, "MISSING_NUMBER": 2, "STREET_LEVEL": 1, "REJECTED": 0}
     c = max(checks, key=lambda x: rank[x.verdict])
@@ -437,12 +437,23 @@ def _outside_with_geo(eng: Engine, ours: Result, checks: list[GeoCheck], strictn
     return _from_geo(eng, ours, c, ACCEPT if ok else CONFIRM, ["OUTSIDE_COVERAGE"] + (["GEO_VERIFIED"] if ok else []))
 
 
-def _national_with_geo(ours: Result, checks: list[GeoCheck], strictness: str) -> Result:
+def _national_with_geo(eng: Engine, ours: Result, checks: list[GeoCheck], strictness: str) -> Result:
     """试点范围外、全国门址库查到了这个门牌：以全国库为准。geo 的门址也和输入一致、而且就在同一处 -> geo 印证，
-    路名 / 城镇只是拼写纠正的也可以直接通过；geo 和输入一致却在别处 -> 请用户确认（两处都列为候选）。"""
+    路名 / 城镇只是拼写纠正的也可以直接通过；geo 和输入一致却在别处 -> 请用户确认（两处都列为候选）。
+    例外：全国库只找到拼写纠正过的门牌，geo 的路名却与原文完全一致（全国库缺了这一处）-> 按 geo 核对，
+    全国库的结果列为候选。"""
     rank = {"VERIFIED": 4, "PLAUSIBLE": 3, "MISSING_NUMBER": 2, "STREET_LEVEL": 1, "REJECTED": 0}
     c = max(checks, key=lambda x: rank[x.verdict])
     d = haversine(ours.lat, ours.lng, c.geo.lat, c.geo.lng)
+    weak = "STREET_SPELL_CORRECTED" in ours.reasons  # 全国库没有原文这条路（只有拼写纠正过的）；只是有歧义的不算
+    if d > AGREE_M and weak and c.verdict in ("VERIFIED", "PLAUSIBLE") and c.fields.get("route") == "CONFIRMED":
+        comp = {k: (ours.components.get(k) or {}).get("text", "") for k in ("route", "street_number", "postal_code",
+                                                                           "locality")}
+        nat = {"street": comp["route"], "number": comp["street_number"], "postcode": comp["postal_code"],
+               "area": comp["locality"], "lat": ours.lat, "lng": ours.lng, "source": "national"}
+        res = _outside_with_geo(eng, ours, checks, strictness)
+        res.candidates = (res.candidates or []) + [nat]
+        return res
     if d <= AGREE_M:
         ours.reasons.append("GEO_AGREES_WITH_NATIONAL")
         if ours.action == CONFIRM and c.verdict == "VERIFIED" and strictness != "STRICT" \

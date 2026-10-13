@@ -657,6 +657,9 @@ def test_completed_names_and_chilean_numbers(cl):
     assert res.granularity == "PREMISE" and res.best.point["number"] == "8193"
     res = cl.validate("Av. Las Torres 91, Quilicura")
     assert res.granularity == "PREMISE" and res.best.point["number"] == "091"
+    # 度数符号当序数符号：N° 后面的是门牌，1° 是楼层
+    assert cl.validate("N°91 / 1°, Av. Las Torres, Quilicura").parsed.number == "91"
+    assert cl.validate("91 2°, Av. Las Torres, Quilicura").parsed.number == "91"
     assert key("Tobalaba N° 14.007", "CL") == "TOBALABA N 14007" and key("Av. Paulista, 1.636", "BR").endswith(" 1636")
     assert "1636" not in key("12.1.636", "BR") and key("Kreuzg. 1.636", "AT").endswith("1 636")  # 只在这几个市场、只合并 x.xxx
 
@@ -842,6 +845,9 @@ def test_national_address_index(tmp_path_factory):
         "HANNOVER"
     assert route_match("Schönbühlstraße", "Schoenbuehlstr. 45A, Stuttgart") == "CONFIRMED"  # 变音转写
     assert street_part("Nr. 9 Vogelberger Weg, Lüdenscheid")[1] == ["VOGELBERGER", "WEG"]  # 门牌标记在段首
+    from avmvp.intl.national import number_variants
+    assert number_variants("15a/4", "PL") == ["15A/4", "15A"]  # 斜杠后是公寓号，不能当门牌查
+    assert number_variants("41-43") == ["41-43", "41", "43"] and "2" in number_variants("772/2", "CZ")
     out = eng.to_response(eng.validate("100 Crown St, Wollongong NSW 2500"))["result"]
     by = {c["componentType"]: c["componentName"]["text"] for c in out["address"]["addressComponents"]}
     assert by["route"] == "Crown Street" and by["locality"] == "Wollongong" and by["postal_code"] == "2500"

@@ -56,7 +56,7 @@ python scripts/fetch_osm_addresses.py     # OSM 门牌 + 道路编号（BBBike /
 python scripts/fetch_extra_addresses.py   # 政府开放地址：波哥大门牌牌号、索非亚地址；英国邮编中心点（只用于估计标注噪声）
 python scripts/build_market_reference.py  # 构建参考库（3 路并行约 25 分钟，澳洲最大）
 python scripts/fetch_gazetteer.py         # 全国地名 / 邮编表（GeoNames）：判断输入写的地点在不在试点范围内（试点范围守卫）
-python scripts/fetch_national.py --markets NZ,AT,BE,PL,NL,CO,DE   # 可选：全国门址库（Overture 全国门牌点，存磁盘 sqlite），
+python scripts/fetch_national.py --markets DE,AU,ES,NL,CO,BE,PL,AT,NZ   # 可选：全国门址库（Overture 全国门牌点，存磁盘 sqlite），
                                           # 试点城市以外的地址也能验到门牌级；每国 0.3–3 GB，没有就退回城镇级
 python scripts/fetch_address_formats.py   # Google 地址格式元数据（各国必填字段、排版、州 / 省邮编前缀），已随代码提交，更新时才需要跑
 python scripts/train_market_parsers.py    # 训练各市场的机器学习解析器（CRF，每个市场约 30 秒）

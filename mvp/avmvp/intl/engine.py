@@ -228,7 +228,7 @@ class Engine:
         if nat.premise:
             written = nat.written_number or p.number or ""
             same = same_number(nat.number, written)
-            part = same or number_key(nat.number) in number_variants(written)  # 41-43 里的 41
+            part = same or number_key(nat.number) in number_variants(written, self.market)  # 41-43 里的 41
             comps["street_number"] = {"text": nat.number, "level": "CONFIRMED" if part else "UNCONFIRMED_BUT_PLAUSIBLE"}
             ok = (not corrected and not nat.ambiguous and nat.place in ("postcode", "locality") and same
                   and strictness != "STRICT")
@@ -1315,7 +1315,7 @@ REASON_TEXT = {
     "GEO_STREET_LEVEL_ONLY": "geo 服务只定位到道路或区域级，没有门牌",
     "GEO_AMBIGUOUS": "同名道路在别处也有这个门牌，输入里没有邮编或片区能确定是哪一处",
     "NO_REFERENCE_DATA": "这个国家没有参考库：只用原文和全国地名表核对 geo 的门址",
-    "OUTSIDE_COVERAGE": "所写城镇 / 邮编 / 州在参考数据覆盖范围外：无法逐门牌验证，只定位到城镇",
+    "OUTSIDE_COVERAGE": "所写城镇 / 邮编 / 州在试点参考库范围外：有全国门址库时按它核对门牌（NATIONAL_ADDRESS），否则只定位到城镇",
     "DESCRIPTIVE_LOCATION": "输入只有方位描述（第几栋、在某物后面），没有可核对的地址；请用户提供门牌地址，或在地图上标点 / 给出 Plus Code",
     "BUILDING_NAME_AMBIGUOUS": "同名楼宇有多处，需要用户确认是哪一处",
     "POSTCODE_NOT_FOUND": "官方地址表里没有这个邮编",

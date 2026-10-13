@@ -21,7 +21,7 @@ from dataclasses import dataclass, field
 from rapidfuzz import fuzz
 
 from .coverage import norm
-from .geo_text import PARTICLES, TYPES, UNIT_WORDS, _core, route_match, street_part
+from .geo_text import PARTICLES, TYPES, UNIT_WORDS, _core, numbered_only, route_match, street_part
 from .noise import strip_noise
 from .reference import DATA, haversine, number_key
 from .text import fold, norm_postcode
@@ -144,6 +144,7 @@ class NationalIndex:
             return None
         clean = strip_noise(text)[0]
         _, name, locality = street_part(clean, pc_re)
+        self_words = locality  # 只出现在道路段以外的词（城镇名要从这里印证）
         written = _core(name)[0]
         if locality and [w for w in written if w not in locality]:
             written = [w for w in written if w not in locality]  # 与 route_match 同样去掉夹在道路段里的城镇名
@@ -166,9 +167,12 @@ class NationalIndex:
         if grid:  # 网格路名的前缀：编号（CL 16 -> #16，CL 39A -> 39A）
             prefixes = sorted({"#" + n for _, n, _ in grid} | {(n + l)[:3] for _, n, l in grid if len(n + l) >= 3})
         cols = "street, number, postcode, locality, lkey, lat, lng"
+        # 道路段里除门牌以外的数字（编号道路 Calle 5 的 5）；道路段以外的词（城镇名的印证只算这些里的）
+        ctx = {"street_nums": {w for w in name if re.search(r"\d", w)} - {number_key(number or "")},
+               "other": self_words}
         rows: list[tuple] = []
         if number:
-            nums = [number_key(number)] if grid else number_variants(number)
+            nums = [number_key(number)] if grid else number_variants(number, self.cc)
             qn = ",".join("?" * len(nums))
             if prefixes:
                 rows += self._rows(f"SELECT {cols} FROM addr WHERE nkey IN ({qn}) AND s3 IN ({','.join('?' * len(prefixes))})",
@@ -179,12 +183,12 @@ class NationalIndex:
             if towns:
                 rows += self._rows(f"SELECT {cols} FROM addr WHERE nkey IN ({qn}) AND lkey IN "
                                    f"({','.join('?' * len(towns))})", nums + towns)
-        hit = self._best(rows, clean, pc_re, pcs, grams, name, written, grid, premise=True)
+        hit = self._best(rows, clean, pc_re, pcs, grams, name, written, grid, premise=True, ctx=ctx)
         base = re.fullmatch(r"(\d+)[A-Z]", number_key(number or ""))
         if hit is None and base and not grid and prefixes:  # 45A 不在表里、45 在：取 45（门牌附近，请用户确认）
             hit = self._best(self._rows(f"SELECT {cols} FROM addr WHERE nkey=? AND s3 IN "
                                         f"({','.join('?' * len(prefixes))})", [base.group(1)] + prefixes),
-                             clean, pc_re, pcs, grams, name, written, grid, premise=True)
+                             clean, pc_re, pcs, grams, name, written, grid, premise=True, ctx=ctx)
             if hit is not None and not hit.place:
                 hit = None  # 只认所写城镇 / 邮编里的
         if hit is None and plate and prefixes and (towns or pcs):
@@ -202,7 +206,7 @@ class NationalIndex:
         if towns:
             street_rows += self._rows(f"SELECT {cols} FROM addr WHERE s3 IN ({qp}) AND lkey IN "
                                       f"({','.join('?' * len(towns))}) LIMIT 3000", prefixes + towns)
-        return self._best(street_rows, clean, pc_re, pcs, grams, name, written, grid, premise=False)
+        return self._best(street_rows, clean, pc_re, pcs, grams, name, written, grid, premise=False, ctx=ctx)
 
     def _block(self, grid: dict, plate: str, prefixes: list[str], cols: str, towns: list[str], pcs: list[str],
                grams: set[str]):
@@ -233,7 +237,7 @@ class NationalIndex:
                              written_postcode=rpc if rpc in pcs else (pcs[0] if pcs else ""))
 
     def _best(self, rows: list[tuple], clean: str, pc_re, pcs: list[str], grams: set[str], name: list[str],
-              written: list[str], grid: dict, premise: bool):
+              written: list[str], grid: dict, premise: bool, ctx: dict | None = None):
         seen = {}
         for street, num, rpc, loc, lkey, lat, lng in rows:
             seen[(street, num, rpc, loc, round(lat, 5), round(lng, 5))] = (street, num, rpc, loc, lkey, lat, lng)
@@ -249,6 +253,8 @@ class NationalIndex:
                     sl = route_cache[street] = route_match(street, clean, pc_re)
             if sl not in ("CONFIRMED", "CORRECTED"):
                 continue
+            if not grid and numbered_only(street) and not set(_core(norm(street).split())[1]) <= ctx["street_nums"]:
+                continue  # 编号道路（Calle Transversal 5）：编号要写在道路段里，不能是门牌号本身
             if rpc and rpc in pcs:
                 place = "postcode"
             elif lkey and lkey in grams:
@@ -256,8 +262,13 @@ class NationalIndex:
             elif lkey and len(lkey) >= 5 and any(abs(len(g) - len(lkey)) <= 2 and fuzz.ratio(g, lkey) >= 85
                                                  for g in grams):
                 place = "locality_fuzzy"
+            elif lkey and any(len(g) >= 5 and lkey.startswith(g + " ") for g in grams):
+                place = "locality_fuzzy"  # 只写了正式名称的前半（Sant Cugat = Sant Cugat del Vallès）
             else:
                 place = ""
+            if place.startswith("locality") and set(lkey.split()) <= set(norm(street).split()) \
+                    and not set(lkey.split()) <= ctx["other"]:
+                place = ""  # 城镇名只是路名的一部分（Calle Serra 印证不了 Serra 镇）
             if not place and (not premise or sl != "CONFIRMED" or grid or (rpc and pcs)):
                 # 没有邮编 / 城镇印证：门牌级只认路名完全对上、且邮编不与原文冲突的（原文写的邮编在别处 = 多半是
                 # 数据缺了这一处，选别的城市的同名同号是错的）；网格门牌各城市大量重复，也不认；道路级不认
@@ -298,12 +309,16 @@ def same_number(found: str, written: str) -> bool:
     return key(found) == key(written)
 
 
-def number_variants(number: str) -> list[str]:
+def number_variants(number: str, cc: str = "") -> list[str]:
+    """门牌的几种写法：区间 41-43 两头都可查；斜杠后面多是单元（波兰 15a/4、奥地利 16/75 Top、比利时 2/3 bus），
+    只有捷克 / 斯洛伐克（登记号 / 街道号）两边都是门牌。"""
     n = number_key(number)
     out = [n]
-    m = re.fullmatch(r"(\d+[A-Z]?)[-/](\d+[A-Z]?)", n)
+    m = re.fullmatch(r"(\d+[A-Z]?)([-/])(\d+[A-Z]?)", n)
     if m:
-        out += [m.group(1), m.group(2)]
+        out.append(m.group(1))
+        if m.group(2) == "-" or cc in ("CZ", "SK"):
+            out.append(m.group(3))
     return list(dict.fromkeys(out))
 
 

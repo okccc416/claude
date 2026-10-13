@@ -137,7 +137,9 @@ components:
             [{"long_name", "types"}], "geometry": {"location": {"lat", "lng"}, "location_type"}}]}），也接受单条结果或结果列表。
             给了就先把 geo 的门址代回输入核对：逐字段一致直接采用（GEO_VERIFIED）；有纠正 / 补全时 CONFIRM；
             门牌 / 道路对不上时改用本引擎的结论，geo 结果列在候选里（GEO_REJECTED）。见 mvp/avmvp/intl/geo_check.py。
-            输入写的城镇 / 邮编在试点范围外（原因码 OUTSIDE_COVERAGE）时，改用全国地名 / 邮编表核对 geo 坐标是否在所写城镇附近。
+            输入写的城镇 / 邮编在试点范围外（原因码 OUTSIDE_COVERAGE）时：有全国门址库（scripts/fetch_national.py）的国家按全国库核对门牌、
+            路名和城镇 / 邮编（NATIONAL_ADDRESS；geo 与全国库同一处时 GEO_AGREES_WITH_NATIONAL），否则用全国地名 / 邮编表核对
+            geo 坐标是否在所写城镇附近。
             也接受高德海外地理编码的响应（{"geocodes": [...]}）。regionCode 不在已建参考库的市场里时，带 geoResult 的请求只用
             原文 + 全国地名表核对（原因码 NO_REFERENCE_DATA，metadata.marketClass = none），见 mvp/avmvp/intl/geo_free.py
     ValidateResponse:
@@ -181,7 +183,7 @@ components:
                 confidenceNote: { type: string, description: 多市场引擎：置信度的来历，如"开发集上同类结论 N 条中位置给对了 M 条" }
                 reasons:
                   type: array
-                  description: 原因码，如 STREET_SPELL_CORRECTED、POSTCODE_REPLACED、AMBIGUOUS_MULTIPLE_CANDIDATES、ROUTE_NOT_CORROBORATED、LOCATED_BY_PLUS_CODE、LLM_UNVERIFIED
+                  description: 原因码，如 STREET_SPELL_CORRECTED、POSTCODE_REPLACED、AMBIGUOUS_MULTIPLE_CANDIDATES、ROUTE_NOT_CORROBORATED、LOCATED_BY_PLUS_CODE、LLM_UNVERIFIED、OUTSIDE_COVERAGE、NATIONAL_ADDRESS
                   items:
                     type: object
                     properties:

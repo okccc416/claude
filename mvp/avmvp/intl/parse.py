@@ -301,6 +301,10 @@ class RuleParser:
                     continue
                 p.unit = f"{t} {toks[i + 1]}"
                 used[i] = used[i + 1] = True
+            elif self.ref.market == "PL" and t in ("M", "MIESZK", "MIESZKANIE") and 0 < i < len(toks) - 1 \
+                    and re.fullmatch(r"\d+[A-Z]?", toks[i - 1]) and re.fullmatch(r"\d+[A-Z]?", toks[i + 1]):
+                p.unit = p.unit or f"M {toks[i + 1]}"  # 波兰 ul. Obozowa 24a m. 13：m. = mieszkanie（公寓号）
+                used[i] = used[i + 1] = True
             elif t == "#" and i + 1 < len(toks) and not self.m.hash_number:  # 拉美的 # 标门牌，不是单元
                 p.unit = "#" + toks[i + 1]
                 used[i] = used[i + 1] = True
@@ -617,8 +621,15 @@ class RuleParser:
         p.numbers = cand
         if not cand:
             return
+        # 度数符号当序数符号写（分词时被去掉了）：N° 3 的 3 是门牌，1° 是楼层（坐标 24°46' 不算）
+        raw = fold(p.raw or "")
+        marked = {m.group(1) for m in re.finditer(r"(?<![A-Z])N\s?°\s?(\d{1,5}[A-Z]?)(?![\dA-Z])", raw)}
+        ordinal = {m.group(1) for m in re.finditer(r"(?<![\d.,°'])(\d{1,2})\s?°(?![\d'’])", raw)}
+        cand = [c for c in cand if c[1] not in ordinal or c[1] in marked] or cand
         street = next((s for s in p.streets if s.start >= 0), None)
-        if street is not None:
+        if any(t in marked for _, t in cand):
+            p.number = next(t for _, t in cand if t in marked)
+        elif street is not None:
             before = [c for c in cand if c[0] < street.start]
             after = [c for c in cand if c[0] >= street.end]
             first = (max(before)[1] if before else None, min(after)[1] if after else None)
