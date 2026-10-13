@@ -790,6 +790,50 @@ def test_outside_coverage_guard(au_cov):
     assert "GEO_REJECTED" in res.reasons and res.granularity == "LOCALITY" and res.lat < -34.3
 
 
+def test_national_address_index(tmp_path_factory):
+    """试点城市以外按全国门址库核对：路名、门牌、城镇 / 邮编都对上 -> 直接通过；路名错拼 -> 请确认；
+    门牌查不到 -> 道路级请确认；原文没有能印证的城镇、全国又有多处同名同号 -> 不选（退回城镇级）。"""
+    import gzip
+    import sqlite3
+    from avmvp.intl.national import INDEXES, SCHEMA, name_prefix
+    root = tmp_path_factory.mktemp("markets")
+    _write(root / "AU", [("Surry Hills", "neighborhood", (151.200, -33.895, 151.220, -33.880))],
+           [("Crown Street", -33.884 - 0.001 * i, 151.212) for i in range(6)],
+           [("Crown Street Public School", "elementary_school", -33.8870, 151.2125)],
+           [("100", "Crown Street", "", "2010", -33.8850, 151.2121)])
+    places = [[["Sydney"], -33.8688, 151.2093, "P", 5000000, "02"],
+              [["Wollongong"], -34.424, 150.893, "P", 300000, "02"],
+              [["Bathurst"], -33.42, 149.58, "P", 40000, "02"]]
+    with gzip.open(root / "AU" / "gazetteer.json.gz", "wt", encoding="utf-8") as f:
+        json.dump({"places": places, "postcodes": [["2500", "Wollongong", -34.42, 150.89]]}, f)
+    eng = Engine("AU", "rules", build("AU", "A", log=lambda *_: None, root=root))
+    db = sqlite3.connect(root / "AU" / "national.sqlite")
+    db.executescript(SCHEMA)
+    for street, num, pc, loc, lat, lng in (("Crown Street", "100", "2500", "Wollongong", -34.4250, 150.8930),
+                                           ("Crown Street", "100", "2795", "Bathurst", -33.4200, 149.5800),
+                                           ("Keira Street", "5", "2500", "Wollongong", -34.4270, 150.8900),
+                                           ("Keira Street", "7", "2500", "Wollongong", -34.4272, 150.8902)):
+        db.execute("INSERT INTO addr(street, s3, number, nkey, unit, postcode, locality, lkey, region, lat, lng) "
+                   "VALUES (?,?,?,?,'',?,?,?,'NSW',?,?)",
+                   (street, name_prefix(street), num, num, pc, loc, loc.upper(), lat, lng))
+    for sql in INDEXES:
+        db.execute(sql)
+    db.commit()
+    db.close()
+    res = eng.validate("100 Crown St, Wollongong NSW 2500")
+    assert (res.action, res.granularity) == (ACCEPT, "PREMISE") and "NATIONAL_ADDRESS" in res.reasons
+    assert abs(res.lat - -34.425) < 0.001 and res.confidence is None  # 没有校准数据：不报置信度
+    res = eng.validate("100 Crwn Street, Wollongong 2500")
+    assert res.action == CONFIRM and "STREET_SPELL_CORRECTED" in res.reasons and abs(res.lat - -34.425) < 0.001
+    res = eng.validate("100 Crown St, Bathurst")
+    assert res.action == ACCEPT and abs(res.lat - -33.42) < 0.001
+    res = eng.validate("9 Keira St, Wollongong 2500")
+    assert (res.action, res.granularity) == (CONFIRM, "ROUTE") and "PREMISE_NOT_FOUND" in res.reasons
+    out = eng.to_response(eng.validate("100 Crown St, Wollongong NSW 2500"))["result"]
+    by = {c["componentType"]: c["componentName"]["text"] for c in out["address"]["addressComponents"]}
+    assert by["route"] == "Crown Street" and by["locality"] == "Wollongong" and by["postal_code"] == "2500"
+
+
 def test_amap_geo_format_and_route_text_match():
     """高德海外地理编码格式：street / number 拆错时按 formatted_address 重拆、单元截掉、乱码还原；
     路名只和原文的道路段比（城镇名冒充路名判冲突），跨语言类型词、缩写、只写姓算对上。"""

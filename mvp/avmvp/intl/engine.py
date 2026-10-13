@@ -25,6 +25,7 @@ import numpy as np
 
 from . import google
 from .coverage import gazetteer
+from .national import national
 from .markets import MARKETS
 from .parse import AU_STATES, Parsed, RuleParser, Span
 from .poiaddr import lookup as poi_lookup
@@ -133,7 +134,8 @@ class Engine:
     def validate(self, text: str, strictness: str = "BALANCED", min_confidence: float | None = None) -> Result:
         """min_confidence：可选门槛。结论是 ACCEPT（或只提示补单元号）但置信度低于门槛时，改为 CONFIRM（LOW_CONFIDENCE）。"""
         res = self._validate(text, strictness)
-        if self.conf_model is not None and res.lat is not None:
+        # 试点城市以外按全国门址库核对的结论没有校准数据（开发集只覆盖试点城市）：不报置信度
+        if self.conf_model is not None and res.lat is not None and "NATIONAL_ADDRESS" not in res.reasons:
             res.confidence = self.conf_model.confidence(res, self.market, self.m.cls)
             res.confidence_note = self.conf_model.explain(res, self.market, self.m.cls)
             if min_confidence is not None and res.action in (ACCEPT, ADD_SUB) and res.confidence < min_confidence:
@@ -172,13 +174,17 @@ class Engine:
         cov = gazetteer(self.ref).assess(text, best_res.parsed.postcode,
                                          b.street_span.text if b is not None and b.street_span is not None else None)
         if cov.status == "OUTSIDE":
-            best_res = self._outside(best_res, cov)
+            best_res = self._outside(best_res, cov, strictness)
         best_res.coverage = cov
         return best_res
 
-    def _outside(self, res: Result, cov) -> Result:
-        """范围外的地址：参考库验证不了，只给出城镇级位置。写全了道路和门牌的请用户确认，否则请用户补全。"""
+    def _outside(self, res: Result, cov, strictness: str = "BALANCED") -> Result:
+        """范围外的地址：试点参考库验证不了。有全国门址库（national.py）时按门牌号召回、按路名和城镇 / 邮编核对；
+        没有或查不到时只给出城镇级位置——写全了道路和门牌的请用户确认，否则请用户补全。"""
         p = res.parsed
+        nat = national(self.ref).lookup(p.raw, p.number, p.postcode, self.rules.pc_re)
+        if nat is not None and (not nat.premise or nat.place or not nat.ambiguous):
+            return self._national(res, nat, strictness)
         reasons = (["NON_ADDRESS_INFO_EXTRACTED"] if p.noise else []) + ["OUTSIDE_COVERAGE"]
         complete = bool(p.number and (p.streets or p.leftover or p.buildings))
         comps = {"locality": {"text": cov.place, "level": "UNCONFIRMED_BUT_PLAUSIBLE", "inferred": True}}
@@ -188,6 +194,49 @@ class Engine:
             comps["street_number"] = {"text": p.number, "level": "UNCONFIRMED_BUT_PLAUSIBLE"}
         return Result(self.market, CONFIRM if complete else FIX, "LOCALITY", cov.lat, cov.lng, p, None, reasons,
                       comps, [], res.parser)
+
+    def _national(self, res: Result, nat, strictness: str) -> Result:
+        """全国门址库查到的结论：路名完全一致、门牌一致、邮编或城镇印证、全国只有这一处才直接通过。"""
+        p = res.parsed
+        reasons = (["NON_ADDRESS_INFO_EXTRACTED"] if p.noise else []) + ["OUTSIDE_COVERAGE", "NATIONAL_ADDRESS"]
+        corrected = nat.street_level != "CONFIRMED"
+        if corrected:
+            reasons.append("STREET_SPELL_CORRECTED")
+        if nat.ambiguous:
+            reasons.append("AMBIGUOUS_MULTIPLE_CANDIDATES")
+        if nat.place == "locality_fuzzy":
+            reasons.append("LOCALITY_SPELL_CORRECTED")
+        comps: dict[str, dict] = {"route": {"text": nat.street, "level": "UNCONFIRMED_BUT_PLAUSIBLE" if corrected
+                                            else "CONFIRMED", "spellCorrected": corrected}}
+        if nat.locality:
+            comps["locality"] = {"text": nat.locality, "level": "CONFIRMED", "inferred": not nat.place.startswith(
+                "locality")}
+        if nat.postcode:
+            comps["postal_code"] = {"text": nat.postcode, "level": "CONFIRMED", "inferred": not p.postcode,
+                                    "replaced": bool(p.postcode) and p.postcode != nat.postcode}
+            if p.postcode and p.postcode != nat.postcode:
+                reasons.append("POSTCODE_REPLACED")
+        elif p.postcode:
+            comps["postal_code"] = {"text": p.postcode, "level": "UNCONFIRMED_BUT_PLAUSIBLE"}
+        if p.unit:
+            comps["subpremise"] = {"text": p.unit, "level": "UNCONFIRMED_BUT_PLAUSIBLE"}
+        point = {"id": -4, "number": nat.number, "street": None, "unit": "", "postcode": nat.postcode,
+                 "locality": nat.locality, "lat": nat.lat, "lng": nat.lng}
+        best = Hypothesis(0.0, point=point if nat.premise else None)
+        best.notes = list(reasons)
+        if nat.premise:
+            comps["street_number"] = {"text": nat.number, "level": "CONFIRMED"}
+            ok = (not corrected and not nat.ambiguous and nat.place in ("postcode", "locality")
+                  and number_key(nat.number) == number_key(p.number or "") and strictness != "STRICT")
+            action, gran = (ACCEPT if ok else CONFIRM), "PREMISE"
+        else:
+            if p.number:
+                comps["street_number"] = {"text": p.number, "level": "UNCONFIRMED_AND_SUSPICIOUS"}
+                reasons.append("PREMISE_NOT_FOUND")
+            else:
+                reasons.append("MISSING_PREMISE")
+            action, gran = (CONFIRM if p.number else FIX), "ROUTE"
+        return Result(self.market, action, gran, nat.lat, nat.lng, p, best, reasons, comps, nat.others, res.parser)
 
     def _llm_cap(self, res: Result) -> Result:
         """模型解析出的结果：改写过原文的最多给 CONFIRM；没有官方地址表的市场（B / C 类）一律最多 CONFIRM
@@ -1260,6 +1309,9 @@ REASON_TEXT = {
     "POSTCODE_NOT_FOUND": "官方地址表里没有这个邮编",
     "POSTCODE_STREET_MISMATCH": "邮编与道路相距很远，互相矛盾",
     "POSTCODE_REPLACED": "邮编与门牌地址不符，已替换为官方邮编",
+    "NATIONAL_ADDRESS": "试点城市以外：按全国官方门址库核对门牌、路名和城镇 / 邮编（没有路网和商户数据印证，置信度未校准）",
+    "LOCALITY_SPELL_CORRECTED": "城镇名有拼写错误，已按全国门址库纠正",
+    "GEO_AGREES_WITH_NATIONAL": "geo 服务返回的门址与全国门址库查到的是同一处",
     "POSTCODE_INFERRED": "输入没有邮编，已按官方地址补全",
     "AREA_STREET_MISMATCH": "所写片区与道路位置不符",
     "BUILDING_ONLY": "只凭楼宇 / 地点名定位，没有可核对的道路",

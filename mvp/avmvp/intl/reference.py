@@ -208,7 +208,7 @@ class MarketReference:
 
 
 # 用到时才生成、按市场缓存在参考库对象上的派生索引（不存盘）
-DERIVED = ("_divisions", "_np", "_core_fuzzy", "_suffix", "_completed", "_first_names", "_last_names", "_stems", "_jp_chome",
+DERIVED = ("_divisions", "_national", "_np", "_core_fuzzy", "_suffix", "_completed", "_first_names", "_last_names", "_stems", "_jp_chome",
            "_pc_far_share", "_has_pts", "_poi_all", "_gazetteer")
 
 

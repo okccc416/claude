@@ -361,6 +361,8 @@ def validate_with_geo(eng: Engine, text: str, geo, strictness: str = "BALANCED",
         ours.reasons.append("GEO_NO_RESULT")
         return ours
     if cov is not None and cov.status == "OUTSIDE":
+        if "NATIONAL_ADDRESS" in ours.reasons and ours.granularity == "PREMISE":
+            return _national_with_geo(ours, checks, strictness)
         return _outside_with_geo(eng, ours, checks, strictness)
     rank = {"VERIFIED": 4, "PLAUSIBLE": 3, "MISSING_NUMBER": 2, "STREET_LEVEL": 1, "REJECTED": 0}
     c = max(checks, key=lambda x: rank[x.verdict])
@@ -433,6 +435,27 @@ def _outside_with_geo(eng: Engine, ours: Result, checks: list[GeoCheck], strictn
     ok = c.verdict == "VERIFIED" and c.fields["locality"] == "CONFIRMED" and strictness != "STRICT" \
         and c.geo.location_type != "RANGE_INTERPOLATED"
     return _from_geo(eng, ours, c, ACCEPT if ok else CONFIRM, ["OUTSIDE_COVERAGE"] + (["GEO_VERIFIED"] if ok else []))
+
+
+def _national_with_geo(ours: Result, checks: list[GeoCheck], strictness: str) -> Result:
+    """试点范围外、全国门址库查到了这个门牌：以全国库为准。geo 的门址也和输入一致、而且就在同一处 -> geo 印证，
+    路名 / 城镇只是拼写纠正的也可以直接通过；geo 和输入一致却在别处 -> 请用户确认（两处都列为候选）。"""
+    rank = {"VERIFIED": 4, "PLAUSIBLE": 3, "MISSING_NUMBER": 2, "STREET_LEVEL": 1, "REJECTED": 0}
+    c = max(checks, key=lambda x: rank[x.verdict])
+    d = haversine(ours.lat, ours.lng, c.geo.lat, c.geo.lng)
+    if d <= AGREE_M:
+        ours.reasons.append("GEO_AGREES_WITH_NATIONAL")
+        if ours.action == CONFIRM and c.verdict == "VERIFIED" and strictness != "STRICT" \
+                and "AMBIGUOUS_MULTIPLE_CANDIDATES" not in ours.reasons:
+            ours.action = ACCEPT
+        return ours
+    ours.candidates = (ours.candidates or []) + [_cand(c.geo)]
+    if c.verdict == "VERIFIED" and d > DISAGREE_M and ours.action == ACCEPT:
+        ours.action = CONFIRM
+        ours.reasons.append("GEO_ENGINE_DISAGREE")
+    else:
+        ours.reasons += c.flags + (["GEO_REJECTED"] if c.verdict in ("REJECTED", "STREET_LEVEL") else [])
+    return ours
 
 
 def _from_geo(eng: Engine, ours: Result, c: GeoCheck, action: str, extra: list[str]) -> Result:
