@@ -25,7 +25,7 @@ import numpy as np
 
 from . import google
 from .coverage import gazetteer
-from .national import national
+from .national import national, same_number
 from .markets import MARKETS
 from .parse import AU_STATES, Parsed, RuleParser, Span
 from .poiaddr import lookup as poi_lookup
@@ -211,13 +211,14 @@ class Engine:
         if nat.locality:
             comps["locality"] = {"text": nat.locality, "level": "CONFIRMED", "inferred": not nat.place.startswith(
                 "locality")}
+        written_pc = p.postcode or nat.written_postcode
         if nat.postcode:
-            comps["postal_code"] = {"text": nat.postcode, "level": "CONFIRMED", "inferred": not p.postcode,
-                                    "replaced": bool(p.postcode) and p.postcode != nat.postcode}
-            if p.postcode and p.postcode != nat.postcode:
+            comps["postal_code"] = {"text": nat.postcode, "level": "CONFIRMED", "inferred": not written_pc,
+                                    "replaced": bool(written_pc) and written_pc != nat.postcode}
+            if written_pc and written_pc != nat.postcode:
                 reasons.append("POSTCODE_REPLACED")
-        elif p.postcode:
-            comps["postal_code"] = {"text": p.postcode, "level": "UNCONFIRMED_BUT_PLAUSIBLE"}
+        elif written_pc:
+            comps["postal_code"] = {"text": written_pc, "level": "UNCONFIRMED_BUT_PLAUSIBLE"}
         if p.unit:
             comps["subpremise"] = {"text": p.unit, "level": "UNCONFIRMED_BUT_PLAUSIBLE"}
         point = {"id": -4, "number": nat.number, "street": None, "unit": "", "postcode": nat.postcode,
@@ -227,7 +228,8 @@ class Engine:
         if nat.premise:
             comps["street_number"] = {"text": nat.number, "level": "CONFIRMED"}
             ok = (not corrected and not nat.ambiguous and nat.place in ("postcode", "locality")
-                  and number_key(nat.number) == number_key(p.number or "") and strictness != "STRICT")
+                  and same_number(nat.number, nat.written_number or p.number or "")
+                  and strictness != "STRICT")
             action, gran = (ACCEPT if ok else CONFIRM), "PREMISE"
         else:
             if p.number:
@@ -236,6 +238,10 @@ class Engine:
             else:
                 reasons.append("MISSING_PREMISE")
             action, gran = (CONFIRM if p.number else FIX), "ROUTE"
+            if nat.block and p.number:  # 网格门牌：同一条路、同一个路口的门牌，位置接近门牌级
+                comps["street_number"]["level"] = "UNCONFIRMED_BUT_PLAUSIBLE"
+                best.notes.append("PREMISE_INTERPOLATED")
+                gran = "PREMISE_PROXIMITY"
         return Result(self.market, action, gran, nat.lat, nat.lng, p, best, reasons, comps, nat.others, res.parser)
 
     def _llm_cap(self, res: Result) -> Result:
@@ -1126,7 +1132,7 @@ class Engine:
             if b is not None and b.building and not ({"PREMISE_INTERPOLATED", "PREMISE_FROM_POI"} & notes):
                 val = "PREMISE"
             else:
-                val = "ROUTE" if b is not None and b.street is not None else "OTHER"
+                val = "ROUTE" if b is not None and (b.street is not None or "NATIONAL_ADDRESS" in notes) else "OTHER"
         else:
             val = "ROUTE" if g == "ROUTE" else "OTHER"
         if val == "PREMISE" and any(c["componentType"] == "subpremise" and c["confirmationLevel"] == "CONFIRMED"

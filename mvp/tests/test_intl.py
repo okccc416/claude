@@ -829,9 +829,53 @@ def test_national_address_index(tmp_path_factory):
     assert res.action == ACCEPT and abs(res.lat - -33.42) < 0.001
     res = eng.validate("9 Keira St, Wollongong 2500")
     assert (res.action, res.granularity) == (CONFIRM, "ROUTE") and "PREMISE_NOT_FOUND" in res.reasons
+    res = eng.validate("100 Krown St, Bathurst")  # 路名开头就拼错（前缀对不上）：按门牌 + 城镇召回
+    assert res.action == CONFIRM and "STREET_SPELL_CORRECTED" in res.reasons and abs(res.lat - -33.42) < 0.001
+    res = eng.validate("deliver to 7 Keira St Wollongong 2500")  # 配送前缀后面直接是地址
+    assert (res.action, res.granularity) == (ACCEPT, "PREMISE") and abs(res.lat - -34.4272) < 0.0005
+    assert name_prefix("Am Volksgarten") == "VOL" and name_prefix("Calle 72") == "#72"
     out = eng.to_response(eng.validate("100 Crown St, Wollongong NSW 2500"))["result"]
     by = {c["componentType"]: c["componentName"]["text"] for c in out["address"]["addressComponents"]}
     assert by["route"] == "Crown Street" and by["locality"] == "Wollongong" and by["postal_code"] == "2500"
+
+
+def test_national_grid_addresses(tmp_path):
+    """哥伦比亚式网格门牌：类型 + 编号 + 字母 + 方位都要对上（Calle 16 不是 Carrera 16，Calle 9 Sur 不是 Calle 9），
+    # 后面的 22-53 是一个整体；各城市大量重复，必须有城市印证；门牌查不到时取同一路口距离数最接近的门牌。"""
+    import re
+    import sqlite3
+    from avmvp.intl.national import (INDEXES, SCHEMA, NationalIndex, grid_input, grid_key, grid_match, name_prefix,
+                                     same_number)
+    assert grid_input("Calle 39a #17 b 53, Villavicencio") == ({("CL", "39", "A"): {""}}, "17B-53")
+    assert grid_input("callé 52 # 16 B - 15, Manizales")[1] == "16B-15"
+    assert grid_key("CL 9A S") == ("CL", "9", "A", "S") and grid_key("KR 9 BIS") == ("KR", "9", "BIS", "")
+    keys = grid_input("Calle 9 Sur # 4-55")[0]
+    assert (grid_match("CL 9 S", keys), grid_match("CL 9", keys), grid_match("KR 9 S", keys)) == \
+        ("CONFIRMED", "CONFLICT", "CONFLICT")
+    assert grid_match("CL 9 S", grid_input("Calle 9 # 4-55")[0]) == "CORRECTED"  # 原文没写方位
+    assert same_number("16B 15", "16B-15") and not same_number("16B 15", "15")
+    (tmp_path / "CO").mkdir()
+    db = sqlite3.connect(tmp_path / "CO" / "national.sqlite")
+    db.executescript(SCHEMA)
+    for street, num, loc, lat, lng in (("CL 16", "22 53", "MANIZALES", 5.0700, -75.5100),
+                                       ("KR 16", "22 53", "MANIZALES", 5.0720, -75.5175),
+                                       ("CL 16", "22 53", "FONSECA", 10.8800, -72.8500),
+                                       ("CL 39A", "17 48", "VILLAVICENCIO", 4.15127, -73.61671),
+                                       ("CL 39A", "17 16", "VILLAVICENCIO", 4.14852, -73.60653)):
+        db.execute("INSERT INTO addr(street, s3, number, nkey, unit, postcode, locality, lkey, region, lat, lng) "
+                   "VALUES (?,?,?,?,'','',?,?,'',?,?)",
+                   (street, name_prefix(street), num, num.replace(" ", "-"), loc.title(), loc, lat, lng))
+    for sql in INDEXES:
+        db.execute(sql)
+    db.commit()
+    db.close()
+    idx, pc = NationalIndex("CO", tmp_path / "CO"), re.compile(r"\b\d{6}\b")
+    m = idx.lookup("Calle 16 #22-53 apto 401, Manizales, Caldas", "22-53", None, pc)
+    assert (m.street, m.locality, m.premise, m.ambiguous) == ("CL 16", "Manizales", True, False)
+    assert same_number(m.number, m.written_number)
+    m = idx.lookup("Calle 39a #17 b 53, Villavicencio, Meta", "17", None, pc)  # 17B-53 不在表里：同一路口的 17-48
+    assert m.block and not m.premise and m.street == "CL 39A" and abs(m.lng - -73.61671) < 1e-4
+    assert idx.lookup("Calle 16 #22-53", "22-53", None, pc) is None  # 没写城市：各城市都有，不选
 
 
 def test_amap_geo_format_and_route_text_match():

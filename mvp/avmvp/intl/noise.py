@@ -203,6 +203,8 @@ def strip_noise(raw: str, ref=None) -> tuple[str, dict[str, list[str]], dict[str
                 add("recipients", body[:toks[n - 1].end()])
                 seg, up = body[toks[n].start():].strip(), _fold(body[toks[n].start():])
                 has_digit = bool(re.search(r"\d", seg))
+            elif n == 0 and body:  # 前缀后面直接是地址（deliver to 12 Priestley Pl）：只去掉前缀
+                seg, up = body, _fold(body)
         if _DESCRIBE.search(up) or _DESCRIBE.search(seg):
             add("descriptions", seg)
             m = _REL_ANY.search(up) or _REL_ANY.search(seg)

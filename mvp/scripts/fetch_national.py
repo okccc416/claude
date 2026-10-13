@@ -5,12 +5,14 @@
 （avmvp/intl/national.py）。只下载需要的列（不要几何和来源），按行组的国家统计跳过别国数据。
 
   python scripts/fetch_national.py --markets NZ,AT,BE [--release 2026-09-23.1]
+  python scripts/fetch_national.py --markets NZ --reindex   # 不重新下载，只按当前代码重算路名前缀、重建索引
 """
 
 from __future__ import annotations
 
 import argparse
 import os
+import shutil
 import sqlite3
 import sys
 import time
@@ -31,6 +33,13 @@ from avmvp.intl.text import norm_postcode  # noqa: E402
 
 COLS = ["street", "number", "unit", "postcode", "postal_city", "address_levels", "country", "bbox"]
 
+
+def _vacuum(db: sqlite3.Connection, path: Path) -> None:
+    """VACUUM 要临时多占一份文件大小的磁盘；空间不够就跳过（只是文件稍大，不影响查询）。"""
+    if shutil.disk_usage(path.parent).free > 2.5 * path.stat().st_size:
+        db.execute("VACUUM")
+    else:
+        print(f"磁盘空间不够，跳过 VACUUM：{path}", flush=True)
 
 
 def row_groups(fs, base: str, cc: str):
@@ -76,17 +85,37 @@ def fetch(cc: str, fs, base: str) -> None:
     for sql in INDEXES:
         db.execute(sql)
     db.commit()
-    db.execute("VACUUM")
+    _vacuum(db, tmp)
     db.close()
     tmp.replace(out)
     print(f"{cc} 完成：{n:,} 条，{out.stat().st_size / 1e6:.0f} MB", flush=True)
+
+
+def reindex(cc: str) -> None:
+    path = DATA / cc / "national.sqlite"
+    db = sqlite3.connect(path)
+    db.create_function("name_prefix", 1, name_prefix, deterministic=True)
+    for (name,) in db.execute("SELECT name FROM sqlite_master WHERE type='index' AND sql IS NOT NULL").fetchall():
+        db.execute(f"DROP INDEX {name}")
+    db.execute("UPDATE addr SET s3 = name_prefix(street)")
+    for sql in INDEXES:
+        db.execute(sql)
+    db.commit()
+    _vacuum(db, path)
+    db.close()
+    print(f"{cc} 已重建索引：{path.stat().st_size / 1e6:.0f} MB", flush=True)
 
 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--markets", required=True)
     ap.add_argument("--release", default="2026-09-23.1")
+    ap.add_argument("--reindex", action="store_true", help="不下载，只重算已有 national.sqlite 的路名前缀和索引")
     args = ap.parse_args()
+    if args.reindex:
+        for cc in args.markets.split(","):
+            reindex(cc)
+        return
     if Path("/root/.ccr/ca-bundle.crt").exists():
         os.environ.setdefault("AWS_CA_BUNDLE", "/root/.ccr/ca-bundle.crt")
     fs = pafs.S3FileSystem(anonymous=True, region="us-west-2")
