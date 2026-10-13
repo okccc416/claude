@@ -38,6 +38,7 @@ UNIT_WORDS = {"BUILDING", "BLDG", "BLD", "VILLA", "VILA", "HOUSE", "HSE", "FLAT"
               "شقة", "عمارة", "بناية", "دور", "طابق", "محل"}
 PARTICLES = {"DE", "DEL", "DELA", "DA", "DAS", "DO", "DOS", "DI", "DU", "DES", "LA", "LE", "LES", "LOS", "LAS", "EL",
              "L", "D", "Y", "E", "ET", "VON", "VAN", "DER", "DEN", "THE", "OF", "AL", "ال"}
+NUMBER_WORDS = {"NR", "NO", "N", "NUM", "NUMERO", "NRO", "NUMBER", "HAUSNUMMER", "HNR"}  # 门牌号前的标记
 _SEG = re.compile(r"\s*(?:[,;|\n،]|\s[-–—]\s)\s*")
 _HOUSE = re.compile(r"(?<![\dA-Z])\d{1,4}[A-Z]?(?:[/\-]\d{1,4}[A-Z]?)?(?![\dA-Z\-])")  # 5 位以上多是邮编
 
@@ -50,8 +51,11 @@ ABBR = {"NTE": "NORTE", "OTE": "ORIENTE", "PTE": "PONIENTE", "STA": "SANTA", "ST
 
 
 def _canon(w: str) -> str:
-    """缩写展开；德 / 荷式粘连类型词统一：MARTINUSSTRASSE / MARTINUSSTR / MERESTRAAT -> …STR。"""
+    """缩写展开；德 / 荷式粘连类型词统一：MARTINUSSTRASSE / MARTINUSSTR / MERESTRAAT -> …STR；
+    变音的转写统一（Schoenbuehl = Schönbühl，ae / oe / ue 与 ä / ö / ü 去掉变音后相同；荷兰文 ij = y）。"""
     w = ABBR.get(w, w)
+    if len(w) >= 4:
+        w = w.replace("AE", "A").replace("OE", "O").replace("UE", "U").replace("IJ", "Y")
     return re.sub(r"(STRASSE|STRAAT|STRAßE|STR)$", "STR", w) if len(w) > 6 else w
 
 
@@ -81,8 +85,8 @@ def street_part(text: str, pc_re: re.Pattern | None = None) -> tuple[list[str], 
     nums = [k for k, w in enumerate(toks) if re.fullmatch(r"\d{1,4}[A-Z]?", w)]
     if not nums or len(street) > 1:
         name = words
-    elif nums[0] == 0:
-        name = toks[1:]
+    elif nums[0] == 0 or all(t in NUMBER_WORDS for t in toks[:nums[0]]):  # 门牌在段首（Nr. 9 Vogelberger Weg）
+        name = toks[nums[0] + 1:]
     else:
         name = toks[:nums[-1]]
     other = {w for k, s in enumerate(segs) if k not in street for w in norm(s).split()}

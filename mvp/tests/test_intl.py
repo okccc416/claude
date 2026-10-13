@@ -834,6 +834,14 @@ def test_national_address_index(tmp_path_factory):
     res = eng.validate("deliver to 7 Keira St Wollongong 2500")  # 配送前缀后面直接是地址
     assert (res.action, res.granularity) == (ACCEPT, "PREMISE") and abs(res.lat - -34.4272) < 0.0005
     assert name_prefix("Am Volksgarten") == "VOL" and name_prefix("Calle 72") == "#72"
+    res = eng.validate("100A Crown St, Wollongong 2500")  # 100A 不在表里、100 在：门牌附近，请用户确认
+    assert (res.action, res.granularity) == (CONFIRM, "PREMISE_PROXIMITY") and "PREMISE_NOT_FOUND" in res.reasons
+    from avmvp.intl.geo_text import route_match, street_part
+    from avmvp.intl.national import locality_key
+    assert locality_key("Oldenburg (Oldenb.), Stadt") == "OLDENBURG" and locality_key("Hannover, Landeshauptstadt") == \
+        "HANNOVER"
+    assert route_match("Schönbühlstraße", "Schoenbuehlstr. 45A, Stuttgart") == "CONFIRMED"  # 变音转写
+    assert street_part("Nr. 9 Vogelberger Weg, Lüdenscheid")[1] == ["VOGELBERGER", "WEG"]  # 门牌标记在段首
     out = eng.to_response(eng.validate("100 Crown St, Wollongong NSW 2500"))["result"]
     by = {c["componentType"]: c["componentName"]["text"] for c in out["address"]["addressComponents"]}
     assert by["route"] == "Crown Street" and by["locality"] == "Wollongong" and by["postal_code"] == "2500"

@@ -93,6 +93,12 @@ INDEXES = ["CREATE INDEX addr_n_s3 ON addr(nkey, s3)", "CREATE INDEX addr_n_l ON
            "CREATE INDEX addr_s3_pc ON addr(s3, postcode)", "CREATE INDEX addr_s3_l ON addr(s3, lkey)"]
 
 
+def locality_key(locality: str) -> str:
+    """城镇名的检索键：去掉官方名称里的附加说明（Hannover, Landeshauptstadt、Oldenburg (Oldenb.), Stadt -> HANNOVER、
+    OLDENBURG），用户只写城镇名本身。"""
+    return norm(re.sub(r"\([^)]*\)", " ", (locality or "").split(",")[0]))
+
+
 def name_prefix(street: str) -> str:
     """路名第一个核心词（去掉类型词、冠词、单元词和两个字母以下的词——Am Volksgarten 取 VOL）的前 3 个字母；
     编号道路（Calle 72、Street 7）取 #编号。与查询时原文路名的取法一致。"""
@@ -162,7 +168,7 @@ class NationalIndex:
         cols = "street, number, postcode, locality, lkey, lat, lng"
         rows: list[tuple] = []
         if number:
-            nums = [number_key(number)] if grid else _number_variants(number)
+            nums = [number_key(number)] if grid else number_variants(number)
             qn = ",".join("?" * len(nums))
             if prefixes:
                 rows += self._rows(f"SELECT {cols} FROM addr WHERE nkey IN ({qn}) AND s3 IN ({','.join('?' * len(prefixes))})",
@@ -174,10 +180,17 @@ class NationalIndex:
                 rows += self._rows(f"SELECT {cols} FROM addr WHERE nkey IN ({qn}) AND lkey IN "
                                    f"({','.join('?' * len(towns))})", nums + towns)
         hit = self._best(rows, clean, pc_re, pcs, grams, name, written, grid, premise=True)
+        base = re.fullmatch(r"(\d+)[A-Z]", number_key(number or ""))
+        if hit is None and base and not grid and prefixes:  # 45A 不在表里、45 在：取 45（门牌附近，请用户确认）
+            hit = self._best(self._rows(f"SELECT {cols} FROM addr WHERE nkey=? AND s3 IN "
+                                        f"({','.join('?' * len(prefixes))})", [base.group(1)] + prefixes),
+                             clean, pc_re, pcs, grams, name, written, grid, premise=True)
+            if hit is not None and not hit.place:
+                hit = None  # 只认所写城镇 / 邮编里的
         if hit is None and plate and prefixes and (towns or pcs):
             hit = self._block(grid, plate, prefixes, cols, towns, pcs, grams)
         if hit is not None:
-            hit.written_number = plate
+            hit.written_number = plate or number or ""
         if hit is not None or not prefixes:
             return hit
         # 门牌查不到：路名在所写城镇 / 邮编里 -> 道路级
@@ -245,8 +258,10 @@ class NationalIndex:
                 place = "locality_fuzzy"
             else:
                 place = ""
-            if not place and (not premise or sl != "CONFIRMED" or grid):
-                continue  # 没有邮编 / 城镇印证：门牌级只认路名完全对上的（网格门牌各城市大量重复，也不认），道路级不认
+            if not place and (not premise or sl != "CONFIRMED" or grid or (rpc and pcs)):
+                # 没有邮编 / 城镇印证：门牌级只认路名完全对上、且邮编不与原文冲突的（原文写的邮编在别处 = 多半是
+                # 数据缺了这一处，选别的城市的同名同号是错的）；网格门牌各城市大量重复，也不认；道路级不认
+                continue
             # 路名的核心词与原文完全相同（Nieuwstraat 不是 Korte Nieuwstraat，Avenue Prince de Liège 不是
             # Chaussée de Liège）加 0.6，足以分开"原文只是另一条路名的一部分"；其余同分按字面相似度排
             # （Am Volskgarten：Am Volksgarten 先于 Volksgartenstraße），加分不到 0.5，不影响歧义判断
@@ -283,7 +298,7 @@ def same_number(found: str, written: str) -> bool:
     return key(found) == key(written)
 
 
-def _number_variants(number: str) -> list[str]:
+def number_variants(number: str) -> list[str]:
     n = number_key(number)
     out = [n]
     m = re.fullmatch(r"(\d+[A-Z]?)[-/](\d+[A-Z]?)", n)

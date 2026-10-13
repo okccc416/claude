@@ -25,7 +25,7 @@ import numpy as np
 
 from . import google
 from .coverage import gazetteer
-from .national import national, same_number
+from .national import national, number_variants, same_number
 from .markets import MARKETS
 from .parse import AU_STATES, Parsed, RuleParser, Span
 from .poiaddr import lookup as poi_lookup
@@ -226,11 +226,17 @@ class Engine:
         best = Hypothesis(0.0, point=point if nat.premise else None)
         best.notes = list(reasons)
         if nat.premise:
-            comps["street_number"] = {"text": nat.number, "level": "CONFIRMED"}
-            ok = (not corrected and not nat.ambiguous and nat.place in ("postcode", "locality")
-                  and same_number(nat.number, nat.written_number or p.number or "")
+            written = nat.written_number or p.number or ""
+            same = same_number(nat.number, written)
+            part = same or number_key(nat.number) in number_variants(written)  # 41-43 里的 41
+            comps["street_number"] = {"text": nat.number, "level": "CONFIRMED" if part else "UNCONFIRMED_BUT_PLAUSIBLE"}
+            ok = (not corrected and not nat.ambiguous and nat.place in ("postcode", "locality") and same
                   and strictness != "STRICT")
             action, gran = (ACCEPT if ok else CONFIRM), "PREMISE"
+            if not part and p.number:  # 45A 不在表里，取了 45：门牌附近
+                reasons.append("PREMISE_NOT_FOUND")
+                best.notes.append("PREMISE_INTERPOLATED")
+                gran = "PREMISE_PROXIMITY"
         else:
             if p.number:
                 comps["street_number"] = {"text": p.number, "level": "UNCONFIRMED_AND_SUSPICIOUS"}

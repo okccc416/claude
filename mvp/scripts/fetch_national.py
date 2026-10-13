@@ -5,7 +5,7 @@
 （avmvp/intl/national.py）。只下载需要的列（不要几何和来源），按行组的国家统计跳过别国数据。
 
   python scripts/fetch_national.py --markets NZ,AT,BE [--release 2026-09-23.1]
-  python scripts/fetch_national.py --markets NZ --reindex   # 不重新下载，只按当前代码重算路名前缀、重建索引
+  python scripts/fetch_national.py --markets NZ --reindex   # 不重新下载，只按当前代码重算路名前缀 / 城镇键、重建索引
 """
 
 from __future__ import annotations
@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from avmvp.intl.coverage import norm  # noqa: E402
-from avmvp.intl.national import INDEXES, SCHEMA, name_prefix  # noqa: E402
+from avmvp.intl.national import INDEXES, SCHEMA, locality_key, name_prefix  # noqa: E402
 from avmvp.intl.reference import DATA, address_numbers  # noqa: E402
 from avmvp.intl.text import norm_postcode  # noqa: E402
 
@@ -76,12 +76,17 @@ def fetch(cc: str, fs, base: str) -> None:
             b = x["bbox"]
             nkey = address_numbers(cc, num, x["unit"] or "")[1][0] if num else ""  # 与参考库同一套门牌写法（66 33 -> 66-33）
             rows.append((street, name_prefix(street), num, nkey, (x["unit"] or "").strip(),
-                         norm_postcode(x["postcode"], cc) if x["postcode"] else "", loc, norm(loc),
+                         norm_postcode(x["postcode"], cc) if x["postcode"] else "", loc, locality_key(loc),
                          levels[0] if levels else "", (b["ymin"] + b["ymax"]) / 2, (b["xmin"] + b["xmax"]) / 2))
         db.executemany("INSERT INTO addr(street, s3, number, nkey, unit, postcode, locality, lkey, region, lat, lng) "
                        "VALUES (?,?,?,?,?,?,?,?,?,?,?)", rows)
         n += len(rows)
         print(f"{cc} {n:,} 条（{time.time() - t:.0f} 秒）", flush=True)
+    if not n:  # Overture 没有这个国家的地址点
+        db.close()
+        tmp.unlink()
+        print(f"{cc} 没有地址点，跳过", flush=True)
+        return
     for sql in INDEXES:
         db.execute(sql)
     db.commit()
@@ -94,10 +99,13 @@ def fetch(cc: str, fs, base: str) -> None:
 def reindex(cc: str) -> None:
     path = DATA / cc / "national.sqlite"
     db = sqlite3.connect(path)
+    db.execute("PRAGMA journal_mode=OFF")  # 大表整表更新时回滚日志会和库一样大；中途失败重新下载即可
     db.create_function("name_prefix", 1, name_prefix, deterministic=True)
+    db.create_function("locality_key", 1, locality_key, deterministic=True)
     for (name,) in db.execute("SELECT name FROM sqlite_master WHERE type='index' AND sql IS NOT NULL").fetchall():
         db.execute(f"DROP INDEX {name}")
-    db.execute("UPDATE addr SET s3 = name_prefix(street)")
+    db.execute("UPDATE addr SET s3 = name_prefix(street) WHERE s3 IS NOT name_prefix(street)")
+    db.execute("UPDATE addr SET lkey = locality_key(locality) WHERE lkey IS NOT locality_key(locality)")
     for sql in INDEXES:
         db.execute(sql)
     db.commit()
@@ -110,7 +118,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--markets", required=True)
     ap.add_argument("--release", default="2026-09-23.1")
-    ap.add_argument("--reindex", action="store_true", help="不下载，只重算已有 national.sqlite 的路名前缀和索引")
+    ap.add_argument("--reindex", action="store_true", help="不下载，只重算已有 national.sqlite 的路名前缀、城镇键和索引")
     args = ap.parse_args()
     if args.reindex:
         for cc in args.markets.split(","):
