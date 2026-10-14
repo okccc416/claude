@@ -940,3 +940,13 @@ def test_geo_check_without_reference_data():
     assert res.action == "CONFIRM" and "GEO_AMBIGUOUS" in res.reasons
     out = geo_free.to_response(geo_free.validate_free("ZZ", "Jr. Los Eucaliptos 371, Lima", amap("Jirón Los Eucaliptos 371", -12.06, -77.03)))
     assert out["result"]["verdict"]["possibleNextAction"] == "ACCEPT" and out["result"]["metadata"]["marketClass"] == "none"
+    # 写的是州（Arequipa 州），同名的只是外地小村：不作城镇证据，不能据此否决
+    idx.names["AREQUIPA"] = [(-16.40, -71.54, 3000.0, 0)]
+    idx.regions = {"AREQUIPA"}
+    res = geo_free.validate_free("ZZ", "Jr. Los Eucaliptos 371, Arequipa", amap("Jirón Los Eucaliptos 371", -12.06, -77.03))
+    assert "AREA_STREET_MISMATCH" not in res.reasons
+    from avmvp.intl.coverage import Coverage, locality_check  # 范围外核对 geo 坐标：原文写到的城镇都算
+    cov = Coverage("OUTSIDE", points=[(37.99, -1.13, 18000.0)], towns=[(37.56, -1.81, 12000.0)])
+    assert locality_check(cov, 37.56, -1.81) == "CONFIRMED" and locality_check(cov, 40.4, -3.7) == "CONFLICT"
+    from avmvp.intl.geo_text import street_part  # 只有单元词 + 号码的段不是道路段
+    assert street_part("ap 202, Rua Eça de Queiros 65, Joinville")[1] == ["RUA", "ECA", "DE", "QUEIROS"]

@@ -45,6 +45,7 @@ class Coverage:
     lat: float | None = None
     lng: float | None = None
     points: list[tuple] = field(default_factory=list)  # 范围外证据的位置 (纬度, 经度, 半径米)：所写城镇的各处同名地点、邮编位置
+    towns: list[tuple] = field(default_factory=list)  # 原文写到的所有城镇的位置（含被当作范围内片区的同名城镇）
 
 
 class Gazetteer:
@@ -226,6 +227,15 @@ class Gazetteer:
                 score_out += 3
                 outs.append((3, 0, hits[0][0], hits[0][1], hits[0][2]))
                 cov.points += [(h[0], h[1], 15000.0) for h in hits]
+        # 核对 geo 坐标用：原文写到的城镇都算（Puerto Lumbreras 在马德里也是条路 / 片区名，照样是所写的城镇；
+        # 只排除道路段和带门牌的段，不排除引擎配上的路名）
+        for k, w in self._candidates(text, None):
+            places = [h for h in self.names.get(k, []) if h[2] in ("P", "A2", "A3")] \
+                if w > 0 and k not in self.neutral else []
+            if places:
+                top = max(h[3] for h in places)
+                sel = [h for h in places if h[3] >= max(1000, top * 0.05)] or sorted(places, key=lambda e: -e[3])[:5]
+                cov.towns += [(h[0], h[1], town_radius(h[3])) for h in sel]
         for k, w in self._candidates(text, street):
             hits = self.names.get(k, [])
             towns_in, towns_part, towns_out = [], [], []
@@ -296,7 +306,7 @@ def locality_check(cov: Coverage, lat: float, lng: float) -> str:
     """范围外的地址：geo 返回的点在不在所写城镇 / 邮编附近。CONFIRMED / CONFLICT / ""（只写了州，无从核对）。"""
     if not cov.points:
         return ""
-    return "CONFIRMED" if any(haversine(lat, lng, a, b) <= r for a, b, r in cov.points) else "CONFLICT"
+    return "CONFIRMED" if any(haversine(lat, lng, a, b) <= r for a, b, r in cov.points + cov.towns) else "CONFLICT"
 
 
 def gazetteer(ref: MarketReference) -> Gazetteer:

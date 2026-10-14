@@ -266,6 +266,9 @@ class RuleParser:
                         and re.search(r"(?:^|[,;\n|])\s*$", text[:h.start()]) and re.match(r"\s*(?:[,;\n|]|$)", text[h.end():]))]
         elif rule == "chunk":  # 欧洲写法（1070 Wien）：不认识的 4 位数只有单独成段时才当邮编，否则多半是门牌
             hits = [h for h in hits if not text[:h.start()].strip() or re.search(r"[,;\n|]\s*$", text[:h.start()])]
+        elif self.m.number_first:  # 门牌在前的市场（菲律宾 1561 Burbank St）：段首、后面紧跟路名的 4 位数是门牌
+            hits = [h for h in hits if not (re.search(r"(?:^|[,;\n|])\s*#?\s*$", text[:h.start()])
+                                            and re.match(r"\s+[A-Z]{2,}", text[h.end():]))]
         if not hits:
             return text, None
         h = hits[-1]

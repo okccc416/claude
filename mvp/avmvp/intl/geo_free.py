@@ -38,13 +38,17 @@ class TownIndex:
     def __init__(self, cc: str):
         self.cc = cc
         self.names: dict[str, list[tuple]] = {}
+        self.regions: set[str] = set()  # 一级行政区名（州 / 省）
         src = DATA / cc / "gazetteer.json.gz"
         if not src.exists():
             return
         with gzip.open(src, "rt", encoding="utf-8") as f:
             raw = json.load(f)
         for nms, lat, lng, kind, pop, _a1 in raw["places"]:
-            if kind == "A1" or (kind == "P" and 0 < pop < 1000):  # 州太大；人口不详以外的小村常与普通词同名
+            if kind == "A1":  # 州太大，不作位置；只记名字（同名的小村不能冒充所写的州）
+                self.regions |= {norm(n) for n in nms}
+                continue
+            if kind == "P" and 0 < pop < 1000:  # 人口不详以外的小村常与普通词同名
                 continue
             # 城区半径从紧：同一都市圈里相邻的区（利马的 Lurín 与 Pachacámac）不能互相算"在所写城镇里"
             #（大城市按都市区算：约翰内斯堡、新加坡的郊区离城市中心点 20 公里以上）
@@ -52,7 +56,7 @@ class TownIndex:
                  if kind == "P" else 5000.0 if kind == "X" else max(10000.0, town_radius(pop)))
             for k in {norm(n) for n in nms}:
                 if len(k) >= 3 and not k.isdigit():
-                    self.names.setdefault(k, []).append((lat, lng, r))
+                    self.names.setdefault(k, []).append((lat, lng, r, pop))
 
     def locality(self, text: str, lat: float, lng: float) -> str:
         """原文写的城镇 / 区包含 geo 坐标 -> CONFIRMED；写了但都离得远 -> CONFLICT；原文没有可查的城镇 -> ""。"""
@@ -67,10 +71,10 @@ class TownIndex:
             for cand in (seg, re.split(r"[/(]", seg)[0]):
                 k = " ".join(t for t in norm(cand).split() if not t.isdigit())
                 hits = self.names.get(k)
-                if not hits:
-                    continue
+                if not hits or (k in self.regions and all((h[3] if len(h) > 3 else 0) < 100000 for h in hits)):
+                    continue  # 写的是州 / 省（القليوبية），同名的只是外地小村
                 found = found or cand.strip()
-                if any(haversine(lat, lng, a, b) <= r for a, b, r in hits):
+                if any(haversine(lat, lng, h[0], h[1]) <= h[2] for h in hits):
                     return "CONFIRMED", re.sub(r"\s*\d+\s*", " ", cand).strip()
                 break
         return ("CONFLICT", found) if found else ("", "")

@@ -79,7 +79,7 @@ MARKETS: dict[str, Market] = {m.code: m for m in [
            "339/5 Tô Hiến Thành；Đường / Phường / Quận；邮编 2018 年起为 5 位（旧版 6 位仍常见）",
            {"DUONG": ("D", "Đ", "ĐƯỜNG"), "PHUONG": ("P", "PHƯỜNG"), "QUAN": ("Q", "QUẬN")}, omit_type=True),
     Market("PH", "菲律宾", "C", (("马尼拉", (120.95, 14.5, 121.1, 14.7)),), r"\b\d{4}\b", True, ("en", "tl"),
-           "Barangay；St.；1300 Metro Manila", EN_ROAD, type_after=True),
+           "Barangay；St.；1300 Metro Manila；#35 Kurtante St（# 标门牌）", EN_ROAD, type_after=True, hash_number=True),
 ]}
 
 # ---------------------------------------------------------------------------------------------------------------

@@ -39,6 +39,8 @@ UNIT_WORDS = {"BUILDING", "BLDG", "BLD", "VILLA", "VILA", "HOUSE", "HSE", "FLAT"
 PARTICLES = {"DE", "DEL", "DELA", "DA", "DAS", "DO", "DOS", "DI", "DU", "DES", "LA", "LE", "LES", "LOS", "LAS", "EL",
              "L", "D", "Y", "E", "ET", "VON", "VAN", "DER", "DEN", "THE", "OF", "AL", "ال"}
 NUMBER_WORDS = {"NR", "NO", "N", "NUM", "NUMERO", "NRO", "NUMBER", "HAUSNUMMER", "HNR"}  # 门牌号前的标记
+_UNIT_EXTRA = {"AP", "APPT", "APPARTEMENT", "APART", "APAR", "WOHNUNG", "WHG", "TOP", "STIEGE", "ETAGE", "PISO",
+               "PLANTA", "ANDAR", "SALA", "LOJA", "CASA", "STALL", "LOT", "BLK", "BLOCK", "TORRE", "TOWER"}
 _SEG = re.compile(r"\s*(?:[,;|\n،]|\s[-–—]\s)\s*")
 _HOUSE = re.compile(r"(?<![\dA-Z])\d{1,4}[A-Z]?(?:[/\-]\d{1,4}[A-Z]?)?(?![\dA-Z\-])")  # 5 位以上多是邮编
 
@@ -76,7 +78,12 @@ def street_part(text: str, pc_re: re.Pattern | None = None) -> tuple[list[str], 
     if not segs:
         return [], [], set()
     plain = [pc_re.sub(" ", s) if pc_re else s for s in segs]  # 去掉邮编再找门牌
-    i = next((k for k, s in enumerate(plain) if _HOUSE.search(s)), 0)  # 第一个带门牌号的段
+    with_no = [k for k, s in enumerate(plain) if _HOUSE.search(s)]
+
+    def unit_only(k: int) -> bool:  # 只有单元词 + 号码的段（ap 202、Apt 169、Appartement 5）是单元，不是道路段
+        alpha = [w for w in norm(plain[k]).split() if not re.search(r"\d", w) and len(w) > 1]
+        return bool(alpha) and all(w in UNIT_WORDS or w in _UNIT_EXTRA for w in alpha)
+    i = ([k for k in with_no if not unit_only(k)] or with_no or [0])[0]  # 第一个带门牌号的段
     street = [i]
     if not _core(norm(plain[i]).split())[0] and len(segs) > 1:
         street.append(i - 1 if i > 0 else i + 1)  # 门牌号单独成段：路名在前一段（C/ Joaquín Peralta, 12）或后一段
