@@ -848,6 +848,8 @@ def test_national_address_index(tmp_path_factory):
     from avmvp.intl.national import number_variants
     assert number_variants("15a/4", "PL") == ["15A/4", "15A"]  # 斜杠后是公寓号，不能当门牌查
     assert number_variants("41-43") == ["41-43", "41", "43"] and "2" in number_variants("772/2", "CZ")
+    from avmvp.intl.text import tokenize  # 哈萨克文字母转写
+    assert tokenize("Қабанбай батыр даңғылы 53") == ["KABANBAY", "BATYR", "DANGYLY", "53"]
     out = eng.to_response(eng.validate("100 Crown St, Wollongong NSW 2500"))["result"]
     by = {c["componentType"]: c["componentName"]["text"] for c in out["address"]["addressComponents"]}
     assert by["route"] == "Crown Street" and by["locality"] == "Wollongong" and by["postal_code"] == "2500"
@@ -904,6 +906,14 @@ def test_amap_geo_format_and_route_text_match():
                                              "location": "16.2465,50.4425", "city": "x", "district": []}]}
     g = parse_geo(json.dumps(amap("ULICA 1 MAJA 3", "1 MAJA 3", "ULICA")))[0]
     assert (g.number, g.route, g.lat) == ("3", "ULICA 1 MAJA", 50.4425)
+    # 科威特编号街道：两个数字前面是类型词时，前一个数字属于路名（不是"门牌 + 信箱号"）
+    g = parse_geo(amap("شارع 24 14", "24 14", "شارع"))[0]
+    assert (g.route, g.number) == ("شارع 24", "14")
+    assert parse_geo(amap("شارع 3-جادة 2 10", "3-جادة 2 10", "شارع"))[0].route == "شارع 3-جادة 2"
+    # 编号道路按"类型 + 号码"成对比较：门牌和街道号对调、街道 / 巷号对调都不算一致
+    assert route_match("شارع 24", "14 / شارع 24 / الرقة") == "CONFIRMED"
+    assert route_match("شارع 7", "7، شارع 10، علي صباح السالم") == "CONFLICT"
+    assert route_match("شارع 6 جادة 3", "6، شارع 3 جادة 6، الظهر") == "CORRECTED"
     g = parse_geo(amap("AVENIDA JOAO FRANCESCHI 2101, BLOCO 2, APTO 303", "AVENIDA JOAO FRANCESCHI 2101, BLOCO 2", "AVENIDA"))[0]
     assert (g.number, g.route) == ("2101", "AVENIDA JOAO FRANCESCHI")
     g = parse_geo(amap("Avenida MÃ©xico 27", "Avenida MÃ©xico", "27"))[0]

@@ -25,7 +25,7 @@ from .reference import MarketReference, haversine
 from .noise import strip_noise
 from .text import TYPE_WORDS, fold, key, norm_postcode, type_words
 
-VERSION = 3  # 索引格式 / 规范化方式变了就加一，缓存自动重建
+VERSION = 4  # 索引格式 / 规范化方式变了就加一，缓存自动重建
 MARGIN_DEG = 0.03  # 试点范围向外放宽约 3 公里（边界附近的城镇，参考库里可能有它的一部分道路）
 _SEG = re.compile(r"\s*(?:[,;|\n]|\s[-–—]\s)\s*")
 _PARTICLES = {"DE", "DA", "DO", "DAS", "DOS", "DEL", "DI", "DU", "LA", "LE", "EL", "AL", "VON", "VAN", "DER", "DEN", "THE"}
@@ -177,7 +177,11 @@ class Gazetteer:
                 toks = [t for t in toks if t not in AU_STATES]
             toks = [t for t in toks if not t.isdigit()]
             k = " ".join(toks)
-            if len(k) < 3 or any(k == c for c, _ in out):
+            if len(k) < 3:
+                continue
+            j = next((n for n, (c, _) in enumerate(out) if c == k), None)
+            if j is not None:  # 同一个地名写了两遍（Семей, улица …, Семей）：按证据最强的那次算
+                out[j] = (k, max(out[j][1], w))
                 continue
             out.append((k, w))
             if k in self.names or k in self.neutral or k in self.ref.area_keys:
@@ -229,13 +233,19 @@ class Gazetteer:
                 cov.points += [(h[0], h[1], 15000.0) for h in hits]
         # 核对 geo 坐标用：原文写到的城镇都算（Puerto Lumbreras 在马德里也是条路 / 片区名，照样是所写的城镇；
         # 只排除道路段和带门牌的段，不排除引擎配上的路名）
-        for k, w in self._candidates(text, None):
-            places = [h for h in self.names.get(k, []) if h[2] in ("P", "A2", "A3")] \
+        cands = self._candidates(text, None)
+        written_a1 = {h[4] for k, _ in cands for h in self.names.get(k, []) if h[2] == "A1"}
+        for k, w in cands:
+            places = [h for h in self.names.get(k, []) if h[2] in ("P", "A2", "A3", "X")] \
                 if w > 0 and k not in self.neutral else []
+            # 写了州 / 省：只看这个州里的同名城镇（哈萨克斯坦有十几个 Karabulak）
+            places = [h for h in places if h[4] in written_a1] or places
             if places:
                 top = max(h[3] for h in places)
                 sel = [h for h in places if h[3] >= max(1000, top * 0.05)] or sorted(places, key=lambda e: -e[3])[:5]
+                sel += [h for h in places if h[2] == "X" and h not in sel]  # 城区片区（开罗的马塔里亚）人口常不详，照算
                 cov.towns += [(h[0], h[1], town_radius(h[3])) for h in sel]
+        city_written = any(k in self.city for k, _ in cands)
         for k, w in self._candidates(text, street):
             hits = self.names.get(k, [])
             towns_in, towns_part, towns_out = [], [], []
@@ -261,8 +271,9 @@ class Gazetteer:
             #（雅加达的 Grogol）照算
             gaz_in = any(h[2] in ("X", "A2", "A3") and self.in_pilot(h[0], h[1]) for h in hits)
             ref_in = self._area_in(k)
+            # 原文同时写了试点城市名（المطريه، القاهرة）：试点城市里的同名城区算范围内，不按外地的同名城市判
             area_in = self._area_in(k, 2000.0) or (ref_in and (gaz_in or bool(towns_in))) or (
-                big_out < 100000 and (ref_in or gaz_in))
+                big_out < 100000 and (ref_in or gaz_in)) or (gaz_in and city_written)
             if towns_in and not (big_out >= 10000 and small_in * 20 < big_out and not area_in):
                 cov.inside.append(f"place:{k}")
                 score_in += 1 if a1_pilot else 2  # Berlin / Madrid / Auckland：既是城市也是州，写的可能是州

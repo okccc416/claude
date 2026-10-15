@@ -1,0 +1,2663 @@
+{
+  "KW": {
+    "rules": {
+      "real": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.026,
+          "正确·要求确认": 0.244,
+          "判 FIX·片区对": 0.231,
+          "判 FIX": 0.256,
+          "错误建议": 0.235,
+          "静默错误": 0.008
+        },
+        "silent_over_1km": 0.006,
+        "wrong_over_1km": 0.181,
+        "granularity": {
+          "ROUTE": 0.338,
+          "LOCALITY": 0.308,
+          "OTHER": 0.179,
+          "PREMISE_PROXIMITY": 0.127,
+          "PREMISE": 0.048
+        },
+        "median_error_m": 1064.506578177667,
+        "within_500m": 0.232,
+        "ms": 9.191794700000173,
+        "examples": {
+          "判 FIX": [
+            [
+              "Alsalam, حولى",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "AlThajeej, الفروانية",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "الشاميه، قطعة ٩, مدينة الكويت",
+              "FIX",
+              "LOCALITY",
+              "حولي, الكويت"
+            ],
+            [
+              "Road 602, الفروانية",
+              "FIX",
+              "OTHER",
+              "602 Road, الكويت"
+            ]
+          ],
+          "错误建议": [
+            [
+              "Hawalli, Al-Naqrah, Block 10, Plot 7202, Street 219, حولى",
+              "CONFIRM",
+              "ROUTE",
+              "Block 10, 7202 Street 219, Ḩawallī, الكويت"
+            ],
+            [
+              "Hamad Al-Zuwayer Street, الأحمدى",
+              "CONFIRM",
+              "ROUTE",
+              "Hamad Al Zuwayer Street, الأحمدي, الكويت"
+            ],
+            [
+              "800001 Faris Abdulrahman Al Waqayan St, Zahra",
+              "CONFIRM",
+              "ROUTE",
+              "Al-Zahra'a Street, Ḩawallī, Kuwait"
+            ],
+            [
+              "11 2 St. 1 Ln, حولى, 3000",
+              "CONFIRM",
+              "PREMISE",
+              "2 شارع 1, الفروانية, الكويت"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Etihad medical centre,Amman Street,Salmiya, حولى, 32771",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Etihad Medical Centre, Amman Street, 32771 حولي, الكويت"
+            ],
+            [
+              "1873 Sheikh Zayed Bin Sultan Al Nahyan Rd, الجهراء, 92000",
+              "ACCEPT",
+              "PREMISE",
+              "1873 Sheikh Zayed Bin Sultan Al Nahyan Road, 92000 حولي, الكويت"
+            ],
+            [
+              "Mangaf, Kuwait, 34XJ+HJ Mangaf, Kuwait, Kuwait",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "7HXC34XJ+HJ, Al Aḩmadī, Kuwait"
+            ],
+            [
+              "25 Arabian Gulf St, Salmiya, مدينة الكويت, 35908",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "25 Arabischer-Golf-Straße, 35908 حولي, الكويت"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.039,
+          "正确·要求确认": 0.468,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.173,
+          "错误建议": 0.32,
+          "静默错误": 0.0
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.297,
+        "granularity": {
+          "ROUTE": 0.504,
+          "PREMISE": 0.213,
+          "LOCALITY": 0.145,
+          "PREMISE_PROXIMITY": 0.11,
+          "OTHER": 0.028
+        },
+        "median_error_m": 286.21962755481235,
+        "within_500m": 0.538,
+        "ms": 8.95072913399963,
+        "examples": {
+          "判 FIX": [
+            [
+              "الدور 27, 329 Streea 669 West of Abdullah Al Mubarak Al Sabah Block 6, الكويت",
+              "FIX",
+              "LOCALITY",
+              "Block 6, 27 الدور, الفروانية, الكويت"
+            ],
+            [
+              "شقة 33, مبنى 49, ش 315 المهبولة - قطعة 3, Mahboula, Kuwait",
+              "FIX",
+              "LOCALITY",
+              "شقه 33, 49 مبنى, احمدی, الكويت"
+            ],
+            [
+              "ش 61",
+              "FIX",
+              "OTHER",
+              "61, الكويت"
+            ],
+            [
+              "152 ش 106, Block 3, Andalous, Kuwait",
+              "FIX",
+              "LOCALITY",
+              "Block 3, 152, حولي, الكويت"
+            ]
+          ],
+          "错误建议": [
+            [
+              "12b ش 66, shuwaikh industrial 3 - block d",
+              "CONFIRM",
+              "ROUTE",
+              "66 Shuwaikh Street, حولي, الكويت"
+            ],
+            [
+              "81 St 309, 85600",
+              "CONFIRM",
+              "ROUTE",
+              "81 Street 309, 85600 Ḩawallī, Kuwait"
+            ],
+            [
+              "Apartment 18, Street 8, Block 6, Kuwait",
+              "CONFIRM",
+              "ROUTE",
+              "Block 6, Street 8, Al Farwānīyah, Kuwait"
+            ],
+            [
+              "الدور 3, House 91 شارع 8, Surra - Block 3",
+              "CONFIRM",
+              "ROUTE",
+              "Block 3, 91 Street 8, حولي, الكويت"
+            ]
+          ]
+        }
+      }
+    },
+    "crf": {
+      "real": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.013,
+          "正确·要求确认": 0.17,
+          "判 FIX·片区对": 0.156,
+          "判 FIX": 0.532,
+          "错误建议": 0.121,
+          "静默错误": 0.008
+        },
+        "silent_over_1km": 0.007,
+        "wrong_over_1km": 0.099,
+        "granularity": {
+          "OTHER": 0.462,
+          "ROUTE": 0.243,
+          "LOCALITY": 0.226,
+          "PREMISE_PROXIMITY": 0.052,
+          "PREMISE": 0.017
+        },
+        "median_error_m": 1187.2195722020574,
+        "within_500m": 0.141,
+        "ms": 4.764172135000081,
+        "examples": {
+          "判 FIX": [
+            [
+              "Souk Area, The Avenues Mall, Phase 3, الفروانية, 00000",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "Salem Al Mubarak Street Abdulwahab Complex (used To Be Galleria 2000) In The Basement, حول",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "Salmiyeh  Salem Al Mubarak Street, حولى, +965",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "8 Street, Sabahiya Co Op, Kuwait",
+              "FIX",
+              "OTHER",
+              ""
+            ]
+          ],
+          "错误建议": [
+            [
+              "Al Assima Mall, Al-Mirqab, Mubarak Al Kabeer Street, Block 3, Ground floor, Kuwait City",
+              "CONFIRM",
+              "ROUTE",
+              "Al-Kameet Street, Al Farwānīyah, Kuwait"
+            ],
+            [
+              "Hawalli, Al-Naqrah, Block 10, Plot 7202, Street 219, حولى",
+              "CONFIRM",
+              "ROUTE",
+              "7202 Street 219, الفروانية, الكويت"
+            ],
+            [
+              "Kuwait International Airport, Farwaniya",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Kuwait International Airport, Ḩawallī, Kuwait"
+            ],
+            [
+              "Hamad Al-Zuwayer Street, الأحمدى",
+              "CONFIRM",
+              "ROUTE",
+              "Hamad Al Zuwayer Street, الأحمدي, الكويت"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Etihad medical centre,Amman Street,Salmiya, حولى, 32771",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Etihad Medical Centre, Amman Street, 32771 حولي, الكويت"
+            ],
+            [
+              "1873 Sheikh Zayed Bin Sultan Al Nahyan Rd, الجهراء, 92000",
+              "ACCEPT",
+              "PREMISE",
+              "1873 Sheikh Zayed Bin Sultan Al Nahyan Road, 92000 حولي, الكويت"
+            ],
+            [
+              "Mangaf, Kuwait, 34XJ+HJ Mangaf, Kuwait, Kuwait",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "7HXC34XJ+HJ, Al Aḩmadī, Kuwait"
+            ],
+            [
+              "25 Arabian Gulf St, Salmiya, مدينة الكويت, 35908",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "25 Arabischer-Golf-Straße, 35908 حولي, الكويت"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.04,
+          "正确·要求确认": 0.454,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.176,
+          "错误建议": 0.33,
+          "静默错误": 0.0
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.314,
+        "granularity": {
+          "ROUTE": 0.468,
+          "PREMISE": 0.237,
+          "PREMISE_PROXIMITY": 0.119,
+          "LOCALITY": 0.107,
+          "OTHER": 0.069
+        },
+        "median_error_m": 260.59166050286274,
+        "within_500m": 0.52,
+        "ms": 7.545599299999594,
+        "examples": {
+          "错误建议": [
+            [
+              "شقة 7, 68 Street 20 ام الهيمان-علي صباح السالم - قطعة 5, UmAl-Hayman-AliSabahAs-Salem",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "شقه 7, 68 Street 20, الفروانية, الكويت"
+            ],
+            [
+              "81 St 309, 85600",
+              "CONFIRM",
+              "ROUTE",
+              "81 Street 309, 85600 Ḩawallī, Kuwait"
+            ],
+            [
+              "Apartment 18, Street 8, Block 6, Kuwait",
+              "CONFIRM",
+              "ROUTE",
+              "Apartment 18, Street 8, Ḩawallī, Kuwait"
+            ],
+            [
+              "Steet 11, Kuwait, 35706",
+              "CONFIRM",
+              "ROUTE",
+              "Street 11, 35706 Al Aḩmadī, Kuwait"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "شقة 33, مبنى 49, ش 315 المهبولة - قطعة 3, Mahboula, Kuwait",
+              "FIX",
+              "OTHER",
+              "شقه 33, 49 مبنى, الكويت"
+            ],
+            [
+              "12b ش 66, shuwaikh industrial 3 - block d",
+              "FIX",
+              "LOCALITY",
+              "12B, حولي, الكويت"
+            ],
+            [
+              "ش 61",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "152 ش 106, Block 3, Andalous, Kuwait",
+              "FIX",
+              "OTHER",
+              "152, الكويت"
+            ]
+          ]
+        }
+      }
+    },
+    "hybrid": {
+      "real": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.026,
+          "正确·要求确认": 0.251,
+          "判 FIX·片区对": 0.213,
+          "判 FIX": 0.246,
+          "错误建议": 0.256,
+          "静默错误": 0.008
+        },
+        "silent_over_1km": 0.006,
+        "wrong_over_1km": 0.201,
+        "granularity": {
+          "ROUTE": 0.347,
+          "LOCALITY": 0.286,
+          "OTHER": 0.173,
+          "PREMISE_PROXIMITY": 0.139,
+          "PREMISE": 0.055
+        },
+        "median_error_m": 1108.6604151439371,
+        "within_500m": 0.239,
+        "ms": 9.92486099800044,
+        "examples": {
+          "判 FIX": [
+            [
+              "Alsalam, حولى",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "AlThajeej, الفروانية",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "الشاميه، قطعة ٩, مدينة الكويت",
+              "FIX",
+              "LOCALITY",
+              "حولي, الكويت"
+            ],
+            [
+              "Road 602, الفروانية",
+              "FIX",
+              "OTHER",
+              "602 Road, الكويت"
+            ]
+          ],
+          "错误建议": [
+            [
+              "Hawalli, Al-Naqrah, Block 10, Plot 7202, Street 219, حولى",
+              "CONFIRM",
+              "ROUTE",
+              "Block 10, 7202 Street 219, Ḩawallī, الكويت"
+            ],
+            [
+              "Kuwait International Airport, Farwaniya",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Kuwait International Airport, Ḩawallī, Kuwait"
+            ],
+            [
+              "Hamad Al-Zuwayer Street, الأحمدى",
+              "CONFIRM",
+              "ROUTE",
+              "Hamad Al Zuwayer Street, الأحمدي, الكويت"
+            ],
+            [
+              "800001 Faris Abdulrahman Al Waqayan St, Zahra",
+              "CONFIRM",
+              "ROUTE",
+              "Al-Zahra'a Street, Ḩawallī, Kuwait"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Etihad medical centre,Amman Street,Salmiya, حولى, 32771",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Etihad Medical Centre, Amman Street, 32771 حولي, الكويت"
+            ],
+            [
+              "1873 Sheikh Zayed Bin Sultan Al Nahyan Rd, الجهراء, 92000",
+              "ACCEPT",
+              "PREMISE",
+              "1873 Sheikh Zayed Bin Sultan Al Nahyan Road, 92000 حولي, الكويت"
+            ],
+            [
+              "Mangaf, Kuwait, 34XJ+HJ Mangaf, Kuwait, Kuwait",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "7HXC34XJ+HJ, Al Aḩmadī, Kuwait"
+            ],
+            [
+              "25 Arabian Gulf St, Salmiya, مدينة الكويت, 35908",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "25 Arabischer-Golf-Straße, 35908 حولي, الكويت"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.044,
+          "正确·要求确认": 0.481,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.152,
+          "错误建议": 0.323,
+          "静默错误": 0.0
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.298,
+        "granularity": {
+          "ROUTE": 0.463,
+          "PREMISE": 0.265,
+          "LOCALITY": 0.133,
+          "PREMISE_PROXIMITY": 0.12,
+          "OTHER": 0.019
+        },
+        "median_error_m": 271.47933099227885,
+        "within_500m": 0.552,
+        "ms": 13.832374075000189,
+        "examples": {
+          "错误建议": [
+            [
+              "شقة 7, 68 Street 20 ام الهيمان-علي صباح السالم - قطعة 5, UmAl-Hayman-AliSabahAs-Salem",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "شقه 7, 68 Street 20, الفروانية, الكويت"
+            ],
+            [
+              "12b ش 66, shuwaikh industrial 3 - block d",
+              "CONFIRM",
+              "ROUTE",
+              "66 Shuwaikh Street, حولي, الكويت"
+            ],
+            [
+              "81 St 309, 85600",
+              "CONFIRM",
+              "ROUTE",
+              "81 Street 309, 85600 Ḩawallī, Kuwait"
+            ],
+            [
+              "Apartment 18, Street 8, Block 6, Kuwait",
+              "CONFIRM",
+              "ROUTE",
+              "Apartment 18, Street 8, Ḩawallī, Kuwait"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "شقة 33, مبنى 49, ش 315 المهبولة - قطعة 3, Mahboula, Kuwait",
+              "FIX",
+              "LOCALITY",
+              "شقه 33, 49 مبنى, احمدی, الكويت"
+            ],
+            [
+              "ش 61",
+              "FIX",
+              "OTHER",
+              "61, الكويت"
+            ],
+            [
+              "152 ش 106, Block 3, Andalous, Kuwait",
+              "FIX",
+              "LOCALITY",
+              "Block 3, 152, حولي, الكويت"
+            ],
+            [
+              "مبنى 78 ش 140 Hawally Block 12, Hawalli, Kuwait",
+              "FIX",
+              "LOCALITY",
+              "Block 12, 78 مبنى ش 140 Hawally Block 12, Ḩawallī, الكويت"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "BH": {
+    "rules": {
+      "real": {
+        "n": 921,
+        "outcomes": {
+          "正确·直接通过": 0.006514657980456026,
+          "正确·要求确认": 0.31704668838219324,
+          "判 FIX·片区对": 0.20846905537459284,
+          "判 FIX": 0.06623235613463627,
+          "错误建议": 0.3995656894679696,
+          "静默错误": 0.002171552660152009
+        },
+        "silent_over_1km": 0.002171552660152009,
+        "wrong_over_1km": 0.3257328990228013,
+        "granularity": {
+          "ROUTE": 0.6167209554831705,
+          "LOCALITY": 0.250814332247557,
+          "PREMISE_PROXIMITY": 0.10749185667752444,
+          "OTHER": 0.023887079261672096,
+          "PREMISE": 0.0010857763300760044
+        },
+        "median_error_m": 1169.8807769200534,
+        "within_500m": 0.30293159609120524,
+        "ms": 7.344721775244795,
+        "examples": {
+          "错误建议": [
+            [
+              "Shop 179G, الساية",
+              "CONFIRM",
+              "ROUTE",
+              "Shop 179g, شارع الساية, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "4609 طريق 316, المنامة",
+              "CONFIRM",
+              "ROUTE",
+              "4609 طريق 316, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "986 Rd No 2417, المنامة",
+              "CONFIRM",
+              "ROUTE",
+              "2417 شارع المنامة, المنامة, البحرين"
+            ],
+            [
+              "طريق 2811 657, المنامة",
+              "CONFIRM",
+              "ROUTE",
+              "657 طريق 2811, اَلْمُحَرَّق, البحرين"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Seef Mall Muharraq, Muharraq",
+              "FIX",
+              "LOCALITY",
+              "Muharraq, Bahrain"
+            ],
+            [
+              "Bahrain, مدينة حمد",
+              "FIX",
+              "LOCALITY",
+              "المنامة, البحرين"
+            ],
+            [
+              "Unit G80 - Level G, City Centre Mall, Manama",
+              "FIX",
+              "LOCALITY",
+              "Unit G80, Al Muharraq, Bahrain"
+            ],
+            [
+              "Diyar Al-Muharraq, قلالي, 263",
+              "FIX",
+              "LOCALITY",
+              "263, Al Muharraq, البحرين"
+            ]
+          ],
+          "静默错误": [
+            [
+              "5GQQ+QG Tubli, Bahrain, توبلي",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "7HRG5GQQ+QG, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "5J68+P9G, Sitra, Bahrain, سفالة",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "7HRG5J68+P9, اَلْمُحَرَّق, البحرين"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.02,
+          "正确·要求确认": 0.505,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.067,
+          "错误建议": 0.408,
+          "静默错误": 0.0
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.387,
+        "granularity": {
+          "ROUTE": 0.894,
+          "LOCALITY": 0.039,
+          "PREMISE_PROXIMITY": 0.038,
+          "OTHER": 0.028,
+          "PREMISE": 0.001
+        },
+        "median_error_m": 127.04007921404109,
+        "within_500m": 0.54,
+        "ms": 4.387099280000257,
+        "examples": {
+          "错误建议": [
+            [
+              "VILLA 66 طريق 4315",
+              "CONFIRM",
+              "ROUTE",
+              "66 Road 4315, النويدرات, البحرين"
+            ],
+            [
+              "شقة 22, 329 Road 2417, المنامة, 426",
+              "CONFIRM",
+              "ROUTE",
+              "شقه 22, 329 طريق 2417, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "مبنى 77 طريق 2417, 426",
+              "CONFIRM",
+              "ROUTE",
+              "77 طريق 2417, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "80 طريق 3870, Manama 1000",
+              "CONFIRM",
+              "ROUTE",
+              "80 Road 3870, مدينة حمد, البحرين"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Building 51 طريu 425, Manama",
+              "FIX",
+              "LOCALITY",
+              "51 Building طريu 425, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "Building 12 Rd No 5103, Suwayfiya, Manama",
+              "FIX",
+              "LOCALITY",
+              "5103 Building 12 Rd, Al Muharraq, Bahrain"
+            ],
+            [
+              "63 Rd No 3930",
+              "FIX",
+              "OTHER",
+              "3930, Bahrain"
+            ],
+            [
+              "23 ش 79, Manama, 450",
+              "FIX",
+              "LOCALITY",
+              "23, اَلْمُحَرَّق, البحرين"
+            ]
+          ]
+        }
+      }
+    },
+    "crf": {
+      "real": {
+        "n": 921,
+        "outcomes": {
+          "正确·直接通过": 0.0054288816503800215,
+          "正确·要求确认": 0.21064060803474485,
+          "判 FIX·片区对": 0.05428881650380022,
+          "判 FIX": 0.42996742671009774,
+          "错误建议": 0.2953311617806732,
+          "静默错误": 0.004343105320304018
+        },
+        "silent_over_1km": 0.004343105320304018,
+        "wrong_over_1km": 0.2692725298588491,
+        "granularity": {
+          "ROUTE": 0.44299674267100975,
+          "OTHER": 0.4256243213897937,
+          "PREMISE_PROXIMITY": 0.0727470141150923,
+          "LOCALITY": 0.05863192182410423
+        },
+        "median_error_m": 1681.8509490098452,
+        "within_500m": 0.20955483170466885,
+        "ms": 3.487679459283361,
+        "examples": {
+          "判 FIX": [
+            [
+              "Unit 310, Building 103, Block 318, Road 1802, Manama",
+              "FIX",
+              "OTHER",
+              "Unit 310, 103 Building, Bahrain"
+            ],
+            [
+              "Seef Mall Muharraq, Muharraq",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "طريق 2811 657, المنامة",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "طريق 525 1311, المنامة",
+              "FIX",
+              "OTHER",
+              ""
+            ]
+          ],
+          "错误建议": [
+            [
+              "Shop 179G, الساية",
+              "CONFIRM",
+              "ROUTE",
+              "Shop 179g, شارع الساية, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "4609 طريق 316, المنامة",
+              "CONFIRM",
+              "ROUTE",
+              "4609 طريق 316, المنامة, البحرين"
+            ],
+            [
+              "986 Rd No 2417, المنامة",
+              "CONFIRM",
+              "ROUTE",
+              "986 طريق 2417, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "Office 803, Building, Block 351 Sixty Offices, 1848 Road 5133, المنامة, 404",
+              "CONFIRM",
+              "ROUTE",
+              "Block 351, 1848 Road 5133, اَلْمُحَرَّق, البحرين"
+            ]
+          ],
+          "静默错误": [
+            [
+              "5GVQ+2G4, المنامة",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "7HRG5GVQ+2G, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "5GQQ+QG Tubli, Bahrain, توبلي",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "7HRG5GQQ+QG, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "6F8J+WV Saar, Sar",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "7HRG6F8J+WV, Al Muharraq, Bahrain"
+            ],
+            [
+              "5J68+P9G, Sitra, Bahrain, سفالة",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "7HRG5J68+P9, اَلْمُحَرَّق, البحرين"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.037,
+          "正确·要求确认": 0.575,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.014,
+          "错误建议": 0.374,
+          "静默错误": 0.0
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.37,
+        "granularity": {
+          "ROUTE": 0.944,
+          "PREMISE_PROXIMITY": 0.042,
+          "OTHER": 0.013,
+          "LOCALITY": 0.001
+        },
+        "median_error_m": 50.57387631613503,
+        "within_500m": 0.613,
+        "ms": 2.6408801060006226,
+        "examples": {
+          "错误建议": [
+            [
+              "VILLA 66 طريق 4315",
+              "CONFIRM",
+              "ROUTE",
+              "66 Road 4315, النويدرات, البحرين"
+            ],
+            [
+              "شقة 22, 329 Road 2417, المنامة, 426",
+              "CONFIRM",
+              "ROUTE",
+              "شقه 22, 329 طريق 2417, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "مبنى 77 طريق 2417, 426",
+              "CONFIRM",
+              "ROUTE",
+              "77 طريق 2417, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "80 طريق 3870, Manama 1000",
+              "CONFIRM",
+              "ROUTE",
+              "80 Road 3870, مدينة حمد, البحرين"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Building 51 طريu 425, Manama",
+              "FIX",
+              "OTHER",
+              "51 Building طريu 425, البحرين"
+            ],
+            [
+              "23 ش 79, Manama, 450",
+              "FIX",
+              "OTHER",
+              "23, البحرين"
+            ],
+            [
+              "31 طرoق 3359, المنامة",
+              "FIX",
+              "OTHER",
+              "31 طرoق 3359, البحرين"
+            ],
+            [
+              "80A, طsيق 4903 20137",
+              "FIX",
+              "OTHER",
+              "80A, البحرين"
+            ]
+          ]
+        }
+      }
+    },
+    "hybrid": {
+      "real": {
+        "n": 921,
+        "outcomes": {
+          "正确·直接通过": 0.006514657980456026,
+          "正确·要求确认": 0.34419109663409336,
+          "判 FIX·片区对": 0.18132464712269272,
+          "判 FIX": 0.05646036916395222,
+          "错误建议": 0.40933767643865365,
+          "静默错误": 0.002171552660152009
+        },
+        "silent_over_1km": 0.002171552660152009,
+        "wrong_over_1km": 0.3333333333333333,
+        "granularity": {
+          "ROUTE": 0.6351791530944625,
+          "LOCALITY": 0.21715526601520088,
+          "PREMISE_PROXIMITY": 0.1259500542888165,
+          "OTHER": 0.02062975027144408,
+          "PREMISE": 0.0010857763300760044
+        },
+        "median_error_m": 1116.2182062028464,
+        "within_500m": 0.3268186753528773,
+        "ms": 7.662290391965734,
+        "examples": {
+          "错误建议": [
+            [
+              "Shop 179G, الساية",
+              "CONFIRM",
+              "ROUTE",
+              "Shop 179g, شارع الساية, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "4609 طريق 316, المنامة",
+              "CONFIRM",
+              "ROUTE",
+              "4609 طريق 316, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "986 Rd No 2417, المنامة",
+              "CONFIRM",
+              "ROUTE",
+              "2417 شارع المنامة, المنامة, البحرين"
+            ],
+            [
+              "طريق 2811 657, المنامة",
+              "CONFIRM",
+              "ROUTE",
+              "657 طريق 2811, اَلْمُحَرَّق, البحرين"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Seef Mall Muharraq, Muharraq",
+              "FIX",
+              "LOCALITY",
+              "Muharraq, Bahrain"
+            ],
+            [
+              "Bahrain, مدينة حمد",
+              "FIX",
+              "LOCALITY",
+              "المنامة, البحرين"
+            ],
+            [
+              "Unit G80 - Level G, City Centre Mall, Manama",
+              "FIX",
+              "LOCALITY",
+              "Unit G80, Al Muharraq, Bahrain"
+            ],
+            [
+              "Diyar Al-Muharraq, قلالي, 263",
+              "FIX",
+              "LOCALITY",
+              "263, Al Muharraq, البحرين"
+            ]
+          ],
+          "静默错误": [
+            [
+              "5GQQ+QG Tubli, Bahrain, توبلي",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "7HRG5GQQ+QG, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "5J68+P9G, Sitra, Bahrain, سفالة",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "7HRG5J68+P9, اَلْمُحَرَّق, البحرين"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.031,
+          "正确·要求确认": 0.55,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.007,
+          "错误建议": 0.412,
+          "静默错误": 0.0
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.397,
+        "granularity": {
+          "ROUTE": 0.941,
+          "PREMISE_PROXIMITY": 0.051,
+          "LOCALITY": 0.005,
+          "OTHER": 0.002,
+          "PREMISE": 0.001
+        },
+        "median_error_m": 94.79560948052759,
+        "within_500m": 0.586,
+        "ms": 6.511377301000721,
+        "examples": {
+          "错误建议": [
+            [
+              "VILLA 66 طريق 4315",
+              "CONFIRM",
+              "ROUTE",
+              "66 Road 4315, النويدرات, البحرين"
+            ],
+            [
+              "شقة 22, 329 Road 2417, المنامة, 426",
+              "CONFIRM",
+              "ROUTE",
+              "شقه 22, 329 طريق 2417, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "مبنى 77 طريق 2417, 426",
+              "CONFIRM",
+              "ROUTE",
+              "77 طريق 2417, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "80 طريق 3870, Manama 1000",
+              "CONFIRM",
+              "ROUTE",
+              "80 Road 3870, مدينة حمد, البحرين"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Building 51 طريu 425, Manama",
+              "FIX",
+              "LOCALITY",
+              "51 Building طريu 425, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "23 ش 79, Manama, 450",
+              "FIX",
+              "LOCALITY",
+              "23, اَلْمُحَرَّق, البحرين"
+            ],
+            [
+              "80A, طsيق 4903 20137",
+              "FIX",
+              "OTHER",
+              "80A, البحرين"
+            ],
+            [
+              "ش 161, Manama",
+              "FIX",
+              "LOCALITY",
+              "161, اَلْمُحَرَّق, البحرين"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "EG": {
+    "rules": {
+      "real": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.009,
+          "正确·要求确认": 0.257,
+          "判 FIX·片区对": 0.05,
+          "判 FIX": 0.075,
+          "错误建议": 0.606,
+          "静默错误": 0.003
+        },
+        "silent_over_1km": 0.003,
+        "wrong_over_1km": 0.56,
+        "granularity": {
+          "ROUTE": 0.464,
+          "PREMISE": 0.327,
+          "LOCALITY": 0.092,
+          "PREMISE_PROXIMITY": 0.084,
+          "OTHER": 0.033
+        },
+        "median_error_m": 5014.056820998252,
+        "within_500m": 0.258,
+        "ms": 31.643744287999652,
+        "examples": {
+          "错误建议": [
+            [
+              "كارفور المعادي ، محافظة القاهرة ، مصر, المعادى, 11728",
+              "CONFIRM",
+              "ROUTE",
+              "شارع كارفور, القاهرة, 11728, مصر"
+            ],
+            [
+              "3 شارع م. محمود صدقي, الاسكندرية",
+              "CONFIRM",
+              "PREMISE",
+              "3 شارع محمود صدقي, القاهرة, الجيزة, 12551, مصر"
+            ],
+            [
+              "Abbas El-Shareef, القاهرة, 4540010",
+              "CONFIRM",
+              "ROUTE",
+              "Abbas Street, القاهرة, الجيزة, مصر"
+            ],
+            [
+              "Omar Ibn El-Khattab, القاهرة, 3753450",
+              "CONFIRM",
+              "ROUTE",
+              "Omar Ibn Al-Khattab Street, القاهرة, مصر"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Co-Op Gas Station, Nasr City, 11774",
+              "FIX",
+              "LOCALITY",
+              "Cairo, Cairo Governorate, 11774, Egypt"
+            ],
+            [
+              "Pyramids park, الجيزة, 12943",
+              "FIX",
+              "LOCALITY",
+              "القاهرة, الجيزة, 12943, مصر"
+            ],
+            [
+              "Cairo",
+              "FIX",
+              "LOCALITY",
+              "Cairo, Cairo Governorate, Egypt"
+            ],
+            [
+              "الاسكندرية, الاسكندرية",
+              "FIX",
+              "OTHER",
+              "الإسكندرية, مصر"
+            ]
+          ],
+          "静默错误": [
+            [
+              "2 شارع اليابان متفرع من شارع خاتم المرسلين قاعة سيد درويش - العمرانيه, الجيزة, 12552",
+              "ACCEPT",
+              "PREMISE",
+              "2 شارع اليابان, القاهرة, الجيزة, 12552, مصر"
+            ],
+            [
+              "360 شارع الهرم - الجيزة - الدور الأول أمام سنيما رادوبيس, العمرانية الغربية، قسم العمرانية",
+              "ACCEPT",
+              "ROUTE",
+              "360 شارع العمرانيه, القاهرة, الجيزة, 12551, مصر"
+            ],
+            [
+              "X5V9+3H5, Farouk Mohammed, Al Kom Al Akhdar, El Talbia, Giza Governorate 3531140, الخصوص, ",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Farouq Mahmoud Street, القاهرة, الجيزة, مصر"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.12,
+          "正确·要求确认": 0.58,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.006,
+          "错误建议": 0.293,
+          "静默错误": 0.001
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.266,
+        "granularity": {
+          "ROUTE": 0.601,
+          "PREMISE": 0.231,
+          "PREMISE_PROXIMITY": 0.162,
+          "LOCALITY": 0.005,
+          "OTHER": 0.001
+        },
+        "median_error_m": 71.4682942243376,
+        "within_500m": 0.706,
+        "ms": 10.254782128000443,
+        "examples": {
+          "错误建议": [
+            [
+              "عمارة 36 شارع لطفى الصاوى, Bashtil Village Cairo",
+              "CONFIRM",
+              "PREMISE",
+              "36 شارع بشتيل, Cairo, الجيزة, 12668, مصر"
+            ],
+            [
+              "رقم 66 حارة الطبي, Souq Al Gomaa And Al Mounir, A L Labban",
+              "CONFIRM",
+              "PREMISE",
+              "66 Al Souq Street, القاهرة, 11648, مصر"
+            ],
+            [
+              "ش اoاتحاد, المنيب, Giza, 12576",
+              "CONFIRM",
+              "ROUTE",
+              "شارع الاتحاد, القاهرة, الجيزة, 12576, مصر"
+            ],
+            [
+              "رقم 15 Shehata Abd Al Aal Alley Al Zahraa and Masaken El Helmeya, القاهرة, 11772",
+              "CONFIRM",
+              "PREMISE",
+              "15 Al Zahraa Street, القاهرة, 11772, مصر"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "ش خلف بهتيم الرياضى, بهتيم, Shubra Al-Khayma 2, القاهرة, 13752",
+              "FIX",
+              "LOCALITY",
+              "القاهرة, القليوبية, 13752, مصر"
+            ],
+            [
+              "Apartment 6 35 ش الوسط Economy Housing Hilwan, 11746",
+              "FIX",
+              "LOCALITY",
+              "Apartment 6, 35 Apartment 6 ش الوسط Economy Housing Hilwan, القاهرة, 1"
+            ],
+            [
+              "51 ش عمرو بن العاص Sendioun, القاهرة, 13744",
+              "FIX",
+              "LOCALITY",
+              "51 ش عمرو بن العاص Sendioun, القاهرة, القليوبية, 13744, مصر"
+            ],
+            [
+              "42, ش 7 Marg, Cairo, 11888",
+              "FIX",
+              "LOCALITY",
+              "42, Cairo, القليوبية, 11888, مصر"
+            ]
+          ],
+          "静默错误": [
+            [
+              "رقم 54A Ismail Asem Pasha Alley Darb El Gamamiz, Cairo 11617",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "54A Darb El Gamamiz Street, القاهرة, 11617, مصر"
+            ]
+          ]
+        }
+      }
+    },
+    "crf": {
+      "real": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.003,
+          "正确·要求确认": 0.179,
+          "判 FIX·片区对": 0.194,
+          "判 FIX": 0.333,
+          "错误建议": 0.29,
+          "静默错误": 0.001
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.268,
+        "granularity": {
+          "LOCALITY": 0.32,
+          "PREMISE": 0.226,
+          "OTHER": 0.207,
+          "ROUTE": 0.2,
+          "PREMISE_PROXIMITY": 0.047
+        },
+        "median_error_m": 2312.15286025001,
+        "within_500m": 0.224,
+        "ms": 13.546231866000198,
+        "examples": {
+          "判 FIX": [
+            [
+              "كارفور المعادي ، محافظة القاهرة ، مصر, المعادى, 11728",
+              "FIX",
+              "LOCALITY",
+              "القاهرة, 11728, مصر"
+            ],
+            [
+              "Pyramids park, الجيزة, 12943",
+              "FIX",
+              "LOCALITY",
+              "القاهرة, الجيزة, 12943, مصر"
+            ],
+            [
+              "City Stars Omar Ibn Al Khattab St. Entrance Num 6, القاهرة",
+              "FIX",
+              "OTHER",
+              "القاهرة, مصر"
+            ],
+            [
+              "2005 Nile Corniche, القاهرة, 4311301",
+              "FIX",
+              "OTHER",
+              "2005 Nile Corniche, القاهرة, مصر"
+            ]
+          ],
+          "错误建议": [
+            [
+              "3 شارع م. محمود صدقي, الاسكندرية",
+              "CONFIRM",
+              "PREMISE",
+              "3 شارع محمود صدقي, القاهرة, الجيزة, 12551, مصر"
+            ],
+            [
+              "Abbas El-Shareef, القاهرة, 4540010",
+              "CONFIRM",
+              "ROUTE",
+              "Abbas Street, القاهرة, الجيزة, مصر"
+            ],
+            [
+              "59 El-Sayed El-Marghany, القاهرة, 11765",
+              "CONFIRM",
+              "ROUTE",
+              "59 Al Sayed Street, القاهرة, الجيزة, 11765, مصر"
+            ],
+            [
+              "Omar Ibn El-Khattab, القاهرة, 3753450",
+              "CONFIRM",
+              "ROUTE",
+              "Omar Al Bana Street, القاهرة, القليوبية, مصر"
+            ]
+          ],
+          "静默错误": [
+            [
+              "29°51'36.5\"N 31°18'44.9\"E, حلوان, 40421",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "7GXHV866+3X, القاهرة, 40421, مصر"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.138,
+          "正确·要求确认": 0.696,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.02,
+          "错误建议": 0.146,
+          "静默错误": 0.0
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.143,
+        "granularity": {
+          "ROUTE": 0.643,
+          "PREMISE_PROXIMITY": 0.174,
+          "PREMISE": 0.163,
+          "LOCALITY": 0.011,
+          "OTHER": 0.009
+        },
+        "median_error_m": 43.0719635579695,
+        "within_500m": 0.831,
+        "ms": 7.459163913999873,
+        "examples": {
+          "判 FIX": [
+            [
+              "ش اoاتحاد, المنيب, Giza, 12576",
+              "FIX",
+              "LOCALITY",
+              "القاهرة, الجيزة, 12576, مصر"
+            ],
+            [
+              "ش خلف بهتيم الرياضى, بهتيم, Shubra Al-Khayma 2, القاهرة, 13752",
+              "FIX",
+              "LOCALITY",
+              "القاهرة, القليوبية, 13752, مصر"
+            ],
+            [
+              "76 حارة عطارد الهماميل, al manshiyya, 21518",
+              "FIX",
+              "LOCALITY",
+              "76 حارة عطارد الهماميل, ئەسکەندەریە, الإسكندرية, 21518, مصر"
+            ],
+            [
+              "شقة 18 منزل 3 شارع الصرفي المنيل الشرقي, القاهرة",
+              "FIX",
+              "OTHER",
+              "شقه 18, 3 شقة 18 منزل شارع الصرفي المنيل الشرقي, القاهرة, مصر"
+            ]
+          ],
+          "错误建议": [
+            [
+              "عمارة 55 al warsha st., مدينه قليوب, qalyub, القاهرة",
+              "CONFIRM",
+              "PREMISE",
+              "55 شارع الورشه, القاهرة, الجيزة, 12621, مصر"
+            ],
+            [
+              "الدور 30, 136 ش طاهر باشا الحضره قبلى, Bab Sharqi",
+              "CONFIRM",
+              "ROUTE",
+              "الدور 30, 136 شارع طاهر باشا, القاهرة, مصر"
+            ],
+            [
+              "رقم 53 Al Wasat Street, Bahtim",
+              "CONFIRM",
+              "PREMISE",
+              "53 Al Wasat Street, القاهرة, 11795, مصر"
+            ],
+            [
+              "8 طريق عرب الشعار, الجعافره Al Gaafra Village",
+              "CONFIRM",
+              "ROUTE",
+              "8 شارع ربيع سرور, القاهرة, القليوبية, مصر"
+            ]
+          ]
+        }
+      }
+    },
+    "hybrid": {
+      "real": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.009,
+          "正确·要求确认": 0.26,
+          "判 FIX·片区对": 0.048,
+          "判 FIX": 0.069,
+          "错误建议": 0.611,
+          "静默错误": 0.003
+        },
+        "silent_over_1km": 0.003,
+        "wrong_over_1km": 0.566,
+        "granularity": {
+          "ROUTE": 0.434,
+          "PREMISE": 0.362,
+          "LOCALITY": 0.089,
+          "PREMISE_PROXIMITY": 0.087,
+          "OTHER": 0.028
+        },
+        "median_error_m": 4894.064246383761,
+        "within_500m": 0.262,
+        "ms": 35.10696015299982,
+        "examples": {
+          "错误建议": [
+            [
+              "كارفور المعادي ، محافظة القاهرة ، مصر, المعادى, 11728",
+              "CONFIRM",
+              "ROUTE",
+              "شارع كارفور, القاهرة, 11728, مصر"
+            ],
+            [
+              "3 شارع م. محمود صدقي, الاسكندرية",
+              "CONFIRM",
+              "PREMISE",
+              "3 شارع محمود صدقي, القاهرة, الجيزة, 12551, مصر"
+            ],
+            [
+              "Abbas El-Shareef, القاهرة, 4540010",
+              "CONFIRM",
+              "ROUTE",
+              "Abbas Street, القاهرة, الجيزة, مصر"
+            ],
+            [
+              "Omar Ibn El-Khattab, القاهرة, 3753450",
+              "CONFIRM",
+              "ROUTE",
+              "Omar Ibn Al-Khattab Street, القاهرة, مصر"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Co-Op Gas Station, Nasr City, 11774",
+              "FIX",
+              "LOCALITY",
+              "Cairo, Cairo Governorate, 11774, Egypt"
+            ],
+            [
+              "Pyramids park, الجيزة, 12943",
+              "FIX",
+              "LOCALITY",
+              "القاهرة, الجيزة, 12943, مصر"
+            ],
+            [
+              "Cairo",
+              "FIX",
+              "LOCALITY",
+              "Cairo, Cairo Governorate, Egypt"
+            ],
+            [
+              "الاسكندرية, الاسكندرية",
+              "FIX",
+              "OTHER",
+              "الإسكندرية, مصر"
+            ]
+          ],
+          "静默错误": [
+            [
+              "2 شارع اليابان متفرع من شارع خاتم المرسلين قاعة سيد درويش - العمرانيه, الجيزة, 12552",
+              "ACCEPT",
+              "PREMISE",
+              "2 شارع اليابان, القاهرة, الجيزة, 12552, مصر"
+            ],
+            [
+              "360 شارع الهرم - الجيزة - الدور الأول أمام سنيما رادوبيس, العمرانية الغربية، قسم العمرانية",
+              "ACCEPT",
+              "ROUTE",
+              "360 شارع العمرانيه, القاهرة, الجيزة, 12551, مصر"
+            ],
+            [
+              "X5V9+3H5, Farouk Mohammed, Al Kom Al Akhdar, El Talbia, Giza Governorate 3531140, الخصوص, ",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Farouq Mahmoud Street, القاهرة, الجيزة, مصر"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.14,
+          "正确·要求确认": 0.576,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.004,
+          "错误建议": 0.279,
+          "静默错误": 0.001
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.255,
+        "granularity": {
+          "ROUTE": 0.546,
+          "PREMISE": 0.258,
+          "PREMISE_PROXIMITY": 0.192,
+          "LOCALITY": 0.004
+        },
+        "median_error_m": 70.8754971487472,
+        "within_500m": 0.723,
+        "ms": 16.376966618999177,
+        "examples": {
+          "错误建议": [
+            [
+              "عمارة 36 شارع لطفى الصاوى, Bashtil Village Cairo",
+              "CONFIRM",
+              "PREMISE",
+              "36 شارع بشتيل, Cairo, الجيزة, 12668, مصر"
+            ],
+            [
+              "رقم 66 حارة الطبي, Souq Al Gomaa And Al Mounir, A L Labban",
+              "CONFIRM",
+              "PREMISE",
+              "66 Al Souq Street, القاهرة, 11648, مصر"
+            ],
+            [
+              "ش اoاتحاد, المنيب, Giza, 12576",
+              "CONFIRM",
+              "ROUTE",
+              "شارع الاتحاد, القاهرة, الجيزة, 12576, مصر"
+            ],
+            [
+              "رقم 15 Shehata Abd Al Aal Alley Al Zahraa and Masaken El Helmeya, القاهرة, 11772",
+              "CONFIRM",
+              "PREMISE",
+              "15 Al Zahraa Street, القاهرة, 11772, مصر"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "ش خلف بهتيم الرياضى, بهتيم, Shubra Al-Khayma 2, القاهرة, 13752",
+              "FIX",
+              "LOCALITY",
+              "القاهرة, القليوبية, 13752, مصر"
+            ],
+            [
+              "Apartment 6 35 ش الوسط Economy Housing Hilwan, 11746",
+              "FIX",
+              "LOCALITY",
+              "Apartment 6, 35 Apartment 6 ش الوسط Economy Housing Hilwan, القاهرة, 1"
+            ],
+            [
+              "42, ش 7 Marg, Cairo, 11888",
+              "FIX",
+              "LOCALITY",
+              "42, Cairo, القليوبية, 11888, مصر"
+            ],
+            [
+              "19 ش 8, دنا",
+              "FIX",
+              "LOCALITY",
+              "19, ئەسکەندەریە, الإسكندرية, مصر"
+            ]
+          ],
+          "静默错误": [
+            [
+              "رقم 54A Ismail Asem Pasha Alley Darb El Gamamiz, Cairo 11617",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "54A Darb El Gamamiz Street, القاهرة, 11617, مصر"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "KZ": {
+    "rules": {
+      "real": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.066,
+          "正确·要求确认": 0.449,
+          "判 FIX·片区对": 0.029,
+          "判 FIX": 0.083,
+          "错误建议": 0.367,
+          "静默错误": 0.006
+        },
+        "silent_over_1km": 0.003,
+        "wrong_over_1km": 0.328,
+        "granularity": {
+          "ROUTE": 0.698,
+          "PREMISE_PROXIMITY": 0.188,
+          "LOCALITY": 0.114
+        },
+        "median_error_m": 1801.1307417797468,
+        "within_500m": 0.288,
+        "ms": 6.744999979000568,
+        "examples": {
+          "错误建议": [
+            [
+              "Түркебаев көшесі 86, Алматы, 050009",
+              "CONFIRM",
+              "ROUTE",
+              "050009, Almaty, Түркебаев көшесі 86, Қазақстан"
+            ],
+            [
+              "Алматы микрорайон Аксай-4 118А, Алматы, 050063",
+              "CONFIRM",
+              "ROUTE",
+              "050063, Астана, Ақсай көшесі 4, Қазақстан"
+            ],
+            [
+              "микрорайон Кайрат 4, Алматы",
+              "CONFIRM",
+              "ROUTE",
+              "Алматы, Қайрат көшесі 4, Қазақстан"
+            ],
+            [
+              "Мәңгілік Ел даңғылы 30, Астана, 010000",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "010000, Астана, Мәңгілік Ел даңғылы 30, Қазақстан"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Әл-Назыр көшесі 91, Алматы, 050000",
+              "FIX",
+              "LOCALITY",
+              "050000, Almaty, Әл-Назыр көшесі 91, Қазақстан"
+            ],
+            [
+              "микрорайон Целинный 5/1, Астана, 010005",
+              "FIX",
+              "LOCALITY",
+              "010005, Астана, микрорайон Целинный 5/1, Қазақстан"
+            ],
+            [
+              "астана, Целиноград ауданы, 010000",
+              "FIX",
+              "LOCALITY",
+              "010000, Astana, Қазақстан"
+            ],
+            [
+              "Запотоцкий көшесі 2, Алматы, 050035",
+              "FIX",
+              "LOCALITY",
+              "050035, Almaty, Запотоцкий көшесі 2, Қазақстан"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Көкімжан Қазыбаев көшесі 272А, Алматы, 050014",
+              "ACCEPT",
+              "ROUTE",
+              "050014, Алматы, Қазыбаев көшесі 272A, Қазақстан"
+            ],
+            [
+              "​ул. Улагат 2, ​ул. Садвакасова 146, Алматы, 050063",
+              "ACCEPT",
+              "ROUTE",
+              "050063, Алматы, улица Улагат 2, Қазақстан"
+            ],
+            [
+              "микрорайон 9-й 1, Алматы, 050036",
+              "ACCEPT",
+              "ROUTE",
+              "050036, Алматы, Микрорайон 9 1, Қазақстан"
+            ],
+            [
+              "Qazybek Bi St 19, Шымкент, 160011",
+              "ACCEPT",
+              "ROUTE",
+              "160011, Шымкент, Qazybek bi street 19, Қазақстан"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.067,
+          "正确·要求确认": 0.759,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.012,
+          "错误建议": 0.161,
+          "静默错误": 0.001
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.119,
+        "granularity": {
+          "ROUTE": 0.971,
+          "PREMISE_PROXIMITY": 0.016,
+          "LOCALITY": 0.013
+        },
+        "median_error_m": 182.96117635172536,
+        "within_500m": 0.732,
+        "ms": 4.1995328800003335,
+        "examples": {
+          "错误建议": [
+            [
+              "улица Туран 301",
+              "CONFIRM",
+              "ROUTE",
+              "Алматы, Тұран көшесі 301, Қазақстан"
+            ],
+            [
+              "Западная көшеесі",
+              "CONFIRM",
+              "ROUTE",
+              "Алматы облысы, №71-темір жол айрығы, Западная, Қазақстан"
+            ],
+            [
+              "Өркениет көш. 50, Աստանա",
+              "CONFIRM",
+              "ROUTE",
+              "Астана, Өркениет көшесі 50, Қазақстан"
+            ],
+            [
+              "міржақып дулаттов 19",
+              "CONFIRM",
+              "ROUTE",
+              "Шымкент, Чимкент, улица Миржакипа Дулатова 19, Қазақстан"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "ул. Апанассенко 102 Алматы A36H0B8",
+              "FIX",
+              "LOCALITY",
+              "A36H0B8, Almaty, ул. Апанассенко Алматы 102, Қазақстан"
+            ],
+            [
+              "кв. 30, Шолохоав улица 172 Алматы, 160013",
+              "FIX",
+              "LOCALITY",
+              "160013, Almaty, 30, Қазақстан"
+            ],
+            [
+              "улица Аlанат 101 District Almaty",
+              "FIX",
+              "LOCALITY",
+              "Астана, улица Аlанат District Almaty 101, Қазақстан"
+            ],
+            [
+              "ул. Нуркена Абдироа 44 Коянкус Җетеген, Алматы",
+              "FIX",
+              "LOCALITY",
+              "Almaty, ул. Нуркена Абдироа Коянкус Җетеген 44, Қазақстан"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Unicars_kz, улица Алимжанова, 50",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Алматы, Unicars_kz, Әлімжанов көшесі 50, Қазақстан"
+            ]
+          ]
+        }
+      }
+    },
+    "crf": {
+      "real": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.06,
+          "正确·要求确认": 0.386,
+          "判 FIX·片区对": 0.086,
+          "判 FIX": 0.162,
+          "错误建议": 0.303,
+          "静默错误": 0.003
+        },
+        "silent_over_1km": 0.001,
+        "wrong_over_1km": 0.265,
+        "granularity": {
+          "ROUTE": 0.585,
+          "LOCALITY": 0.196,
+          "PREMISE_PROXIMITY": 0.165,
+          "OTHER": 0.054
+        },
+        "median_error_m": 1973.332843258901,
+        "within_500m": 0.259,
+        "ms": 4.360369357000309,
+        "examples": {
+          "错误建议": [
+            [
+              "Түркебаев көшесі 86, Алматы, 050009",
+              "CONFIRM",
+              "ROUTE",
+              "050009, Almaty, Түркебаев көшесі 86, Қазақстан"
+            ],
+            [
+              "Мәңгілік Ел даңғылы 30, Астана, 010000",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "010000, Астана, Мәңгілік Ел даңғылы 30, Қазақстан"
+            ],
+            [
+              "Пушкина 64, Алматы",
+              "CONFIRM",
+              "ROUTE",
+              "Almaty, пушкина 64, Қазақстан"
+            ],
+            [
+              "Юрий Гагарин даңғылы 245, Алматы, 050060",
+              "CONFIRM",
+              "ROUTE",
+              "050060, Астана, Юрий Гагарин көшесі 245, Қазақстан"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "микрорайон Кайрат 4, Алматы",
+              "FIX",
+              "OTHER",
+              "Алматы, микрорайон Кайрат 4, Қазақстан"
+            ],
+            [
+              "Жаңайдар Жирентаев көшесі 4/1, Астана, 010008",
+              "FIX",
+              "LOCALITY",
+              "010008, Astana, Жаңайдар Жирентаев көшесі 4/1, Қазақстан"
+            ],
+            [
+              "Рамстор, Самал шағын ауданы 11, Астана, 010000",
+              "FIX",
+              "LOCALITY",
+              "010000, Астана, Самал шағын ауданы 11, Қазақстан"
+            ],
+            [
+              "Almaty Towers 2-Этаж, Офис:5 (северная башня), Baizakov Street 280, Алматы, 050062",
+              "FIX",
+              "LOCALITY",
+              "050062, Алматы, Ofis 5, Baizakov Street 280, Қазақстан"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Qazybek Bi St 19, Шымкент, 160011",
+              "ACCEPT",
+              "ROUTE",
+              "160011, Шымкент, Qazybek bi street 19, Қазақстан"
+            ],
+            [
+              "Нұрсұлтан Назарбаев даңғылы 226, Алматы, 050059",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "050059, Алматы, Назарбаев даңғылы 226, Қазақстан"
+            ],
+            [
+              "Erzo Coffee, Асқар Тоқпанов көшесі 27, Астана, 010002",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "010002, Астана, Асқар Тоқпанов көшесі 27, Қазақстан"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.075,
+          "正确·要求确认": 0.757,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.004,
+          "错误建议": 0.163,
+          "静默错误": 0.001
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.121,
+        "granularity": {
+          "ROUTE": 0.972,
+          "PREMISE_PROXIMITY": 0.023,
+          "LOCALITY": 0.003,
+          "OTHER": 0.002
+        },
+        "median_error_m": 139.51322936823163,
+        "within_500m": 0.753,
+        "ms": 2.716481092000322,
+        "examples": {
+          "错误建议": [
+            [
+              "Яссауи улица 13, Катын кёпир, Абай ауданы",
+              "CONFIRM",
+              "ROUTE",
+              "Алматы, Яссауи көшесі 13, Қазақстан"
+            ],
+            [
+              "улица Туран 301",
+              "CONFIRM",
+              "ROUTE",
+              "Алматы, Тұран көшесі 301, Қазақстан"
+            ],
+            [
+              "улиац Актамберды Жырау 191 Тұздыбастау, Талғар ауданы Астана",
+              "CONFIRM",
+              "ROUTE",
+              "Алматы, улица Актамберды жырау 191, Қазақстан"
+            ],
+            [
+              "Западная көшеесі",
+              "CONFIRM",
+              "ROUTE",
+              "Алматы, Алма-Ата, Западная көшесі, Қазақстан"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Unicars_kz, улица Алимжанова, 50",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Алматы, Unicars_kz, Әлімжанов көшесі 50, Қазақстан"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "КАРНАК УЛИЦА (КУРСАЙ МИКРОРАЙОН)",
+              "FIX",
+              "LOCALITY",
+              "Алматы, Қазақстан"
+            ],
+            [
+              "улица Салыка Зиманов а 85, Астана",
+              "FIX",
+              "OTHER",
+              "Астана, Қазақстан"
+            ],
+            [
+              "Rauan sttreet 49, Астана",
+              "FIX",
+              "OTHER",
+              "Астана, Rauan sttreet 49, Қазақстан"
+            ],
+            [
+              "Таргетолог Інжу көшесі 73, Шапагат, Астана",
+              "FIX",
+              "LOCALITY",
+              "Алматы, Таргетолог Інжу көшесі 73, Қазақстан"
+            ]
+          ]
+        }
+      }
+    },
+    "hybrid": {
+      "real": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.066,
+          "正确·要求确认": 0.456,
+          "判 FIX·片区对": 0.026,
+          "判 FIX": 0.078,
+          "错误建议": 0.368,
+          "静默错误": 0.006
+        },
+        "silent_over_1km": 0.003,
+        "wrong_over_1km": 0.325,
+        "granularity": {
+          "ROUTE": 0.7,
+          "PREMISE_PROXIMITY": 0.194,
+          "LOCALITY": 0.106
+        },
+        "median_error_m": 1655.230384547743,
+        "within_500m": 0.295,
+        "ms": 10.609670081000331,
+        "examples": {
+          "错误建议": [
+            [
+              "Түркебаев көшесі 86, Алматы, 050009",
+              "CONFIRM",
+              "ROUTE",
+              "050009, Almaty, Түркебаев көшесі 86, Қазақстан"
+            ],
+            [
+              "Алматы микрорайон Аксай-4 118А, Алматы, 050063",
+              "CONFIRM",
+              "ROUTE",
+              "050063, Астана, Ақсай көшесі 4, Қазақстан"
+            ],
+            [
+              "микрорайон Кайрат 4, Алматы",
+              "CONFIRM",
+              "ROUTE",
+              "Алматы, Қайрат көшесі 4, Қазақстан"
+            ],
+            [
+              "Мәңгілік Ел даңғылы 30, Астана, 010000",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "010000, Астана, Мәңгілік Ел даңғылы 30, Қазақстан"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Әл-Назыр көшесі 91, Алматы, 050000",
+              "FIX",
+              "LOCALITY",
+              "050000, Almaty, Әл-Назыр көшесі 91, Қазақстан"
+            ],
+            [
+              "микрорайон Целинный 5/1, Астана, 010005",
+              "FIX",
+              "LOCALITY",
+              "010005, Астана, микрорайон Целинный 5/1, Қазақстан"
+            ],
+            [
+              "астана, Целиноград ауданы, 010000",
+              "FIX",
+              "LOCALITY",
+              "010000, Astana, Қазақстан"
+            ],
+            [
+              "Запотоцкий көшесі 2, Алматы, 050035",
+              "FIX",
+              "LOCALITY",
+              "050035, Almaty, Запотоцкий көшесі 2, Қазақстан"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Көкімжан Қазыбаев көшесі 272А, Алматы, 050014",
+              "ACCEPT",
+              "ROUTE",
+              "050014, Алматы, Қазыбаев көшесі 272A, Қазақстан"
+            ],
+            [
+              "​ул. Улагат 2, ​ул. Садвакасова 146, Алматы, 050063",
+              "ACCEPT",
+              "ROUTE",
+              "050063, Алматы, улица Улагат 2, Қазақстан"
+            ],
+            [
+              "микрорайон 9-й 1, Алматы, 050036",
+              "ACCEPT",
+              "ROUTE",
+              "050036, Алматы, Микрорайон 9 1, Қазақстан"
+            ],
+            [
+              "Qazybek Bi St 19, Шымкент, 160011",
+              "ACCEPT",
+              "ROUTE",
+              "160011, Шымкент, Qazybek bi street 19, Қазақстан"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.077,
+          "正确·要求确认": 0.776,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.0,
+          "错误建议": 0.146,
+          "静默错误": 0.001
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.103,
+        "granularity": {
+          "ROUTE": 0.976,
+          "PREMISE_PROXIMITY": 0.023,
+          "LOCALITY": 0.001
+        },
+        "median_error_m": 182.04339828134604,
+        "within_500m": 0.75,
+        "ms": 5.459521022999979,
+        "examples": {
+          "错误建议": [
+            [
+              "улица Туран 301",
+              "CONFIRM",
+              "ROUTE",
+              "Алматы, Тұран көшесі 301, Қазақстан"
+            ],
+            [
+              "Западная көшеесі",
+              "CONFIRM",
+              "ROUTE",
+              "Алматы облысы, №71-темір жол айрығы, Западная, Қазақстан"
+            ],
+            [
+              "Өркениет көш. 50, Աստանա",
+              "CONFIRM",
+              "ROUTE",
+              "Астана, Өркениет көшесі 50, Қазақстан"
+            ],
+            [
+              "міржақып дулаттов 19",
+              "CONFIRM",
+              "ROUTE",
+              "Шымкент, Чимкент, улица Миржакипа Дулатова 19, Қазақстан"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Unicars_kz, улица Алимжанова, 50",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Алматы, Unicars_kz, Әлімжанов көшесі 50, Қазақстан"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "DO": {
+    "rules": {
+      "real": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.124,
+          "正确·要求确认": 0.365,
+          "判 FIX·片区对": 0.017,
+          "判 FIX": 0.06,
+          "错误建议": 0.402,
+          "静默错误": 0.032
+        },
+        "silent_over_1km": 0.023,
+        "wrong_over_1km": 0.346,
+        "granularity": {
+          "ROUTE": 0.604,
+          "PREMISE_PROXIMITY": 0.257,
+          "LOCALITY": 0.064,
+          "PREMISE": 0.062,
+          "OTHER": 0.013
+        },
+        "median_error_m": 1027.3055236593261,
+        "within_500m": 0.397,
+        "ms": 9.826548584000193,
+        "examples": {
+          "错误建议": [
+            [
+              "Residencial Gacela, Santo Domingo",
+              "CONFIRM",
+              "ROUTE",
+              "Residencial Madelta, Santo Domingo Este, República Dominicana"
+            ],
+            [
+              "Plaza granada oriental 2do nivel, Santo Domingo",
+              "CONFIRM",
+              "ROUTE",
+              "Calle Paseo de Granada, Santo Domingo de Guzmán, República Dominicana"
+            ],
+            [
+              "Prol. Av. 27 de Febrero 500, Santo Domingo Oeste, 10904",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Avenida 27 de Febrero 500, 10904 Santo Domingo de Guzmán, República Do"
+            ],
+            [
+              "Maria Trinidad Sanchez, San Cristóbal, 91000",
+              "CONFIRM",
+              "ROUTE",
+              "Calle María Trindad Sánchez, 91000 Los Alcarrizos, República Dominican"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "avenida sanvicente, Santo Domingo, 03012",
+              "FIX",
+              "OTHER",
+              "03012, República Dominicana"
+            ],
+            [
+              "Ensanche espaillat, C/Jimani #42 D.N Rep. Dom., Santo Domingo, 11500",
+              "FIX",
+              "LOCALITY",
+              "C/Jimani D.N Rep. Dom 42, 11500 Santo Domingo de Guzmán, República Dom"
+            ],
+            [
+              "Avenida augusto lora #7 proximo a la Fuente Fun, Santiago, 51000",
+              "FIX",
+              "LOCALITY",
+              "Avenida augusto lora proximo a la Fuente Fun 7, 51000 Santo Domingo de"
+            ],
+            [
+              "Linha C 70 Br 364, Los Alcarrizos",
+              "FIX",
+              "LOCALITY",
+              "Linha C Br 364 70, Los Alcarrizos, República Dominicana"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Coronel Fernández Domínguez #11. Sector Landia, Los Alcarrizos, 10803",
+              "ACCEPT",
+              "ROUTE",
+              "Calle Domínguez 11, 10803 Santo Domingo de Guzmán, República Dominican"
+            ],
+            [
+              "Avenida Gustavo Mejía Ricart 12, Santo Domingo, 10121",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Avenida Gustavo Mejía Ricart 12, 10121 Santo Domingo de Guzmán, Repúbl"
+            ],
+            [
+              "18°27'00.8\"N 69°57'20.3\"W\\nSanto Domingo\\nhttps://goo.gl/maps/vkibNkbMspx9YZydA, Santo Dom",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "77CGF22V+3P, 10901 Santo Domingo de Guzmán, República Dominicana"
+            ],
+            [
+              "Av. San Vicente de Paúl 36, Santo Domingo Este, 11901",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Avenida San Vicente de Paúl 36, 11901 Santo Domingo Este, República Do"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.105,
+          "正确·要求确认": 0.462,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.008,
+          "错误建议": 0.424,
+          "静默错误": 0.001
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.404,
+        "granularity": {
+          "ROUTE": 0.878,
+          "PREMISE_PROXIMITY": 0.102,
+          "PREMISE": 0.012,
+          "LOCALITY": 0.005,
+          "OTHER": 0.003
+        },
+        "median_error_m": 269.0685116611204,
+        "within_500m": 0.539,
+        "ms": 7.556507799000428,
+        "examples": {
+          "错误建议": [
+            [
+              "piso 20, callejón rosario 13, santo domingo, d.n.",
+              "CONFIRM",
+              "ROUTE",
+              "Piso 20, Callejon Rosario 13, Santo Domingo Este, República Dominicana"
+            ],
+            [
+              "Calle 6, # 14, Santiago, Santo Domingo, D.N.",
+              "CONFIRM",
+              "ROUTE",
+              "Calle 6 14, Santiago, República Dominicana"
+            ],
+            [
+              "Calle 8 113, Santo Domingo Este, Santo Domingo, D.N.",
+              "CONFIRM",
+              "ROUTE",
+              "Calle 8 113, Santo Domingo Oeste, República Dominicana"
+            ],
+            [
+              "Piso 7, Calle La Marina 60 Municipalité Santo Domingo Norte",
+              "CONFIRM",
+              "ROUTE",
+              "Piso 7, Calle La Marina 60, Santo Domingo de Guzmán, República Dominic"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Cl. Bellas Arrtes Santo Domingo",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "Calle B2 Santo Domingo, D.N.",
+              "FIX",
+              "OTHER",
+              "Floor B2, República Dominicana"
+            ],
+            [
+              "Respald 6, # 26 Santo Domingo Este, Santo Domingo",
+              "FIX",
+              "LOCALITY",
+              "Santo Domingo Este 26, Santo Domingo Este, República Dominicana"
+            ],
+            [
+              "calel 24 65 municipalité de santiago, santo domingo",
+              "FIX",
+              "LOCALITY",
+              "calel 65 municipalité de santiago 24, Santiago, República Dominicana"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Solutema, Callee B, Municipalité Santo Domingo Oeste, Santo Domingo",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Solutema, Avenida Oeste, Santo Domingo Oeste, República Dominicana"
+            ]
+          ]
+        }
+      }
+    },
+    "crf": {
+      "real": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.103,
+          "正确·要求确认": 0.331,
+          "判 FIX·片区对": 0.085,
+          "判 FIX": 0.196,
+          "错误建议": 0.261,
+          "静默错误": 0.024
+        },
+        "silent_over_1km": 0.015,
+        "wrong_over_1km": 0.221,
+        "granularity": {
+          "ROUTE": 0.458,
+          "PREMISE_PROXIMITY": 0.208,
+          "LOCALITY": 0.207,
+          "OTHER": 0.074,
+          "PREMISE": 0.053
+        },
+        "median_error_m": 1047.4264199752533,
+        "within_500m": 0.365,
+        "ms": 6.24891273600042,
+        "examples": {
+          "错误建议": [
+            [
+              "Residencial Gacela, Santo Domingo",
+              "CONFIRM",
+              "ROUTE",
+              "Residencial Madelta, Santo Domingo Este, República Dominicana"
+            ],
+            [
+              "Maria Trinidad Sanchez, San Cristóbal, 91000",
+              "CONFIRM",
+              "ROUTE",
+              "María Trinidad Sánchez, 91000 Santo Domingo Este, República Dominicana"
+            ],
+            [
+              "Guarocuya 16, Santo Domingo, 10136",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Calle Guarocuya 16, 10136 Santo Domingo Oeste, República Dominicana"
+            ],
+            [
+              "ave. Charles de Gaulle frente a la Sirena SD este, Santo Domingo, 111",
+              "CONFIRM",
+              "ROUTE",
+              "Avenida Charles de Gaulle, Santo Domingo, República Dominicana"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Plaza granada oriental 2do nivel, Santo Domingo",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "avenida sanvicente, Santo Domingo, 03012",
+              "FIX",
+              "OTHER",
+              "03012, República Dominicana"
+            ],
+            [
+              "Ensanche espaillat, C/Jimani #42 D.N Rep. Dom., Santo Domingo, 11500",
+              "FIX",
+              "LOCALITY",
+              "C/Jimani D.N Rep. Dom 42, 11500 Santo Domingo, República Dominicana"
+            ],
+            [
+              "Avenida augusto lora #7 proximo a la Fuente Fun, Santiago, 51000",
+              "FIX",
+              "LOCALITY",
+              "Avenida augusto lora proximo a la Fuente Fun 7, 51000 Santiago, Repúbl"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Avenida Gustavo Mejía Ricart 12, Santo Domingo, 10121",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Avenida Gustavo Mejía Ricart 12, 10121 Santo Domingo de Guzmán, Repúbl"
+            ],
+            [
+              "18°27'00.8\"N 69°57'20.3\"W\\nSanto Domingo\\nhttps://goo.gl/maps/vkibNkbMspx9YZydA, Santo Dom",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "77CGF22V+3P, 10901 Santo Domingo de Guzmán, República Dominicana"
+            ],
+            [
+              "Av. San Vicente de Paúl 36, Santo Domingo Este, 11901",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Avenida San Vicente de Paúl 36, 11901 Santo Domingo Este, República Do"
+            ],
+            [
+              "Plaza Gazebo (Local 209).  Avenida Sarasota 71, Santo Domingo, 10143",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Local 209, Avenida Sarasota 71, 10143 Santo Domingo de Guzmán, Repúbli"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.127,
+          "正确·要求确认": 0.492,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.004,
+          "错误建议": 0.377,
+          "静默错误": 0.0
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.36,
+        "granularity": {
+          "ROUTE": 0.862,
+          "PREMISE_PROXIMITY": 0.123,
+          "PREMISE": 0.011,
+          "LOCALITY": 0.003,
+          "OTHER": 0.001
+        },
+        "median_error_m": 198.9655379382457,
+        "within_500m": 0.586,
+        "ms": 5.935907423999197,
+        "examples": {
+          "错误建议": [
+            [
+              "piso 20, callejón rosario 13, santo domingo, d.n.",
+              "CONFIRM",
+              "ROUTE",
+              "Piso 20, Callejon Rosario 13, Santo Domingo Este, República Dominicana"
+            ],
+            [
+              "Calle 6, # 14, Santiago, Santo Domingo, D.N.",
+              "CONFIRM",
+              "ROUTE",
+              "Calle 6 14, Santiago, República Dominicana"
+            ],
+            [
+              "Calle 8 113, Santo Domingo Este, Santo Domingo, D.N.",
+              "CONFIRM",
+              "ROUTE",
+              "Calle 8 113, Santo Domingo Este, República Dominicana"
+            ],
+            [
+              "Calle 21 de Enero, Santo Domingo de Guzmán",
+              "CONFIRM",
+              "ROUTE",
+              "Calle 21 de Enero, Santo Domingo de Guzmán, República Dominicana"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "Calle Manzana 13 y 14, Municipalité Santo Domingo Oeste, Santo Domingo, D.N.",
+              "FIX",
+              "LOCALITY",
+              "Calle Manzana 13 y 14, Santo Domingo Oeste, República Dominicana"
+            ],
+            [
+              "Cisne 2, Santo Domingo, D.N.",
+              "FIX",
+              "OTHER",
+              ""
+            ],
+            [
+              "Santo Domingo - Yamasá, #, 64, Municipalité Santo Domingo Norte",
+              "FIX",
+              "LOCALITY",
+              "64, Santo Domingo, República Dominicana"
+            ],
+            [
+              "calle mistral oeste 2 municipalité santo domingo norte, santo domingo, d.n.",
+              "FIX",
+              "LOCALITY",
+              "calle mistral oeste municipalité santo domingo norte 2, Santo Domingo,"
+            ]
+          ]
+        }
+      }
+    },
+    "hybrid": {
+      "real": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.125,
+          "正确·要求确认": 0.376,
+          "判 FIX·片区对": 0.015,
+          "判 FIX": 0.056,
+          "错误建议": 0.396,
+          "静默错误": 0.032
+        },
+        "silent_over_1km": 0.023,
+        "wrong_over_1km": 0.336,
+        "granularity": {
+          "ROUTE": 0.596,
+          "PREMISE_PROXIMITY": 0.267,
+          "PREMISE": 0.066,
+          "LOCALITY": 0.058,
+          "OTHER": 0.013
+        },
+        "median_error_m": 1011.9957319148615,
+        "within_500m": 0.397,
+        "ms": 13.59074731200053,
+        "examples": {
+          "错误建议": [
+            [
+              "Residencial Gacela, Santo Domingo",
+              "CONFIRM",
+              "ROUTE",
+              "Residencial Madelta, Santo Domingo Este, República Dominicana"
+            ],
+            [
+              "Plaza granada oriental 2do nivel, Santo Domingo",
+              "CONFIRM",
+              "ROUTE",
+              "Calle Paseo de Granada, Santo Domingo de Guzmán, República Dominicana"
+            ],
+            [
+              "Prol. Av. 27 de Febrero 500, Santo Domingo Oeste, 10904",
+              "CONFIRM",
+              "PREMISE_PROXIMITY",
+              "Avenida 27 de Febrero 500, 10904 Santo Domingo de Guzmán, República Do"
+            ],
+            [
+              "Maria Trinidad Sanchez, San Cristóbal, 91000",
+              "CONFIRM",
+              "ROUTE",
+              "Calle María Trindad Sánchez, 91000 Los Alcarrizos, República Dominican"
+            ]
+          ],
+          "判 FIX": [
+            [
+              "avenida sanvicente, Santo Domingo, 03012",
+              "FIX",
+              "OTHER",
+              "03012, República Dominicana"
+            ],
+            [
+              "Ensanche espaillat, C/Jimani #42 D.N Rep. Dom., Santo Domingo, 11500",
+              "FIX",
+              "LOCALITY",
+              "C/Jimani D.N Rep. Dom 42, 11500 Santo Domingo de Guzmán, República Dom"
+            ],
+            [
+              "Avenida augusto lora #7 proximo a la Fuente Fun, Santiago, 51000",
+              "FIX",
+              "LOCALITY",
+              "Avenida augusto lora proximo a la Fuente Fun 7, 51000 Santo Domingo de"
+            ],
+            [
+              "Linha C 70 Br 364, Los Alcarrizos",
+              "FIX",
+              "LOCALITY",
+              "Linha C Br 364 70, Los Alcarrizos, República Dominicana"
+            ]
+          ],
+          "静默错误": [
+            [
+              "Coronel Fernández Domínguez #11. Sector Landia, Los Alcarrizos, 10803",
+              "ACCEPT",
+              "ROUTE",
+              "Calle Domínguez 11, 10803 Santo Domingo de Guzmán, República Dominican"
+            ],
+            [
+              "Avenida Gustavo Mejía Ricart 12, Santo Domingo, 10121",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Avenida Gustavo Mejía Ricart 12, 10121 Santo Domingo de Guzmán, Repúbl"
+            ],
+            [
+              "18°27'00.8\"N 69°57'20.3\"W\\nSanto Domingo\\nhttps://goo.gl/maps/vkibNkbMspx9YZydA, Santo Dom",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "77CGF22V+3P, 10901 Santo Domingo de Guzmán, República Dominicana"
+            ],
+            [
+              "Av. San Vicente de Paúl 36, Santo Domingo Este, 11901",
+              "ACCEPT",
+              "PREMISE_PROXIMITY",
+              "Avenida San Vicente de Paúl 36, 11901 Santo Domingo Este, República Do"
+            ]
+          ]
+        }
+      },
+      "synthetic": {
+        "n": 1000,
+        "outcomes": {
+          "正确·直接通过": 0.124,
+          "正确·要求确认": 0.48,
+          "判 FIX·片区对": 0.0,
+          "判 FIX": 0.0,
+          "错误建议": 0.396,
+          "静默错误": 0.0
+        },
+        "silent_over_1km": 0.0,
+        "wrong_over_1km": 0.378,
+        "granularity": {
+          "ROUTE": 0.86,
+          "PREMISE_PROXIMITY": 0.127,
+          "PREMISE": 0.013
+        },
+        "median_error_m": 209.97823320597254,
+        "within_500m": 0.573,
+        "ms": 11.940406058000008,
+        "examples": {
+          "错误建议": [
+            [
+              "piso 20, callejón rosario 13, santo domingo, d.n.",
+              "CONFIRM",
+              "ROUTE",
+              "Piso 20, Callejon Rosario 13, Santo Domingo Este, República Dominicana"
+            ],
+            [
+              "Calle 6, # 14, Santiago, Santo Domingo, D.N.",
+              "CONFIRM",
+              "ROUTE",
+              "Calle 6 14, Santiago, República Dominicana"
+            ],
+            [
+              "Calle 8 113, Santo Domingo Este, Santo Domingo, D.N.",
+              "CONFIRM",
+              "ROUTE",
+              "Calle 8 113, Santo Domingo Oeste, República Dominicana"
+            ],
+            [
+              "Calle 21 de Enero, Santo Domingo de Guzmán",
+              "CONFIRM",
+              "ROUTE",
+              "Calle 21 de Enero, Santo Domingo de Guzmán, República Dominicana"
+            ]
+          ]
+        }
+      }
+    }
+  }
+}

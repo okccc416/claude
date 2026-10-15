@@ -39,6 +39,7 @@ LOCALITY_TYPES = ("locality", "sublocality", "sublocality_level_1", "sublocality
                   "neighborhood", "administrative_area_level_2", "administrative_area_level_3")
 STREET_LEVEL_TYPES = ("GEOMETRIC_CENTER", "APPROXIMATE")
 AGREE_M, DISAGREE_M, ELSEWHERE_M = 250.0, 1000.0, 2000.0
+TWIN_NEAR_M, TWIN_FAR_M = 300.0, 5000.0  # 编号道路的同名路：同一个区的其他街区
 NATIONAL_PC_FAR_M = 10000.0  # 全国邮编表的邮编位置离 geo 坐标超过这个距离：二者必有一错
 FINE_PC = {"GB", "IE", "SE", "HU", "AR"}  # 没有官方地址表、但邮编细的市场（其余只用 A 类市场的全国邮编表）
 
@@ -112,6 +113,9 @@ AMAP_LEVEL = {"门牌号": "ROOFTOP", "兴趣点": "ROOFTOP", "单元号": "ROOF
               "道路": "GEOMETRIC_CENTER", "道路交叉路口": "GEOMETRIC_CENTER"}
 
 
+_NUM_STREET_TYPE = re.compile(r"(?:^|-)(?:شارع|ش|طريق|جادة|جاده|سكة|Road|Rd|Street|St|Avenue|Ave|Calle|Jaddah)\.?$", re.I)
+
+
 def _amap(it: dict) -> GeoAddress | None:
     """高德海外地理编码的一条结果。它的 street / number 常拆错：门牌号字段里是类型词、门牌号混进了 street
     （ULICA / 1 MAJA 3、CALLE / 46D 22、Грузинская / улица 2）——这时按 formatted_address 重新拆：末尾的数字是门牌。"""
@@ -135,7 +139,9 @@ def _amap(it: dict) -> GeoAddress | None:
     if num and not re.search(r"\d", num):
         toks = fa_main.replace("_", "/").split()
         house = re.compile(r"^\d+[A-Za-z]?(?:[/\-]\w+)?$")
-        if len(toks) >= 3 and house.match(toks[-1]) and house.match(toks[-2]):  # Baron Ruzettelaan 29 0401：后一个是信箱号
+        # Baron Ruzettelaan 29 0401：后一个是信箱号；但前面是类型词时前一个数字属于路名（شارع 24 14、شارع 3-جادة 2 10）
+        typed = len(toks) >= 3 and _NUM_STREET_TYPE.search(toks[-3])
+        if len(toks) >= 3 and house.match(toks[-1]) and house.match(toks[-2]) and not typed:
             num, street = toks[-2], " ".join(toks[:-2])
         elif len(toks) >= 2 and house.match(toks[-1]):
             num, street = toks[-1], " ".join(toks[:-1])
@@ -192,8 +198,8 @@ def check(eng: Engine, p, g: GeoAddress, cov=None) -> GeoCheck:
     # ---- 门牌
     if not g.number or g.location_type in STREET_LEVEL_TYPES:
         fields["number"] = "MISSING"
-    elif not p.number:
-        fields["number"] = "INFERRED"
+    elif not p.number:  # 原文写了这个号码、只是被当成了单元号（Shop 286 Sh Hamad Ave）：算纠正，请用户确认
+        fields["number"] = "CORRECTED" if f" {number_key(g.number)} " in itxt else "INFERRED"
     else:
         mine = {number_key(v) for v in eng._number_variants(p.number)}
         theirs = {number_key(v) for v in eng._number_variants(g.number)}
@@ -248,6 +254,9 @@ def check(eng: Engine, p, g: GeoAddress, cov=None) -> GeoCheck:
         fields["subpremise"] = "CONFIRMED" if a == b or a.endswith(b) or b.endswith(a) else "CONFLICT"
     elif g.subpremise:
         fields["subpremise"] = "INFERRED"
+    # ---- 编号道路（科威特 شارع 24：同一个区的每个街区各有一条）：附近还有同名路、原文又没写街区 -> 有歧义
+    if g.route and not outside and numbered_only(g.route) and _numbered_twins(eng, g):
+        flags.append("GEO_AMBIGUOUS")
     # ---- 同名道路：别处也有这个门牌，输入里又没有邮编 / 片区能区分
     if fields["number"] in ("CONFIRMED", "CORRECTED") and g.route and fields["postal_code"] != "CONFIRMED" \
             and fields["locality"] != "CONFIRMED" and not outside and _elsewhere(eng, g):
@@ -331,6 +340,13 @@ def _route(eng: Engine, p, g: GeoAddress, itxt: str) -> str:
     if other or score >= 60:
         return "CONFLICT"  # 输入写的是另一条路
     return "INFERRED"  # 输入里没有可以对照的路名（只写了楼名 / 片区）：路名是 geo 推断的
+
+
+def _numbered_twins(eng: Engine, g: GeoAddress) -> bool:
+    """编号道路在 300 米到 5 公里内还有同名的另一条（同一个区的其他街区）。"""
+    ref, m = eng.ref, eng.market
+    ids = set(ref.street_keys.get(" ".join(key(g.route, m).split()), ()))
+    return any(TWIN_NEAR_M < dist_to_street(ref, sid, g.lat, g.lng) <= TWIN_FAR_M for sid in list(ids)[:60])
 
 
 def _elsewhere(eng: Engine, g: GeoAddress) -> bool:

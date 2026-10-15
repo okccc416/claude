@@ -8,17 +8,17 @@
 | geo 返回 | 样本 | 直接通过 | 误放行 | 最终对 | 只用 geo | 主要原因码 |
 |---|---|---|---|---|---|---|
 | 正确 | 1020 | 95.1% | 0.0% | 100.0% | 100% | GEO_CONFIRMED_BY_ENGINE 94%, GEO_VERIFIED 93%, GEO_REJECTED 2%, GEO_POSTCODE_FAR 1%, GEO_ROUTE_CORRECTED 1%, GEO_AMBIGUOUS 1%, GEO_ROUTE_CONFLICT 0% |
-| 门牌吸附错 | 880 | 80.6% | 0.0% | 99.9% | 0% | GEO_NUMBER_CONFLICT 100%, GEO_REJECTED 100%, GEO_POSTCODE_FAR 7%, GEO_ROUTE_CONFLICT 0%, GEO_NUMBER_CORRECTED 0% |
-| 同名路选错 | 222 | 75.2% | 0.0% | 99.5% | 0% | GEO_REJECTED 100%, GEO_POSTCODE_FAR 93%, GEO_NUMBER_CONFLICT 80%, GEO_AMBIGUOUS 14% |
-| 相邻路选错 | 964 | 82.3% | 0.0% | 100.0% | 0% | GEO_REJECTED 100%, GEO_ROUTE_CONFLICT 99%, GEO_NUMBER_CONFLICT 99%, GEO_POSTCODE_FAR 2% |
-| 只到道路级 | 1020 | 80.4% | 0.0% | 100.0% | 0% | GEO_STREET_LEVEL_ONLY 100%, GEO_REJECTED 100%, GEO_POSTCODE_FAR 4% |
+| 门牌吸附错 | 880 | 80.6% | 0.0% | 99.9% | 0% | GEO_NUMBER_CONFLICT 100%, GEO_REJECTED 100%, GEO_POSTCODE_FAR 7%, GEO_ROUTE_CONFLICT 0%, GEO_AMBIGUOUS 0%, GEO_NUMBER_CORRECTED 0% |
+| 同名路选错 | 222 | 75.2% | 0.0% | 99.5% | 0% | GEO_REJECTED 100%, GEO_POSTCODE_FAR 93%, GEO_NUMBER_CONFLICT 80%, GEO_AMBIGUOUS 15% |
+| 相邻路选错 | 964 | 82.3% | 0.0% | 100.0% | 0% | GEO_REJECTED 100%, GEO_ROUTE_CONFLICT 99%, GEO_NUMBER_CONFLICT 99%, GEO_POSTCODE_FAR 2%, GEO_AMBIGUOUS 0% |
+| 只到道路级 | 1020 | 80.4% | 0.0% | 100.0% | 0% | GEO_STREET_LEVEL_ONLY 100%, GEO_REJECTED 100%, GEO_POSTCODE_FAR 4%, GEO_AMBIGUOUS 0% |
 | 没有结果 | 1020 | 80.4% | 0.0% | 100.0% | 0% | GEO_NO_RESULT 100% |
 
 **只有核对层**（假装本引擎什么都没找到：参考库没覆盖的地方，只能靠核对层把关）：
 
 | geo 返回 | 样本 | 直接通过 | 误放行 | 请用户确认 | 请用户补充 | 最终对 |
 |---|---|---|---|---|---|---|
-| 正确 | 1020 | 93.4% | 0.0% | 6.4% | 0.2% | 99.8% |
+| 正确 | 1020 | 93.2% | 0.0% | 6.6% | 0.2% | 99.8% |
 | 门牌吸附错 | 880 | 0.0% | 0.0% | 0.1% | 99.9% | 0.0% |
 | 同名路选错 | 222 | 0.0% | 0.0% | 19.8% | 80.2% | 0.0% |
 | 相邻路选错 | 964 | 0.0% | 0.0% | 0.0% | 100.0% | 0.0% |
@@ -41,7 +41,7 @@
 | 捷克（CZ） | 60 | 95% | 0.0%（113 条） |
 | 葡萄牙（PT） | 60 | 75% | 0.0%（109 条） |
 | 巴西（BR） | 60 | 97% | 0.0%（123 条） |
-| 墨西哥（MX） | 60 | 90% | 0.0%（129 条） |
+| 墨西哥（MX） | 60 | 87% | 0.0%（129 条） |
 | 智利（CL） | 60 | 97% | 0.0%（137 条） |
 | 澳大利亚（AU） | 60 | 97% | 0.0%（146 条） |
 | 加拿大（CA） | 60 | 93% | 0.0%（118 条） |

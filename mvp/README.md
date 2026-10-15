@@ -1,6 +1,6 @@
 # 地址校验（Address Validation）：45 个市场（Google AV 覆盖的全部国家 / 地区，美国除外，外加中东和东南亚）
 
-> 多市场部分（新加坡以外的 44 个市场：澳洲、新西兰、日本、印度、美洲 7 国、欧洲 25 国、中东 2 国、东南亚 5 国）的架构、评测与"规则 vs AI"结论见 **[docs/13](../docs/13-multi-market-product.md)**；下文前半部分是新加坡引擎。
+> 多市场部分（新加坡以外的 49 个市场：澳洲、新西兰、日本、印度、哈萨克斯坦、美洲 8 国、欧洲 25 国、中东 5 国、埃及、东南亚 5 国）的架构、评测与"规则 vs AI"结论见 **[docs/13](../docs/13-multi-market-product.md)**；下文前半部分是新加坡引擎。
 
 一个可在本地运行的地址校验服务（新加坡引擎）：输入任意写法的新加坡地址（可以混着电话、收件人、配送备注、本地缩写、粘连和错拼），返回**结论**（ACCEPT / CONFIRM / FIX / CONFIRM_ADD_SUBPREMISES）、**标准化地址**、**逐组件判断**、**原因码**和坐标，并把电话 / 邮箱 / 订单号 / 收件人 / 公司名 / 备注单独拆出来放在 `nonAddressInfo` 里。接口字段语义对齐 Google Address Validation API，并带上 [05 文档](../docs/05-prd-and-roadmap.md) 规划的扩展字段（严格度档位、原因码、纠错前粒度、改动幅度、校验码、候选地址）。
 
@@ -48,10 +48,10 @@ python scripts/profile_countries.py   # 澳洲 / 中东 / 东南亚 / 欧洲 17 
 pytest -q                             # 111 个单元测试（新加坡用真实数据夹具，多市场用微型悉尼 / 迪拜 / 利雅得 / 布拉格 / 波哥大 / 东京夹具，无需下载）
 ```
 
-多市场（44 个市场，见 [docs/13](../docs/13-multi-market-product.md)）：
+多市场（49 个市场，见 [docs/13](../docs/13-multi-market-product.md)）：
 
 ```bash
-python scripts/fetch_markets.py           # 下载 44 个市场试点城市的 Overture 数据（道路线形、片区边界、POI、A 类官方地址点），约 3GB
+python scripts/fetch_markets.py           # 下载 49 个市场试点城市的 Overture 数据（道路线形、片区边界、POI、A 类官方地址点），约 3GB
 python scripts/fetch_osm_addresses.py     # OSM 门牌 + 道路编号（BBBike / openstreetmap.fr 城市摘录）
 python scripts/fetch_extra_addresses.py   # 政府开放地址：波哥大门牌牌号、索非亚地址；英国邮编中心点（只用于估计标注噪声）
 python scripts/build_market_reference.py  # 构建参考库（3 路并行约 25 分钟，澳洲最大）
@@ -163,7 +163,7 @@ mvp/
 │   ├── router.py       按 regionCode 分发：SG -> 新加坡引擎，其余 -> 多市场引擎（参考数据按需加载）
 │   ├── server.py       本地 HTTP 服务 + 演示页面（可选国家）
 │   └── intl/           多市场引擎（docs/13）
-│       ├── markets.py      44 个市场的配置：类别、试点城市范围、邮编格式与识别规则、门牌位置、类型词习惯、全城名 / 大区名
+│       ├── markets.py      49 个市场的配置：类别、试点城市范围、邮编格式与识别规则、门牌位置、类型词习惯、全城名 / 大区名
 │       ├── text.py         多语种规范化：去声调、阿拉伯文字形、泰文分词、缩写展开、人名缩写、转写骨架
 │       ├── reference.py    参考库：道路（沿线形取点、同名路段合并）、片区边界、POI、A 类官方地址点
 │       ├── parse.py        规则解析：噪声 / 编码识别、邮编、单元、道路 / 片区 / 楼宇匹配、门牌

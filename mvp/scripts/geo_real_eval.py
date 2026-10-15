@@ -3,7 +3,7 @@
 标准答案按距离：geo（或最终结论）的坐标离目标 ≤ 100 米算对，> 500 米算错，中间算"同街附近"。
 比较两种用法：
   直接用 geo   geo 有结果就采用
-  geo + 核对层 本方案的市场（44 个）走 validate_with_geo（参考库 + 本引擎；试点城市以外走范围守卫）；
+  geo + 核对层 本方案的市场走 validate_with_geo（参考库 + 本引擎；试点城市以外走范围守卫）；
               其余国家走 geo_free.validate_free（只用原文 + 全国地名表）
 关心的数字：直接通过（ACCEPT）里错的有多少（静默错误）、geo 错的被拦下多少、geo 对的放行多少。
 
@@ -219,7 +219,7 @@ def main() -> None:
                 "complete": len(comp), "standard_ok": len(std), "need_pc": len(need_pc), "pc_filled": len(pc_filled)}
 
     configs = {}
-    for name, sel in (("全部", lambda x: True), ("本方案 44 个市场", lambda x: x["mode"] != "no_reference"),
+    for name, sel in (("全部", lambda x: True), (f"本方案 {len(MARKETS)} 个市场", lambda x: x["mode"] != "no_reference"),
                       ("其中试点城市内", lambda x: x["mode"] == "reference"),
                       ("其中试点城市外", lambda x: x["mode"] == "outside"),
                       ("没有参考库的国家", lambda x: x["mode"] == "no_reference")):

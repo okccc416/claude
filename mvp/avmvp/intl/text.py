@@ -30,6 +30,8 @@ _CYRILLIC = re.compile(r"[Ѐ-ӿ]")
 _CYR = dict(zip("АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЬЮЯЁЫЭ",
                 ["A", "B", "V", "G", "D", "E", "ZH", "Z", "I", "Y", "K", "L", "M", "N", "O", "P", "R", "S", "T", "U",
                  "F", "H", "TS", "CH", "SH", "SHT", "A", "Y", "YU", "YA", "YO", "Y", "E"]))
+# 哈萨克文特有字母（Қабанбай батыр = Kabanbay batyr、Әл-Фараби = Al-Farabi）
+_CYR.update(dict(zip("ӘҒҚҢӨҰҮҺІ", ["A", "G", "K", "N", "O", "U", "U", "H", "I"])))
 _CYR.update({k.lower(): v.lower() for k, v in _CYR.items()})
 _CYR_MAP = str.maketrans(_CYR)
 # NFD 分解不了的拉丁字母
@@ -121,6 +123,13 @@ ABBREV: dict[str, dict[str, str]] = {
            "BOULEVARD": "BULEVARD", "PL": "PLOSHTAD", "ZK": "ZHK", "ZH": "ZHK", "KV": "KVARTAL",
            "ST": "ULITSA", "STREET": "ULITSA", "SQ": "PLOSHTAD", "SQUARE": "PLOSHTAD", "SV": "SVETA"},
     "JA": {},
+    # 俄文 / 哈萨克文（转写后）：ул. / пр. / пер. / мкр. / д. / кв.；бульвар 转写成 BULYVAR、площадь 转写成 PLOSHTADY
+    "RU": {"UL": "ULITSA", "ULICA": "ULITSA", "ULITCA": "ULITSA", "ULTSA": "ULITSA", "PR": "PROSPEKT",
+           "PROSP": "PROSPEKT", "PRT": "PROSPEKT", "PER": "PEREULOK", "PEREUL": "PEREULOK", "BULYVAR": "BULVAR",
+           "BUL": "BULVAR", "SH": "SHOSSE", "PL": "PLOSHTADY", "NAB": "NABEREZHNAYA", "MKR": "MIKRORAYON",
+           "MKRN": "MIKRORAYON", "MIKR": "MIKRORAYON", "MKRL": "MIKRORAYON", "KV": "KVARTIRA", "KOSH": "KOSHESI",
+           "DANG": "DANGYLY", "AVENUE": "PROSPEKT", "AVE": "PROSPEKT", "STREET": "ULITSA", "STR": "ULITSA",
+           "ST": "ULITSA"},
 }
 # 比利时：法文 + 荷兰文
 ABBREV["BE"] = {**ABBREV["NL"], **ABBREV["FR"]}
@@ -167,11 +176,14 @@ TYPE_WORDS: dict[str, set[str]] = {
     "HR": {"ULICA", "TRG", "AVENIJA", "CESTA", "PUT", "PROLAZ", "ODVOJAK", "OBALA", "PRILAZ", "STUBE"},
     "BG": {"ULITSA", "BULEVARD", "PLOSHTAD", "ZHK", "KVARTAL"},
     "JA": set(),
+    "RU": {"ULITSA", "PROSPEKT", "PEREULOK", "BULVAR", "SHOSSE", "PLOSHTADY", "NABEREZHNAYA", "PROEZD", "TUPIK",
+           "ALLEYA", "TRAKT", "KOSHESI", "KOSHE", "DANGYLY", "ALANY", "TUYYGY"},
     "AREA": {"DISTRICT", "SUBDISTRICT", "CITY", "حي", "KELURAHAN", "KECAMATAN", "แขวง", "เขต", "ตำบล", "อำเภอ",
              "PHUONG", "QUAN", "HUYEN", "TAMAN", "BANDAR", "KAMPUNG", "BARANGAY", "BRGY", "BGY",
              "COLONIA", "COL", "BARRIO", "URBANIZACION", "FRACCIONAMIENTO", "BAIRRO", "JARDIM", "VILA", "LOCALIDAD",
              "COMUNA", "ALCALDIA", "DELEGACION", "QUARTIER", "ARRONDISSEMENT", "BEZIRK", "KERULET", "DZIELNICA",
-             "QUARTIERE", "MUNICIPIO", "ZHK", "KVARTAL", "LINNAOSA", "RAJONS", "SENIUNIJA"},
+             "QUARTIERE", "MUNICIPIO", "ZHK", "KVARTAL", "LINNAOSA", "RAJONS", "SENIUNIJA",
+             "MIKRORAYON", "RAYON", "AUDANY", "SHAGYN", "قطعه", "منطقه", "ENSANCHE", "SECTOR", "RESIDENCIAL", "REPARTO"},
 }
 TYPE_WORDS["BE"] = TYPE_WORDS["FR"] | TYPE_WORDS["NL"]
 MARKET_LANG = {"AU": "EN", "PH": "EN", "AE": "AR", "SA": "AR", "DE": "DE", "FR": "FR", "NL": "NL", "MY": "MY",
@@ -180,8 +192,8 @@ MARKET_LANG = {"AU": "EN", "PH": "EN", "AE": "AR", "SA": "AR", "DE": "DE", "FR":
                "CL": "ES", "CO": "ES", "ES": "ES", "BR": "PT", "PT": "PT", "IT": "IT", "AT": "DE", "CH": "DE",
                "LU": "FR", "BE": "BE", "DK": "DA", "NO": "NO", "SE": "SV", "FI": "FI", "EE": "ET", "LV": "LV",
                "LT": "LT", "PL": "PL", "CZ": "CS", "SK": "SK", "HU": "HU", "SI": "SL", "HR": "HR", "BG": "BG",
-               "JP": "JA"}
-EN_BASE = {"PR", "IN"}  # 这些市场在本语种缩写之外，也用英文缩写（Ave. / St. / Apt.）
+               "JP": "JA", "KW": "AR", "BH": "AR", "EG": "AR", "KZ": "RU", "DO": "ES"}
+EN_BASE = {"PR", "IN", "KZ"}  # 这些市场在本语种缩写之外，也用英文缩写（Ave. / St. / Apt.）
 # 个别市场与语种默认不同的类型词：智利的 Carrera 是人名（Avenida José Miguel Carrera），不是哥伦比亚式的道路类型
 TYPE_REMOVE: dict[str, set[str]] = {"CL": {"CARRERA", "TRANSVERSAL", "DIAGONAL"}, "MX": {"CARRERA"},
                                     "AR": {"CARRERA"}, "PR": {"CARRERA"}}

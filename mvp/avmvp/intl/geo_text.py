@@ -117,6 +117,27 @@ def _hit(w: str, pool: list[str], skel: set[str], blob: str) -> str:
     return "fuzzy" if len(sk) >= 3 and sk in skel else ""
 
 
+# 编号道路的类型词（阿拉伯文 / 英文 / 西文）：按"类型 + 号码"成对比较（شارع 3 جادة 6 ≠ شارع 6 جادة 3）
+_NUM_TYPES = {"شارع": "ST", "ش": "ST", "STREET": "ST", "ST": "ST", "STR": "ST", "طريق": "RD", "ROAD": "RD",
+              "RD": "RD", "جاده": "LN", "ج": "LN", "AVENUE": "AV", "AVE": "AV", "AV": "AV", "CALLE": "CL", "CL": "CL",
+              "CLL": "CL"}
+_NUM_SKIP = {"NO", "رقم", "NUMBER", "NR"}
+
+
+def _num_pairs(words: list[str]) -> list[tuple[str, str]]:
+    out = []
+    for i, w in enumerate(words):
+        t = _NUM_TYPES.get(w)
+        if not t:
+            continue
+        j = i + 1
+        while j < len(words) and words[j] in _NUM_SKIP:
+            j += 1
+        if j < len(words) and re.fullmatch(r"\d+[A-Z]?", words[j]):
+            out.append((t, words[j]))
+    return out
+
+
 def route_match(route: str, text: str, pc_re: re.Pattern | None = None) -> str:
     """geo 路名 vs 原文道路段：CONFIRMED / CORRECTED / CONFLICT / INFERRED（原文没写路名）。"""
     words, name, locality = street_part(text, pc_re)
@@ -128,7 +149,16 @@ def route_match(route: str, text: str, pc_re: re.Pattern | None = None) -> str:
     if g_nums and not all(n in all_nums for n in g_nums):
         return "CONFLICT"  # 编号道路号码不一致（海湾国家 Road / Block 号写在别的段里也算）
     if not g_alpha:
-        return "CONFIRMED" if g_nums else "INFERRED"
+        if not g_nums:
+            return "INFERRED"
+        rp = _num_pairs(norm(route).split())
+        tp = _num_pairs(norm(pc_re.sub(" ", fold(text)) if pc_re else text).split())
+        if rp and tp:  # 编号道路：每个"类型 + 号码"都要在原文里；号码在、类型不同（Avenue / Road 2833）算纠正
+            nums = {n for _, n in tp}
+            if any(x not in tp and x[1] not in nums for x in rp):
+                return "CONFLICT"  # 7، شارع 10 ≠ شارع 7（门牌和街道号对调）
+            return "CONFIRMED" if all(x in tp for x in rp) else "CORRECTED"
+        return "CONFIRMED"
     if not i_alpha:
         return "INFERRED"
     si, sg = script_of(" ".join(i_alpha)), script_of(" ".join(g_alpha))

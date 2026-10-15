@@ -47,6 +47,9 @@ SOURCES = {
     "VN": [BBBIKE.format("Saigon")], "ID": [OSMFR.format("asia/indonesia/jakarta")],
     "PH": [OSMFR.format("asia/philippines/metro_manila")], "AE": [OSMFR.format("asia/united_arab_emirates")],
     "SA": [OSMFR.format("asia/saudi_arabia")],
+    "KW": [OSMFR.format("asia/kuwait")], "BH": [OSMFR.format("asia/bahrain")], "EG": [OSMFR.format("africa/egypt")],
+    "DO": [OSMFR.format("central-america/dominican_republic")],
+    # 哈萨克斯坦：openstreetmap.fr / BBBike 没有摘录，Geofabrik（asia/kazakhstan）在这台机器上连不上，暂缺
 }
 POI_KEYS = ("shop", "amenity", "office", "tourism", "craft", "leisure", "healthcare", "club")
 

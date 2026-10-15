@@ -43,7 +43,10 @@ STREET_ABBR = {"STREET": ["St", "St."], "ROAD": ["Rd", "Rd."], "AVENUE": ["Ave",
                "LARGO": ["Lg."], "ALAMEDA": ["Al."], "PRAÇA": ["Pç."], "VIALE": ["V.le"], "CORSO": ["C.so"],
                "PIAZZA": ["P.za"], "ULICA": ["ul."], "ALEJA": ["al."], "TÄNAV": ["tn"], "GATVĖ": ["g."],
                "PROSPEKTAS": ["pr."], "NÁMĚSTÍ": ["nám."], "NÁMESTIE": ["nám."], "UTCA": ["u."], "KÖRÚT": ["krt."],
-               "CESTA": ["c."], "GATE": ["gt."], "ULITSA": ["ul."]}
+               "CESTA": ["c."], "GATE": ["gt."], "ULITSA": ["ul."],
+               # 阿拉伯文（科威特 ش 7、巴林 طريق / Rd）、俄文 / 哈萨克文
+               "شارع": ["ش"], "ROAD": ["Rd", "Rd.", "Rd No"], "УЛИЦА": ["ул.", "ул"], "ПРОСПЕКТ": ["пр.", "пр-т"],
+               "МИКРОРАЙОН": ["мкр.", "мкр"], "ПЕРЕУЛОК": ["пер."], "КӨШЕСІ": ["көш."], "ДАҢҒЫЛЫ": ["даңғ."]}
 
 
 @dataclass
@@ -105,7 +108,7 @@ class Renderer:
     # ------------------------------------------------------------------ 组件
     def _street_name(self, s) -> str:
         names = s.names
-        if self.market in ("AE", "SA", "TH") and len(names) > 1 and self.rng.random() < 0.5:
+        if self.market in ("AE", "SA", "TH", "KW", "BH", "EG", "KZ") and len(names) > 1 and self.rng.random() < 0.5:
             name = self.rng.choice(names[1:])  # 英文 / 其他语种写法
         else:
             name = names[0]
@@ -241,6 +244,9 @@ class Renderer:
             if num:
                 prefix = rng.choice(["", "", "No. "]) if m in ("MY", "PH") else ("Building " if m == "SA" and
                                                                                 rng.random() < 0.3 else "")
+                if m in ("KW", "BH", "EG") and rng.random() < 0.5:  # منزل 17 / Building 1271 / Villa 803
+                    prefix = rng.choice({"KW": ["منزل ", "House ", "مبنى "], "BH": ["Building ", "Bldg ", "Villa ", "مبنى "],
+                                         "EG": ["عمارة ", "رقم ", "منزل "]}[m])
                 if prefix:
                     seq.append((prefix.strip(), "O"))
                 seq.append((num, "NUM"))

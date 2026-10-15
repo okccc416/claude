@@ -1365,13 +1365,13 @@
     "confirm": 4,
     "fix": 0,
     "geo_ok": 60,
-    "r:GEO_VERIFIED": 54,
+    "r:GEO_VERIFIED": 52,
     "r:GEO_CONFIRMED_BY_ENGINE": 56,
     "blind:n": 60,
     "blind:final_ok": 60,
-    "blind:accept": 54,
+    "blind:accept": 52,
     "blind:false_accept": 0,
-    "blind:confirm": 6,
+    "blind:confirm": 8,
     "blind:fix": 0
    },
    "门牌吸附错": {
@@ -1390,7 +1390,8 @@
     "blind:false_accept": 0,
     "blind:confirm": 0,
     "blind:fix": 56,
-    "r:GEO_POSTCODE_FAR": 6
+    "r:GEO_POSTCODE_FAR": 6,
+    "r:GEO_AMBIGUOUS": 2
    },
    "同名路选错": {
     "n": 17,
@@ -1409,7 +1410,7 @@
     "blind:false_accept": 0,
     "blind:confirm": 2,
     "blind:fix": 15,
-    "r:GEO_AMBIGUOUS": 1
+    "r:GEO_AMBIGUOUS": 3
    },
    "相邻路选错": {
     "n": 56,
@@ -1427,7 +1428,8 @@
     "blind:accept": 0,
     "blind:false_accept": 0,
     "blind:confirm": 0,
-    "blind:fix": 56
+    "blind:fix": 56,
+    "r:GEO_AMBIGUOUS": 1
    },
    "只到道路级": {
     "n": 60,
@@ -1445,7 +1447,8 @@
     "blind:false_accept": 0,
     "blind:confirm": 0,
     "blind:fix": 60,
-    "r:GEO_POSTCODE_FAR": 3
+    "r:GEO_POSTCODE_FAR": 3,
+    "r:GEO_AMBIGUOUS": 2
    },
    "没有结果": {
     "n": 60,
@@ -1554,7 +1557,8 @@
     "blind:false_accept": 0,
     "blind:confirm": 0,
     "blind:fix": 60,
-    "r:GEO_POSTCODE_FAR": 1
+    "r:GEO_POSTCODE_FAR": 1,
+    "r:GEO_AMBIGUOUS": 1
    },
    "没有结果": {
     "n": 60,
@@ -1761,7 +1765,8 @@
     "blind:accept": 0,
     "blind:false_accept": 0,
     "blind:confirm": 0,
-    "blind:fix": 53
+    "blind:fix": 53,
+    "r:GEO_AMBIGUOUS": 1
    },
    "只到道路级": {
     "n": 60,

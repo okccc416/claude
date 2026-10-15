@@ -38,7 +38,7 @@
    "real_outside": 0,
    "synth_outside": 0,
    "real_inside": 586,
-   "synth_inside": 241
+   "synth_inside": 242
   },
   "SA": {
    "real": 600,
@@ -46,7 +46,7 @@
    "real_outside": 2,
    "synth_outside": 2,
    "real_inside": 594,
-   "synth_inside": 271
+   "synth_inside": 272
   },
   "MY": {
    "real": 600,
@@ -94,7 +94,7 @@
    "real_outside": 2,
    "synth_outside": 0,
    "real_inside": 598,
-   "synth_inside": 263
+   "synth_inside": 264
   },
   "MX": {
    "real": 600,
@@ -150,7 +150,7 @@
    "real_outside": 1,
    "synth_outside": 0,
    "real_inside": 599,
-   "synth_inside": 264
+   "synth_inside": 260
   },
   "IE": {
    "real": 600,
@@ -158,7 +158,7 @@
    "real_outside": 0,
    "synth_outside": 0,
    "real_inside": 599,
-   "synth_inside": 252
+   "synth_inside": 253
   },
   "BE": {
    "real": 600,
@@ -334,7 +334,7 @@
    "real_outside": 1,
    "synth_outside": 0,
    "real_inside": 598,
-   "synth_inside": 196
+   "synth_inside": 205
   },
   "JP": {
    "real": 600,
@@ -344,13 +344,53 @@
    "real_inside": 584,
    "synth_inside": 263
   },
+  "KW": {
+   "real": 600,
+   "synth": 300,
+   "real_outside": 0,
+   "synth_outside": 0,
+   "real_inside": 578,
+   "synth_inside": 256
+  },
+  "BH": {
+   "real": 600,
+   "synth": 300,
+   "real_outside": 0,
+   "synth_outside": 0,
+   "real_inside": 558,
+   "synth_inside": 169
+  },
+  "EG": {
+   "real": 600,
+   "synth": 300,
+   "real_outside": 2,
+   "synth_outside": 0,
+   "real_inside": 586,
+   "synth_inside": 268
+  },
+  "KZ": {
+   "real": 600,
+   "synth": 300,
+   "real_outside": 1,
+   "synth_outside": 1,
+   "real_inside": 594,
+   "synth_inside": 240
+  },
+  "DO": {
+   "real": 600,
+   "synth": 300,
+   "real_outside": 0,
+   "synth_outside": 0,
+   "real_inside": 596,
+   "synth_inside": 243
+  },
   "IN": {
    "real": 600,
    "synth": 300,
    "real_outside": 1,
    "synth_outside": 0,
    "real_inside": 599,
-   "synth_inside": 252
+   "synth_inside": 243
   }
  },
  "examples": {
@@ -699,6 +739,41 @@
     "inside": []
    }
   ],
+  "KW": [],
+  "BH": [],
+  "EG": [
+   {
+    "input": "El Haram St, Al Haram",
+    "outside": [
+     "place:AL HARAM"
+    ],
+    "inside": []
+   },
+   {
+    "input": "المنطقة الصناعية, بورسعيد",
+    "outside": [
+     "place:بورسعيد"
+    ],
+    "inside": []
+   }
+  ],
+  "KZ": [
+   {
+    "input": "Төле Би көшесі 57, Байзақ ауданы, 080100",
+    "outside": [
+     "place:BAYZAK AUDANY"
+    ],
+    "inside": []
+   },
+   {
+    "input": "улица Байтерек, Тараз, Енбекшинский район Шымкент",
+    "outside": [
+     "place:TARAZ"
+    ],
+    "inside": []
+   }
+  ],
+  "DO": [],
   "IN": [
    {
     "input": "Opp. Veterinary Hospital, Beside Fatema Clinic, Dr Sheikh Bunker Colony, Kamptee, Mumbai, 441001",
