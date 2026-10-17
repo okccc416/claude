@@ -129,6 +129,9 @@ def test_text_normalization():
     assert key("١٢ شارع", "AE").startswith("12")  # 阿拉伯-印度数字
     assert core_key("Jalan Ampang", "MY", "street") == core_key("Jln Ampang", "MY", "street") == "AMPANG"
     assert key("شارع الوصل", "AE") == key("شارع الوصل", "AE")  # 阿拉伯文字母统一后稳定
+    # 澳新官方路类型缩写和门址库里的截断写法；别的英文市场不受影响
+    assert key("12 Hibiscus Cir", "AU") == "12 HIBISCUS CIRCLE" and key("3 Lilly Clos", "AU") == "3 LILLY CLOSE"
+    assert key("Belgrave Espl", "NZ") == "BELGRAVE ESPLANADE" and key("Belgrave Espl", "GB") == "BELGRAVE ESPL"
 
 
 def test_noise_and_codes_are_separated():

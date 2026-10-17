@@ -136,6 +136,30 @@ ABBREV["BE"] = {**ABBREV["NL"], **ABBREV["FR"]}
 # 只在个别市场成立的缩写（优先于语种缩写）：哥伦比亚地址表把 Sur / Este / Norte 写成 S / E / N（CL 18 S = Calle 18 Sur）
 MARKET_ABBREV: dict[str, dict[str, str]] = {"CO": {"S": "SUR", "E": "ESTE", "N": "NORTE", "OE": "OESTE", "AU": "AUTOPISTA"},
                                              "AR": {"CABA": "CIUDAD AUTONOMA DE BUENOS AIRES"}}
+# 澳新官方路类型缩写（Australia Post / G-NAF；只收不会和普通词撞的写法），CLOS / GLAD 是门址库里常见的 CLOSE / GLADE 截断写法
+_AU_TYPES = {
+    "ACCS": "ACCESS", "ALLY": "ALLEY", "ALWY": "ALLEYWAY", "AMBL": "AMBLE", "APP": "APPROACH", "ARC": "ARCADE",
+    "BCH": "BEACH", "BDGE": "BRIDGE", "BDWY": "BROADWAY", "BRCE": "BRACE", "BRK": "BREAK", "BYPA": "BYPASS",
+    "BYWY": "BYWAY", "CAUS": "CAUSEWAY", "CTR": "CENTRE", "CNWY": "CENTREWAY", "CIR": "CIRCLE", "CLT": "CIRCLET",
+    "CRCS": "CIRCUS", "CLDE": "COLONNADE", "CMMN": "COMMON", "CPS": "COPSE", "CSO": "CORSO", "CTYD": "COURTYARD",
+    "CRST": "CREST", "CRSS": "CROSS", "CRSG": "CROSSING", "CRD": "CROSSROAD", "CUWY": "CRUISEWAY", "CTTG": "CUTTING",
+    "DEVN": "DEVIATION", "DSTR": "DISTRIBUTOR", "DRWY": "DRIVEWAY", "DVWY": "DRIVEWAY", "ENT": "ENTRANCE",
+    "ESPL": "ESPLANADE", "EXTN": "EXTENSION", "FAWY": "FAIRWAY", "FTRK": "FIRE TRACK", "FITR": "FIRETRAIL",
+    "FOLW": "FOLLOW", "FTWY": "FOOTWAY", "FSHR": "FORESHORE", "FRTG": "FRONTAGE", "FWY": "FREEWAY", "GDN": "GARDEN",
+    "GTE": "GATE", "GTES": "GATES", "GLD": "GLADE", "GRA": "GRANGE", "GRND": "GROUND", "GLY": "GULLY",
+    "HRD": "HIGHROAD", "INTG": "INTERCHANGE", "JNC": "JUNCTION", "LDG": "LANDING", "LNWY": "LANEWAY",
+    "LKT": "LOOKOUT", "MNDR": "MEANDER", "MWY": "MOTORWAY", "OTLK": "OUTLOOK", "PKLD": "PARKLANDS",
+    "PHWY": "PATHWAY", "PIAZ": "PIAZZA", "PLAT": "PLATEAU", "PLZA": "PLAZA", "PKT": "POCKET", "PNT": "POINT",
+    "PROM": "PROMENADE", "QDGL": "QUADRANGLE", "QDRT": "QUADRANT", "QY": "QUAY", "QYS": "QUAYS", "RMBL": "RAMBLE",
+    "RNGE": "RANGE", "RCH": "REACH", "RTT": "RETREAT", "RGWY": "RIDGEWAY", "ROWY": "RIGHT OF WAY", "RVR": "RIVER",
+    "RVWY": "RIVERWAY", "RVRA": "RIVIERA", "RDS": "ROADS", "RDSD": "ROADSIDE", "RDWY": "ROADWAY", "RNDE": "RONDE",
+    "RSBL": "ROSEBOWL", "RTY": "ROTARY", "RND": "ROUND", "RTE": "ROUTE", "SWY": "SERVICE WAY", "SDNG": "SIDING",
+    "SLPE": "SLOPE", "SND": "SOUND", "STRS": "STAIRS", "SHWY": "STATE HIGHWAY", "STPS": "STEPS", "STRA": "STRAND",
+    "STRP": "STRIP", "SBWY": "SUBWAY", "THOR": "THOROUGHFARE", "TLWY": "TOLLWAY", "TWRS": "TOWERS", "TRK": "TRACK",
+    "TRL": "TRAIL", "TKWY": "TRUNKWAY", "UPAS": "UNDERPASS", "VDCT": "VIADUCT", "VLLS": "VILLAS", "VSTA": "VISTA",
+    "WKWY": "WALKWAY", "WHRF": "WHARF", "APPR": "APPROACH", "GLN": "GLEN", "INLT": "INLET", "RDG": "RIDGE",
+    "VW": "VIEW", "CLOS": "CLOSE", "GLAD": "GLADE"}
+MARKET_ABBREV["AU"] = MARKET_ABBREV["NZ"] = _AU_TYPES
 # 道路 / 片区的类型词：核心键里去掉（写没写都能匹配上）
 TYPE_WORDS: dict[str, set[str]] = {
     "EN": {"STREET", "ROAD", "AVENUE", "DRIVE", "PLACE", "LANE", "CRESCENT", "COURT", "PARADE", "HIGHWAY",

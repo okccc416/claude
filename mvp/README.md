@@ -200,6 +200,7 @@ mvp/
 │   ├── evaluate_markets.py        多市场评测（真实商户地址 + 合成地址，规则 / 机器学习 / 混合）
 │   ├── fetch_gazetteer.py         下载全国地名 / 邮编表（试点范围守卫用）
 │   ├── fetch_national.py          下载全国门址库（试点城市以外的门牌级验真用；--reindex 只重建索引）
+│   ├── base_table_health.py       客户门址底表体检 + 补齐（逐条对照全国门址库，补 suburb / 邮编）
 │   ├── fetch_address_formats.py   下载 Google 地址格式元数据（响应对齐 Google AV 用）
 │   ├── coverage_eval.py           试点范围守卫评测（开发集误判率 / 线上查询分布）
 │   ├── geo_real_eval.py           geo 服务真实返回评测（核对层，按目标门址坐标判对错）

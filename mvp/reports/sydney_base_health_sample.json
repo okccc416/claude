@@ -1,0 +1,2117 @@
+{
+ "official_rows_in_box": 3199859,
+ "counts": {
+  "n": 50000,
+  "match_30m": 48285,
+  "unit_rows": 14896,
+  "unit_found": 14106,
+  "street_ok_number_missing": 833,
+  "match_30_500m": 495,
+  "street_not_found": 145,
+  "suffix_differs": 63,
+  "lot_only": 98,
+  "match_far_500m+": 50,
+  "street_elsewhere": 20,
+  "unparsed": 11
+ },
+ "diag": {
+  "range_contains": 292,
+  "nm_other_number_30m": 505,
+  "nf_route_number": 34,
+  "nm_nothing_30m": 251,
+  "lot_has_official_number_30m": 84,
+  "nm_letter_suffix_only": 77
+ },
+ "by_id_format": {
+  "other": {
+   "match_30m": 30780,
+   "n": 31725,
+   "street_ok_number_missing": 486,
+   "match_30_500m": 238,
+   "street_not_found": 58,
+   "lot_only": 97,
+   "match_far_500m+": 37,
+   "unparsed": 10,
+   "suffix_differs": 8,
+   "street_elsewhere": 11
+  },
+  "uuid": {
+   "match_30m": 17505,
+   "n": 18275,
+   "match_30_500m": 257,
+   "suffix_differs": 55,
+   "street_ok_number_missing": 347,
+   "street_not_found": 87,
+   "street_elsewhere": 9,
+   "match_far_500m+": 13,
+   "lot_only": 1,
+   "unparsed": 1
+  }
+ },
+ "by_case": {
+  "upper": {
+   "match_30m": 45920,
+   "n": 47461,
+   "street_ok_number_missing": 815,
+   "match_30_500m": 363,
+   "street_not_found": 136,
+   "suffix_differs": 58,
+   "lot_only": 97,
+   "match_far_500m+": 46,
+   "street_elsewhere": 19,
+   "unparsed": 7
+  },
+  "mixed": {
+   "match_30_500m": 132,
+   "n": 2539,
+   "match_30m": 2365,
+   "street_ok_number_missing": 18,
+   "match_far_500m+": 4,
+   "street_elsewhere": 1,
+   "unparsed": 4,
+   "street_not_found": 9,
+   "suffix_differs": 5,
+   "lot_only": 1
+  }
+ },
+ "enrich": {
+  "suburb": 48927,
+  "postcode": 48927
+ },
+ "dist_m": {
+  "p50": 0.68,
+  "p90": 1.16,
+  "p99": 31.11
+ },
+ "far_dist_m": {
+  "p10": 2176.78,
+  "p50": 10829.85,
+  "p90": 44194.56
+ },
+ "same_name": {
+  "groups": 5,
+  "rows": 10,
+  "some_row_unmatched": 1,
+  "resolved_by_suburb": 4
+ },
+ "hotspots": {
+  "streets>=3": {
+   "points": 18,
+   "rows": 83
+  },
+  "streets>=5": {
+   "points": 1,
+   "rows": 7
+  },
+  "streets>=10": {
+   "points": 0,
+   "rows": 0
+  }
+ },
+ "districts": {
+  "The Council Of The Shire Of Hornsby": {
+   "n": 1417,
+   "matched": 1368,
+   "top_suburbs": [
+    [
+     "HORNSBY",
+     211
+    ],
+    [
+     "CHERRYBROOK",
+     144
+    ],
+    [
+     "THORNLEIGH",
+     104
+    ],
+    [
+     "MOUNT COLAH",
+     84
+    ],
+    [
+     "BEECROFT",
+     66
+    ]
+   ]
+  },
+  "Campbelltown City Council": {
+   "n": 1700,
+   "matched": 1629,
+   "top_suburbs": [
+    [
+     "CAMPBELLTOWN",
+     204
+    ],
+    [
+     "INGLEBURN",
+     146
+    ],
+    [
+     "MINTO",
+     139
+    ],
+    [
+     "MACQUARIE FIELDS",
+     118
+    ],
+    [
+     "LEUMEAH",
+     97
+    ]
+   ]
+  },
+  "Penrith City Council": {
+   "n": 2049,
+   "matched": 2007,
+   "top_suburbs": [
+    [
+     "PENRITH",
+     238
+    ],
+    [
+     "GLENMORE PARK",
+     194
+    ],
+    [
+     "ST MARYS",
+     183
+    ],
+    [
+     "ST CLAIR",
+     171
+    ],
+    [
+     "CRANEBROOK",
+     129
+    ]
+   ]
+  },
+  "Ryde City Council": {
+   "n": 1303,
+   "matched": 1283,
+   "top_suburbs": [
+    [
+     "RYDE",
+     285
+    ],
+    [
+     "MACQUARIE PARK",
+     167
+    ],
+    [
+     "WEST RYDE",
+     145
+    ],
+    [
+     "EASTWOOD",
+     137
+    ],
+    [
+     "NORTH RYDE",
+     130
+    ]
+   ]
+  },
+  "Bayside Council": {
+   "n": 1661,
+   "matched": 1650,
+   "top_suburbs": [
+    [
+     "MASCOT",
+     198
+    ],
+    [
+     "BEXLEY",
+     160
+    ],
+    [
+     "ROCKDALE",
+     145
+    ],
+    [
+     "ARNCLIFFE",
+     106
+    ],
+    [
+     "BOTANY",
+     103
+    ]
+   ]
+  },
+  "Inner West Council": {
+   "n": 2046,
+   "matched": 2022,
+   "top_suburbs": [
+    [
+     "MARRICKVILLE",
+     307
+    ],
+    [
+     "ASHFIELD",
+     216
+    ],
+    [
+     "LEICHHARDT",
+     188
+    ],
+    [
+     "DULWICH HILL",
+     146
+    ],
+    [
+     "BALMAIN",
+     116
+    ]
+   ]
+  },
+  "Willoughby City Council": {
+   "n": 761,
+   "matched": 753,
+   "top_suburbs": [
+    [
+     "CHATSWOOD",
+     263
+    ],
+    [
+     "ARTARMON",
+     89
+    ],
+    [
+     "WILLOUGHBY",
+     69
+    ],
+    [
+     "NAREMBURN",
+     63
+    ],
+    [
+     "NORTHBRIDGE",
+     57
+    ]
+   ]
+  },
+  "The Hills Shire Council": {
+   "n": 1925,
+   "matched": 1874,
+   "top_suburbs": [
+    [
+     "CASTLE HILL",
+     366
+    ],
+    [
+     "BAULKHAM HILLS",
+     289
+    ],
+    [
+     "KELLYVILLE",
+     221
+    ],
+    [
+     "NORTH KELLYVILLE",
+     182
+    ],
+    [
+     "BOX HILL",
+     173
+    ]
+   ]
+  },
+  "City Of Parramatta Council": {
+   "n": 2462,
+   "matched": 2430,
+   "top_suburbs": [
+    [
+     "PARRAMATTA",
+     326
+    ],
+    [
+     "EPPING",
+     298
+    ],
+    [
+     "CARLINGFORD",
+     267
+    ],
+    [
+     "ERMINGTON",
+     131
+    ],
+    [
+     "NORTH PARRAMATTA",
+     124
+    ]
+   ]
+  },
+  "Blacktown City Council": {
+   "n": 3742,
+   "matched": 3653,
+   "top_suburbs": [
+    [
+     "BLACKTOWN",
+     480
+    ],
+    [
+     "SEVEN HILLS",
+     217
+    ],
+    [
+     "QUAKERS HILL",
+     205
+    ],
+    [
+     "SCHOFIELDS",
+     178
+    ],
+    [
+     "MARSDEN PARK",
+     159
+    ]
+   ]
+  },
+  "Sydney": {
+   "n": 3152,
+   "matched": 3122,
+   "top_suburbs": [
+    [
+     "SYDNEY",
+     582
+    ],
+    [
+     "SURRY HILLS",
+     242
+    ],
+    [
+     "WATERLOO",
+     198
+    ],
+    [
+     "DARLINGHURST",
+     161
+    ],
+    [
+     "GLEBE",
+     160
+    ]
+   ]
+  },
+  "City Of Canada Bay Council": {
+   "n": 828,
+   "matched": 820,
+   "top_suburbs": [
+    [
+     "CONCORD",
+     135
+    ],
+    [
+     "DRUMMOYNE",
+     124
+    ],
+    [
+     "FIVE DOCK",
+     101
+    ],
+    [
+     "RHODES",
+     99
+    ],
+    [
+     "CONCORD WEST",
+     57
+    ]
+   ]
+  },
+  "Liverpool City Council": {
+   "n": 2286,
+   "matched": 2187,
+   "top_suburbs": [
+    [
+     "LIVERPOOL",
+     305
+    ],
+    [
+     "AUSTRAL",
+     208
+    ],
+    [
+     "CASULA",
+     145
+    ],
+    [
+     "PRESTONS",
+     139
+    ],
+    [
+     "EDMONDSON PARK",
+     126
+    ]
+   ]
+  },
+  "Pitt Town": {
+   "n": 40,
+   "matched": 32,
+   "top_suburbs": [
+    [
+     "PITT TOWN",
+     32
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Canterbury-Bankstown Council": {
+   "n": 3370,
+   "matched": 3318,
+   "top_suburbs": [
+    [
+     "BANKSTOWN",
+     310
+    ],
+    [
+     "CAMPSIE",
+     216
+    ],
+    [
+     "REVESBY",
+     182
+    ],
+    [
+     "GREENACRE",
+     179
+    ],
+    [
+     "PUNCHBOWL",
+     167
+    ]
+   ]
+  },
+  "Camden Council": {
+   "n": 1284,
+   "matched": 1227,
+   "top_suburbs": [
+    [
+     "ORAN PARK",
+     170
+    ],
+    [
+     "GREGORY HILLS",
+     111
+    ],
+    [
+     "LEPPINGTON",
+     104
+    ],
+    [
+     "MOUNT ANNAN",
+     104
+    ],
+    [
+     "HARRINGTON PARK",
+     102
+    ]
+   ]
+  },
+  "Blue Mountains": {
+   "n": 1224,
+   "matched": 1192,
+   "top_suburbs": [
+    [
+     "KATOOMBA",
+     157
+    ],
+    [
+     "BLACKHEATH",
+     101
+    ],
+    [
+     "SPRINGWOOD",
+     96
+    ],
+    [
+     "WENTWORTH FALLS",
+     84
+    ],
+    [
+     "LEURA",
+     81
+    ]
+   ]
+  },
+  "Northern Beaches Council": {
+   "n": 2604,
+   "matched": 2559,
+   "top_suburbs": [
+    [
+     "MANLY",
+     207
+    ],
+    [
+     "DEE WHY",
+     193
+    ],
+    [
+     "MONA VALE",
+     119
+    ],
+    [
+     "FRENCHS FOREST",
+     117
+    ],
+    [
+     "AVALON BEACH",
+     108
+    ]
+   ]
+  },
+  "Sutherland Shire Council": {
+   "n": 2305,
+   "matched": 2280,
+   "top_suburbs": [
+    [
+     "CRONULLA",
+     236
+    ],
+    [
+     "MIRANDA",
+     177
+    ],
+    [
+     "ENGADINE",
+     168
+    ],
+    [
+     "CARINGBAH",
+     154
+    ],
+    [
+     "SUTHERLAND",
+     123
+    ]
+   ]
+  },
+  "Georges River Council": {
+   "n": 1445,
+   "matched": 1436,
+   "top_suburbs": [
+    [
+     "HURSTVILLE",
+     299
+    ],
+    [
+     "PEAKHURST",
+     129
+    ],
+    [
+     "MORTDALE",
+     113
+    ],
+    [
+     "OATLEY",
+     102
+    ],
+    [
+     "PENSHURST",
+     100
+    ]
+   ]
+  },
+  "Cumberland Council": {
+   "n": 2011,
+   "matched": 1977,
+   "top_suburbs": [
+    [
+     "MERRYLANDS",
+     309
+    ],
+    [
+     "AUBURN",
+     295
+    ],
+    [
+     "GREYSTANES",
+     203
+    ],
+    [
+     "GUILDFORD",
+     172
+    ],
+    [
+     "LIDCOMBE",
+     158
+    ]
+   ]
+  },
+  "Mosman Municipal Council": {
+   "n": 271,
+   "matched": 270,
+   "top_suburbs": [
+    [
+     "MOSMAN",
+     270
+    ]
+   ]
+  },
+  "Richmond": {
+   "n": 79,
+   "matched": 75,
+   "top_suburbs": [
+    [
+     "RICHMOND",
+     75
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Fairfield City Council": {
+   "n": 1825,
+   "matched": 1789,
+   "top_suburbs": [
+    [
+     "CABRAMATTA",
+     185
+    ],
+    [
+     "FAIRFIELD",
+     136
+    ],
+    [
+     "SMITHFIELD",
+     135
+    ],
+    [
+     "BOSSLEY PARK",
+     124
+    ],
+    [
+     "WETHERILL PARK",
+     110
+    ]
+   ]
+  },
+  "Randwick City Council": {
+   "n": 1328,
+   "matched": 1310,
+   "top_suburbs": [
+    [
+     "RANDWICK",
+     306
+    ],
+    [
+     "MAROUBRA",
+     274
+    ],
+    [
+     "COOGEE",
+     152
+    ],
+    [
+     "KINGSFORD",
+     151
+    ],
+    [
+     "KENSINGTON",
+     114
+    ]
+   ]
+  },
+  "Paddington": {
+   "n": 134,
+   "matched": 132,
+   "top_suburbs": [
+    [
+     "PADDINGTON",
+     132
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Edgecliff": {
+   "n": 42,
+   "matched": 42,
+   "top_suburbs": [
+    [
+     "EDGECLIFF",
+     40
+    ],
+    [
+     "WOOLLAHRA",
+     1
+    ],
+    [
+     "DOUBLE BAY",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 2
+  },
+  "South Windsor": {
+   "n": 76,
+   "matched": 75,
+   "top_suburbs": [
+    [
+     "SOUTH WINDSOR",
+     73
+    ],
+    [
+     "BLIGH PARK",
+     2
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 2
+  },
+  "North Richmond": {
+   "n": 83,
+   "matched": 79,
+   "top_suburbs": [
+    [
+     "NORTH RICHMOND",
+     78
+    ],
+    [
+     "KURMOND",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 1
+  },
+  "North Sydney Council": {
+   "n": 921,
+   "matched": 908,
+   "top_suburbs": [
+    [
+     "NORTH SYDNEY",
+     190
+    ],
+    [
+     "NEUTRAL BAY",
+     118
+    ],
+    [
+     "CREMORNE",
+     116
+    ],
+    [
+     "CROWS NEST",
+     101
+    ],
+    [
+     "CAMMERAY",
+     77
+    ]
+   ]
+  },
+  "Burwood Council": {
+   "n": 407,
+   "matched": 402,
+   "top_suburbs": [
+    [
+     "BURWOOD",
+     195
+    ],
+    [
+     "CROYDON PARK",
+     58
+    ],
+    [
+     "STRATHFIELD",
+     53
+    ],
+    [
+     "CROYDON",
+     53
+    ],
+    [
+     "ENFIELD",
+     32
+    ]
+   ]
+  },
+  "Bowral": {
+   "n": 167,
+   "matched": 160,
+   "top_suburbs": [
+    [
+     "BOWRAL",
+     129
+    ],
+    [
+     "BURRADOO",
+     31
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 31
+  },
+  "Tahmoor": {
+   "n": 81,
+   "matched": 80,
+   "top_suburbs": [
+    [
+     "TAHMOOR",
+     79
+    ],
+    [
+     "THIRLMERE",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 1
+  },
+  "Windsor Downs": {
+   "n": 19,
+   "matched": 6,
+   "top_suburbs": [
+    [
+     "WINDSOR DOWNS",
+     6
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Ku-Ring-Gai Council": {
+   "n": 1071,
+   "matched": 1063,
+   "top_suburbs": [
+    [
+     "ST IVES",
+     139
+    ],
+    [
+     "WAHROONGA",
+     123
+    ],
+    [
+     "TURRAMURRA",
+     115
+    ],
+    [
+     "LINDFIELD",
+     105
+    ],
+    [
+     "PYMBLE",
+     96
+    ]
+   ]
+  },
+  "Strathfield Municipal Council": {
+   "n": 471,
+   "matched": 445,
+   "top_suburbs": [
+    [
+     "STRATHFIELD",
+     177
+    ],
+    [
+     "HOMEBUSH",
+     107
+    ],
+    [
+     "HOMEBUSH WEST",
+     82
+    ],
+    [
+     "STRATHFIELD SOUTH",
+     65
+    ],
+    [
+     "GREENACRE",
+     14
+    ]
+   ]
+  },
+  "Kangaloon": {
+   "n": 6,
+   "matched": 5,
+   "top_suburbs": [
+    [
+     "KANGALOON",
+     5
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Waverley Council": {
+   "n": 750,
+   "matched": 742,
+   "top_suburbs": [
+    [
+     "BONDI JUNCTION",
+     168
+    ],
+    [
+     "BONDI BEACH",
+     131
+    ],
+    [
+     "BONDI",
+     104
+    ],
+    [
+     "NORTH BONDI",
+     72
+    ],
+    [
+     "BRONTE",
+     69
+    ]
+   ]
+  },
+  "East Kurrajong": {
+   "n": 22,
+   "matched": 14,
+   "top_suburbs": [
+    [
+     "EAST KURRAJONG",
+     14
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Rose Bay": {
+   "n": 61,
+   "matched": 60,
+   "top_suburbs": [
+    [
+     "ROSE BAY",
+     59
+    ],
+    [
+     "BELLEVUE HILL",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 1
+  },
+  "Kurrajong Heights": {
+   "n": 12,
+   "matched": 11,
+   "top_suburbs": [
+    [
+     "KURRAJONG HEIGHTS",
+     11
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "St Albans": {
+   "n": 9,
+   "matched": 8,
+   "top_suburbs": [
+    [
+     "ST ALBANS",
+     8
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Bligh Park": {
+   "n": 57,
+   "matched": 56,
+   "top_suburbs": [
+    [
+     "BLIGH PARK",
+     56
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Bundanoon": {
+   "n": 44,
+   "matched": 41,
+   "top_suburbs": [
+    [
+     "BUNDANOON",
+     41
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Picton": {
+   "n": 61,
+   "matched": 59,
+   "top_suburbs": [
+    [
+     "PICTON",
+     59
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Darling Point": {
+   "n": 61,
+   "matched": 61,
+   "top_suburbs": [
+    [
+     "DARLING POINT",
+     55
+    ],
+    [
+     "EDGECLIFF",
+     5
+    ],
+    [
+     "DOUBLE BAY",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 6
+  },
+  "Hobartville": {
+   "n": 36,
+   "matched": 36,
+   "top_suburbs": [
+    [
+     "HOBARTVILLE",
+     36
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Joadja": {
+   "n": 6,
+   "matched": 6,
+   "top_suburbs": [
+    [
+     "JOADJA",
+     6
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Appin": {
+   "n": 34,
+   "matched": 32,
+   "top_suburbs": [
+    [
+     "APPIN",
+     32
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Bargo": {
+   "n": 56,
+   "matched": 52,
+   "top_suburbs": [
+    [
+     "BARGO",
+     52
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Bellevue Hill": {
+   "n": 113,
+   "matched": 112,
+   "top_suburbs": [
+    [
+     "BELLEVUE HILL",
+     105
+    ],
+    [
+     "DOUBLE BAY",
+     4
+    ],
+    [
+     "ROSE BAY",
+     3
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 7
+  },
+  "Wisemans Ferry": {
+   "n": 74,
+   "matched": 70,
+   "top_suburbs": [
+    [
+     "LOWER PORTLAND",
+     11
+    ],
+    [
+     "LOWER MACDONALD",
+     11
+    ],
+    [
+     "MAROOTA",
+     9
+    ],
+    [
+     "BILPIN",
+     7
+    ],
+    [
+     "WISEMANS FERRY",
+     7
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 63
+  },
+  "Robertson": {
+   "n": 21,
+   "matched": 21,
+   "top_suburbs": [
+    [
+     "ROBERTSON",
+     21
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Moss Vale": {
+   "n": 122,
+   "matched": 116,
+   "top_suburbs": [
+    [
+     "MOSS VALE",
+     115
+    ],
+    [
+     "MANCHESTER SQUARE",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 1
+  },
+  "Lane Cove Municipal Council": {
+   "n": 458,
+   "matched": 451,
+   "top_suburbs": [
+    [
+     "LANE COVE",
+     130
+    ],
+    [
+     "LANE COVE NORTH",
+     87
+    ],
+    [
+     "GREENWICH",
+     67
+    ],
+    [
+     "ST LEONARDS",
+     51
+    ],
+    [
+     "LANE COVE WEST",
+     48
+    ]
+   ]
+  },
+  "Razorback": {
+   "n": 19,
+   "matched": 19,
+   "top_suburbs": [
+    [
+     "RAZORBACK",
+     19
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Oakville": {
+   "n": 35,
+   "matched": 31,
+   "top_suburbs": [
+    [
+     "OAKVILLE",
+     31
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Berrima": {
+   "n": 31,
+   "matched": 28,
+   "top_suburbs": [
+    [
+     "BERRIMA",
+     15
+    ],
+    [
+     "NEW BERRIMA",
+     13
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 13
+  },
+  "Wollondilly Shire Council": {
+   "n": 213,
+   "matched": 201,
+   "top_suburbs": [
+    [
+     "SILVERDALE",
+     49
+    ],
+    [
+     "THE OAKS",
+     29
+    ],
+    [
+     "OAKDALE",
+     25
+    ],
+    [
+     "WARRAGAMBA",
+     20
+    ],
+    [
+     "MENANGLE",
+     19
+    ]
+   ]
+  },
+  "Buxton": {
+   "n": 27,
+   "matched": 27,
+   "top_suburbs": [
+    [
+     "BUXTON",
+     27
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Vaucluse": {
+   "n": 58,
+   "matched": 57,
+   "top_suburbs": [
+    [
+     "VAUCLUSE",
+     55
+    ],
+    [
+     "WATSONS BAY",
+     2
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 2
+  },
+  "Wingello": {
+   "n": 7,
+   "matched": 7,
+   "top_suburbs": [
+    [
+     "WINGELLO",
+     7
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Maraylya": {
+   "n": 35,
+   "matched": 32,
+   "top_suburbs": [
+    [
+     "GABLES",
+     18
+    ],
+    [
+     "MARAYLYA",
+     14
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 18
+  },
+  "Wilberforce": {
+   "n": 44,
+   "matched": 40,
+   "top_suburbs": [
+    [
+     "WILBERFORCE",
+     39
+    ],
+    [
+     "FREEMANS REACH",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 1
+  },
+  "Mittagong": {
+   "n": 123,
+   "matched": 117,
+   "top_suburbs": [
+    [
+     "MITTAGONG",
+     58
+    ],
+    [
+     "RENWICK",
+     23
+    ],
+    [
+     "BALACLAVA",
+     13
+    ],
+    [
+     "WELBY",
+     12
+    ],
+    [
+     "WILLOW VALE",
+     8
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 59
+  },
+  "Freemans Reach": {
+   "n": 19,
+   "matched": 18,
+   "top_suburbs": [
+    [
+     "FREEMANS REACH",
+     18
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Woollahra": {
+   "n": 95,
+   "matched": 94,
+   "top_suburbs": [
+    [
+     "WOOLLAHRA",
+     91
+    ],
+    [
+     "EDGECLIFF",
+     2
+    ],
+    [
+     "BELLEVUE HILL",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 3
+  },
+  "Wilton": {
+   "n": 63,
+   "matched": 59,
+   "top_suburbs": [
+    [
+     "WILTON",
+     59
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Hill Top": {
+   "n": 26,
+   "matched": 25,
+   "top_suburbs": [
+    [
+     "HILL TOP",
+     25
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Glossodia": {
+   "n": 26,
+   "matched": 21,
+   "top_suburbs": [
+    [
+     "GLOSSODIA",
+     21
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Thirlmere": {
+   "n": 70,
+   "matched": 68,
+   "top_suburbs": [
+    [
+     "THIRLMERE",
+     68
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Braemar": {
+   "n": 12,
+   "matched": 12,
+   "top_suburbs": [
+    [
+     "BRAEMAR",
+     12
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Kurmond": {
+   "n": 6,
+   "matched": 5,
+   "top_suburbs": [
+    [
+     "KURMOND",
+     5
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Kurrajong Hills": {
+   "n": 12,
+   "matched": 8,
+   "top_suburbs": [
+    [
+     "KURRAJONG HILLS",
+     8
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Exeter": {
+   "n": 20,
+   "matched": 20,
+   "top_suburbs": [
+    [
+     "EXETER",
+     20
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Colo Vale": {
+   "n": 24,
+   "matched": 24,
+   "top_suburbs": [
+    [
+     "COLO VALE",
+     24
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Double Bay": {
+   "n": 47,
+   "matched": 47,
+   "top_suburbs": [
+    [
+     "DOUBLE BAY",
+     47
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "q": {
+   "n": 11,
+   "matched": 11,
+   "top_suburbs": [
+    [
+     "WATSONS BAY",
+     11
+    ]
+   ]
+  },
+  "Sutton Forest": {
+   "n": 9,
+   "matched": 9,
+   "top_suburbs": [
+    [
+     "SUTTON FOREST",
+     8
+    ],
+    [
+     "EXETER",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 1
+  },
+  "Couridjah": {
+   "n": 2,
+   "matched": 1,
+   "top_suburbs": [
+    [
+     "COURIDJAH",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Pheasants Nest": {
+   "n": 14,
+   "matched": 13,
+   "top_suburbs": [
+    [
+     "PHEASANTS NEST",
+     13
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Bowen Mountain": {
+   "n": 18,
+   "matched": 16,
+   "top_suburbs": [
+    [
+     "BOWEN MOUNTAIN",
+     16
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Alpine": {
+   "n": 3,
+   "matched": 3,
+   "top_suburbs": [
+    [
+     "ALPINE",
+     3
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "The Slopes": {
+   "n": 3,
+   "matched": 2,
+   "top_suburbs": [
+    [
+     "THE SLOPES",
+     2
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Douglas Park": {
+   "n": 18,
+   "matched": 16,
+   "top_suburbs": [
+    [
+     "DOUGLAS PARK",
+     16
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Aylmerton": {
+   "n": 3,
+   "matched": 3,
+   "top_suburbs": [
+    [
+     "AYLMERTON",
+     3
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "High Range": {
+   "n": 7,
+   "matched": 7,
+   "top_suburbs": [
+    [
+     "HIGH RANGE",
+     7
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Balmoral": {
+   "n": 8,
+   "matched": 8,
+   "top_suburbs": [
+    [
+     "BALMORAL VILLAGE",
+     8
+    ]
+   ]
+  },
+  "Windsor": {
+   "n": 43,
+   "matched": 42,
+   "top_suburbs": [
+    [
+     "WINDSOR",
+     42
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Canyonleigh": {
+   "n": 14,
+   "matched": 11,
+   "top_suburbs": [
+    [
+     "CANYONLEIGH",
+     11
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Kurrajong": {
+   "n": 34,
+   "matched": 31,
+   "top_suburbs": [
+    [
+     "KURRAJONG",
+     31
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Mellong": {
+   "n": 2,
+   "matched": 2,
+   "top_suburbs": [
+    [
+     "MELLONG",
+     2
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Fitzroy Falls": {
+   "n": 5,
+   "matched": 5,
+   "top_suburbs": [
+    [
+     "FITZROY FALLS",
+     5
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Yerrinbool": {
+   "n": 16,
+   "matched": 16,
+   "top_suburbs": [
+    [
+     "YERRINBOOL",
+     16
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Grose Vale": {
+   "n": 15,
+   "matched": 12,
+   "top_suburbs": [
+    [
+     "GROSE VALE",
+     12
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Wheeny Creek": {
+   "n": 1,
+   "matched": 1,
+   "top_suburbs": [
+    [
+     "WHEENY CREEK",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Yanderra": {
+   "n": 5,
+   "matched": 5,
+   "top_suburbs": [
+    [
+     "YANDERRA",
+     5
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Mulgrave": {
+   "n": 10,
+   "matched": 10,
+   "top_suburbs": [
+    [
+     "MULGRAVE",
+     10
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Mandemar": {
+   "n": 1,
+   "matched": 1,
+   "top_suburbs": [
+    [
+     "MANDEMAR",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Glenquarry": {
+   "n": 5,
+   "matched": 5,
+   "top_suburbs": [
+    [
+     "GLENQUARRY",
+     5
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Cornwallis": {
+   "n": 2,
+   "matched": 2,
+   "top_suburbs": [
+    [
+     "CORNWALLIS",
+     2
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "派珀角": {
+   "n": 11,
+   "matched": 11,
+   "top_suburbs": [
+    [
+     "POINT PIPER",
+     11
+    ]
+   ]
+  },
+  "Ebenezer": {
+   "n": 5,
+   "matched": 4,
+   "top_suburbs": [
+    [
+     "EBENEZER",
+     4
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Lakesland": {
+   "n": 9,
+   "matched": 7,
+   "top_suburbs": [
+    [
+     "LAKESLAND",
+     7
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "McGraths Hill": {
+   "n": 23,
+   "matched": 23,
+   "top_suburbs": [
+    [
+     "MCGRATHS HILL",
+     23
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Grose Wold": {
+   "n": 10,
+   "matched": 8,
+   "top_suburbs": [
+    [
+     "GROSE WOLD",
+     8
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Penrose": {
+   "n": 6,
+   "matched": 5,
+   "top_suburbs": [
+    [
+     "PENROSE",
+     5
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Cattai": {
+   "n": 15,
+   "matched": 11,
+   "top_suburbs": [
+    [
+     "CATTAI",
+     11
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Vineyard": {
+   "n": 21,
+   "matched": 20,
+   "top_suburbs": [
+    [
+     "VINEYARD",
+     17
+    ],
+    [
+     "MULGRAVE",
+     3
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 3
+  },
+  "Richmond Lowlands": {
+   "n": 2,
+   "matched": 1,
+   "top_suburbs": [
+    [
+     "RICHMOND LOWLANDS",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Fernances": {
+   "n": 1,
+   "matched": 1,
+   "top_suburbs": [
+    [
+     "FERNANCES",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Megalong Valley": {
+   "n": 5,
+   "matched": 4,
+   "top_suburbs": [
+    [
+     "MEGALONG VALLEY",
+     4
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Blaxlands Ridge": {
+   "n": 7,
+   "matched": 6,
+   "top_suburbs": [
+    [
+     "BLAXLANDS RIDGE",
+     6
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Higher Macdonald": {
+   "n": 1,
+   "matched": 1,
+   "top_suburbs": [
+    [
+     "HIGHER MACDONALD",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Pitt Town Bottoms": {
+   "n": 3,
+   "matched": 2,
+   "top_suburbs": [
+    [
+     "PITT TOWN BOTTOMS",
+     2
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Clarendon": {
+   "n": 2,
+   "matched": 2,
+   "top_suburbs": [
+    [
+     "CLARENDON",
+     2
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Burrawang": {
+   "n": 6,
+   "matched": 4,
+   "top_suburbs": [
+    [
+     "BURRAWANG",
+     4
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Bell": {
+   "n": 4,
+   "matched": 3,
+   "top_suburbs": [
+    [
+     "BELL",
+     3
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Tennyson": {
+   "n": 9,
+   "matched": 9,
+   "top_suburbs": [
+    [
+     "TENNYSON",
+     9
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Avoca": {
+   "n": 1,
+   "matched": 1,
+   "top_suburbs": [
+    [
+     "AVOCA",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Wildes Meadow": {
+   "n": 1,
+   "matched": 1,
+   "top_suburbs": [
+    [
+     "WILDES MEADOW",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Manchester Square": {
+   "n": 1,
+   "matched": 1,
+   "top_suburbs": [
+    [
+     "MANCHESTER SQUARE",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Goodmans Ford": {
+   "n": 1,
+   "matched": 1,
+   "top_suburbs": [
+    [
+     "GOODMANS FORD",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  },
+  "Yerranderie": {
+   "n": 1,
+   "matched": 0,
+   "top_suburbs": []
+  },
+  "Mount Murray": {
+   "n": 1,
+   "matched": 1,
+   "top_suburbs": [
+    [
+     "MOUNT MURRAY",
+     1
+    ]
+   ],
+   "suburb_level": true,
+   "other_suburb": 0
+  }
+ },
+ "note": "悉尼门址底表 5 万条随机抽样（种子 42）对照 G-NAF（Overture 2026-09-23.1）；只有汇总数字，没有原始门址"
+}
