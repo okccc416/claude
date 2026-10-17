@@ -46,6 +46,8 @@ class Coverage:
     lng: float | None = None
     points: list[tuple] = field(default_factory=list)  # 范围外证据的位置 (纬度, 经度, 半径米)：所写城镇的各处同名地点、邮编位置
     towns: list[tuple] = field(default_factory=list)  # 原文写到的所有城镇的位置（含被当作范围内片区的同名城镇）
+    local_town: bool = False  # 写了试点城市名以外的城镇 / 片区（Ruse、Leumeah；不算 Sydney、Lisboa 本身）
+    city: bool = False  # 写了试点城市名（Amsterdam、Madrid）
 
 
 class Gazetteer:
@@ -245,7 +247,10 @@ class Gazetteer:
                 sel = [h for h in places if h[3] >= max(1000, top * 0.05)] or sorted(places, key=lambda e: -e[3])[:5]
                 sel += [h for h in places if h[2] == "X" and h not in sel]  # 城区片区（开罗的马塔里亚）人口常不详，照算
                 cov.towns += [(h[0], h[1], town_radius(h[3])) for h in sel]
+                cov.local_town = cov.local_town or k not in self.city
         city_written = any(k in self.city for k, _ in cands)
+        blob = f" {norm(text)} "
+        cov.city = city_written or any(f" {c} " in blob for c in self.city)  # 没用逗号隔开也算（Reigerweg 3 Amsterdam）
         for k, w in self._candidates(text, street):
             hits = self.names.get(k, [])
             towns_in, towns_part, towns_out = [], [], []

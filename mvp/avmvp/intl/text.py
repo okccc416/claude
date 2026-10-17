@@ -475,6 +475,7 @@ _SKEL_DROP = {"STREET", "ST", "ROAD", "RD", "AVENUE", "AVE", "DISTRICT", "SQUARE
               "ميدان"}
 
 
+@lru_cache(maxsize=65536)
 def skeleton(text: str) -> str:
     """转写骨架（只用于阿拉伯文市场的道路 / 片区容错召回）。"""
     out = []

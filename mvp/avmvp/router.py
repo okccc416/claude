@@ -95,7 +95,9 @@ class MarketRouter:
                     from .intl.engine import Engine
                     parser = self.parser if (DATA / code / "crf.model").exists() else "rules"
                     use_llm = self.llm if self.llm_markets is None or code in self.llm_markets else None
-                    self._engines[code] = Engine(code, parser, llm=use_llm, confidence=self.confidence)
+                    eng = Engine(code, parser, llm=use_llm, confidence=self.confidence)
+                    eng.warm()  # 先建好第一次用到才建的索引，线上第一批请求不多等几百毫秒
+                    self._engines[code] = eng
                 self.log(f"已加载 {code} 校验引擎（{time.time() - t:.1f}s）")
         return self._engines[code]
 

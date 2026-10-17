@@ -58,6 +58,7 @@ python scripts/build_market_reference.py  # 构建参考库（3 路并行约 25 
 python scripts/fetch_gazetteer.py         # 全国地名 / 邮编表（GeoNames）：判断输入写的地点在不在试点范围内（试点范围守卫）
 python scripts/fetch_national.py --markets MX,DE,AU,ES,NL,CO,BE,PT,PL,AT,NZ   # 可选：全国门址库（Overture 全国门牌点，存磁盘 sqlite），
                                           # 试点城市以外的地址也能验到门牌级；每国 0.4–5.7 GB，没有就退回城镇级
+                                          # 已有的库在代码新加索引后用 --add-indexes 补建（否则单条查询会到几百毫秒）
 python scripts/fetch_address_formats.py   # Google 地址格式元数据（各国必填字段、排版、州 / 省邮编前缀），已随代码提交，更新时才需要跑
 python scripts/train_market_parsers.py    # 训练各市场的机器学习解析器（CRF，每个市场约 30 秒）
 python scripts/fit_accept_policy.py       # 按市场在开发集上校准直接通过的放宽规则 -> models/accept_policy.json
@@ -201,6 +202,7 @@ mvp/
 │   ├── fetch_gazetteer.py         下载全国地名 / 邮编表（试点范围守卫用）
 │   ├── fetch_national.py          下载全国门址库（试点城市以外的门牌级验真用；--reindex 只重建索引）
 │   ├── base_table_health.py       客户门址底表体检 + 补齐（逐条对照全国门址库，补 suburb / 邮编）
+│   ├── base_table_synth_eval.py   用补齐后的客户底表合成用户写法的查询，评测引擎（合成数据，按坐标判对错）
 │   ├── fetch_address_formats.py   下载 Google 地址格式元数据（响应对齐 Google AV 用）
 │   ├── coverage_eval.py           试点范围守卫评测（开发集误判率 / 线上查询分布）
 │   ├── geo_real_eval.py           geo 服务真实返回评测（核对层，按目标门址坐标判对错）

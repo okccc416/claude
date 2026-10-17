@@ -6,6 +6,7 @@
 
   python scripts/fetch_national.py --markets NZ,AT,BE [--release 2026-09-23.1]
   python scripts/fetch_national.py --markets NZ --reindex   # 不重新下载，只按当前代码重算路名前缀 / 城镇键、重建索引
+  python scripts/fetch_national.py --markets NZ --add-indexes   # 只补建代码里新加的索引
 """
 
 from __future__ import annotations
@@ -114,12 +115,29 @@ def reindex(cc: str) -> None:
     print(f"{cc} 已重建索引：{path.stat().st_size / 1e6:.0f} MB", flush=True)
 
 
+def add_indexes(cc: str) -> None:
+    """只补建缺的索引（代码里新加了索引时用，不重算键、不重建已有索引）。"""
+    path = DATA / cc / "national.sqlite"
+    db = sqlite3.connect(path)
+    t = time.time()
+    for sql in INDEXES:
+        db.execute(sql.replace("CREATE INDEX", "CREATE INDEX IF NOT EXISTS", 1))
+    db.commit()
+    db.close()
+    print(f"{cc} 索引已补齐（{time.time() - t:.0f} 秒）：{path.stat().st_size / 1e6:.0f} MB", flush=True)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--markets", required=True)
     ap.add_argument("--release", default="2026-09-23.1")
     ap.add_argument("--reindex", action="store_true", help="不下载，只重算已有 national.sqlite 的路名前缀、城镇键和索引")
+    ap.add_argument("--add-indexes", action="store_true", help="不下载，只给已有 national.sqlite 补建缺的索引")
     args = ap.parse_args()
+    if args.add_indexes:
+        for cc in args.markets.split(","):
+            add_indexes(cc)
+        return
     if args.reindex:
         for cc in args.markets.split(","):
             reindex(cc)

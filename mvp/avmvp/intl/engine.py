@@ -16,6 +16,7 @@
 
 from __future__ import annotations
 
+import gc
 import math
 import re
 import uuid
@@ -173,10 +174,82 @@ class Engine:
         b = best_res.best
         cov = gazetteer(self.ref).assess(text, best_res.parsed.postcode,
                                          b.street_span.text if b is not None and b.street_span is not None else None)
+        # 写了具体的城镇 / 片区（不算 Lisboa、Sydney 这类试点城市名本身）
+        town = cov.local_town or any(e.startswith(("area:", "place:")) for e in cov.inside)
         if cov.status == "OUTSIDE":
             best_res = self._outside(best_res, cov, strictness)
+        elif best_res.action not in (ACCEPT, ADD_SUB):
+            best_res = self._national_cross_check(best_res, strictness, town)
+        elif b is not None and not ({"postcode", "area"} & b.support) and not best_res.parsed.postcode:
+            if town:  # 写了城镇，试点结论却没有城镇印证（Campbelltown 配到了墨尔本的同名同号）
+                best_res = self._national_cross_check(best_res, strictness, True)
+            elif not cov.inside and not cov.towns and not cov.city:  # 连试点城市名（Madrid、Amsterdam）也没写
+                self._national_unique(best_res)
         best_res.coverage = cov
         return best_res
+
+    def _national_unique(self, res: Result) -> None:
+        """原文没写城镇、邮编，也没写试点城市名（只有门址行），试点参考库里只有一处就直接通过了：试点都市圈里
+        （试点框外扩约 50 公里，悉尼的 Penrith / Campbelltown 在框外）还有别的同名同号时，改成请用户确认。
+        别的城市里的同名同号不算：服务按都市圈开通，只写门址行的用户多半就在这里。"""
+        p = res.parsed
+        if not p.number or res.lat is None:
+            return
+        nat = national(self.ref).lookup(p.raw, p.number, None, self.rules.pc_re, max_others=50)
+        if nat is None or not nat.premise:
+            return
+        cands = [(nat.lat, nat.lng)] + [(o["lat"], o["lng"]) for o in nat.others]
+        metro = [(x0 - 0.5, y0 - 0.5, x1 + 0.5, y1 + 0.5) for _, (x0, y0, x1, y1) in self.m.regions]
+        if any(haversine(res.lat, res.lng, a, b) > 300 and any(x0 <= b <= x1 and y0 <= a <= y1 for x0, y0, x1, y1 in metro)
+               for a, b in cands):
+            res.action = CONFIRM
+            res.reasons.append("AMBIGUOUS_MULTIPLE_CANDIDATES")
+
+    def _national_cross_check(self, res: Result, strictness: str, wrote_place: bool) -> Result:
+        """范围守卫没判出范围外、试点参考库的结论又站不住时（试点框边上的城镇：悉尼的 Penrith / Campbelltown，
+        参考库只收到框内的一截路，配上的常是框内或别的试点城市的同名路）：全国门址库能确证"路名一致、门牌一致、
+        邮编或城镇印证、全国只有这一处"，而试点结论没有落在这个门牌 300 米内时，以全国门址库为准。
+        试点结论站不住 = 只到片区 / 没结论，带着邮编 / 片区对不上、路名推断或纠正、门牌查不到、多个候选这类原因，
+        或者写了邮编 / 城镇而试点结论两样都没印证上。试点结论有邮编或片区印证、只是没直接通过的（里斯本按 POI
+        插值的门牌）不动。原文写的邮编与全国门址库那一处不同时也不换。"""
+        p = res.parsed
+        b = res.best
+        weak = (res.lat is None or res.granularity not in ("PREMISE", "PREMISE_PROXIMITY", "ROUTE")
+                or set(res.reasons) & {"POSTCODE_NOT_FOUND", "POSTCODE_STREET_MISMATCH", "AREA_STREET_MISMATCH",
+                                       "STREET_INFERRED", "STREET_SPELL_CORRECTED", "NO_MATCH", "PREMISE_NOT_FOUND",
+                                       "AMBIGUOUS_MULTIPLE_CANDIDATES", "POSTCODE_REPLACED"}
+                or ((p.postcode or wrote_place) and (b is None or not {"postcode", "area"} & b.support)))
+        if not p.number or not weak:
+            return res
+        nat = national(self.ref).lookup(p.raw, p.number, p.postcode, self.rules.pc_re)
+        written = nat.written_number or p.number if nat is not None else ""
+        if nat is None or not nat.premise or nat.ambiguous or nat.place not in ("postcode", "locality") \
+                or number_key(nat.number) not in number_variants(written, self.market):
+            return res
+        written_pc = p.postcode or nat.written_postcode
+        if written_pc and nat.postcode and written_pc != nat.postcode:
+            return res
+        # 只靠城市名印证（Widok 8, Warszawa：全国库的城镇就是 Warszawa）：试点有门牌 / 道路级结论时不换
+        if nat.place == "locality" and not wrote_place and not written_pc \
+                and res.lat is not None and res.granularity in ("PREMISE", "PREMISE_PROXIMITY", "ROUTE"):
+            return res
+        # 路名是纠正过的（Hckory Rd -> HICKORY ROAD）：试点参考库自己也没对上原文的路名（同样纠正过、推断的、
+        # 只到片区）时才换；试点配上了一字不差的路名、只是邮编对不上的，留着试点的结论
+        if nat.street_level != "CONFIRMED" and not (
+                res.lat is None or res.granularity not in ("PREMISE", "PREMISE_PROXIMITY", "ROUTE")
+                or set(res.reasons) & {"STREET_SPELL_CORRECTED", "STREET_INFERRED", "NO_MATCH"}):
+            return res
+        if res.lat is not None and res.granularity in ("PREMISE", "PREMISE_PROXIMITY") \
+                and haversine(res.lat, res.lng, nat.lat, nat.lng) <= 300:
+            return res
+        out = self._national(res, nat, strictness)
+        out.reasons.remove("OUTSIDE_COVERAGE")  # 范围守卫没判范围外：只是试点参考库里没有这一处
+        if out.action == ACCEPT and "STREET_SPELL_CORRECTED" in res.reasons:
+            out.action = CONFIRM  # 原文路名试点库都没对上（Praque Polvoranca）：全国库对上的路名也请用户确认
+            out.reasons.append("STREET_SPELL_CORRECTED")
+        if out.best is not None and "OUTSIDE_COVERAGE" in out.best.notes:
+            out.best.notes.remove("OUTSIDE_COVERAGE")
+        return out
 
     def _outside(self, res: Result, cov, strictness: str = "BALANCED") -> Result:
         """范围外的地址：试点参考库验证不了。有全国门址库（national.py）时按门牌号召回、按路名和城镇 / 邮编核对；
@@ -358,15 +431,12 @@ class Engine:
                 hyps.append(h)
         return sorted(hyps, key=lambda h: -h.score)
 
-    def _completed_names(self, p: Parsed, pc, near_m: float, area_ids: list[int]) -> list[Hypothesis]:
-        """所写道路上没有这个门牌时，找全称比所写多一两个词、且有这个门牌的道路：
-        Gran Avenida 6610 / José Miguel Carrera 8193 -> Gran Avenida José Miguel Carrera；
-        Vicuña Mackenna 6100 -> Vicuña Mackenna Poniente（双向分开的大道两侧各是一条路）。
-        要有片区 / 邮编印证，或离所写道路不到 1 公里，结论最多 CONFIRM（STREET_NAME_COMPLETED）。"""
+    def _completed_index(self) -> dict[str, set[int]]:
+        """路名的前缀 / 后缀（少 1-3 个词）-> 道路，按参考库缓存。"""
         ref = self.ref
         idx = ref.__dict__.get("_completed")
         if idx is None:
-            idx = ref.__dict__["_completed"] = {}
+            idx = {}
             for table in (ref.street_keys, ref.street_core):
                 for k, ids in table.items():
                     w = k.split()
@@ -374,6 +444,48 @@ class Engine:
                         for part in (" ".join(w[:n]), " ".join(w[-n:])):
                             if len(part.replace(" ", "")) >= 8:
                                 idx.setdefault(part, set()).update(ids)
+            ref.__dict__["_completed"] = idx
+        return idx
+
+    def warm(self, n: int = 12) -> None:
+        """服务加载引擎时调用：把第一次用到才建的索引（路名补全、容错、人名简称、地名表、全国门址库、行政区划）
+        先建好，再按参考库合成几条各种写法的地址跑一遍，免得线上第一批请求各多出几百毫秒。"""
+        from . import parse as _parse
+        from .render import Renderer
+        self._completed_index()
+        for build in (_parse.possessive_stems, _parse.first_names, _parse.last_names, _parse.street_suffixes,
+                      getattr(_parse, "core_fuzzy", None)):
+            if build is not None:
+                build(self.ref)
+        gazetteer(self.ref)
+        google.divisions(self.ref)
+        self.ref.db  # 打开参考库（同时在后台读进页缓存）
+        for t in (national(self.ref).warm_thread, self.ref.__dict__.get("_warm_thread")):
+            if t is not None:
+                t.join(timeout=180)  # 等库文件读进页缓存再接请求
+        rd = Renderer(self.ref, "train", 3)
+        if not rd.street_ids:
+            return
+        for i in range(n):
+            try:
+                smp = rd.sample(noise=0.5)
+                if smp is None:
+                    continue
+                for text in (smp.text, smp.text.split(",")[0], smp.text[:3] + smp.text[4:]):  # 原样、只有门址行、错一个字
+                    self.to_response(self.validate(text))
+            except Exception:  # 预热失败不影响服务（只是第一批请求慢一点）
+                continue
+        # 参考库是几百万个常驻对象：冻结进永久代，Python 的完整垃圾回收就不再逐个扫它们（否则偶尔停顿几百毫秒）
+        gc.collect()
+        gc.freeze()
+
+    def _completed_names(self, p: Parsed, pc, near_m: float, area_ids: list[int]) -> list[Hypothesis]:
+        """所写道路上没有这个门牌时，找全称比所写多一两个词、且有这个门牌的道路：
+        Gran Avenida 6610 / José Miguel Carrera 8193 -> Gran Avenida José Miguel Carrera；
+        Vicuña Mackenna 6100 -> Vicuña Mackenna Poniente（双向分开的大道两侧各是一条路）。
+        要有片区 / 邮编印证，或离所写道路不到 1 公里，结论最多 CONFIRM（STREET_NAME_COMPLETED）。"""
+        ref = self.ref
+        idx = self._completed_index()
         variants = self._number_variants(p.number)
         out: list[Hypothesis] = []
         seen: set[int] = set()
@@ -1321,7 +1433,7 @@ REASON_TEXT = {
     "POSTCODE_NOT_FOUND": "官方地址表里没有这个邮编",
     "POSTCODE_STREET_MISMATCH": "邮编与道路相距很远，互相矛盾",
     "POSTCODE_REPLACED": "邮编与门牌地址不符，已替换为官方邮编",
-    "NATIONAL_ADDRESS": "试点城市以外：按全国官方门址库核对门牌、路名和城镇 / 邮编（没有路网和商户数据印证，置信度未校准）",
+    "NATIONAL_ADDRESS": "试点城市以外（或试点参考库里没有这一处）：按全国官方门址库核对门牌、路名和城镇 / 邮编（没有路网和商户数据印证，置信度未校准）",
     "LOCALITY_SPELL_CORRECTED": "城镇名有拼写错误，已按全国门址库纠正",
     "GEO_AGREES_WITH_NATIONAL": "geo 服务返回的门址与全国门址库查到的是同一处",
     "POSTCODE_INFERRED": "输入没有邮编，已按官方地址补全",

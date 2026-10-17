@@ -132,9 +132,9 @@ class CRFParser:
                 for hit, score, ids in self.ref.poi_fuzzy.search(k, limit=2, min_score=88):
                     if len(ids) <= 20 and not generic_name(hit):
                         p.buildings.append(Span(hit, a, b, ids, score, "exact" if score == 100 else "fuzzy"))
-        if self.ref.market == "AU" and p.unit is None:  # 5/12 形式
+        if self.ref.market == "AU" and p.unit is None:  # 5/12 形式（单元 / 区间门牌：13/7-9）
             for t in toks:
-                m = re.fullmatch(r"(\d+[A-Z]?)/(\d+[A-Z]?)", t)
+                m = re.fullmatch(r"(\d+[A-Z]?)/(\d+[A-Z]?(?:-\d+[A-Z]?)?)", t)
                 if m and p.number == t:
                     p.unit, p.number = f"UNIT {m.group(1)}", m.group(2)
         p.streets.sort(key=lambda s: -s.score)

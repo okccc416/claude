@@ -19,6 +19,7 @@ import os
 import pickle
 import re
 import sqlite3
+import threading
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -117,6 +118,24 @@ def center(bbox: dict) -> tuple[float, float]:
     return (bbox["ymin"] + bbox["ymax"]) / 2, (bbox["xmin"] + bbox["xmax"]) / 2
 
 
+def warm_file(path, chunk: int = 16 << 20) -> threading.Thread | None:
+    """在后台把库文件顺序读一遍进系统页缓存：库在磁盘上（几百 MB 到 3 GB），第一次碰到的页要读盘，冷启动时单条查询
+    会到几百毫秒。设 AV_WARM_DB=0 可关掉（例如内存很小的机器）。"""
+    if os.environ.get("AV_WARM_DB", "1") == "0":
+        return None
+
+    def run():
+        try:
+            with open(path, "rb", buffering=0) as f:
+                while f.read(chunk):
+                    pass
+        except OSError:
+            pass
+    t = threading.Thread(target=run, daemon=True)
+    t.start()
+    return t
+
+
 class MarketReference:
     """一个市场的参考库。内存里放道路 / 片区 / 邮编与检索索引，POI 与地址点放 SQLite。"""
 
@@ -148,6 +167,7 @@ class MarketReference:
     def db(self) -> sqlite3.Connection:
         if self._db is None:
             self._db = sqlite3.connect(self.dir / "reference.sqlite", check_same_thread=False)
+            self.__dict__["_warm_thread"] = warm_file(self.dir / "reference.sqlite")
         return self._db
 
     def poi(self, pid: int) -> dict:
@@ -209,7 +229,7 @@ class MarketReference:
 
 # 用到时才生成、按市场缓存在参考库对象上的派生索引（不存盘）
 DERIVED = ("_divisions", "_national", "_np", "_core_fuzzy", "_suffix", "_completed", "_first_names", "_last_names", "_stems", "_jp_chome",
-           "_pc_far_share", "_has_pts", "_poi_all", "_gazetteer")
+           "_pc_far_share", "_has_pts", "_poi_all", "_gazetteer", "_warm_thread")
 
 
 def number_key(n: str) -> str:

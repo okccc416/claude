@@ -158,6 +158,9 @@ def test_au_unit_slash_variants(au):
                                ("G105/100 Crown St, Surry Hills 2010", "100", "G105")):
         p = rp.parse(text)
         assert (p.number, p.unit) == (number, unit), text
+    if au.crf is not None:  # 机器学习解析同样拆开"单元 / 区间门牌"，不能把单元号当门牌（13/7-9 不是 13 号）
+        p = au.crf.parse("13/102-104 Crown St, Surry Hills 2010")
+        assert (p.number, p.unit) == ("102-104", "UNIT 13")
     r = au.validate("1/102-104 Crown St, Surry Hills NSW 2010")  # 区间按首尾门牌都能查到
     assert r.granularity == "PREMISE" and r.best.point["number"] in ("102", "104")
 
@@ -818,7 +821,10 @@ def test_national_address_index(tmp_path_factory):
     for street, num, pc, loc, lat, lng in (("Crown Street", "100", "2500", "Wollongong", -34.4250, 150.8930),
                                            ("Crown Street", "100", "2795", "Bathurst", -33.4200, 149.5800),
                                            ("Keira Street", "5", "2500", "Wollongong", -34.4270, 150.8900),
-                                           ("Keira Street", "7", "2500", "Wollongong", -34.4272, 150.8902)):
+                                           ("Keira Street", "7", "2500", "Wollongong", -34.4272, 150.8902),
+                                           ("Hall Street", "25", "2756", "Pitt Town", -33.5870, 150.8590),
+                                           ("Pitt Street", "25", "2756", "Windsor", -33.6080, 150.8170),
+                                           ("Auber Glen", "5", "2759", "St Clair", -33.8088, 150.7872)):
         db.execute("INSERT INTO addr(street, s3, number, nkey, unit, postcode, locality, lkey, region, lat, lng) "
                    "VALUES (?,?,?,?,'',?,?,?,'NSW',?,?)",
                    (street, name_prefix(street), num, num, pc, loc, loc.upper(), lat, lng))
@@ -840,6 +846,13 @@ def test_national_address_index(tmp_path_factory):
     res = eng.validate("deliver to 7 Keira St Wollongong 2500")  # 配送前缀后面直接是地址
     assert (res.action, res.granularity) == (ACCEPT, "PREMISE") and abs(res.lat - -34.4272) < 0.0005
     assert name_prefix("Am Volksgarten") == "VOL" and name_prefix("Calle 72") == "#72"
+    # 城镇名没用逗号隔开（Pitt Town 不能让 Pitt Street 对上）；备注、单元号连着地址；州缩写和 Gln 这类缩写
+    res = eng.validate("attn: j. smith 25 hall street pitt town nsw 2756 ph 0455 325 993")
+    assert res.action == ACCEPT and abs(res.lat - -33.587) < 0.0005
+    res = eng.validate("leave at door u2/7 keira st wollongong nsw 2500")
+    assert res.granularity == "PREMISE" and abs(res.lat - -34.4272) < 0.0005
+    res = eng.validate("5 Auber Gln NSW 2759")
+    assert res.action == ACCEPT and abs(res.lat - -33.8088) < 0.0005
     res = eng.validate("100A Crown St, Wollongong 2500")  # 100A 不在表里、100 在：门牌附近，请用户确认
     assert (res.action, res.granularity) == (CONFIRM, "PREMISE_PROXIMITY") and "PREMISE_NOT_FOUND" in res.reasons
     from avmvp.intl.geo_text import route_match, street_part
@@ -848,6 +861,7 @@ def test_national_address_index(tmp_path_factory):
         "HANNOVER"
     assert route_match("Schönbühlstraße", "Schoenbuehlstr. 45A, Stuttgart") == "CONFIRMED"  # 变音转写
     assert street_part("Nr. 9 Vogelberger Weg, Lüdenscheid")[1] == ["VOGELBERGER", "WEG"]  # 门牌标记在段首
+    assert street_part("U56/1 Limestone Road, Rouse Hill")[1] == ["LIMESTONE", "ROAD"]  # 前面只有单元号
     from avmvp.intl.national import number_variants
     assert number_variants("15a/4", "PL") == ["15A/4", "15A"]  # 斜杠后是公寓号，不能当门牌查
     assert number_variants("41-43") == ["41-43", "41", "43"] and "2" in number_variants("772/2", "CZ")

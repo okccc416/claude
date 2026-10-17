@@ -12,6 +12,7 @@
 from __future__ import annotations
 
 import re
+from functools import lru_cache
 
 from rapidfuzz import fuzz
 
@@ -74,9 +75,28 @@ def street_part(text: str, pc_re: re.Pattern | None = None) -> tuple[list[str], 
     道路段 = 第一个带门牌号的段（门牌号单独成段时并上前一段，没有前一段就并下一段）；没有门牌号就取第一段。
     路名的词按门牌号的位置取：门牌在段首取后面的词（27 Calle Virgen de la Salud），否则取最后一个门牌号前面的词
     （Rua Limeira 179 fundo casa：后面的 fundo casa、bloco 2、local 6 是单元 / 描述）。"""
-    segs = [s for s in _SEG.split(fold(text)) if s.strip()]
+    segs, plain, street, i = _street_segments(text, pc_re)
     if not segs:
         return [], [], set()
+    words = [w for k in sorted(street) for w in norm(plain[k]).split()]
+    toks = norm(plain[i]).split()
+    nums = [k for k, w in enumerate(toks) if re.fullmatch(r"\d{1,4}[A-Z]?", w)]
+    if not nums or len(street) > 1:
+        name = words
+    elif nums[0] == 0 or all(t in NUMBER_WORDS for t in toks[:nums[0]]) or all(
+            t in UNIT_WORDS or t in _UNIT_EXTRA or re.fullmatch(r"U\d+[A-Z]?", t) for t in toks[:nums[0]]):
+        name = toks[nums[0] + 1:]  # 门牌在段首（Nr. 9 Vogelberger Weg）；前面只有单元号（U56/1 Limestone Rd、Apt 7 43 Kent St）
+    else:
+        name = toks[:nums[-1]]
+    other = {w for k, s in enumerate(segs) if k not in street for w in norm(s).split()}
+    return words, name, other - set(words)
+
+
+def _street_segments(text: str, pc_re: re.Pattern | None = None) -> tuple[list[str], list[str], list[int], int]:
+    """(各段, 去掉邮编的各段, 道路段的下标, 带门牌号的那一段的下标)。"""
+    segs = [s for s in _SEG.split(fold(text)) if s.strip()]
+    if not segs:
+        return [], [], [], 0
     plain = [pc_re.sub(" ", s) if pc_re else s for s in segs]  # 去掉邮编再找门牌
     with_no = [k for k, s in enumerate(plain) if _HOUSE.search(s)]
 
@@ -87,25 +107,22 @@ def street_part(text: str, pc_re: re.Pattern | None = None) -> tuple[list[str], 
     street = [i]
     if not _core(norm(plain[i]).split())[0] and len(segs) > 1:
         street.append(i - 1 if i > 0 else i + 1)  # 门牌号单独成段：路名在前一段（C/ Joaquín Peralta, 12）或后一段
-    words = [w for k in sorted(street) for w in norm(plain[k]).split()]
-    toks = norm(plain[i]).split()
-    nums = [k for k, w in enumerate(toks) if re.fullmatch(r"\d{1,4}[A-Z]?", w)]
-    if not nums or len(street) > 1:
-        name = words
-    elif nums[0] == 0 or all(t in NUMBER_WORDS for t in toks[:nums[0]]):  # 门牌在段首（Nr. 9 Vogelberger Weg）
-        name = toks[nums[0] + 1:]
-    else:
-        name = toks[:nums[-1]]
-    other = {w for k, s in enumerate(segs) if k not in street for w in norm(s).split()}
-    return words, name, other - set(words)
+    return segs, plain, street, i
+
+
+def other_words(text: str, pc_re: re.Pattern | None = None) -> set[str]:
+    """道路段以外各段的全部词（与路名重复的也算：Thirlmere Way, Thirlmere 里第二段的 Thirlmere 是所写的城镇）。"""
+    segs, _, street, _ = _street_segments(text, pc_re)
+    return {w for k, s in enumerate(segs) if k not in street for w in norm(s).split()}
 
 
 def _hit(w: str, pool: list[str], skel: set[str], blob: str) -> str:
     """一个词在另一边的对应："exact" / "fuzzy" / ""。"""
     if w in pool:
         return "exact"
-    if len(w) >= 4 and f" {w}" in blob:  # 泰文等不分词的文字；粘连写法
-        return "exact"
+    if len(w) >= 4 and f" {w}" in blob:  # 泰文等不分词的文字；粘连写法（拉丁文只认后面直接跟类型词的：PARK 不是 PARKSIDE）
+        if not w.isascii() or any(t.startswith(w) and (t == w or t[len(w):] in TYPES) for t in blob.split()):
+            return "exact"
     for x in pool:
         if len(w) >= 4 and len(x) >= 4 and abs(len(x) - len(w)) <= 4 and fuzz.ratio(w, x) >= 80:
             return "fuzzy"
@@ -138,21 +155,34 @@ def _num_pairs(words: list[str]) -> list[tuple[str, str]]:
     return out
 
 
-def route_match(route: str, text: str, pc_re: re.Pattern | None = None) -> str:
-    """geo 路名 vs 原文道路段：CONFIRMED / CORRECTED / CONFLICT / INFERRED（原文没写路名）。"""
+@lru_cache(maxsize=8192)
+def _text_side(text: str, pc_re: re.Pattern | None) -> tuple:
+    """原文这一侧（同一条原文要和全国库的几百个候选路名比，只算一次）。"""
     words, name, locality = street_part(text, pc_re)
-    g_alpha, g_nums = _core(norm(route).split())
-    i_alpha, i_nums = _core(name)
+    i_alpha = _core(name)[0]
     if locality and [w for w in i_alpha if w not in locality]:
         i_alpha = [w for w in i_alpha if w not in locality]  # 道路段里夹着的城镇名不算路名（只剩城镇名时保留）
-    all_nums = set(norm(pc_re.sub(" ", fold(text)) if pc_re else text).split())
+    flat_words = norm(pc_re.sub(" ", fold(text)) if pc_re else text).split()
+    return (tuple(i_alpha), frozenset(flat_words), tuple(_num_pairs(flat_words)),
+            frozenset(skeleton(" ".join(words)).split()), script_of(" ".join(i_alpha)))
+
+
+@lru_cache(maxsize=65536)
+def _route_side(route: str) -> tuple:
+    g_alpha, g_nums = _core(norm(route).split())
+    return (tuple(g_alpha), tuple(g_nums), tuple(_num_pairs(norm(route).split())), frozenset(skeleton(route).split()),
+            script_of(" ".join(g_alpha)))
+
+
+def route_match(route: str, text: str, pc_re: re.Pattern | None = None) -> str:
+    """geo 路名 vs 原文道路段：CONFIRMED / CORRECTED / CONFLICT / INFERRED（原文没写路名）。"""
+    i_alpha, all_nums, tp, sk_i, si = _text_side(text, pc_re)
+    g_alpha, g_nums, rp, sk_g, sg = _route_side(route)
     if g_nums and not all(n in all_nums for n in g_nums):
         return "CONFLICT"  # 编号道路号码不一致（海湾国家 Road / Block 号写在别的段里也算）
     if not g_alpha:
         if not g_nums:
             return "INFERRED"
-        rp = _num_pairs(norm(route).split())
-        tp = _num_pairs(norm(pc_re.sub(" ", fold(text)) if pc_re else text).split())
         if rp and tp:  # 编号道路：每个"类型 + 号码"都要在原文里；号码在、类型不同（Avenue / Road 2833）算纠正
             nums = {n for _, n in tp}
             if any(x not in tp and x[1] not in nums for x in rp):
@@ -161,14 +191,12 @@ def route_match(route: str, text: str, pc_re: re.Pattern | None = None) -> str:
         return "CONFIRMED"
     if not i_alpha:
         return "INFERRED"
-    si, sg = script_of(" ".join(i_alpha)), script_of(" ".join(g_alpha))
     if si != sg:  # 两边文字不同：阿拉伯文 <-> 拉丁转写按整串辅音骨架比；其他文字之间（泰文 / 拉丁）无从比较
         if {si, sg} != {"arabic", "latin"}:
             return "INFERRED"
         a, b = skeleton(" ".join(g_alpha)), skeleton(" ".join(i_alpha))
         return "CORRECTED" if a and b and fuzz.token_set_ratio(a, b) >= 85 else "CONFLICT"
     blob_i, blob_g = " " + " ".join(i_alpha), " " + " ".join(g_alpha)
-    sk_i, sk_g = set(skeleton(" ".join(words)).split()), set(skeleton(route).split())
     g_hits = [_hit(w, i_alpha, sk_i, blob_i) for w in g_alpha]
     i_hits = [_hit(w, g_alpha, sk_g, blob_g) for w in i_alpha]
     g_cov = sum(bool(h) for h in g_hits) / len(g_alpha)

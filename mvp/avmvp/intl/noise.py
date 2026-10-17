@@ -82,6 +82,10 @@ NOTE_WORDS = {
     "DEIXAR", "PORTARIA", "LIGAR", "CAMPAINHA", "PROSZE", "ZOSTAWIC", "SASIADA", "DZWONIC", "DOSTAWA", "TITIP", "SATPAM",
     "TELEPON", "TOLONG", "HUBUNGI", "الرجاء", "الاتصال", "التوصيل",
     "THANKS", "THANK", "THX", "GRACIAS", "PORFA", "OBRIGADO", "OBRIGADA", "DANKE", "GRAZIE", "DZIEKUJE", "TERIMA"}
+# 单元 / 楼层词：收件人名字、配送备注切到这里为止（attn: j. smith apt 2 12-20 Tornaros Ave 的 apt 2 是单元）
+UNIT_START = {"APT", "APARTMENT", "UNIT", "U", "FLAT", "SHOP", "SUITE", "STE", "LEVEL", "LVL", "LOT", "VILLA", "OFFICE",
+              "ROOM", "BLDG", "BUILDING", "TOWNHOUSE", "KIOSK", "FACTORY", "WAREHOUSE", "APTO", "DEPTO", "DPTO", "PISO",
+              "WOHNUNG", "WHG", "APPT", "APPARTEMENT", "MIESZKANIE", "LOKAL"}
 # 方位描述：序数 + 房屋 / 门（第三栋、segunda casa、rumah ketiga）
 _ORD = (r"(?:FIRST|SECOND|THIRD|FOURTH|FIFTH|LAST|\d(?:ST|ND|RD|TH)|ERSTE[NSRM]?|ZWEITE[NSRM]?|DRITTE[NSRM]?|VIERTE[NSRM]?|"
         r"LETZTE[NSRM]?|PREMIERE|DEUXIEME|TROISIEME|DERNIERE|PRIMER[AO]?|SEGUND[AO]|TERCER[AO]?|CUART[AO]|ULTIM[AO]|"
@@ -197,7 +201,8 @@ def strip_noise(raw: str, ref=None) -> tuple[str, dict[str, list[str]], dict[str
                 continue
             toks = list(re.finditer(r"\S+", body))  # 同一段里人名后面直接跟着地址：最多切掉 4 个词的人名
             n = 0
-            while n < len(toks) and n < 4 and toks[n].group(0).replace(".", "").isalpha():
+            while n < len(toks) and n < 4 and toks[n].group(0).replace(".", "").isalpha() \
+                    and _fold(toks[n].group(0)).strip(".") not in UNIT_START:
                 n += 1
             if 0 < n < len(toks):
                 add("recipients", body[:toks[n - 1].end()])
@@ -205,6 +210,16 @@ def strip_noise(raw: str, ref=None) -> tuple[str, dict[str, list[str]], dict[str
                 has_digit = bool(re.search(r"\d", seg))
             elif n == 0 and body:  # 前缀后面直接是地址（deliver to 12 Priestley Pl）：只去掉前缀
                 seg, up = body, _fold(body)
+        elif has_digit and words and words[0] in NOTE_WORDS:  # 备注直接连着地址（leave at door 166 Cox St）：切掉备注
+            toks = list(re.finditer(r"\S+", seg))
+            n = 0
+            while n < len(toks) and n < 5 and toks[n].group(0).replace(".", "").isalpha() \
+                    and _fold(toks[n].group(0)).strip(".") not in UNIT_START:
+                n += 1
+            if 0 < n < len(toks) and re.match(r"\d|U\d", toks[n].group(0), re.I):
+                add("notes", seg[:toks[n - 1].end()])
+                seg = seg[toks[n].start():].strip()
+                up = _fold(seg)
         if _DESCRIBE.search(up) or _DESCRIBE.search(seg):
             add("descriptions", seg)
             m = _REL_ANY.search(up) or _REL_ANY.search(seg)
