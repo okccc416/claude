@@ -2,6 +2,7 @@
 
 > 面向：新加坡地图能力供应商 · 产品经理 / 能力建设负责人
 > 前提：公司已有 Geo（地理编码 / 检索）能力，计划新建 **地址校验（Address Validation, AV）** 能力，对标 Google Address Validation API 与 Loqate（GBG）的验真 + 补齐能力。
+> **交接**：产品先看 [18 · 交接说明（产品）](docs/18-handover-pm.md)，研发先看 [19 · 交接说明（研发）](docs/19-handover-dev.md)。和 Google 的逐国实测对照见 [google_real_compare.md](mvp/reports/google_real_compare.md)。
 
 ---
 
@@ -47,6 +48,8 @@ Google AV 的核心产出不是坐标，而是一个**可执行的结论**（`AC
 | 15 | [判断层技术选型](docs/15-decision-layer-selection.md) | 召回候选之后"选哪个、对不对、能不能直接通过"用什么做？Jev 类判断型模型要不要上？悉尼试点怎么比、看什么、怎么定？ |
 | 16 | [开源方案对比](docs/16-open-source-benchmark.md) | libpostal、开源地理编码器和本方案比，哪里强、哪里弱？要不要拿来兜底？ |
 | 17 | [悉尼门址底表体检与合成评测](docs/17-sydney-base-table-health.md) | 客户的 421 万条悉尼门址底表质量如何？缺的 suburb / 邮编能不能补？有哪些要清理？引擎在这套门址上表现如何、改了什么？ |
+| 18 | [**交接说明（产品）**](docs/18-handover-pm.md) | 结论（和 Google 同批线上查询逐国对比）、技术链路、其他国家拓展、其他方案和下一步 |
+| 19 | [**交接说明（研发）**](docs/19-handover-dev.md) | 同上的研发版：逐国对照和失败原因、代码与关键设计的依据、加国家和重建数据的步骤、全部方案对照、评测规矩、没解决的问题 |
 
 ## 可运行的服务：45 个市场
 

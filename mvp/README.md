@@ -68,6 +68,7 @@ python scripts/evaluate_markets.py --split test --n 1000  # 测试集（留到�
 python scripts/google_parity.py --split test   # 与 Google AV 对标（估计 Google 上限）-> reports/google_parity.md
 python scripts/coverage_eval.py --jobs 4       # 试点范围守卫：开发集误判率 -> reports/coverage_guard.md
 python scripts/geo_real_eval.py --responses <geo 返回.jsonl>  # geo 真实返回 + 核对层 -> reports/geo_real_eval.md
+python scripts/google_real_compare.py     # 同一批线上查询与 Google 逐国对照（读上一步的汇总）-> reports/google_real_compare.md
 
 curl -s -X POST http://127.0.0.1:8080/v1/address:validate -H 'Content-Type: application/json' \
   -d '{"address":{"regionCode":"AE","addressLines":["Latifa Tower, Ground Floor - Sheikh Zayed Rd"],"locality":"Dubai"}}'
@@ -203,9 +204,11 @@ mvp/
 │   ├── fetch_national.py          下载全国门址库（试点城市以外的门牌级验真用；--reindex 只重建索引）
 │   ├── base_table_health.py       客户门址底表体检 + 补齐（逐条对照全国门址库，补 suburb / 邮编）
 │   ├── base_table_synth_eval.py   用补齐后的客户底表合成用户写法的查询，评测引擎（合成数据，按坐标判对错）
+│   ├── regression_diff.py         改动前后逐条对比（两份代码各跑一遍开发集，列出结论变了的样本）
 │   ├── fetch_address_formats.py   下载 Google 地址格式元数据（响应对齐 Google AV 用）
 │   ├── coverage_eval.py           试点范围守卫评测（开发集误判率 / 线上查询分布）
 │   ├── geo_real_eval.py           geo 服务真实返回评测（核对层，按目标门址坐标判对错）
+│   ├── google_real_compare.py     线上真实流量与 Google 逐国对照（汇总 geo_real_eval.json，不需要原始数据）
 │   └── fit_accept_policy.py       按市场校准直接通过的放宽规则（开发集）
 ├── labeled/            标注数据（模拟订单 orders_sg_v1.csv、调研测试集 testset_sg_research_v1.csv）、数据说明、标注规范
 ├── models/             贝叶斯参数（证据权重、置信度统计表）
